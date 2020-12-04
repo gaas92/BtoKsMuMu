@@ -79,10 +79,10 @@ class BtoKsMuMu : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
 //
 BtoKsMuMu::BtoKsMuMu(const edm::ParameterSet& iConfig)
  :
-   muon_Label(consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("muons"))),
   //tracksToken_(consumes<TrackCollection>(iConfig.getUntrackedParameter<edm::InputTag>("tracks")))
 
 {
+   muon_Label = consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("muons"));
    //now do what ever initialization is needed
 
 }
