@@ -218,7 +218,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       
       for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
 	{
-  
+	  std::cout << "muons working "<< std::endl;		
 	  if(iMuon1==iMuon2) continue;
 	  
 	  //opposite charge 
@@ -252,7 +252,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  // *****  Trajectory states to calculate DCA for the 2 muons *********************
 	  FreeTrajectoryState mu1State = muon1TT.impactPointTSCP().theState();
 	  FreeTrajectoryState mu2State = muon2TT.impactPointTSCP().theState();
-
+	  std::endl << "pass muons continues ... "<< std::endl;
 	  if( !muon1TT.impactPointTSCP().isValid() || !muon2TT.impactPointTSCP().isValid() ) continue;
 
 	  // Measure distance between tracks at their closest approach
