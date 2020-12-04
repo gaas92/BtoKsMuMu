@@ -337,6 +337,12 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   //get Lam tracks from V0 candidate
 		   vector<pat::PackedCandidate> v0daughters;
 		     vector<Track> theDaughterTracks;
+			 pat::PackedCandidate* track1 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0));
+			 pat::PackedCandidate* track2 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1));
+
+			 if (track1->pt() < 0.55 || track->pt() < 0.55) continue;
+
+
 		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0))) );
 		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1))) );
 		     		     
