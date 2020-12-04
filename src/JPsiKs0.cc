@@ -429,7 +429,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		       continue; 
 		     }
 		     std::cout << "pass 424 continues ... "<< std::endl;
-		     
+		     //aca chinga a su madre todo
+			 
 		     Ks0VertexFitTree->movePointerToTheTop();
 		     RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
 		     
@@ -442,8 +443,12 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		     vFitMCParticles.push_back(ks0_vFit_withMC);
 		     
 		     MultiTrackKinematicConstraint *  j_psi_c = new  TwoTrackMassKinematicConstraint(psi_mass);
-		     KinematicConstrainedVertexFitter kcvFitter;
-		     RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles, j_psi_c);
+		     //KinematicConstrainedVertexFitter kcvFitter;
+		     //RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles, j_psi_c);
+
+			 //no mass constrain 
+			 KinematicParticleVertexFitter kcvFitter;
+			 RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
 		     if (!vertexFitTree->isValid()) {
 		       std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
 		       continue;
@@ -656,7 +661,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   /////////////////////////////////////////////////
 		   pionParticles.clear();
 		   muonParticles.clear();
-		   vFitMCParticles.clear();
+		   //vFitMCParticles.clear();
 		  
 
 		   }
