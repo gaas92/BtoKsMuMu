@@ -58,6 +58,7 @@ class BtoKsMuMu : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
 
       // ----------member data ---------------------------
       edm::EDGetTokenT<TrackCollection> tracksToken_;  //used to select what tracks to read from configuration file
+      edm::EDGetTokenT<edm::View<pat::Muon>> muon_Label;
 };
 
 //
