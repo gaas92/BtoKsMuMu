@@ -218,7 +218,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       
       for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
 	{
-	  std::cout << "muons working "<< std::endl;		
+	  //std::cout << "muons working "<< std::endl;		
 	  if(iMuon1==iMuon2) continue;
 	  
 	  //opposite charge 
@@ -394,7 +394,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			 //std::cout << "negative chisq from ks fit" << endl;
 			 continue;
 		       }
-		     
+		     std::cout << "pass Fit continues ... "<< std::endl;
 		     //some loose cuts go here
 		     
 		     if(Ks0_vFit_vertex_noMC->chiSquared()>50) continue;
