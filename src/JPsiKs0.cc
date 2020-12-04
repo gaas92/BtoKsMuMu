@@ -161,7 +161,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   using namespace edm;
   using namespace reco;
   using namespace std;
-  
+  std::cout << "analyse ok" <<std::endl;
   //*********************************
   // Get event content information
   //*********************************  
