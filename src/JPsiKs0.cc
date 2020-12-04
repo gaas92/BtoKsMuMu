@@ -394,7 +394,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			 //std::cout << "negative chisq from ks fit" << endl;
 			 continue;
 		       }
-		     std::cout << "pass Fit continues ... "<< std::endl;
+		     //std::cout << "pass Fit continues ... "<< std::endl;
 		     //some loose cuts go here
 		     
 		     if(Ks0_vFit_vertex_noMC->chiSquared()>50) continue;
@@ -464,7 +464,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		       {
 			 continue;
 		       }		     
-		     
+		     std::cout << "pass 467" <<std::endl;
 		   // get children from final B fit
 		   vertexFitTree->movePointerToTheFirstChild();
 		   RefCountedKinematicParticle mu1CandMC = vertexFitTree->currentParticle();
@@ -607,7 +607,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   
 		   tri_Dim25->push_back( tri_Dim25_tmp );	       
 		   tri_JpsiTk->push_back( tri_JpsiTk_tmp );
-                   tri_JpsiTkTk->push_back( tri_JpsiTkTk_tmp );
+           tri_JpsiTkTk->push_back( tri_JpsiTkTk_tmp );
 
  	   // ************
 		  
@@ -626,7 +626,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   mupC2->push_back( glbTrackP->normalizedChi2() );
 		   mupNHits->push_back( glbTrackP->numberOfValidHits() );
 		   mupNPHits->push_back( glbTrackP->hitPattern().numberOfValidPixelHits() );
-                   mumdxy->push_back(glbTrackM->dxy(bestVtx.position()) );
+           mumdxy->push_back(glbTrackM->dxy(bestVtx.position()) );
 		   mupdxy->push_back(glbTrackP->dxy(bestVtx.position()) );
 		   mumdz->push_back(glbTrackM->dz(bestVtx.position()) );
 		   mupdz->push_back(glbTrackP->dz(bestVtx.position()) );
@@ -643,8 +643,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   pi2dz_e->push_back(v0daughters[1].dzError());
 
 		   // try refitting the primary without the tracks in the B reco candidate		   
-		  
-		  nB++;	       
+		  std::cout<< "pass all" << std::endl;
+		   nB++;	       
 		   
 		   /////////////////////////////////////////////////
 		   pionParticles.clear();
