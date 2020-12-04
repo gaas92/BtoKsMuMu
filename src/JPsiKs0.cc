@@ -340,7 +340,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			 const pat::PackedCandidate* track1 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0));
 			 const pat::PackedCandidate* track2 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1));
 
-			 if (track1->pt() < 0.55 || track2->pt() < 0.55) continue;
+			 if (track1->pt() < 0.1 || track2->pt() < 0.1) continue;
 
 
 		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0))) );
