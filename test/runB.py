@@ -32,8 +32,16 @@ process.TFileService = cms.Service("TFileService",
 )
 
 #### B Fitter-Tupler 
-process.Btupler = cms.EDAnalyzer('BtoKsMuMu'
-
+process.Btupler = cms.EDAnalyzer('BtoKsMuMu', 
+                          muons = cms.InputTag("slimmedMuons"),
+                          #packedPFcand = cms.InputTag("packedPFCandidates"),
+                          #primaryVertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+                          #secundaryVerticesPtr = cms.InputTag("slimmedKshortVertices"),
+                          #bslabel = cms.InputTag("offlineBeamSpot"),
+                          #TriggerResults = cms.InputTag("TriggerResults", "", "HLT"),
+                          #OnlyBest = cms.bool(False),
+                          #isMC = cms.bool(False),
+                          #OnlyGen = cms.bool(False)                               
     )
 
 process.p = cms.Path(process.Btupler)
