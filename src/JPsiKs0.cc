@@ -297,7 +297,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
 	    continue;
 	  }
-      std::cout << "pass fit continues ... "<< std::endl;
+      //std::cout << "pass fit continues ... "<< std::endl;
 	  if (!psiVertexFitTree->isValid()) 
 	    {
 	      //std::cout << "caught an exception in the psi vertex fit" << std::endl;
