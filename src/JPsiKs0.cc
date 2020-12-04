@@ -468,13 +468,13 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		     if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ) 
 		       {
 			     std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
-			     continue;
+			     //continue;
 		       }
 		     std::cout << "pass 461 continues ... "<< std::endl;
 		     double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
 		     if(B_Prob_tmp<0.01)
 		       {
-			 continue;
+			    //continue;
 		       }		     
 		     std::cout << "pass 467" <<std::endl;
 		   // get children from final B fit
