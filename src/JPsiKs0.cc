@@ -324,7 +324,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   //some loose cuts go here
 
 	   if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
-	   if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
+	   //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
+	   if(psi_vFit_noMC->currentState().mass()<1.1 || psi_vFit_noMC->currentState().mass()>22.0) continue;
 
 	   //  ***************  
 
