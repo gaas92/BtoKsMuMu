@@ -45,7 +45,7 @@ process.triggerSelection = cms.EDFilter("TriggerResultsFilter",
                                         throw = cms.bool(False)
                                         )
 
-process.load("myAnalyzers.JPsiKsPAT.PsiphiRootupler_cfi")
+process.load("myAnalyzers.BtoKsMuMu.PsiphiRootupler_cfi")
 #process.rootuple.isMC = cms.bool(True) 
 #process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
 

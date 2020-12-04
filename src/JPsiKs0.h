@@ -5,7 +5,7 @@
 #include <memory>
 
 // user include files
-//#include "myAnalyzers/JPsiKsPAT/interface/JPsif0PAT.h"
+//#include "myAnalyzers/BtoKsMuMu/interface/JPsif0PAT.h"
 
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"

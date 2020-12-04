@@ -18,5 +18,5 @@
 <use name=CondFormats/L1TObjects>
 <flags EDM_PLUGIN=1>
 <export>
-   <lib name=myAnalyzersJPsiKsPAT>
+   <lib name=myAnalyzersBtoKsMuMu>
 </export>

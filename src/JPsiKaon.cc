@@ -15,7 +15,7 @@
 
 
 // user include files
-#include "myAnalyzers/JPsiKsPAT/src/JPsiKaon.h"
+#include "myAnalyzers/BtoKsMuMu/src/JPsiKaon.h"
 
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"

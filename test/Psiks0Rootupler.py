@@ -45,7 +45,7 @@ process.triggerSelection = cms.EDFilter("TriggerResultsFilter",
                                         throw = cms.bool(False)
                                         )
 
-process.load("myAnalyzers.JPsiKsPAT.Psiks0Rootupler_cfi")
+process.load("myAnalyzers.BtoKsMuMu.Psiks0Rootupler_cfi")
 
 process.TFileService = cms.Service("TFileService",
 

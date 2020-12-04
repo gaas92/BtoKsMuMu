@@ -7,8 +7,8 @@ cmsrel CMSSW_10_6_12
 cd CMSSW_10_6_12/src/
 cmsenv
 voms-proxy-init -voms cms -valid 192:00
-git clone https://github.com/jmejiagu/MiniAODBphysicsUltraLegacyRun2.git myAnalyzers/JPsiKsPAT
-cd myAnalyzers/JPsiKsPAT/
+git clone https://github.com/jmejiagu/MiniAODBphysicsUltraLegacyRun2.git myAnalyzers/BtoKsMuMu
+cd myAnalyzers/BtoKsMuMu/
 git checkout master
 cd ../..
 scram b
@@ -19,7 +19,7 @@ Run: (use your favorite input sample. You will see examples in the confi files)
 
 
 ```
-cd myAnalyzers/JPsiKsPAT/test/
+cd myAnalyzers/BtoKsMuMu/test/
 cmsRun PsikaonRootupler.py
 ```
 

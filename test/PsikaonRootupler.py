@@ -45,7 +45,7 @@ process.triggerSelection = cms.EDFilter("TriggerResultsFilter",
                                         throw = cms.bool(False)
                                         )
 
-process.load("myAnalyzers.JPsiKsPAT.PsikaonRootupler_cfi")
+process.load("myAnalyzers.BtoKsMuMu.PsikaonRootupler_cfi")
 #process.rootuple.dimuons = cms.InputTag('slimmedMuons') 
 
 process.TFileService = cms.Service("TFileService",
