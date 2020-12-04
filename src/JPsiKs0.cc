@@ -239,8 +239,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	      continue;
 	    }
 
-	  if(iMuon1->track()->pt()<4.0) continue;
-	  if(iMuon2->track()->pt()<4.0) continue;
+	  if(iMuon1->track()->pt()<1.0) continue;
+	  if(iMuon2->track()->pt()<1.0) continue;
 
 	  if(!(glbTrackM->quality(reco::TrackBase::highPurity))) continue;
 	  if(!(glbTrackP->quality(reco::TrackBase::highPurity))) continue;
@@ -283,7 +283,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    muonParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
 	  }
 	  catch(...) { 
-	    std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
+	    //std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
 	    continue;
 	  }
 
@@ -294,7 +294,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    psiVertexFitTree = fitter.fit(muonParticles); 
 	  }
 	  catch (...) { 
-	    std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
+	    //std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
 	    continue;
 	  }
       //std::cout << "pass fit continues ... "<< std::endl;
@@ -340,7 +340,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			 const pat::PackedCandidate* track1 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0));
 			 const pat::PackedCandidate* track2 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1));
 
-			 if (track1->pt() < 0.1 || track2->pt() < 0.1) continue;
+			 if (track1->pt() < 0.55 || track2->pt() < 0.55) continue;
 
 
 		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0))) );
@@ -374,7 +374,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		       pionParticles.push_back(pFactory.particle(pion2TT,pion_mass,chi,ndf,pion_sigma));
 		     }
 		     catch(...) {
-		       std::cout<<" Exception caught ... continuing 3 "<<std::endl;
+		       //std::cout<<" Exception caught ... continuing 3 "<<std::endl;
 		       continue;
 		     }
 		     
@@ -383,7 +383,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		       Ks0VertexFitTree = fitter.fit(pionParticles); 
 		     }
 		     catch(...) {
-		       std::cout<<" Exception caught ... continuing 4 "<<std::endl;                   
+		       //std::cout<<" Exception caught ... continuing 4 "<<std::endl;                   
 		       continue;
 		     }
 		     if (!Ks0VertexFitTree->isValid()) 
@@ -428,7 +428,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		       //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
 		       continue; 
 		     }
-		     std::cout << "pass 424 continues ... "<< std::endl;
+		     //std::cout << "pass 424 continues ... "<< std::endl;
 		     //aca chinga a su madre todo
 			 
 		     Ks0VertexFitTree->movePointerToTheTop();
@@ -450,7 +450,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			 KinematicParticleVertexFitter kcvFitter;
 			 RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
 		     if (!vertexFitTree->isValid()) {
-		       std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
+		       //std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
 		       continue;
 		     }
 		     
@@ -459,7 +459,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		     RefCountedKinematicParticle bCandMC = vertexFitTree->currentParticle();
 		     RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
 		     if (!bDecayVertexMC->vertexIsValid()){
-		       std::cout << "B MC fit vertex is not valid" << endl;
+		       //std::cout << "B MC fit vertex is not valid" << endl;
 		       continue;
 		     }
 		     
@@ -467,16 +467,16 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		     
 		     if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ) 
 		       {
-			     std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
-			     //continue;
+			     //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
+			     continue;
 		       }
-		     std::cout << "pass 461 continues ... "<< std::endl;
+		     //std::cout << "pass 461 continues ... "<< std::endl;
 		     double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
 		     if(B_Prob_tmp<0.01)
 		       {
-			    //continue;
+			    continue;
 		       }		     
-		     std::cout << "pass 467" <<std::endl;
+		     //std::cout << "pass 467" <<std::endl;
 		   // get children from final B fit
 		   vertexFitTree->movePointerToTheFirstChild();
 		   RefCountedKinematicParticle mu1CandMC = vertexFitTree->currentParticle();
@@ -655,7 +655,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   pi2dz_e->push_back(v0daughters[1].dzError());
 
 		   // try refitting the primary without the tracks in the B reco candidate		   
-		  std::cout<< "pass all" << std::endl;
+		  //std::cout<< "pass all" << std::endl;
 		   nB++;	       
 		   
 		   /////////////////////////////////////////////////
