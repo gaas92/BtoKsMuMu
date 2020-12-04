@@ -1,0 +1,11 @@
+*.root
+.DS_Store
+test/crab/*/*
+*.pyc
+*.idea/workspace.xml
+*.vscode/*
+CVS
+*.pyc
+*.o
+*__init__.py
+*~
