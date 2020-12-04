@@ -161,7 +161,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   using namespace edm;
   using namespace reco;
   using namespace std;
-  std::cout << "analyse ok" <<std::endl;
+  //std::cout << "analyse ok" <<std::endl;
   //*********************************
   // Get event content information
   //*********************************  
@@ -421,6 +421,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		       //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
 		       continue; 
 		     }
+		     std::cout << "pass 424 continues ... "<< std::endl;
 		     
 		     Ks0VertexFitTree->movePointerToTheTop();
 		     RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
@@ -457,7 +458,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			 //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
 			 continue;
 		       }
-		     
+		     std::cout << "pass 461 continues ... "<< std::endl;
 		     double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
 		     if(B_Prob_tmp<0.01)
 		       {
