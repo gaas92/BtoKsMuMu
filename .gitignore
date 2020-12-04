@@ -1,0 +1,6 @@
+*.root
+.DS_Store
+test/crab/*/*
+*.pyc
+*.idea/workspace.xml
+*.vscode/*
