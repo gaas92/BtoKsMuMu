@@ -438,7 +438,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		     KinematicConstrainedVertexFitter kcvFitter;
 		     RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles, j_psi_c);
 		     if (!vertexFitTree->isValid()) {
-		       //std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
+		       std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
 		       continue;
 		     }
 		     
@@ -447,7 +447,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		     RefCountedKinematicParticle bCandMC = vertexFitTree->currentParticle();
 		     RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
 		     if (!bDecayVertexMC->vertexIsValid()){
-		       //std::cout << "B MC fit vertex is not valid" << endl;
+		       std::cout << "B MC fit vertex is not valid" << endl;
 		       continue;
 		     }
 		     
@@ -455,8 +455,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		     
 		     if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ) 
 		       {
-			 //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
-			 continue;
+			     std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
+			     continue;
 		       }
 		     std::cout << "pass 461 continues ... "<< std::endl;
 		     double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
