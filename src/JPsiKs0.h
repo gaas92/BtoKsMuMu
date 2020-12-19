@@ -60,6 +60,7 @@
 #include "RecoVertex/VertexPrimitives/interface/BasicSingleVertexState.h"
 #include "RecoVertex/VertexPrimitives/interface/VertexState.h"
 
+#include "TLorentzVector.h"
 #include "TFile.h"
 #include "TTree.h"
 
@@ -96,7 +97,7 @@ private:
   edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
   edm::EDGetTokenT<reco::GenParticleCollection> genCands_;
   edm::EDGetTokenT<pat::PackedGenParticleCollection> packedGenToken_;
-  
+
   std::string genParticles_;
   bool OnlyBest_;
   bool isMC_;
