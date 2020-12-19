@@ -94,7 +94,9 @@ private:
   edm::EDGetTokenT<reco::BeamSpot> BSLabel_;
   edm::EDGetTokenT<edm::TriggerResults> triggerResults_Label;
   edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
-
+  edm::EDGetTokenT<reco::GenParticleCollection> genCands_;
+  edm::EDGetTokenT<pat::PackedGenParticleCollection> packedGenToken_;
+  
   std::string genParticles_;
   bool OnlyBest_;
   bool isMC_;
