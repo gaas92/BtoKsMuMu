@@ -75,7 +75,9 @@ public:
   void fillV0(const reco::Candidate& genv0);
   int const getMuCat(reco::Muon const& muon) const;
   bool IsTheSame(const reco::Track& tk, const pat::Muon& mu);
-  
+  bool isAncestor(const reco::Candidate*, const reco::Candidate*);
+  bool isAncestor(int, const reco::Candidate*);
+  double GetLifetime(TLorentzVector, TVector3, TVector3);
   
 private:
   virtual void beginJob() ;
@@ -96,6 +98,7 @@ private:
   std::string genParticles_;
   bool OnlyBest_;
   bool isMC_;
+  bool isRes_;
   bool OnlyGen_;
   bool doMC_;
 
@@ -162,6 +165,10 @@ private:
 
   int  run, event;
   int  lumiblock;
+
+  TLorentzVector gen_b_p4,gen_jpsi_p4,gen_pion1_p4,gen_pion2_p4,gen_ks0_p4,gen_muon1_p4,gen_muon2_p4;
+  TVector3       gen_b_vtx,gen_jpsi_vtx,gen_ks0_vtx;
+  float          gen_b_ct, gen_ks0_ct;
 
 };
 

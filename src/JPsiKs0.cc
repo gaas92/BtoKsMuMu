@@ -93,6 +93,7 @@ JPsiKs0::JPsiKs0(const edm::ParameterSet& iConfig)
   genParticles_ ( iConfig.getUntrackedParameter<std::string>("GenParticles",std::string("genParticles")) ),
   OnlyBest_(iConfig.getParameter<bool>("OnlyBest")),
   isMC_(iConfig.getParameter<bool>("isMC")),
+  isRes_(iConfig.getParameter<bool>("isRes"))
   OnlyGen_(iConfig.getParameter<bool>("OnlyGen")),
   doMC_ ( iConfig.getUntrackedParameter<bool>("doMC",false) ),
   tree_(0), 
@@ -180,6 +181,277 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   iEvent.getByToken(dimuon_Label,thePATMuonHandle);
 
   //*********************************
+  // Get gen level information
+  //*********************************
+  //For simulated events, only a selected set of particles is stored because the simulated particle
+  //format, called GenParticle, takes a lot of space. First, a set called pruned GenParticles that
+  //includes initial partons, heavy flavor particles, electroweak bosons, and leptons is stored in full.
+  //Second, a set called packed GenParticles that have only the four-momentum and particle type
+  //is saved for particles representing the final state particles in the event. Generated jets and some
+  //reference information is also saved.
+  //With the packed GenParticles, an analyst can re-make the generated jets with various
+  //algorithms. The pruned GenParticles enable event classification, flavor definition, and matching
+  //to reconstructed physics objects. Links from each packed GenParticle to its last surviving
+  //ancestor pruned GenParticle allow the decay chain of the event to be reconstructed.
+
+  gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  gen_pion2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  gen_bc_vtx.SetXYZ(0.,0.,0.);
+  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
+  gen_ks0_vtx.SetXYZ(0.,0.,0.);
+  gen_bc_ct = -9999.;
+  gen_ks0_ct = -9999.;
+  // for resonant in jpsi 
+  if ( (isMC_ || OnlyGen_) && pruned.isValid() && isRes_) {   
+    int foundit = 0;
+    for (size_t i=0; i<pruned->size(); i++) {
+      foundit = 0;
+      const reco::Candidate *dau = &(*pruned)[i];
+      if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
+	    foundit++;
+	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
+	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
+	    for (size_t k=0; k<dau->numberOfDaughters(); k++) {
+	      const reco::Candidate *gdau = dau->daughter(k);
+	      if (gdau->pdgId()==443 ) { // if Jpsi
+	        foundit++;
+	        gen_jpsi_vtx.SetXYZ(gdau->vx(),gdau->vy(),gdau->vz());
+	        gen_b_ct = GetLifetime(gen_b_p4,gen_b_vtx,gen_jpsi_vtx);     
+	        int nm=0;
+	        for (size_t l=0; l<gdau->numberOfDaughters(); l++) {
+	          const reco::Candidate *mm = gdau->daughter(l);
+	          if (mm->pdgId()==13) { foundit++;
+	    		if (mm->status()!=1) {
+	    		  for (size_t m=0; m<mm->numberOfDaughters(); m++) {
+	    		    const reco::Candidate *mu = mm->daughter(m);
+	    		    if (mu->pdgId()==13 ) { //&& mu->status()==1) {
+	    		      nm++;
+	    		      gen_muon1_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
+	    		      break;
+	    		    }
+	    		  }
+	    		} 
+			    else {
+	    	    gen_muon1_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
+	    	    nm++;
+	    	    }
+	          }
+	          if (mm->pdgId()==-13) { foundit++;
+	    		if (mm->status()!=1) {
+	    	  		for (size_t m=0; m<mm->numberOfDaughters(); m++) {
+	    	  		  const reco::Candidate *mu = mm->daughter(m);
+	    	  		  if (mu->pdgId()==-13 ) { //&& mu->status()==1) {
+	    	  		    nm++;
+	    	  		    gen_muon2_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
+	    	  		    break;
+	    	  		  }
+	    	  		}
+	    		}
+			  	else {
+	    	  		gen_muon2_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
+	    	  		nm++;
+	    	  	}
+	          }
+	        }// end for daugters of Jpsi
+	        if (nm==2) gen_jpsi_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
+	        else foundit-=nm;
+	      }//end if Jpsi
+	    } // end for B daughters for jpsi
+        for (size_t k=0; k<dau->numberOfDaughters(); k++){
+			if (gdau->pdgId()==310){ //is K0s
+			  foundit++;
+			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
+			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
+			  int np=0;
+			  for(size_t l=0; l<gdau->numberOfDaughters(); l++){
+				  const reco::Candiate *pi = gdau->daughter(l);
+				  if (pi->pdgId()==211) { foundit++;
+	    			if (pi->status()!=1) {
+	    			  for (size_t m=0; m<pi->numberOfDaughters(); m++) {
+	    			    const reco::Candidate *pi_ = pi->daughter(m);
+	    			    if (pi_->pdgId()== 211 ) { //&& mu->status()==1) {
+	    			      np++;
+	    			      gen_pion1_p4.SetPtEtaPhiM(pi_->pt(),pi_->eta(),pi_->phi(),pi_->mass());
+	    			      break;
+	    			    }
+	    			  }
+	    			} 
+			        else {
+	    	    	  gen_pion1_p4.SetPtEtaPhiM(pi->pt(),pi->eta(),pi->phi(),pi->mass());
+	    	    	  np++;
+	    	        }
+				  }// end found pi+	
+				  if (pi->pdgId()==-211) { foundit++;
+	    			if (pi->status()!=1) {
+	    			  for (size_t m=0; m<pi->numberOfDaughters(); m++) {
+	    			    const reco::Candidate *pi_ = pi->daughter(m);
+	    			    if (pi_->pdgId()==-211 ) { //&& mu->status()==1) {
+	    			      np++;
+	    			      gen_pion2_p4.SetPtEtaPhiM(pi_->pt(),pi_->eta(),pi_->phi(),pi_->mass());
+	    			      break;
+	    			    }
+	    			  }
+	    			} 
+			        else {
+	    	    	  gen_pion2_p4.SetPtEtaPhiM(pi->pt(),pi->eta(),pi->phi(),pi->mass());
+	    	    	  np++;
+	    	        }
+				  }// end found pi+	
+				  if (np == 2){
+					  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
+			  		  gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx); 
+				  }
+				  else foundit-=np;
+			  }// end loop over K0 daughters  
+		    }// end if K0s
+		}// end of B daughters for Ks0
+      } // end in B0
+      if (foundit>=7) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0, 6-pi1, 7-pi2
+    } // for i
+    if (foundit!=7) {
+      gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_pion2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_bc_vtx.SetXYZ(0.,0.,0.);
+  	  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
+  	  gen_ks0_vtx.SetXYZ(0.,0.,0.);
+  	  gen_bc_ct = -9999.;
+  	  gen_ks0_ct = -9999.;
+      std::cout << "Does not found the given decay " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
+    }
+  }
+  
+  
+  // for the non-resonant channel 
+  if ( (isMC_ || OnlyGen_) && pruned.isValid() && !isRes_) {
+    int foundit = 0;
+    for (size_t i=0; i<pruned->size(); i++) {
+      foundit = 0;
+      const reco::Candidate *dau = &(*pruned)[i];
+      if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
+	    foundit++;
+	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
+	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
+	    for (size_t k=0; k<dau->numberOfDaughters(); k++) {
+	      const reco::Candidate *mm = dau->daughter(k);     
+	      int nm=0;
+	      if (mm->pdgId()==13 && !isAncestor(443,mm)) { foundit++;  // cames from B but not J/p
+		    gen_jpsi_vtx.SetXYZ(mm->vx(),mm->vy(),mm->vz());
+	        if (mm->status()!=1) {
+	          for (size_t m=0; m<mm->numberOfDaughters(); m++) {
+	            const reco::Candidate *mu = mm->daughter(m);
+	            if (mu->pdgId()==13 ) { //&& mu->status()==1) {
+	              nm++;
+	              gen_muon1_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
+	              break;
+	            }
+	          }
+	        } 
+		    else {
+	          gen_muon1_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
+	          nm++;
+	        }
+	      }
+	      if (mm->pdgId()==-13 !isAncestor(443,mm)) { foundit++;  // cames from B but not J/p
+	        if (mm->status()!=1) {
+	        		for (size_t m=0; m<mm->numberOfDaughters(); m++) {
+	        		  const reco::Candidate *mu = mm->daughter(m);
+	        		  if (mu->pdgId()==-13 ) { //&& mu->status()==1) {
+	        		    nm++;
+	        		    gen_muon2_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
+	        		    break;
+	        		  }
+	        		}
+	        }
+		    else {
+	        	gen_muon2_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
+	        	nm++;
+	        }
+	      }
+	    }// end for daugters (for muons)
+	    if (nm==2) {
+			gen_jpsi_p4 = gen_muon1_p4 + gen_muon2_p4;
+	        gen_b_ct = GetLifetime(gen_b_p4,gen_b_vtx,gen_jpsi_vtx);
+		} 	  
+	    else foundit-=nm;
+	    // end for B daughters for dimuon
+        for (size_t k=0; k<dau->numberOfDaughters(); k++){
+			if (gdau->pdgId()==310){ //is K0s
+			  foundit++;
+			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
+			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
+			  int np=0;
+			  for(size_t l=0; l<gdau->numberOfDaughters(); l++){
+				  const reco::Candiate *pi = gdau->daughter(l);
+				  if (pi->pdgId()==211) { foundit++;
+	    			if (pi->status()!=1) {
+	    			  for (size_t m=0; m<pi->numberOfDaughters(); m++) {
+	    			    const reco::Candidate *pi_ = pi->daughter(m);
+	    			    if (pi_->pdgId()== 211 ) { //&& mu->status()==1) {
+	    			      np++;
+	    			      gen_pion1_p4.SetPtEtaPhiM(pi_->pt(),pi_->eta(),pi_->phi(),pi_->mass());
+	    			      break;
+	    			    }
+	    			  }
+	    			} 
+			        else {
+	    	    	  gen_pion1_p4.SetPtEtaPhiM(pi->pt(),pi->eta(),pi->phi(),pi->mass());
+	    	    	  np++;
+	    	        }
+				  }// end found pi+	
+				  if (pi->pdgId()==-211) { foundit++;
+	    			if (pi->status()!=1) {
+	    			  for (size_t m=0; m<pi->numberOfDaughters(); m++) {
+	    			    const reco::Candidate *pi_ = pi->daughter(m);
+	    			    if (pi_->pdgId()==-211 ) { //&& mu->status()==1) {
+	    			      np++;
+	    			      gen_pion2_p4.SetPtEtaPhiM(pi_->pt(),pi_->eta(),pi_->phi(),pi_->mass());
+	    			      break;
+	    			    }
+	    			  }
+	    			} 
+			        else {
+	    	    	  gen_pion2_p4.SetPtEtaPhiM(pi->pt(),pi->eta(),pi->phi(),pi->mass());
+	    	    	  np++;
+	    	        }
+				  }// end found pi+	
+				  if (np == 2){
+					  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
+			  		  gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx); 
+				  }
+				  else foundit-=np;
+			  }// end loop over K0 daughters  
+		    }// end if K0s
+	  }// end for B daughters for Ks0
+      } // end if B0
+    if (foundit>=7) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0, 6-pi1, 7-pi2
+    } // for gen particlea
+    if (foundit!=7) {
+      gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_pion2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	  gen_bc_vtx.SetXYZ(0.,0.,0.);
+  	  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
+  	  gen_ks0_vtx.SetXYZ(0.,0.,0.);
+  	  gen_bc_ct = -9999.;
+  	  gen_ks0_ct = -9999.;
+      std::cout << "Does not found the given decay " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
+    }
+  }
+  //*********************************
   //Now we get the primary vertex 
   //*********************************
 
@@ -212,8 +484,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //Let's begin by looking for J/psi->mu+mu-
 
   unsigned int nMu_tmp = thePATMuonHandle->size();
- 
- for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
+  if (!OnlyGen_){
+   for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
     {
       
       for(View<pat::Muon>::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) 
@@ -668,10 +940,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	     }
 	}
     }
- 
+  }
    
    //fill the tree and clear the vectors
-   if (nB > 0 ) 
+   if (nB > 0 || OnlyGen_) 
      {
        //std::cout << "filling tree" << endl;
        tree_->Fill();
@@ -735,6 +1007,28 @@ bool JPsiKs0::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
   return false;
 }
 
+bool JPsiKs0::isAncestor(const reco::Candidate* ancestor, const reco::Candidate * particle) {
+    if (ancestor == particle ) return true;
+    for (size_t i=0; i< particle->numberOfMothers(); i++) {
+        if (isAncestor(ancestor,particle->mother(i))) return true;
+    }
+    return false;
+}
+bool JPsiKs0::isAncestor(int a_pdgId, const reco::Candidate * particle) {
+    if (a_pdgId == particle->pdgId() ) return true;
+    for (size_t i=0; i< particle->numberOfMothers(); i++) {
+        if (isAncestor(a_pdgId,particle->mother(i))) return true;
+    }
+    return false;
+}
+double JPsiKs0::GetLifetime(TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx) {
+   TVector3 pv_dv = decay_vtx - production_vtx;
+   TVector3 b_p3  = b_p4.Vect();
+   pv_dv.SetZ(0.);
+   b_p3.SetZ(0.);
+   Double_t lxy   = pv_dv.Dot(b_p3)/b_p3.Mag();
+   return lxy*b_p4.M()/b_p3.Mag();
+}
 // ------------ method called once each job just before starting event loop  ------------
 
 void 
@@ -744,136 +1038,152 @@ JPsiKs0::beginJob()
   std::cout << "Beginning analyzer job with value of doMC = " << doMC_ << std::endl;
 
   edm::Service<TFileService> fs;
-  tree_ = fs->make<TTree>("ntuple","Bs->J/psi Ks0 ntuple");
-
-  tree_->Branch("nB",&nB,"nB/i");
-  tree_->Branch("nMu",&nMu,"nMu/i");
-
-  tree_->Branch("B_mass", &B_mass);
-  tree_->Branch("B_px", &B_px);
-  tree_->Branch("B_py", &B_py);
-  tree_->Branch("B_pz", &B_pz);
-
-  tree_->Branch("B_Ks0_mass", &B_Ks0_mass);
-  tree_->Branch("B_Ks0_px", &B_Ks0_px);
-  tree_->Branch("B_Ks0_py", &B_Ks0_py);
-  tree_->Branch("B_Ks0_pz", &B_Ks0_pz);
- 
-  tree_->Branch("B_J_mass", &B_J_mass);
-  tree_->Branch("B_J_px", &B_J_px);
-  tree_->Branch("B_J_py", &B_J_py);
-  tree_->Branch("B_J_pz", &B_J_pz);
-
-  tree_->Branch("B_Ks0_pt1", &B_Ks0_pt1);
-  tree_->Branch("B_Ks0_px1", &B_Ks0_px1);
-  tree_->Branch("B_Ks0_py1", &B_Ks0_py1);
-  tree_->Branch("B_Ks0_pz1", &B_Ks0_pz1);
-  tree_->Branch("B_Ks0_px1_track", &B_Ks0_px1_track);
-  tree_->Branch("B_Ks0_py1_track", &B_Ks0_py1_track);
-  tree_->Branch("B_Ks0_pz1_track", &B_Ks0_pz1_track);
-  tree_->Branch("B_Ks0_charge1", &B_Ks0_charge1); 
- 
-  tree_->Branch("B_Ks0_pt2", &B_Ks0_pt2);
-  tree_->Branch("B_Ks0_px2", &B_Ks0_px2);
-  tree_->Branch("B_Ks0_py2", &B_Ks0_py2);
-  tree_->Branch("B_Ks0_pz2", &B_Ks0_pz2);
-  tree_->Branch("B_Ks0_px2_track", &B_Ks0_px2_track);
-  tree_->Branch("B_Ks0_py2_track", &B_Ks0_py2_track);
-  tree_->Branch("B_Ks0_pz2_track", &B_Ks0_pz2_track);
-  tree_->Branch("B_Ks0_charge2", &B_Ks0_charge2);
-
-  tree_->Branch("B_J_pt1", &B_J_pt1);
-  tree_->Branch("B_J_px1", &B_J_px1);
-  tree_->Branch("B_J_py1", &B_J_py1);
-  tree_->Branch("B_J_pz1", &B_J_pz1);
-  tree_->Branch("B_J_charge1", &B_J_charge1);
-
-  tree_->Branch("B_J_pt2", &B_J_pt2);
-  tree_->Branch("B_J_px2", &B_J_px2);
-  tree_->Branch("B_J_py2", &B_J_py2);
-  tree_->Branch("B_J_pz2", &B_J_pz2);
-  tree_->Branch("B_J_charge2", &B_J_charge2);
-
-  tree_->Branch("B_chi2", &B_chi2);
-  tree_->Branch("B_Ks0_chi2", &B_Ks0_chi2);
-  tree_->Branch("B_J_chi2", &B_J_chi2);
-
-  tree_->Branch("B_Prob",    &B_Prob);
-  tree_->Branch("B_ks0_Prob", &B_ks0_Prob);
-  tree_->Branch("B_J_Prob",  &B_J_Prob);
-       
-  // *************************
-
-  tree_->Branch("priVtxX",&priVtxX, "priVtxX/f");
-  tree_->Branch("priVtxY",&priVtxY, "priVtxY/f");
-  tree_->Branch("priVtxZ",&priVtxZ, "priVtxZ/f");
-  tree_->Branch("priVtxXE",&priVtxXE, "priVtxXE/f");
-  tree_->Branch("priVtxYE",&priVtxYE, "priVtxYE/f");
-  tree_->Branch("priVtxZE",&priVtxZE, "priVtxZE/f");
-  tree_->Branch("priVtxXYE",&priVtxXYE, "priVtxXYE/f");
-  tree_->Branch("priVtxXZE",&priVtxXZE, "priVtxXZE/f");
-  tree_->Branch("priVtxYZE",&priVtxYZE, "priVtxYZE/f");
-  tree_->Branch("priVtxCL",&priVtxCL, "priVtxCL/f");
-
-  tree_->Branch("nVtx",       &nVtx);
-  tree_->Branch("run",        &run,       "run/I");
-  tree_->Branch("event",        &event,     "event/I");
-  tree_->Branch("lumiblock",&lumiblock,"lumiblock/I");
-
-  tree_->Branch("bDecayVtxX",&bDecayVtxX);
-  tree_->Branch("bDecayVtxY",&bDecayVtxY);
-  tree_->Branch("bDecayVtxZ",&bDecayVtxZ);
-  tree_->Branch("bDecayVtxXE",&bDecayVtxXE);
-  tree_->Branch("bDecayVtxYE",&bDecayVtxYE);
-  tree_->Branch("bDecayVtxZE",&bDecayVtxZE);
-  tree_->Branch("bDecayVtxXYE",&bDecayVtxXYE);
-  tree_->Branch("bDecayVtxXZE",&bDecayVtxXZE);
-  tree_->Branch("bDecayVtxYZE",&bDecayVtxYZE);
-
-  tree_->Branch("VDecayVtxX",&VDecayVtxX);
-  tree_->Branch("VDecayVtxY",&VDecayVtxY);
-  tree_->Branch("VDecayVtxZ",&VDecayVtxZ);
-  tree_->Branch("VDecayVtxXE",&VDecayVtxXE);
-  tree_->Branch("VDecayVtxYE",&VDecayVtxYE);
-  tree_->Branch("VDecayVtxZE",&VDecayVtxZE);
-  tree_->Branch("VDecayVtxXYE",&VDecayVtxXYE);
-  tree_->Branch("VDecayVtxXZE",&VDecayVtxXZE);
-  tree_->Branch("VDecayVtxYZE",&VDecayVtxYZE);
-
-  tree_->Branch("pi1dxy",&pi1dxy);
-  tree_->Branch("pi2dxy",&pi2dxy);
-  tree_->Branch("pi1dz",&pi1dz);
-  tree_->Branch("pi2dz",&pi2dz);
-
-  tree_->Branch("pi1dxy_e",&pi1dxy_e);
-  tree_->Branch("pi2dxy_e",&pi2dxy_e);
-  tree_->Branch("pi1dz_e",&pi1dz_e);
-  tree_->Branch("pi2dz_e",&pi2dz_e);
-
-  tree_->Branch("mumC2",&mumC2);  
-  tree_->Branch("mumNHits",&mumNHits);
-  tree_->Branch("mumNPHits",&mumNPHits);
-  tree_->Branch("mupC2",&mupC2);  
-  tree_->Branch("mupNHits",&mupNHits);
-  tree_->Branch("mupNPHits",&mupNPHits);
-  tree_->Branch("mumdxy",&mumdxy);
-  tree_->Branch("mupdxy",&mupdxy);
-  tree_->Branch("muon_dca",&muon_dca);
-
-  tree_->Branch("tri_Dim25",&tri_Dim25);
-  tree_->Branch("tri_JpsiTk",&tri_JpsiTk);
-  tree_->Branch("tri_JpsiTkTk",&tri_JpsiTkTk); 
- 
-  tree_->Branch("mumdz",&mumdz);
-  tree_->Branch("mupdz",&mupdz);
-  tree_->Branch("mu1soft",&mu1soft);
-  tree_->Branch("mu2soft",&mu2soft);
-  tree_->Branch("mu1tight",&mu1tight);
-  tree_->Branch("mu2tight",&mu2tight);
-  tree_->Branch("mu1PF",&mu1PF);
-  tree_->Branch("mu2PF",&mu2PF);
-  tree_->Branch("mu1loose",&mu1loose);
-  tree_->Branch("mu2loose",&mu2loose);
+  tree_ = fs->make<TTree>("ntuple","Bs->mu mu Ks0 ntuple");
+  if (!OnlyGen_){
+     tree_->Branch("nB",&nB,"nB/i");
+     tree_->Branch("nMu",&nMu,"nMu/i");
+   
+     tree_->Branch("B_mass", &B_mass);
+     tree_->Branch("B_px", &B_px);
+     tree_->Branch("B_py", &B_py);
+     tree_->Branch("B_pz", &B_pz);
+   
+     tree_->Branch("B_Ks0_mass", &B_Ks0_mass);
+     tree_->Branch("B_Ks0_px", &B_Ks0_px);
+     tree_->Branch("B_Ks0_py", &B_Ks0_py);
+     tree_->Branch("B_Ks0_pz", &B_Ks0_pz);
+    
+     tree_->Branch("B_J_mass", &B_J_mass);
+     tree_->Branch("B_J_px", &B_J_px);
+     tree_->Branch("B_J_py", &B_J_py);
+     tree_->Branch("B_J_pz", &B_J_pz);
+   
+     tree_->Branch("B_Ks0_pt1", &B_Ks0_pt1);
+     tree_->Branch("B_Ks0_px1", &B_Ks0_px1);
+     tree_->Branch("B_Ks0_py1", &B_Ks0_py1);
+     tree_->Branch("B_Ks0_pz1", &B_Ks0_pz1);
+     tree_->Branch("B_Ks0_px1_track", &B_Ks0_px1_track);
+     tree_->Branch("B_Ks0_py1_track", &B_Ks0_py1_track);
+     tree_->Branch("B_Ks0_pz1_track", &B_Ks0_pz1_track);
+     tree_->Branch("B_Ks0_charge1", &B_Ks0_charge1); 
+    
+     tree_->Branch("B_Ks0_pt2", &B_Ks0_pt2);
+     tree_->Branch("B_Ks0_px2", &B_Ks0_px2);
+     tree_->Branch("B_Ks0_py2", &B_Ks0_py2);
+     tree_->Branch("B_Ks0_pz2", &B_Ks0_pz2);
+     tree_->Branch("B_Ks0_px2_track", &B_Ks0_px2_track);
+     tree_->Branch("B_Ks0_py2_track", &B_Ks0_py2_track);
+     tree_->Branch("B_Ks0_pz2_track", &B_Ks0_pz2_track);
+     tree_->Branch("B_Ks0_charge2", &B_Ks0_charge2);
+   
+     tree_->Branch("B_J_pt1", &B_J_pt1);
+     tree_->Branch("B_J_px1", &B_J_px1);
+     tree_->Branch("B_J_py1", &B_J_py1);
+     tree_->Branch("B_J_pz1", &B_J_pz1);
+     tree_->Branch("B_J_charge1", &B_J_charge1);
+   
+     tree_->Branch("B_J_pt2", &B_J_pt2);
+     tree_->Branch("B_J_px2", &B_J_px2);
+     tree_->Branch("B_J_py2", &B_J_py2);
+     tree_->Branch("B_J_pz2", &B_J_pz2);
+     tree_->Branch("B_J_charge2", &B_J_charge2);
+   
+     tree_->Branch("B_chi2", &B_chi2);
+     tree_->Branch("B_Ks0_chi2", &B_Ks0_chi2);
+     tree_->Branch("B_J_chi2", &B_J_chi2);
+   
+     tree_->Branch("B_Prob",    &B_Prob);
+     tree_->Branch("B_ks0_Prob", &B_ks0_Prob);
+     tree_->Branch("B_J_Prob",  &B_J_Prob);
+          
+     // *************************
+   
+     tree_->Branch("priVtxX",&priVtxX, "priVtxX/f");
+     tree_->Branch("priVtxY",&priVtxY, "priVtxY/f");
+     tree_->Branch("priVtxZ",&priVtxZ, "priVtxZ/f");
+     tree_->Branch("priVtxXE",&priVtxXE, "priVtxXE/f");
+     tree_->Branch("priVtxYE",&priVtxYE, "priVtxYE/f");
+     tree_->Branch("priVtxZE",&priVtxZE, "priVtxZE/f");
+     tree_->Branch("priVtxXYE",&priVtxXYE, "priVtxXYE/f");
+     tree_->Branch("priVtxXZE",&priVtxXZE, "priVtxXZE/f");
+     tree_->Branch("priVtxYZE",&priVtxYZE, "priVtxYZE/f");
+     tree_->Branch("priVtxCL",&priVtxCL, "priVtxCL/f");
+   
+     tree_->Branch("nVtx",       &nVtx);
+     tree_->Branch("run",        &run,       "run/I");
+     tree_->Branch("event",        &event,     "event/I");
+     tree_->Branch("lumiblock",&lumiblock,"lumiblock/I");
+   
+     tree_->Branch("bDecayVtxX",&bDecayVtxX);
+     tree_->Branch("bDecayVtxY",&bDecayVtxY);
+     tree_->Branch("bDecayVtxZ",&bDecayVtxZ);
+     tree_->Branch("bDecayVtxXE",&bDecayVtxXE);
+     tree_->Branch("bDecayVtxYE",&bDecayVtxYE);
+     tree_->Branch("bDecayVtxZE",&bDecayVtxZE);
+     tree_->Branch("bDecayVtxXYE",&bDecayVtxXYE);
+     tree_->Branch("bDecayVtxXZE",&bDecayVtxXZE);
+     tree_->Branch("bDecayVtxYZE",&bDecayVtxYZE);
+   
+     tree_->Branch("VDecayVtxX",&VDecayVtxX);
+     tree_->Branch("VDecayVtxY",&VDecayVtxY);
+     tree_->Branch("VDecayVtxZ",&VDecayVtxZ);
+     tree_->Branch("VDecayVtxXE",&VDecayVtxXE);
+     tree_->Branch("VDecayVtxYE",&VDecayVtxYE);
+     tree_->Branch("VDecayVtxZE",&VDecayVtxZE);
+     tree_->Branch("VDecayVtxXYE",&VDecayVtxXYE);
+     tree_->Branch("VDecayVtxXZE",&VDecayVtxXZE);
+     tree_->Branch("VDecayVtxYZE",&VDecayVtxYZE);
+   
+     tree_->Branch("pi1dxy",&pi1dxy);
+     tree_->Branch("pi2dxy",&pi2dxy);
+     tree_->Branch("pi1dz",&pi1dz);
+     tree_->Branch("pi2dz",&pi2dz);
+   
+     tree_->Branch("pi1dxy_e",&pi1dxy_e);
+     tree_->Branch("pi2dxy_e",&pi2dxy_e);
+     tree_->Branch("pi1dz_e",&pi1dz_e);
+     tree_->Branch("pi2dz_e",&pi2dz_e);
+   
+     tree_->Branch("mumC2",&mumC2);  
+     tree_->Branch("mumNHits",&mumNHits);
+     tree_->Branch("mumNPHits",&mumNPHits);
+     tree_->Branch("mupC2",&mupC2);  
+     tree_->Branch("mupNHits",&mupNHits);
+     tree_->Branch("mupNPHits",&mupNPHits);
+     tree_->Branch("mumdxy",&mumdxy);
+     tree_->Branch("mupdxy",&mupdxy);
+     tree_->Branch("muon_dca",&muon_dca);
+   
+     tree_->Branch("tri_Dim25",&tri_Dim25);
+     tree_->Branch("tri_JpsiTk",&tri_JpsiTk);
+     tree_->Branch("tri_JpsiTkTk",&tri_JpsiTkTk); 
+    
+     tree_->Branch("mumdz",&mumdz);
+     tree_->Branch("mupdz",&mupdz);
+     tree_->Branch("mu1soft",&mu1soft);
+     tree_->Branch("mu2soft",&mu2soft);
+     tree_->Branch("mu1tight",&mu1tight);
+     tree_->Branch("mu2tight",&mu2tight);
+     tree_->Branch("mu1PF",&mu1PF);
+     tree_->Branch("mu2PF",&mu2PF);
+     tree_->Branch("mu1loose",&mu1loose);
+     tree_->Branch("mu2loose",&mu2loose);
+  }
+    // gen
+  if (isMC_) {
+     tree_->Branch("gen_b_p4",      "TLorentzVector",  &gen_b_p4);
+     tree_->Branch("gen_jpsi_p4",   "TLorentzVector",  &gen_jpsi_p4);
+     tree_->Branch("gen_pionks0_p4","TLorentzVector",  &gen_ks0_p4);
+     tree_->Branch("gen_muon1_p4",  "TLorentzVector",  &gen_muon1_p4);
+     tree_->Branch("gen_muon2_p4",  "TLorentzVector",  &gen_muon2_p4);
+     tree_->Branch("gen_pion1_p4",  "TLorentzVector",  &gen_pion1_p4);
+     tree_->Branch("gen_pion2_p4",  "TLorentzVector",  &gen_pion2_p4);
+     tree_->Branch("gen_b_vtx",     "TVector3",        &gen_b_vtx);
+     tree_->Branch("gen_jpsi_vtx",  "TVector3",        &gen_jpsi_vtx);
+     tree_->Branch("gen_ks0_vtx",   "TVector3",        &gen_ks0_vtx);
+     tree_->Branch("gen_b_ct",      &gen_b_ct,        "gen_b_ct/F");
+     tree_->Branch("gen_ks0_ct",    &gen_ks0_ct,      "gen_ks0_ct/F");
+  }
 
 }
 
