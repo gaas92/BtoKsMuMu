@@ -43,6 +43,7 @@
 #include "DataFormats/RecoCandidate/interface/RecoChargedCandidate.h"
 
 #include "DataFormats/PatCandidates/interface/PackedCandidate.h" // muy importante para MiniAOD
+#include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
 
 #include "CondFormats/L1TObjects/interface/L1GtTriggerMenu.h"
 #include "CondFormats/DataRecord/interface/L1GtTriggerMenuRcd.h"
