@@ -1134,7 +1134,7 @@ std::string JPsiKs0::printName(int pdgid){
 	umap[-2212] = "p-";
 	umap[2112]  = "n";
 	umap[-2112] = "n-";
-	umap[21] = "g"
+	umap[21] = "g";
 	umap[20213] = "a1(1260)+";
 	umap[-20213]= "a1(1260)-";
 
