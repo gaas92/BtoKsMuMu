@@ -372,7 +372,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	          nm++;
 	        }
 	      }
-	      if (mm->pdgId()==-13 !isAncestor(443,mm)) { foundit++;  // cames from B but not J/p
+	      if (mm->pdgId()==-13 && !isAncestor(443,mm)) { foundit++;  // cames from B but not J/p
 	        if (mm->status()!=1) {
 	        		for (size_t m=0; m<mm->numberOfDaughters(); m++) {
 	        		  const reco::Candidate *mu = mm->daughter(m);
