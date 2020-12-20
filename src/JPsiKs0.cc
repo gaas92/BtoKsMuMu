@@ -350,7 +350,9 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       const reco::Candidate *dau = &(*pruned)[i];
       if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
 	    foundit++;
-		std::cout<<"Found B0 "<< std::endl;
+		std::cout<< "|--XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX--|" std::endl;
+		std::cout<<"Found B0 printing Decay Tree ..."<< std::endl;
+		printMCtree(dau, 0);
 	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
 	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
 		int nm=0;
@@ -393,7 +395,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    if (nm==2) {
 			gen_jpsi_p4 = gen_muon1_p4 + gen_muon2_p4;
 	        gen_b_ct = GetLifetime(gen_b_p4,gen_b_vtx,gen_jpsi_vtx);
-			std::cout << "muons ok"<< std::endl;
+			//std::cout << "muons ok"<< std::endl;
 		} 	  
 	    else foundit-=nm;
 	    // end for B daughters for dimuon
@@ -401,19 +403,19 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			const reco::Candidate *gdau = dau->daughter(k); 
 			if (gdau->pdgId()==310){ //is K0s
 			  foundit++;
-			  std::cout<< "Found Ks0: "<< gdau->numberOfDaughters() << std::endl;
+			  //std::cout<< "Found Ks0: "<< gdau->numberOfDaughters() << std::endl;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
 			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
 			  int np=0;
-			  std::cout<< "packed size: "<< packed->size() << std::endl;
+			  //std::cout<< "packed size: "<< packed->size() << std::endl;
 			  for (size_t lk=0; lk<packed->size(); lk++) {
 	  			const reco::Candidate * dauInPrunedColl = (*packed)[lk].mother(0);
 	  			int stable_id = (*packed)[lk].pdgId();
                 if (abs(stable_id) == 211){ 
-					std::cout << lk << " is pion !!" << std::endl;
-					std::cout << "n moms" << dauInPrunedColl->numberOfMothers() << std::endl;
+					//std::cout << lk << " is pion !!" << std::endl;
+					//std::cout << "n moms" << dauInPrunedColl->numberOfMothers() << std::endl;
 					for (size_t i=0; i< dauInPrunedColl->numberOfMothers(); i++) {
-						std::cout<< "mom is ... " << dauInPrunedColl->mother(i)->pdgId() <<std::endl; 
+						//std::cout<< "mom is ... " << dauInPrunedColl->mother(i)->pdgId() <<std::endl; 
     				}
 				}
 	  			if (dauInPrunedColl != nullptr && isAncestor(310,dauInPrunedColl)) {
