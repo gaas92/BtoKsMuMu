@@ -405,6 +405,24 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
 			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
 			  int np=0;
+			  for (size_t lk=0; lk<packed->size(); lk++) {
+	  			const reco::Candidate * dauInPrunedColl = (*packed)[lk].mother(0);
+	  			int stable_id = (*packed)[lk].pdgId();
+
+	  			if (dauInPrunedColl != nullptr && isAncestor(310,dauInPrunedColl)) {
+	  			  if(stable_id ==211 ) {foundit++;
+					np++;
+	  			    gen_pion1_p4.SetPtEtaPhiM((*packed)[lk].pt(),(*packed)[lk].eta(),(*packed)[lk].phi(),(*packed)[lk].mass());
+	  			  }
+				  if(stable_id == -211 ) {foundit++;
+				    np++;
+	  			    gen_pion2_p4.SetPtEtaPhiM((*packed)[lk].pt(),(*packed)[lk].eta(),(*packed)[lk].phi(),(*packed)[lk].mass());
+	  			  }
+	  			}
+			  }
+			  std::cout<< "Found pions ?? "<< np << std::endl;
+			  // not daugters in pruned, check in packed ...
+			  /*
 			  for(size_t l=0; l<gdau->numberOfDaughters(); l++){
 				  const reco::Candidate *pi = gdau->daughter(l);
 				  if (pi->pdgId()==211) { foundit++;
@@ -445,7 +463,9 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 					  std::cout<< "Ks0 (pions) ok" << std::endl; 
 				  }
 				  else foundit-=np;
-			  }// end loop over K0 daughters  
+
+			  }// end loop over K0 daughters
+			  */  
 		    }// end if K0s
 	    }// end for B daughters for Ks0
       } // end if B0
