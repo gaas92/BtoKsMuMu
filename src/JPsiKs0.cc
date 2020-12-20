@@ -405,10 +405,11 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
 			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
 			  int np=0;
+			  std::cout<< "packed size: "<< packed->size() << std::endl;
 			  for (size_t lk=0; lk<packed->size(); lk++) {
 	  			const reco::Candidate * dauInPrunedColl = (*packed)[lk].mother(0);
 	  			int stable_id = (*packed)[lk].pdgId();
-
+                if (abs(stable_id) == 211) std::cout << lk << " is pion !!" << std::endl;
 	  			if (dauInPrunedColl != nullptr && isAncestor(310,dauInPrunedColl)) {
 	  			  if(stable_id ==211 ) {foundit++;
 					np++;
