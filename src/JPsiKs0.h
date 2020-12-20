@@ -89,6 +89,10 @@ private:
   void printout(const RefCountedKinematicVertex& myVertex) const;
   void printout(const RefCountedKinematicParticle& myParticle) const;
   void printout(const RefCountedKinematicTree& myTree) const;
+  
+  void printMCtree(const reco::Candidate *, int);
+  void printMCtreeUP(const reco::Candidate *, int);
+  std::string printName(int);
  
   // ----------member data ---------------------------
   edm::EDGetTokenT<edm::View<pat::Muon>> dimuon_Label;

@@ -1072,6 +1072,85 @@ double JPsiKs0::GetLifetime(TLorentzVector b_p4, TVector3 production_vtx, TVecto
    Double_t lxy   = pv_dv.Dot(b_p3)/b_p3.Mag();
    return lxy*b_p4.M()/b_p3.Mag();
 }
+//Try to print mc Tree
+std::string JPsiKs0::printName(int pdgid){
+    std::unordered_map<int, std::string> umap;
+    umap[11]  = "e-";
+    umap[-11] = "e+";
+    umap[13]  = "mu-";
+    umap[-13] = "mu+";
+    umap[22]  = "gamma";
+    umap[23]  = "Z";
+    umap[12]  = "Ve";
+    umap[14]  = "Vmu";
+    umap[-14] = "-Vmu";
+    umap[15]  = "tau-";
+    umap[-15] = "tau+";
+    umap[16]  = "Vtau";
+    umap[-16] = "-Vtau";
+    umap[111] = "pi0";
+    umap[211] = "pi+";
+    umap[-211]= "pi-";
+	umap[310] = "Ks0";
+	umap[443] = "Jpsi";
+	umap[511] = "B0";
+	umap[521] = "B+";
+	umap[311] = "K0";
+	umap[130] = "Kl0";
+	umap[321] = "K+";
+	umap[-321]= "K-"; 
+    std::string retstr;
+    if (umap.find(pdgid) == umap.end()){
+        retstr = std::to_string(pdgid);
+    }
+    else{
+        retstr = umap.at(pdgid);
+    }
+
+    return retstr;
+}
+void JPsiKs0::printMCtree(const reco::Candidate* mother, int indent=0){
+    if (mother == NULL){
+         std::cout << "end tree" << std::endl;
+         return;
+    }
+    if (mother->numberOfDaughters() > 0){
+        if(indent){
+                std::cout << std::setw(indent) << " ";
+        }
+        std::cout << printName(mother->pdgId()) <<" has "<< mother->numberOfDaughters() <<" daughters " <<std::endl;
+    }
+    int extraIndent = 0;
+    for (size_t i=0; i< mother->numberOfDaughters(); i++){
+        const reco::Candidate * daughter = mother->daughter(i);
+        if (mother->numberOfDaughters() > 0){
+            if(indent){
+                std::cout << std::setw(indent) << " ";
+            }
+            std::cout << " daugter "<< i+1 <<": "<<  printName(daughter->pdgId()) << " with Pt: ";
+            std::cout << daughter->pt() << " | Eta: "<< daughter->eta() << " | Phi: "<< daughter->phi() << " | mass: "<< daughter->mass() << std::endl;
+            extraIndent+=4;
+        }
+        if (daughter->numberOfDaughters()) printMCtree(daughter, indent+extraIndent);
+    }
+}
+
+void JPsiKs0::printMCtreeUP(const reco::Candidate* daughter, int indent = 0){
+    if (daughter == NULL){
+        std::cout << "end tree" << std::endl;
+        return;
+    }
+    int extraIndent = 0;
+    for(size_t i = 0; i < daughter->numberOfMothers(); i++){
+        const reco::Candidate* mother = daughter->mother(i);
+        if(indent){
+            std::cout << std::setw(indent) << " ";
+        }
+        std::cout<< "mother "<< i+1 << ": "<<printName(mother->pdgId()) << std::endl;
+        extraIndent+=4;
+        if (mother->numberOfMothers()) printMCtreeUP(daughter, indent+extraIndent);
+    }
+}
 // ------------ method called once each job just before starting event loop  ------------
 
 void 
