@@ -3,6 +3,8 @@ import FWCore.ParameterSet.Config as cms
 rootuple = cms.EDAnalyzer('JPsiKs0',
                           dimuons = cms.InputTag("slimmedMuons"),
                           Trak = cms.InputTag("packedPFCandidates"),
+                          GenParticles = cms.InputTag("genParticles"),
+                          packedGenParticles = cms.InputTag("packedGenParticles"),
                           primaryVertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
                           secundaryVerticesPtr = cms.InputTag("slimmedKshortVertices"),
                           bslabel = cms.InputTag("offlineBeamSpot"),
