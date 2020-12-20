@@ -1113,6 +1113,7 @@ std::string JPsiKs0::printName(int pdgid){
 	umap[511] = "B0";
 	umap[-511]= "B0-";
 	umap[521] = "B+";
+	umap[-521]= "B-";
 	umap[311] = "K0";
 	umap[130] = "Kl0";
 	umap[321] = "K+";
@@ -1129,6 +1130,13 @@ std::string JPsiKs0::printName(int pdgid){
 	umap[-423]= "D*(2007)0-"; 
 	umap[10411] = "D*0(2400)+";
 	umap[-10411] = "D*0(2400)-";
+	umap[2212]  = "p";
+	umap[-2212] = "p-";
+	umap[2112]  = "n";
+	umap[-2112] = "n-";
+	umap[21] = "g"
+	umap[20213] = "a1(1260)+";
+	umap[-20213]= "a1(1260)-";
 
 
     std::string retstr;
