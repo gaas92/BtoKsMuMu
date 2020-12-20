@@ -348,7 +348,6 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
       const reco::Candidate *dau = &(*pruned)[i];
-	  std::cout<<"PDG ID: "<< dau->pdgId() << std::endl;
       if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
 	    foundit++;
 		std::cout<<"Found B0 "<< std::endl;
@@ -394,6 +393,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    if (nm==2) {
 			gen_jpsi_p4 = gen_muon1_p4 + gen_muon2_p4;
 	        gen_b_ct = GetLifetime(gen_b_p4,gen_b_vtx,gen_jpsi_vtx);
+			std::cout << "muons ok"<< std::endl;
 		} 	  
 	    else foundit-=nm;
 	    // end for B daughters for dimuon
@@ -401,6 +401,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			const reco::Candidate *gdau = dau->daughter(k); 
 			if (gdau->pdgId()==310){ //is K0s
 			  foundit++;
+			  std::cout<< "Found Ks0" << std::endl;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
 			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
 			  int np=0;
@@ -440,7 +441,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 				  }// end found pi+	
 				  if (np == 2){
 					  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
-			  		  gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx); 
+			  		  gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx);
+					  std::cout<< "Ks0 (pions) ok" << std::endl; 
 				  }
 				  else foundit-=np;
 			  }// end loop over K0 daughters  
