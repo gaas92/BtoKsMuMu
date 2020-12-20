@@ -401,7 +401,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			const reco::Candidate *gdau = dau->daughter(k); 
 			if (gdau->pdgId()==310){ //is K0s
 			  foundit++;
-			  std::cout<< "Found Ks0" << std::endl;
+			  std::cout<< "Found Ks0: "<< gdau->numberOfDaughters() << std::endl;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
 			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
 			  int np=0;
