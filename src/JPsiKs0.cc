@@ -273,6 +273,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	      }//end if Jpsi
 	    } // end for B daughters for jpsi
         for (size_t k=0; k<dau->numberOfDaughters(); k++){
+			const reco::Candidate *gdau = dau->daughter(k);
 			if (gdau->pdgId()==310){ //is K0s
 			  foundit++;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
