@@ -352,9 +352,9 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    foundit++;
 	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
 	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
+		int nm=0;
 	    for (size_t k=0; k<dau->numberOfDaughters(); k++) {
 	      const reco::Candidate *mm = dau->daughter(k);     
-	      int nm=0;
 	      if (mm->pdgId()==13 && !isAncestor(443,mm)) { foundit++;  // cames from B but not J/p
 		    gen_jpsi_vtx.SetXYZ(mm->vx(),mm->vy(),mm->vz());
 	        if (mm->status()!=1) {
@@ -374,14 +374,14 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	      }
 	      if (mm->pdgId()==-13 && !isAncestor(443,mm)) { foundit++;  // cames from B but not J/p
 	        if (mm->status()!=1) {
-	        		for (size_t m=0; m<mm->numberOfDaughters(); m++) {
-	        		  const reco::Candidate *mu = mm->daughter(m);
-	        		  if (mu->pdgId()==-13 ) { //&& mu->status()==1) {
-	        		    nm++;
-	        		    gen_muon2_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
-	        		    break;
-	        		  }
-	        		}
+	        	for (size_t m=0; m<mm->numberOfDaughters(); m++) {
+	        	  const reco::Candidate *mu = mm->daughter(m);
+	        	  if (mu->pdgId()==-13 ) { //&& mu->status()==1) {
+	        	    nm++;
+	        	    gen_muon2_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
+	        	    break;
+	        	  }
+	        	}
 	        }
 		    else {
 	        	gen_muon2_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
