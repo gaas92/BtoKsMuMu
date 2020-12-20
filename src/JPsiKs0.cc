@@ -205,10 +205,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  gen_bc_vtx.SetXYZ(0.,0.,0.);
+  gen_b_vtx.SetXYZ(0.,0.,0.);
   gen_jpsi_vtx.SetXYZ(0.,0.,0.);
   gen_ks0_vtx.SetXYZ(0.,0.,0.);
-  gen_bc_ct = -9999.;
+  gen_b_ct = -9999.;
   gen_ks0_ct = -9999.;
   // for resonant in jpsi 
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && isRes_) {   
@@ -325,10 +325,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   	  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   	  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   	  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_bc_vtx.SetXYZ(0.,0.,0.);
+  	  gen_b_vtx.SetXYZ(0.,0.,0.);
   	  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
   	  gen_ks0_vtx.SetXYZ(0.,0.,0.);
-  	  gen_bc_ct = -9999.;
+  	  gen_b_ct = -9999.;
   	  gen_ks0_ct = -9999.;
       std::cout << "Does not found the given decay " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
     }
@@ -447,10 +447,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   	  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   	  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   	  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_bc_vtx.SetXYZ(0.,0.,0.);
+  	  gen_b_vtx.SetXYZ(0.,0.,0.);
   	  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
   	  gen_ks0_vtx.SetXYZ(0.,0.,0.);
-  	  gen_bc_ct = -9999.;
+  	  gen_b_ct = -9999.;
   	  gen_ks0_ct = -9999.;
       std::cout << "Does not found the given decay " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
     }
