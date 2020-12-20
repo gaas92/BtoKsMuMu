@@ -1096,11 +1096,21 @@ std::string JPsiKs0::printName(int pdgid){
 	umap[310] = "Ks0";
 	umap[443] = "Jpsi";
 	umap[511] = "B0";
+	umap[-511]= "B0-";
 	umap[521] = "B+";
 	umap[311] = "K0";
 	umap[130] = "Kl0";
 	umap[321] = "K+";
-	umap[-321]= "K-"; 
+	umap[-321]= "K-";
+	umap[413] = "D*(2010)+";
+	umap[-413]= "D*(2010)-";
+	umap[421] = "D0";
+	umap[-421]= "D0-";
+	umap[411] = "D+";
+	umap[-411]= "D-";
+	umap[415] = "D*2(2460)+";
+	umap[-415]= "D*2(2460)-";
+
     std::string retstr;
     if (umap.find(pdgid) == umap.end()){
         retstr = std::to_string(pdgid);
