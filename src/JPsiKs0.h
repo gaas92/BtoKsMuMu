@@ -27,6 +27,7 @@
 #include "RecoVertex/KinematicFitPrimitives/interface/TransientTrackKinematicParticle.h"
 #include "RecoVertex/AdaptiveVertexFit/interface/AdaptiveVertexFitter.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticleFactoryFromTransientTrack.h"
+#include "RecoVertex/AdaptiveVertexFit/interface/AdaptiveVertexFitter.h"
 
 #include "TrackingTools/TransientTrack/interface/TransientTrackFromFTSFactory.h"
 #include "TrackingTools/TransientTrack/interface/TransientTrack.h"
