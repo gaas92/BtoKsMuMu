@@ -347,9 +347,11 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
+	  std::cout<<"PDG ID: "<< dau->pdgId() << std::endl;
       const reco::Candidate *dau = &(*pruned)[i];
       if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
 	    foundit++;
+		std::cout<<"Found B0 "<< std::endl;
 	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
 	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
 		int nm=0;
