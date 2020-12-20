@@ -412,8 +412,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 if (abs(stable_id) == 211){ 
 					std::cout << lk << " is pion !!" << std::endl;
 					std::cout << "n moms" << dauInPrunedColl->numberOfMothers() << std::endl;
-					for (size_t i=0; i< particle->numberOfMothers(); i++) {
-						std::cout<< "mom is ... " << particle->mother(i)->pdgId() <<std::endl; 
+					for (size_t i=0; i< dauInPrunedColl->numberOfMothers(); i++) {
+						std::cout<< "mom is ... " << dauInPrunedColl->mother(i)->pdgId() <<std::endl; 
     				}
 				}
 	  			if (dauInPrunedColl != nullptr && isAncestor(310,dauInPrunedColl)) {
