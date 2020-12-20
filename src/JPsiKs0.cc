@@ -337,7 +337,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   	  gen_ks0_vtx.SetXYZ(0.,0.,0.);
   	  gen_b_ct = -9999.;
   	  gen_ks0_ct = -9999.;
-      std::cout << "Does not found the given decay " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
+      std::cout << "Does not found the given decay (res) " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
     }
   }
   
@@ -460,7 +460,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   	  gen_ks0_vtx.SetXYZ(0.,0.,0.);
   	  gen_b_ct = -9999.;
   	  gen_ks0_ct = -9999.;
-      std::cout << "Does not found the given decay " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
+      std::cout << "Does not found the given decay (non-res) " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
     }
   }
   //*********************************
