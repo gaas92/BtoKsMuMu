@@ -396,6 +396,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    else foundit-=nm;
 	    // end for B daughters for dimuon
         for (size_t k=0; k<dau->numberOfDaughters(); k++){
+			const reco::Candidate *gdau = dau->daughter(k); 
 			if (gdau->pdgId()==310){ //is K0s
 			  foundit++;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
@@ -442,9 +443,9 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 				  else foundit-=np;
 			  }// end loop over K0 daughters  
 		    }// end if K0s
-	  }// end for B daughters for Ks0
+	    }// end for B daughters for Ks0
       } // end if B0
-    if (foundit>=7) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0, 6-pi1, 7-pi2
+      if (foundit>=7) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0, 6-pi1, 7-pi2
     } // for gen particlea
     if (foundit!=7) {
       gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
