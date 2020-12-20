@@ -174,7 +174,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   edm::Handle<std::vector<reco::VertexCompositePtrCandidate>> theV0PtrHandle;
   iEvent.getByToken(v0PtrCollection_,  theV0PtrHandle);
 
-// Kinematic fit
+  // Kinematic fit
   edm::ESHandle<TransientTrackBuilder> theB; 
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB); 
 
@@ -187,6 +187,12 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //*********************************
   // Get gen level information
   //*********************************
+  edm::Handle<reco::GenParticleCollection> pruned;
+  //edm::Handle<pat::PackedGenParticle> pruned; 
+  iEvent.getByToken(genCands_, pruned);
+  
+  edm::Handle<pat::PackedGenParticleCollection> packed;
+  iEvent.getByToken(packedGenToken_,packed);
   //For simulated events, only a selected set of particles is stored because the simulated particle
   //format, called GenParticle, takes a lot of space. First, a set called pruned GenParticles that
   //includes initial partons, heavy flavor particles, electroweak bosons, and leptons is stored in full.
