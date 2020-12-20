@@ -100,7 +100,6 @@ private:
   edm::EDGetTokenT<reco::GenParticleCollection> genCands_;
   edm::EDGetTokenT<pat::PackedGenParticleCollection> packedGenToken_;
 
-  std::string genParticles_;
   bool OnlyBest_;
   bool isMC_;
   bool isRes_;
