@@ -1180,7 +1180,8 @@ void JPsiKs0::printMCtreeUP(const reco::Candidate* daughter, int indent = 0){
         	extraIndent+=1;
 	    }
 		if (mother->pdgId() == daughter->pdgId()) return;
-        if (mother->numberOfMothers() > 1) printMCtreeUP(daughter, indent+extraIndent);
+        //if (mother->numberOfMothers() > 1) printMCtreeUP(daughter, indent+extraIndent);
+		return;
     }
 }
 // ------------ method called once each job just before starting event loop  ------------
