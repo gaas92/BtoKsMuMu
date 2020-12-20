@@ -350,9 +350,9 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		int stable_id = (*packed)[lk].pdgId();
         if (abs(stable_id) == 211){ 
 			//std::cout << lk << " is pion !!" << std::endl;
-			//std::cout << "n moms" << dauInPrunedColl->numberOfMothers() << std::endl;
 			std::cout<< "|--YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY--|"<< std::endl;
 			std::cout<<"Found Pion printing Decay Tree ..."<< std::endl;
+			std::cout << "n moms" << dauInPrunedColl->numberOfMothers() << std::endl;
 			for (size_t i=0; i< dauInPrunedColl->numberOfMothers(); i++) {
 			    std::cout<< "pion comes From " << printName(dauInPrunedColl->mother(i)->pdgId()) <<std::endl; 
     		}
