@@ -1172,11 +1172,13 @@ void JPsiKs0::printMCtreeUP(const reco::Candidate* daughter, int indent = 0){
     int extraIndent = 0;
     for(size_t i = 0; i < daughter->numberOfMothers(); i++){
         const reco::Candidate* mother = daughter->mother(i);
-        if(indent){
-            std::cout << std::setw(indent) << " ";
-        }
-        std::cout<< "mother "<< i+1 << ": "<<printName(mother->pdgId()) << std::endl;
-        extraIndent+=4;
+		if (mother->numberOfMothers() > 0){
+        	if(indent){
+        	    std::cout << std::setw(indent) << " ";
+        	}
+        	std::cout<< "mother "<< i+1 << ": "<<printName(mother->pdgId()) << std::endl;
+        	extraIndent+=1;
+	    }
         if (mother->numberOfMothers()) printMCtreeUP(daughter, indent+extraIndent);
     }
 }
