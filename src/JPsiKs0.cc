@@ -403,7 +403,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
 			  int np=0;
 			  for(size_t l=0; l<gdau->numberOfDaughters(); l++){
-				  const reco::Candiate *pi = gdau->daughter(l);
+				  const reco::Candidate *pi = gdau->daughter(l);
 				  if (pi->pdgId()==211) { foundit++;
 	    			if (pi->status()!=1) {
 	    			  for (size_t m=0; m<pi->numberOfDaughters(); m++) {
