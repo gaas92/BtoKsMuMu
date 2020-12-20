@@ -345,6 +345,18 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   // for the non-resonant channel 
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && !isRes_) {
     int foundit = 0;
+	for (size_t lk=0; lk<packed->size(); lk++) {
+		const reco::Candidate * dauInPrunedColl = (*packed)[lk].mother(0);
+		int stable_id = (*packed)[lk].pdgId();
+        if (abs(stable_id) == 211){ 
+			//std::cout << lk << " is pion !!" << std::endl;
+			//std::cout << "n moms" << dauInPrunedColl->numberOfMothers() << std::endl;
+			std::cout<< "|--YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY--|"<< std::endl;
+			std::cout<<"Found Pion printing Decay Tree ..."<< std::endl;
+			printMCtreeUP(dauInPrunedColl, 0);
+		}
+		
+	}
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
       const reco::Candidate *dau = &(*pruned)[i];
@@ -1110,6 +1122,11 @@ std::string JPsiKs0::printName(int pdgid){
 	umap[-411]= "D-";
 	umap[415] = "D*2(2460)+";
 	umap[-415]= "D*2(2460)-";
+	umap[423] = "D*(2007)0";
+	umap[-423]= "D*(2007)0-"; 
+	umap[10411] = "D*0(2400)+";
+	umap[-10411] = "D*0(2400)-";
+
 
     std::string retstr;
     if (umap.find(pdgid) == umap.end()){
