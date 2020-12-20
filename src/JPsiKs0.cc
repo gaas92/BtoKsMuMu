@@ -97,7 +97,7 @@ JPsiKs0::JPsiKs0(const edm::ParameterSet& iConfig)
   
   OnlyBest_(iConfig.getParameter<bool>("OnlyBest")),
   isMC_(iConfig.getParameter<bool>("isMC")),
-  isRes_(iConfig.getParameter<bool>("isRes"))
+  isRes_(iConfig.getParameter<bool>("isRes")),
   OnlyGen_(iConfig.getParameter<bool>("OnlyGen")),
   doMC_ ( iConfig.getUntrackedParameter<bool>("doMC",false) ),
   tree_(0), 
