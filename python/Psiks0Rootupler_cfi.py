@@ -11,6 +11,6 @@ rootuple = cms.EDAnalyzer('JPsiKs0',
                           TriggerResults = cms.InputTag("TriggerResults", "", "HLT"),
                           OnlyBest = cms.bool(False),
                           isMC = cms.bool(False),
-                          isRes = cms.bool(False),     # if reco MC resonant  
+                          isRes = cms.bool(True),     # if reco MC resonant  
                           OnlyGen = cms.bool(False),
                           )
