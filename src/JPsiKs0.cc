@@ -398,7 +398,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   std::cout<< "Decay info: Mu2: " << gen_muon2_p4.M() << std::endl;
   std::cout<< "Decay info: Ks0: " << gen_ks0_p4.M()   << std::endl;
   std::cout<< "Decay info: Jspi: "<< gen_jpsi_p4.M()  << std::endl;
-
+  /*
   //Trigger info
   if ( triggerResults_handle.isValid()) {
    const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
@@ -422,6 +422,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      }
    }
   } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
+  */
   //*********************************
   //Now we get the primary vertex 
   //*********************************
