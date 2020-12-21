@@ -88,8 +88,8 @@ def main():
 	#config.Data.outLFNDirBase = '/store/user/%s/parkedFullTest/' % ("gayalasa")
 	#config.Site.storageSite = 'T3_US_FNALLPC'
 	config.Site.storageSite = 'T3_CH_CERNBOX'
-    config.Site.whitelist = ['T2_US*']
-    config.Data.ignoreLocality = True
+        config.Site.whitelist = ['T2_US*']
+        config.Data.ignoreLocality = True
         #config.Site.storageSite = None # Choose your site. 
         #--------------------------------------------------------
 
