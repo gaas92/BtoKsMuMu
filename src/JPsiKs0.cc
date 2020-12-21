@@ -185,6 +185,9 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   edm::Handle< View<pat::Muon> > thePATMuonHandle;
   iEvent.getByToken(dimuon_Label,thePATMuonHandle);
 
+  //Trigger info
+  edm::Handle<edm::TriggerResults> triggerResults_handle;
+  iEvent.getByToken(triggerResults_Label, triggerResults_handle);
   //*********************************
   // Get gen level information
   //*********************************
@@ -374,22 +377,51 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       } // end if B0
       if (foundit>=5) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0 //NOPIONS , 6-pi1, 7-pi2
     } // for gen particlea
-    if (foundit!=5) {
-      gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_pion2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_b_vtx.SetXYZ(0.,0.,0.);
-  	  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
-  	  gen_ks0_vtx.SetXYZ(0.,0.,0.);
-  	  gen_b_ct = -9999.;
-  	  gen_ks0_ct = -9999.;
-      std::cout << "Does not found the given decay (non-res) " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
-    }
+    //if (foundit!=5) {
+    //  gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_pion2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_b_vtx.SetXYZ(0.,0.,0.);
+  	//  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
+  	//  gen_ks0_vtx.SetXYZ(0.,0.,0.);
+  	//  gen_b_ct = -9999.;
+  	//  gen_ks0_ct = -9999.;
+    //  std::cout << "Does not found the given decay (non-res) " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
+    //}
   }
+  std::cout<< "Decay info: B0: "  << gen_b_p4.M() << std::endl;
+  std::cout<< "Decay info: Mu1: " << gen_muon1_p4.M() << std::endl;
+  std::cout<< "Decay info: Mu2: " << gen_muon2_p4.M() << std::endl;
+  std::cout<< "Decay info: Ks0: " << gen_ks0_p4.M()   << std::endl;
+  std::cout<< "Decay info: Jspi: "<< gen_jpsi_p4.M()  << std::endl;
+
+  //Trigger info
+  if ( triggerResults_handle.isValid()) {
+   const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+   unsigned int NTRIGGERS = 9;
+   // para el 2016
+   std::string TriggersToTest[NTRIGGERS] = {
+     "HLT_PAL1DoubleMuOpen","HLT_PAFullTracks_Multiplicity150","HLT_PAFullTracks_Multiplicity185_part1",
+     "HLT_PAFullTracks_Multiplicity185_part2","HLT_PAFullTracks_Multiplicity185_part3",
+     "HLT_PAFullTracks_Multiplicity185_part4","HLT_PAFullTracks_Multiplicity185_part5",
+     "HLT_PAFullTracks_Multiplicity185_part6","HLT_PAFullTracks_Multiplicity220"};
+
+   for (unsigned int i = 0; i < NTRIGGERS; i++) {
+     for (int version = 1; version < 9; version++) {
+       std::stringstream ss;
+       ss << TriggersToTest[i] << "_v" << version;
+       unsigned int bit = TheTriggerNames.triggerIndex(edm::InputTag(ss.str()).label());
+       if (bit < triggerResults_handle->size() && triggerResults_handle->accept(bit) && !triggerResults_handle->error(bit)) {
+         trigger += (1<<i);
+         break;
+       }
+     }
+   }
+  } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
   //*********************************
   //Now we get the primary vertex 
   //*********************************
