@@ -193,7 +193,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //edm::Handle<pat::PackedGenParticle> pruned; 
   iEvent.getByToken(genCands_, pruned);
   
-  edm::Handle<pat::PackedGenParticleCollection> packed;
+  //edm::Handle<pat::PackedGenParticleCollection> packed;
+  edm::Handle<reco::GenParticleCollection> packed;
   iEvent.getByToken(packedGenToken_,packed);
   //For simulated events, only a selected set of particles is stored because the simulated particle
   //format, called GenParticle, takes a lot of space. First, a set called pruned GenParticles that
