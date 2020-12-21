@@ -149,7 +149,8 @@ JPsiKs0::JPsiKs0(const edm::ParameterSet& iConfig)
   B_Prob(0), B_J_Prob(0), B_ks0_Prob(0),
 
   run(0), event(0),
-  lumiblock(0)
+  lumiblock(0),
+  trigger(0)
 
 {
    //now do what ever initialization is needed
@@ -923,6 +924,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    // *********
 
    nB = 0; nMu = 0;
+   trigger = 0;
 
    B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
    B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
@@ -1191,6 +1193,7 @@ JPsiKs0::beginJob()
      tree_->Branch("run",        &run,       "run/I");
      tree_->Branch("event",        &event,     "event/I");
      tree_->Branch("lumiblock",&lumiblock,"lumiblock/I");
+	 tree_->Branch("trigger",  &trigger, "trigger/i");
    
      tree_->Branch("bDecayVtxX",&bDecayVtxX);
      tree_->Branch("bDecayVtxY",&bDecayVtxY);

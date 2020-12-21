@@ -173,7 +173,8 @@ private:
 
   int  run, event;
   int  lumiblock;
-
+  UInt_t trigger;
+  
   TLorentzVector gen_b_p4,gen_jpsi_p4,gen_pion1_p4,gen_pion2_p4,gen_ks0_p4,gen_muon1_p4,gen_muon2_p4;
   TVector3       gen_b_vtx,gen_jpsi_vtx,gen_ks0_vtx;
   float          gen_b_ct, gen_ks0_ct;
