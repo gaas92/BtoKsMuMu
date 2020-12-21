@@ -289,21 +289,21 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       } // end in B0
       if (foundit>=5) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0,// NO PIONS 6-pi1, 7-pi2
     } // for i
-    if (foundit!=5) {
-      gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_pion2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
-  	  gen_b_vtx.SetXYZ(0.,0.,0.);
-  	  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
-  	  gen_ks0_vtx.SetXYZ(0.,0.,0.);
-  	  gen_b_ct = -9999.;
-  	  gen_ks0_ct = -9999.;
-      std::cout << "Does not found the given decay (res) " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
-    }
+    //if (foundit!=5) {
+    //  gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_pion2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	//  gen_b_vtx.SetXYZ(0.,0.,0.);
+  	//  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
+  	//  gen_ks0_vtx.SetXYZ(0.,0.,0.);
+  	//  gen_b_ct = -9999.;
+  	//  gen_ks0_ct = -9999.;
+    //  std::cout << "Does not found the given decay (res) " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
+    //}
   }
   
   
