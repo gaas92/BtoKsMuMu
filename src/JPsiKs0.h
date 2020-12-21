@@ -89,7 +89,7 @@ private:
   void printout(const RefCountedKinematicVertex& myVertex) const;
   void printout(const RefCountedKinematicParticle& myParticle) const;
   void printout(const RefCountedKinematicTree& myTree) const;
-  
+
   void printMCtree(const reco::Candidate *, int);
   void printMCtreeUP(const reco::Candidate *, int);
   std::string printName(int);
@@ -102,7 +102,8 @@ private:
   edm::EDGetTokenT<edm::TriggerResults> triggerResults_Label;
   edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
   edm::EDGetTokenT<reco::GenParticleCollection> genCands_;
-  edm::EDGetTokenT<pat::PackedGenParticleCollection> packedGenToken_;
+  //edm::EDGetTokenT<pat::PackedGenParticleCollection> packedGenToken_;
+  edm::EDGetTokenT<reco::GenParticleCollection> packedGenToken_;
 
   bool OnlyBest_;
   bool isMC_;
