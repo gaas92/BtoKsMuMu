@@ -278,54 +278,15 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			if (gdau->pdgId()==310){ //is K0s
 			  foundit++;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
-			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
-			  int np=0;
-			  for(size_t l=0; l<gdau->numberOfDaughters(); l++){
-				  const reco::Candidate *pi = gdau->daughter(l);
-				  if (pi->pdgId()==211) { foundit++;
-	    			if (pi->status()!=1) {
-	    			  for (size_t m=0; m<pi->numberOfDaughters(); m++) {
-	    			    const reco::Candidate *pi_ = pi->daughter(m);
-	    			    if (pi_->pdgId()== 211 ) { //&& mu->status()==1) {
-	    			      np++;
-	    			      gen_pion1_p4.SetPtEtaPhiM(pi_->pt(),pi_->eta(),pi_->phi(),pi_->mass());
-	    			      break;
-	    			    }
-	    			  }
-	    			} 
-			        else {
-	    	    	  gen_pion1_p4.SetPtEtaPhiM(pi->pt(),pi->eta(),pi->phi(),pi->mass());
-	    	    	  np++;
-	    	        }
-				  }// end found pi+	
-				  if (pi->pdgId()==-211) { foundit++;
-	    			if (pi->status()!=1) {
-	    			  for (size_t m=0; m<pi->numberOfDaughters(); m++) {
-	    			    const reco::Candidate *pi_ = pi->daughter(m);
-	    			    if (pi_->pdgId()==-211 ) { //&& mu->status()==1) {
-	    			      np++;
-	    			      gen_pion2_p4.SetPtEtaPhiM(pi_->pt(),pi_->eta(),pi_->phi(),pi_->mass());
-	    			      break;
-	    			    }
-	    			  }
-	    			} 
-			        else {
-	    	    	  gen_pion2_p4.SetPtEtaPhiM(pi->pt(),pi->eta(),pi->phi(),pi->mass());
-	    	    	  np++;
-	    	        }
-				  }// end found pi+	
-				  if (np == 2){
-					  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
-			  		  gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx); 
-				  }
-				  else foundit-=np;
-			  }// end loop over K0 daughters  
+			  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
+			  gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx); 
+			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx 
 		    }// end if K0s
 		}// end of B daughters for Ks0
       } // end in B0
-      if (foundit>=7) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0, 6-pi1, 7-pi2
+      if (foundit>=5) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0,// NO PIONS 6-pi1, 7-pi2
     } // for i
-    if (foundit!=7) {
+    if (foundit!=5) {
       gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   	  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   	  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
@@ -346,28 +307,13 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   // for the non-resonant channel 
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && !isRes_) {
     int foundit = 0;
-	for (size_t lk=0; lk<packed->size(); lk++) {
-		const reco::Candidate * dauInPrunedColl = (*packed)[lk].mother(0);
-		int stable_id = (*packed)[lk].pdgId();
-        if (abs(stable_id) == 211 && dauInPrunedColl->numberOfMothers()){ 
-			//std::cout << lk << " is pion !!" << std::endl;
-			std::cout<< "|--YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY----YYY--|"<< std::endl;
-			std::cout<<"Found Pion printing Decay Tree ..."<< std::endl;
-			std::cout << "n moms" << dauInPrunedColl->numberOfMothers() << std::endl;
-			for (size_t i=0; i< dauInPrunedColl->numberOfMothers(); i++) {
-			    std::cout<< "pion comes From " << printName(dauInPrunedColl->mother(i)->pdgId()) <<std::endl; 
-    		}
-			//printMCtreeUP(dauInPrunedColl, 0);
-		}
-		
-	}
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
       const reco::Candidate *dau = &(*pruned)[i];
       if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
 	    foundit++;
-		std::cout<< "|--XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX--|"<< std::endl;
-		std::cout<<"Found B0 printing Decay Tree ..."<< std::endl;
+		//std::cout<< "|--XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX--|"<< std::endl;
+		//std::cout<<"Found B0 printing Decay Tree ..."<< std::endl;
 		printMCtree(dau, 0);
 	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
 	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
@@ -419,84 +365,16 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			const reco::Candidate *gdau = dau->daughter(k); 
 			if (gdau->pdgId()==310){ //is K0s
 			  foundit++;
-			  //std::cout<< "Found Ks0: "<< gdau->numberOfDaughters() << std::endl;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
-			  // TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx
-			  int np=0;
-			  //std::cout<< "packed size: "<< packed->size() << std::endl;
-			  for (size_t lk=0; lk<packed->size(); lk++) {
-	  			const reco::Candidate * dauInPrunedColl = (*packed)[lk].mother(0);
-	  			int stable_id = (*packed)[lk].pdgId();
-                if (abs(stable_id) == 211){ 
-					//std::cout << lk << " is pion !!" << std::endl;
-					//std::cout << "n moms" << dauInPrunedColl->numberOfMothers() << std::endl;
-					for (size_t i=0; i< dauInPrunedColl->numberOfMothers(); i++) {
-						//std::cout<< "mom is ... " << dauInPrunedColl->mother(i)->pdgId() <<std::endl; 
-    				}
-				}
-	  			if (dauInPrunedColl != nullptr && isAncestor(310,dauInPrunedColl)) {
-	  			  if(stable_id ==211 ) {foundit++;
-					np++;
-	  			    gen_pion1_p4.SetPtEtaPhiM((*packed)[lk].pt(),(*packed)[lk].eta(),(*packed)[lk].phi(),(*packed)[lk].mass());
-	  			  }
-				  if(stable_id == -211 ) {foundit++;
-				    np++;
-	  			    gen_pion2_p4.SetPtEtaPhiM((*packed)[lk].pt(),(*packed)[lk].eta(),(*packed)[lk].phi(),(*packed)[lk].mass());
-	  			  }
-	  			}
-			  }
-			  std::cout<< "Found pions ?? "<< np << std::endl;
-			  // not daugters in pruned, check in packed ...
-			  /*
-			  for(size_t l=0; l<gdau->numberOfDaughters(); l++){
-				  const reco::Candidate *pi = gdau->daughter(l);
-				  if (pi->pdgId()==211) { foundit++;
-	    			if (pi->status()!=1) {
-	    			  for (size_t m=0; m<pi->numberOfDaughters(); m++) {
-	    			    const reco::Candidate *pi_ = pi->daughter(m);
-	    			    if (pi_->pdgId()== 211 ) { //&& mu->status()==1) {
-	    			      np++;
-	    			      gen_pion1_p4.SetPtEtaPhiM(pi_->pt(),pi_->eta(),pi_->phi(),pi_->mass());
-	    			      break;
-	    			    }
-	    			  }
-	    			} 
-			        else {
-	    	    	  gen_pion1_p4.SetPtEtaPhiM(pi->pt(),pi->eta(),pi->phi(),pi->mass());
-	    	    	  np++;
-	    	        }
-				  }// end found pi+	
-				  if (pi->pdgId()==-211) { foundit++;
-	    			if (pi->status()!=1) {
-	    			  for (size_t m=0; m<pi->numberOfDaughters(); m++) {
-	    			    const reco::Candidate *pi_ = pi->daughter(m);
-	    			    if (pi_->pdgId()==-211 ) { //&& mu->status()==1) {
-	    			      np++;
-	    			      gen_pion2_p4.SetPtEtaPhiM(pi_->pt(),pi_->eta(),pi_->phi(),pi_->mass());
-	    			      break;
-	    			    }
-	    			  }
-	    			} 
-			        else {
-	    	    	  gen_pion2_p4.SetPtEtaPhiM(pi->pt(),pi->eta(),pi->phi(),pi->mass());
-	    	    	  np++;
-	    	        }
-				  }// end found pi+	
-				  if (np == 2){
-					  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
-			  		  gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx);
-					  std::cout<< "Ks0 (pions) ok" << std::endl; 
-				  }
-				  else foundit-=np;
-
-			  }// end loop over K0 daughters
-			  */  
+			  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
+			  gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx); 
+			   
 		    }// end if K0s
 	    }// end for B daughters for Ks0
       } // end if B0
-      if (foundit>=7) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0, 6-pi1, 7-pi2
+      if (foundit>=5) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0 //NOPIONS , 6-pi1, 7-pi2
     } // for gen particlea
-    if (foundit!=7) {
+    if (foundit!=5) {
       gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   	  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
   	  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
