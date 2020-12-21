@@ -94,7 +94,7 @@ JPsiKs0::JPsiKs0(const edm::ParameterSet& iConfig)
 
   genCands_(consumes<reco::GenParticleCollection>(iConfig.getParameter < edm::InputTag > ("GenParticles"))), 
   //packedGenToken_(consumes<pat::PackedGenParticleCollection>(iConfig.getParameter <edm::InputTag> ("packedGenParticles"))), 
-  packedGenToken_(consumes<reco::GenParticleCollection>iConfig.getParameter <edm::InputTag> ("packedGenParticles"))), 
+  packedGenToken_(consumes<reco::GenParticleCollection>(iConfig.getParameter <edm::InputTag> ("packedGenParticles"))), 
   
   
   OnlyBest_(iConfig.getParameter<bool>("OnlyBest")),
