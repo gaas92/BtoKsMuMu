@@ -56,7 +56,7 @@ process.source = cms.Source("PoolSource",
 
 process.load("myAnalyzers.BtoKsMuMu.Psiks0Rootupler_cfi")
 process.rootuple.isMC = cms.bool(True) 
-process.rootuple.isRes = cms.bool(False) 
+process.rootuple.isRes = cms.bool(True) 
 process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
 
 process.TFileService = cms.Service("TFileService",
