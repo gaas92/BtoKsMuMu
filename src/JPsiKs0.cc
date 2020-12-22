@@ -478,10 +478,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  }
 	  else{
 		std::cout<< " MUON - REC( pT: "<< iMuon2->pt() << ", Eta: "<<iMuon2->eta() << ", Phi: "<< iMuon2->phi() << std::endl;
-	  	std::cout<< " MUON - GEN( pT: "<< gen_muon2_p4.Pt() << ", Eta: "<<gen_muon2_p4.Eta() << ", Phi: "<< gen_muon2_p4.Phi() << std::endl;
+	  	std::cout<< " MUON - GEN( pT: "<< gen_muon1_p4.Pt() << ", Eta: "<<gen_muon1_p4.Eta() << ", Phi: "<< gen_muon1_p4.Phi() << std::endl;
 		std::cout<<"\n"<<std::endl;  
 		std::cout<< " MUON + REC( pT: "<< iMuon1->pt() << ", Eta: "<<iMuon1->eta() << ", Phi: "<< iMuon1->phi() << std::endl;
-	  	std::cout<< " MUON + GEN( pT: "<< gen_muon1_p4.Pt() << ", Eta: "<<gen_muon1_p4.Eta() << ", Phi: "<< gen_muon1_p4.Phi() << std::endl;
+	  	std::cout<< " MUON + GEN( pT: "<< gen_muon2_p4.Pt() << ", Eta: "<<gen_muon2_p4.Eta() << ", Phi: "<< gen_muon2_p4.Phi() << std::endl;
 	  } 
 	  TrackRef glbTrackP;	  
 	  TrackRef glbTrackM;	  
