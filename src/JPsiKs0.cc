@@ -480,7 +480,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //emulate BParking MuonTriggerSelector 
   std::vector<pat::TriggerObjectStandAlone> triggeringMuons;
   int int_obj = 0;
-  bool debug = false;
+  bool debug = true;
   // std::cout << "\n\n\n------------>>>>>>NEW RECORD NEW RECORD NEW RECORD NEW RECORD"<<"\n";
  
   //Itera sobre los objetos 
