@@ -21,7 +21,7 @@ process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
 
-        #Parcked Data
+        #Parked Data
         '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/2129F080-982D-A649-8D20-4944620E99A6.root',
         '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/12C659FD-D961-6640-9C3D-48CD12A0D033.root', 
         '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/05030414-6C93-DC46-AD09-68D76E2FB466.root'
@@ -54,7 +54,7 @@ process.load("myAnalyzers.BtoKsMuMu.Psiks0Rootupler_cfi")
 
 process.TFileService = cms.Service("TFileService",
 
-       fileName = cms.string('Rootuple_Bdtojpiks0_2018UL_MiniAOD.root'),
+       fileName = cms.string('Rootuple_Bdtojpiks0_PARKED_MiniAOD.root'),
 )
 
 #process.mySequence = cms.Sequence(

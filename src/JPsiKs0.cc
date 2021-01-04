@@ -471,6 +471,70 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   run = iEvent.id().run();
   event = iEvent.id().event(); 
 
+
+  //emulate BParking MuonTriggerSelector 
+  std::vector<pat::TriggerObjectStandAlone> triggeringMuons;
+  int int_obj = 0;
+  // std::cout << "\n\n\n------------>>>>>>NEW RECORD NEW RECORD NEW RECORD NEW RECORD"<<"\n";
+ 
+  //Itera sobre los objetos 
+  //corrobora que al menos haya un filterID = 83
+  //corrobora que al menos uno tenga 'hltL3' y 'Park'
+  // el objeto que satisfaga estas dos condiciones se agrega
+  // al vector triggeringMuons, definido previamente
+  // std::cout << "\n\n ------------>>>>>>>>TriggerObjectStandAlone TriggerObjectStandAlone TriggerObjectStandAlone TriggerObjectStandAlone"<<"\n";
+  for (pat::TriggerObjectStandAlone obj : *triggerObjects) { // note: not "const &" since we want to call unpackPathNames   
+    int_obj++; 
+    // std::cout << "---->>obj number = " <<int_obj << "\n";
+    obj.unpackFilterLabels(iEvent, *triggerBits);
+    obj.unpackPathNames(names);
+    bool isTriggerMuon = false;
+
+    // checa que al menos un elemento sea un muon (ID=83)
+    // que pasa con los demas?
+    // std::cout << "\tfilterIds size:   " << obj.filterIds().size()<< "\n";
+    for (unsigned h = 0; h < obj.filterIds().size(); ++h)
+    	if(obj.filterIds()[h] == 83){ 
+        	isTriggerMuon = true; 
+         	// std::cout << "\t\tType IDs:   " << 83 <<"\n";  //83 = muon
+        	//break;
+      	} else {
+         	// std::cout << "\t\tXXXXXXXXXX   Not Muon:   " << obj.filterIds()[h] <<"\n";
+         	isTriggerMuon = false;
+    }
+    if(!isTriggerMuon) continue;
+    // Ahora checa que dentro de los filterlabes en al menos uno
+    // exista hltL3 y Park
+    isTriggerMuon = false;
+    // std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
+    for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
+        std::string filterName = obj.filterLabels()[h];
+        // std::cout << "\t\tfilterlabes:  " << h << filterName << "\n";
+        if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
+            isTriggerMuon = true;
+            // std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
+        }
+	    //else{ isTriggerMuon = false; }
+    }
+    //std::cout << "\n\n\n";
+    if(!isTriggerMuon) continue;
+    triggeringMuons.push_back(obj);
+
+
+    if(debug){ 
+        std::cout << "\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
+      	//Print trigger object collection and type
+	    std::cout << "\t\t\tCollection: " << obj.collection() << std::endl;
+    }
+  }//trigger objects
+
+  if(debug){    
+    // std::cout << "\n Total n of triggering muons = " << triggeringMuons.size() << std::endl;
+    for(auto ij : triggeringMuons){
+	    std::cout << " \t>>> components (pt, eta, phi) = (" << ij.pt() << ", " << ij.eta() << ", " << ij.phi() << ")\n";
+    }
+  }
+  
   //*****************************************
   //Let's begin by looking for J/psi->mu+mu-
 
