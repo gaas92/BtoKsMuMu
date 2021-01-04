@@ -91,6 +91,8 @@ JPsiKs0::JPsiKs0(const edm::ParameterSet& iConfig)
   BSLabel_(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("bslabel"))),
   triggerResults_Label(consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("TriggerResults"))),
   v0PtrCollection_(consumes<reco::VertexCompositePtrCandidateCollection>(iConfig.getParameter<edm::InputTag>("secundaryVerticesPtr"))),	       
+  //Trigger Muon Selecctor 
+  triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
 
   genCands_(consumes<reco::GenParticleCollection>(iConfig.getParameter < edm::InputTag > ("GenParticles"))), 
   packedGenToken_(consumes<pat::PackedGenParticleCollection>(iConfig.getParameter <edm::InputTag> ("packedGenParticles"))), 
@@ -189,6 +191,11 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //Trigger info
   edm::Handle<edm::TriggerResults> triggerResults_handle;
   iEvent.getByToken(triggerResults_Label, triggerResults_handle);
+
+  //Trigger Muon Selector
+  edm::Handle<std::vector<pat::TriggerObjectStandAlone>> triggerObjects;
+  iEvent.getByToken(triggerObjects_, triggerObjects);
+
   //*********************************
   // Get gen level information
   //*********************************
@@ -406,9 +413,14 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   if ( triggerResults_handle.isValid()) {
    const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
    unsigned int NTRIGGERS = 20;
-   // para el 2016
    // de acuerdo con https://indico.cern.ch/event/988495/contributions/4161361/attachments/2166530/3656840/Slides_210104_ERDUpdate.pdf
    // los Trigger de BParking son : HLT_Mu7_IP4, HLT_Mu9_IP5, HLT_Mu9_IP6, HLT_Mu12_IP6
+   //#V2.0
+   //"HLT_Mu9_IP6_part","HLT_Mu8p5_IP3p5","HLT_Mu10p5_IP3p5","HLT_Mu8_IP3",
+   //#V2.2
+   //"HLT_Mu12_IP6","HLT_Mu9_IP5","HLT_Mu7_IP4","HLT_Mu9_IP4","HLT_Mu8_IP5","HLT_Mu8_IP6",
+   //#V3.5
+   //"HLT_Mu9_IP3","HLT_Mu9_IP0")
    std::string TriggersToTest[NTRIGGERS] = {
      "HLT_Mu12_IP6", //0
 	 "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-5

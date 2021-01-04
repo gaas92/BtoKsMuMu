@@ -101,6 +101,10 @@ private:
   edm::EDGetTokenT<reco::BeamSpot> BSLabel_;
   edm::EDGetTokenT<edm::TriggerResults> triggerResults_Label;
   edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
+
+  //Trigger Muon Selector
+  edm::EDGetTokenT<std::vector<pat::TriggerObjectStandAlone>> triggerObjects_;
+
   edm::EDGetTokenT<reco::GenParticleCollection> genCands_;
   edm::EDGetTokenT<pat::PackedGenParticleCollection> packedGenToken_;
 
