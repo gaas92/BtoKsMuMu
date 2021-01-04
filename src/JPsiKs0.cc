@@ -605,7 +605,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  //Match with TriggerMuons, BParking Nano MuonTriggerSelector emulation 
 	  float dRMuonMatching = -1.; 	
       for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
-        float dR = 0.05;//reco::deltaR(triggeringMuons[iTrg], iMuon1);
+        float dR = reco::deltaR(triggeringMuons[iTrg], *iMuon1);
         // std::cout << "\n\t\tdR = " << dR << "\n";
 	      if((dR < dRMuonMatching || dRMuonMatching == -1) && dR < maxdR_){
           dRMuonMatching = dR;
