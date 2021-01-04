@@ -480,7 +480,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //emulate BParking MuonTriggerSelector 
   std::vector<pat::TriggerObjectStandAlone> triggeringMuons;
   int int_obj = 0;
-  bool debug = true;
+  bool debug = false;
+  const double maxdR_ = 0.1;
   // std::cout << "\n\n\n------------>>>>>>NEW RECORD NEW RECORD NEW RECORD NEW RECORD"<<"\n";
  
   //Itera sobre los objetos 
@@ -600,6 +601,24 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  FreeTrajectoryState mu1State = muon1TT.impactPointTSCP().theState();
 	  FreeTrajectoryState mu2State = muon2TT.impactPointTSCP().theState();
 	  if( !muon1TT.impactPointTSCP().isValid() || !muon2TT.impactPointTSCP().isValid() ) continue;
+
+	  //Match with TriggerMuons, BParking Nano MuonTriggerSelector emulation 
+	  float dRMuonMatching = -1.; 	
+      for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
+        float dR = reco::deltaR(triggeringMuons[iTrg], iMuon1);
+        // std::cout << "\n\t\tdR = " << dR << "\n";
+	      if((dR < dRMuonMatching || dRMuonMatching == -1) && dR < maxdR_){
+          dRMuonMatching = dR;
+          // float eta = muon.eta() - triggeringMuons[iTrg].eta();
+          // float phi = muon.phi() - triggeringMuons[iTrg].phi();
+          // dR_H = std::sqrt(eta*eta+phi*phi);
+
+          // std::cout << "\n\t\t dR_H"<< iTrg <<" = " << dR_H
+          //   << "\n\t\treco (pt, eta, phi) = " << muon.pt() << " " << muon.eta() << " " << muon.phi() << " " 
+          //   << "\n\t\tHLT (pt, eta, phi)  = " << triggeringMuons[iTrg].pt() << " " << triggeringMuons[iTrg].eta() << " " << triggeringMuons[iTrg].phi()
+          //   << std::endl;
+	      }
+      }
 
 	  // Measure distance between tracks at their closest approach
 	  ClosestApproachInRPhi cApp;
