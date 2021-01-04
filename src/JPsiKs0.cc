@@ -607,7 +607,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  float dRMuonMatching2 = -1.; 	
       for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
         float dR1 = -1.;//reco::deltaR(triggeringMuons[iTrg], *iMuon1);
-        float dR2 = -1.;reco::deltaR(triggeringMuons[iTrg], *iMuon2);
+        float dR2 = -1.;//reco::deltaR(triggeringMuons[iTrg], *iMuon2);
         // std::cout << "\n\t\tdR = " << dR << "\n";
 	      if((dR1 < dRMuonMatching1 || dRMuonMatching1 == -1) && dR1 < maxdR_){
           	dRMuonMatching1 = dR1;
