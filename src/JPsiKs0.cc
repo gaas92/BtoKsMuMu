@@ -400,16 +400,22 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //std::cout<< "Decay info: Ks0: " << gen_ks0_p4.M()   << std::endl;
   //std::cout<< "Decay info: Jspi: "<< gen_jpsi_p4.M()  << std::endl;
   
-  //Trigger info
+  //Trigger info 
+  //origen /afs/cern.ch/user/j/jmejiagu/work/public/data2015_RunII/HI/CMSSW_8_0_31/src/Ponia/OniaPhoton/src/Bu_JpsiK_PAT.cc
+  trigger = 0;
   if ( triggerResults_handle.isValid()) {
    const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
-   unsigned int NTRIGGERS = 9;
+   unsigned int NTRIGGERS = 20;
    // para el 2016
+   // de acuerdo con https://indico.cern.ch/event/988495/contributions/4161361/attachments/2166530/3656840/Slides_210104_ERDUpdate.pdf
+   // los Trigger de BParking son : HLT_Mu7_IP4, HLT_Mu9_IP5, HLT_Mu9_IP6, HLT_Mu12_IP6
    std::string TriggersToTest[NTRIGGERS] = {
-     "HLT_PAL1DoubleMuOpen","HLT_PAFullTracks_Multiplicity150","HLT_PAFullTracks_Multiplicity185_part1",
-     "HLT_PAFullTracks_Multiplicity185_part2","HLT_PAFullTracks_Multiplicity185_part3",
-     "HLT_PAFullTracks_Multiplicity185_part4","HLT_PAFullTracks_Multiplicity185_part5",
-     "HLT_PAFullTracks_Multiplicity185_part6","HLT_PAFullTracks_Multiplicity220"};
+     "HLT_Mu12_IP6", //0
+	 "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-5
+     "HLT_Mu8_IP3","HLT_Mu8_IP5", "HLT_Mu8_IP6", //6-8
+     "HLT_Mu7_IP4", //9
+	 "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18er1p5", "L1_SingleMu14er1p5", "L1_SingleMu12er1p5", "L1_SingleMu10er1p5", //10-15
+	 "L1_SingleMu9er1p5", "L1_SingleMu8er1p5", "L1_SingleMu7er1p5", "L1_SingleMu6er1p5")}; //16-19
 
    for (unsigned int i = 0; i < NTRIGGERS; i++) {
      for (int version = 1; version < 9; version++) {
