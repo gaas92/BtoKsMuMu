@@ -195,6 +195,11 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //Trigger Muon Selector
   edm::Handle<std::vector<pat::TriggerObjectStandAlone>> triggerObjects;
   iEvent.getByToken(triggerObjects_, triggerObjects);
+  // Not so clear
+  // https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideEDMPathsAndTriggerBits
+  //edm::Handle<edm::TriggerResults> triggerBits;
+  //iEvent.getByToken(triggerBits_, triggerBits);
+  const edm::TriggerNames &names = iEvent.triggerNames(*triggerResults_handle);
 
   //*********************************
   // Get gen level information
@@ -475,6 +480,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //emulate BParking MuonTriggerSelector 
   std::vector<pat::TriggerObjectStandAlone> triggeringMuons;
   int int_obj = 0;
+  bool debug = false;
   // std::cout << "\n\n\n------------>>>>>>NEW RECORD NEW RECORD NEW RECORD NEW RECORD"<<"\n";
  
   //Itera sobre los objetos 
@@ -486,7 +492,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   for (pat::TriggerObjectStandAlone obj : *triggerObjects) { // note: not "const &" since we want to call unpackPathNames   
     int_obj++; 
     // std::cout << "---->>obj number = " <<int_obj << "\n";
-    obj.unpackFilterLabels(iEvent, *triggerBits);
+    obj.unpackFilterLabels(iEvent, *triggerResults_handle);
     obj.unpackPathNames(names);
     bool isTriggerMuon = false;
 
