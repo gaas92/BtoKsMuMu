@@ -490,6 +490,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   // el objeto que satisfaga estas dos condiciones se agrega
   // al vector triggeringMuons, definido previamente
   // std::cout << "\n\n ------------>>>>>>>>TriggerObjectStandAlone TriggerObjectStandAlone TriggerObjectStandAlone TriggerObjectStandAlone"<<"\n";
+  /*
   for (pat::TriggerObjectStandAlone obj : *triggerObjects) { // note: not "const &" since we want to call unpackPathNames   
     int_obj++; 
     // std::cout << "---->>obj number = " <<int_obj << "\n";
@@ -541,7 +542,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    std::cout << " \t>>> components (pt, eta, phi) = (" << ij.pt() << ", " << ij.eta() << ", " << ij.phi() << ")\n";
     }
   }
-  
+  */
   //*****************************************
   //Let's begin by looking for J/psi->mu+mu-
 
@@ -1005,8 +1006,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
 
            //Trigger Selector
-           drTrg_m1->push_back(dRMuonMatching1);
-	       drTrg_m2->push_back(dRMuonMatching2);
+           //drTrg_m1->push_back(dRMuonMatching1);
+	       //drTrg_m2->push_back(dRMuonMatching2);
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
 		   mumNHits->push_back( glbTrackM->numberOfValidHits() );
@@ -1103,8 +1104,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
    //Trigger Selector
-   drTrg_m1->clear();
-   drTrg_m2->clear();
+   //drTrg_m1->clear();
+   //drTrg_m2->clear();
 }
 
 bool JPsiKs0::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
@@ -1383,8 +1384,8 @@ JPsiKs0::beginJob()
      tree_->Branch("mu1loose",&mu1loose);
      tree_->Branch("mu2loose",&mu2loose);
 	 //Trigger Selector
-	 tree_->Branch("drTrg_m1", &drTrg_m1);
-	 tree_->Branch("drTrg_m2", &drTrg_m2);
+	 //tree_->Branch("drTrg_m1", &drTrg_m1);
+	 //tree_->Branch("drTrg_m2", &drTrg_m2);
   }
     // gen
   if (isMC_) {
