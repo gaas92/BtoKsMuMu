@@ -604,7 +604,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 	  //Match with TriggerMuons, BParking Nano MuonTriggerSelector emulation 
 	  float dRMuonMatching1 = -1.; 	
-	  float dRMuonMatching2 = -1.; 	
+	  float dRMuonMatching2 = -1.;
+	  /* 	
       for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
         float dR1 = -1.;//reco::deltaR(triggeringMuons[iTrg], *iMuon1);
         float dR2 = -1.;//reco::deltaR(triggeringMuons[iTrg], *iMuon2);
@@ -624,7 +625,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
           	dRMuonMatching2 = dR2;	 
 		  }
       }
-
+      */
 	  // Measure distance between tracks at their closest approach
 	  ClosestApproachInRPhi cApp;
 	  cApp.calculate(mu1State, mu2State);
