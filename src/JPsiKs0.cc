@@ -603,21 +603,26 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if( !muon1TT.impactPointTSCP().isValid() || !muon2TT.impactPointTSCP().isValid() ) continue;
 
 	  //Match with TriggerMuons, BParking Nano MuonTriggerSelector emulation 
-	  float dRMuonMatching = -1.; 	
+	  float dRMuonMatching1 = -1.; 	
+	  float dRMuonMatching2 = -1.; 	
       for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
-        float dR = reco::deltaR(triggeringMuons[iTrg], *iMuon1);
+        float dR1 = reco::deltaR(triggeringMuons[iTrg], *iMuon1);
+        float dR2 = reco::deltaR(triggeringMuons[iTrg], *iMuon2);
         // std::cout << "\n\t\tdR = " << dR << "\n";
-	      if((dR < dRMuonMatching || dRMuonMatching == -1) && dR < maxdR_){
-          dRMuonMatching = dR;
-          // float eta = muon.eta() - triggeringMuons[iTrg].eta();
-          // float phi = muon.phi() - triggeringMuons[iTrg].phi();
-          // dR_H = std::sqrt(eta*eta+phi*phi);
+	      if((dR1 < dRMuonMatching1 || dRMuonMatching1 == -1) && dR1 < maxdR_){
+          	dRMuonMatching1 = dR1;
+          	// float eta = muon.eta() - triggeringMuons[iTrg].eta();
+          	// float phi = muon.phi() - triggeringMuons[iTrg].phi();
+          	// dR_H = std::sqrt(eta*eta+phi*phi);
 
-          // std::cout << "\n\t\t dR_H"<< iTrg <<" = " << dR_H
-          //   << "\n\t\treco (pt, eta, phi) = " << muon.pt() << " " << muon.eta() << " " << muon.phi() << " " 
-          //   << "\n\t\tHLT (pt, eta, phi)  = " << triggeringMuons[iTrg].pt() << " " << triggeringMuons[iTrg].eta() << " " << triggeringMuons[iTrg].phi()
-          //   << std::endl;
+          	// std::cout << "\n\t\t dR_H"<< iTrg <<" = " << dR_H
+          	//   << "\n\t\treco (pt, eta, phi) = " << muon.pt() << " " << muon.eta() << " " << muon.phi() << " " 
+          	//   << "\n\t\tHLT (pt, eta, phi)  = " << triggeringMuons[iTrg].pt() << " " << triggeringMuons[iTrg].eta() << " " << triggeringMuons[iTrg].phi()
+          	//   << std::endl;
 	      }
+	      if((dR2 < dRMuonMatching2 || dRMuonMatching2 == -1) && dR2 < maxdR_){
+          	dRMuonMatching2 = dR2;	 
+		  }
       }
 
 	  // Measure distance between tracks at their closest approach
@@ -951,7 +956,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   B_J_Prob  ->push_back(J_Prob_tmp);
 		   B_ks0_Prob ->push_back(ks0_Prob_tmp);
 
-	   // ************
+	       // ************
 		   bDecayVtxX->push_back((*bDecayVertexMC).position().x());
 		   bDecayVtxY->push_back((*bDecayVertexMC).position().y());
 		   bDecayVtxZ->push_back((*bDecayVertexMC).position().z());
@@ -972,7 +977,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   VDecayVtxXZE->push_back( Ks0_vFit_vertex_noMC->error().czx() );
 		   VDecayVtxYZE->push_back( Ks0_vFit_vertex_noMC->error().czy() );
 
- // ********************* muon-trigger-machint**************** 
+           // ********************* muon-trigger-machint**************** 
 		   
 		   const pat::Muon* muon1 = &(*iMuon1);
 		   const pat::Muon* muon2 = &(*iMuon2);
@@ -987,7 +992,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   tri_JpsiTk->push_back( tri_JpsiTk_tmp );
            tri_JpsiTkTk->push_back( tri_JpsiTkTk_tmp );
 
- 	   // ************
+ 	       // ************
 		  
 		   mu1soft->push_back(iMuon1->isSoftMuon(bestVtx) );
 		   mu2soft->push_back(iMuon2->isSoftMuon(bestVtx) );
@@ -997,6 +1002,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   mu2PF->push_back(iMuon2->isPFMuon());
 		   mu1loose->push_back(muon::isLooseMuon(*iMuon1));
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
+
+           //Trigger Selector
+           drTrg_m1->push_back(dRMuonMatching1);
+	       drTrg_m2->push_back(dRMuonMatching2);
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
 		   mumNHits->push_back( glbTrackM->numberOfValidHits() );
@@ -1021,7 +1030,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   pi2dz_e->push_back(v0daughters[1].dzError());
 
 		   // try refitting the primary without the tracks in the B reco candidate		   
-		  //std::cout<< "pass all" << std::endl;
+		   //std::cout<< "pass all" << std::endl;
 		   nB++;	       
 		   
 		   /////////////////////////////////////////////////
@@ -1092,7 +1101,9 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
-
+   //Trigger Selector
+   drTrg_m1->clear();
+   drTrg_m2->clear();
 }
 
 bool JPsiKs0::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
@@ -1370,6 +1381,9 @@ JPsiKs0::beginJob()
      tree_->Branch("mu2PF",&mu2PF);
      tree_->Branch("mu1loose",&mu1loose);
      tree_->Branch("mu2loose",&mu2loose);
+	 //Trigger Selector
+	 tree_->Branch("drTrg_m1", &drTrg_m1);
+	 tree_->Branch("drTrg_m2", &drTrg_m2);
   }
     // gen
   if (isMC_) {
