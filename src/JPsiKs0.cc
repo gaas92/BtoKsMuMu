@@ -626,7 +626,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
           	dRMuonMatching2 = dR2;	 
 		  }
       }
-      if ((dRMuonMatching1 != -1) | (dRMuonMatching2 != -1)) std::cout << "matching ok ..." << std::endl;
+      //if ((dRMuonMatching1 != -1) | (dRMuonMatching2 != -1)) std::cout << "matching ok ..." << std::endl;
+	  
 	  // Measure distance between tracks at their closest approach
 	  ClosestApproachInRPhi cApp;
 	  cApp.calculate(mu1State, mu2State);
@@ -1006,8 +1007,9 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
 
            //Trigger Selector
-           //drTrg_m1->push_back(dRMuonMatching1);
-	       //drTrg_m2->push_back(dRMuonMatching2);
+           drTrg_m1->push_back(dRMuonMatching1);
+	       drTrg_m2->push_back(dRMuonMatching2);
+		   std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
 		   mumNHits->push_back( glbTrackM->numberOfValidHits() );
