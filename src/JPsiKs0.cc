@@ -1387,8 +1387,8 @@ JPsiKs0::beginJob()
      tree_->Branch("mu1loose",&mu1loose);
      tree_->Branch("mu2loose",&mu2loose);
 	 //Trigger Selector
-	 //tree_->Branch("drTrg_m1", &drTrg_m1);
-	 //tree_->Branch("drTrg_m2", &drTrg_m2);
+	 tree_->Branch("drTrg_m1", &drTrg_m1);
+	 tree_->Branch("drTrg_m2", &drTrg_m2);
   }
     // gen
   if (isMC_) {
