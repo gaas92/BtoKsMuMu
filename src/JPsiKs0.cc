@@ -1010,8 +1010,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
 
            //Trigger Selector
-           drTrg_m1->push_back(0.05);
-	       drTrg_m2->push_back(0.05);
+           drTrg_m1->push_back(dRMuonMatching1);
+	       drTrg_m2->push_back(dRMuonMatching2);
 		   std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
