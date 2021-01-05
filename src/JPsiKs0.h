@@ -133,7 +133,7 @@ private:
   std::vector<bool>        *mu1PF, *mu2PF, *mu1loose, *mu2loose;  
 
   //Triger Selector
-  std::vector<bool>       *drTrg_m1, *drTrg_m2; 
+  std::vector<float>       *drTrg_m1, *drTrg_m2; 
  
   int                      muAcc, muTrig, weight;
  
