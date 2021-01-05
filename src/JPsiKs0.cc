@@ -1008,8 +1008,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
 
            //Trigger Selector
-           drTrg_m1->push_back(false);
-	       drTrg_m2->push_back(false);
+           //drTrg_m1->push_back(false);
+	       //drTrg_m2->push_back(false);
 		   std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
@@ -1107,8 +1107,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
    //Trigger Selector
-   drTrg_m1->clear();
-   drTrg_m2->clear();
+   //drTrg_m1->clear();
+   //drTrg_m2->clear();
 }
 
 bool JPsiKs0::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
@@ -1387,8 +1387,8 @@ JPsiKs0::beginJob()
      tree_->Branch("mu1loose",&mu1loose);
      tree_->Branch("mu2loose",&mu2loose);
 	 //Trigger Selector
-	 tree_->Branch("drTrg_m1", &drTrg_m1);
-	 tree_->Branch("drTrg_m2", &drTrg_m2);
+	 //tree_->Branch("drTrg_m1", &drTrg_m1);
+	 //tree_->Branch("drTrg_m2", &drTrg_m2);
   }
     // gen
   if (isMC_) {
