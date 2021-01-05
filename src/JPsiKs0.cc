@@ -170,7 +170,6 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   using namespace edm;
   using namespace reco;
   using namespace std;
-  std::vector<float>       *drTrg_m1, *drTrg_m2; 
 
   //std::cout << "analyse ok" <<std::endl;
   //*********************************
@@ -1009,8 +1008,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
 
            //Trigger Selector
-           drTrg_m1->push_back(0.05);
-	       drTrg_m2->push_back(0.05);
+           //drTrg_m1->push_back(0.05);
+	       //drTrg_m2->push_back(0.05);
 		   std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
@@ -1108,8 +1107,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
    //Trigger Selector
-   //drTrg_m1->clear();
-   //drTrg_m2->clear();
+   drTrg_m1->clear();
+   drTrg_m2->clear();
 }
 
 bool JPsiKs0::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
