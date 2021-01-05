@@ -490,7 +490,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   // el objeto que satisfaga estas dos condiciones se agrega
   // al vector triggeringMuons, definido previamente
   // std::cout << "\n\n ------------>>>>>>>>TriggerObjectStandAlone TriggerObjectStandAlone TriggerObjectStandAlone TriggerObjectStandAlone"<<"\n";
-  /*
+  
   for (pat::TriggerObjectStandAlone obj : *triggerObjects) { // note: not "const &" since we want to call unpackPathNames   
     int_obj++; 
     // std::cout << "---->>obj number = " <<int_obj << "\n";
@@ -542,7 +542,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    std::cout << " \t>>> components (pt, eta, phi) = (" << ij.pt() << ", " << ij.eta() << ", " << ij.phi() << ")\n";
     }
   }
-  */
+  
   //*****************************************
   //Let's begin by looking for J/psi->mu+mu-
 
