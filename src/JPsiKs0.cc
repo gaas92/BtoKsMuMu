@@ -1064,27 +1064,27 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    nB = 0; nMu = 0;
    trigger = 0;
-   std::cout << "ok 1067" <<std::endl;	
-   B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
-   std::cout << "ok 1069" << std::endl;
-   B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
+   std::cout << "ok 1067" <<std::endl;
+   if (!OnlyGen_){	
+   		B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
+   		B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
 
-   B_J_mass->clear();  B_J_px->clear();  B_J_py->clear();  B_J_pz->clear();
+   		B_J_mass->clear();  B_J_px->clear();  B_J_py->clear();  B_J_pz->clear();
 
-   B_Ks0_pt1->clear(); B_Ks0_px1->clear(); B_Ks0_py1->clear(); B_Ks0_pz1->clear(); B_Ks0_charge1->clear(); 
-   B_Ks0_pt2->clear(); B_Ks0_px2->clear(); B_Ks0_py2->clear(); B_Ks0_pz2->clear(); B_Ks0_charge2->clear(); 
+   		B_Ks0_pt1->clear(); B_Ks0_px1->clear(); B_Ks0_py1->clear(); B_Ks0_pz1->clear(); B_Ks0_charge1->clear(); 
+   		B_Ks0_pt2->clear(); B_Ks0_px2->clear(); B_Ks0_py2->clear(); B_Ks0_pz2->clear(); B_Ks0_charge2->clear(); 
 
-   B_Ks0_px1_track->clear(); B_Ks0_py1_track->clear(); B_Ks0_pz1_track->clear(); 
-   B_Ks0_px2_track->clear(); B_Ks0_py2_track->clear(); B_Ks0_pz2_track->clear(); 
+   		B_Ks0_px1_track->clear(); B_Ks0_py1_track->clear(); B_Ks0_pz1_track->clear(); 
+   		B_Ks0_px2_track->clear(); B_Ks0_py2_track->clear(); B_Ks0_pz2_track->clear(); 
 
-   B_J_pt1->clear();  B_J_px1->clear();  B_J_py1->clear();  B_J_pz1->clear(), B_J_charge1->clear();
-   B_J_pt2->clear();  B_J_px2->clear();  B_J_py2->clear();  B_J_pz2->clear(), B_J_charge2->clear();
+   		B_J_pt1->clear();  B_J_px1->clear();  B_J_py1->clear();  B_J_pz1->clear(), B_J_charge1->clear();
+   		B_J_pt2->clear();  B_J_px2->clear();  B_J_py2->clear();  B_J_pz2->clear(), B_J_charge2->clear();
 
-   B_Ks0_chi2->clear(); B_J_chi2->clear(); B_chi2->clear();
-   B_Prob->clear(); B_J_Prob->clear(); B_ks0_Prob->clear();
-   std::cout << "ok 1084" << std::endl;	
+   		B_Ks0_chi2->clear(); B_J_chi2->clear(); B_chi2->clear();
+   		B_Prob->clear(); B_J_Prob->clear(); B_ks0_Prob->clear();
+   } 
    // *********
-
+   std::cout << "1087 ok "<< std::endl;	
    nVtx = 0;
    priVtxX = 0; priVtxY = 0; priVtxZ = 0; 
    priVtxXE = 0; priVtxYE = 0; priVtxZE = 0; priVtxCL = 0;
