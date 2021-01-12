@@ -1081,7 +1081,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    B_Ks0_chi2->clear(); B_J_chi2->clear(); B_chi2->clear();
    B_Prob->clear(); B_J_Prob->clear(); B_ks0_Prob->clear();
-
+   std::cout << "ok 1084" << std::endl;	
    // *********
 
    nVtx = 0;
