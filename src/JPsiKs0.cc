@@ -1089,31 +1089,32 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    priVtxX = 0; priVtxY = 0; priVtxZ = 0; 
    priVtxXE = 0; priVtxYE = 0; priVtxZE = 0; priVtxCL = 0;
    priVtxXYE = 0;   priVtxXZE = 0;   priVtxYZE = 0;
-
-   bDecayVtxX->clear(); bDecayVtxY->clear(); bDecayVtxZ->clear(); 
-   bDecayVtxXE->clear(); bDecayVtxYE->clear(); bDecayVtxZE->clear(); 
-   bDecayVtxXYE->clear(); bDecayVtxXZE->clear(); bDecayVtxYZE->clear();  
-
-   VDecayVtxX->clear(); VDecayVtxY->clear(); VDecayVtxZ->clear();
-   VDecayVtxXE->clear(); VDecayVtxYE->clear(); VDecayVtxZE->clear();
-   VDecayVtxXYE->clear(); VDecayVtxXZE->clear(); VDecayVtxYZE->clear();
-  
-   pi1dxy->clear(); pi2dxy->clear(); pi1dz->clear(); pi2dz->clear();
-   pi1dxy_e->clear(); pi2dxy_e->clear(); pi1dz_e->clear(); pi2dz_e->clear();
-
-   mumC2->clear();
-   mumNHits->clear(); mumNPHits->clear();
-   mupC2->clear();
-   mupNHits->clear(); mupNPHits->clear();
-   mumdxy->clear(); mupdxy->clear(); mumdz->clear(); mupdz->clear(); muon_dca->clear();
-
-   tri_Dim25->clear(); tri_JpsiTk->clear(); tri_JpsiTkTk->clear();
-      
-   mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
-   mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
-   //Trigger Selector
-   drTrg_m1->clear();
-   drTrg_m2->clear();
+   if (!OnlyGen_){
+   		bDecayVtxX->clear(); bDecayVtxY->clear(); bDecayVtxZ->clear(); 
+   		bDecayVtxXE->clear(); bDecayVtxYE->clear(); bDecayVtxZE->clear(); 
+   		bDecayVtxXYE->clear(); bDecayVtxXZE->clear(); bDecayVtxYZE->clear();  
+		
+   		VDecayVtxX->clear(); VDecayVtxY->clear(); VDecayVtxZ->clear();
+   		VDecayVtxXE->clear(); VDecayVtxYE->clear(); VDecayVtxZE->clear();
+   		VDecayVtxXYE->clear(); VDecayVtxXZE->clear(); VDecayVtxYZE->clear();
+		
+   		pi1dxy->clear(); pi2dxy->clear(); pi1dz->clear(); pi2dz->clear();
+   		pi1dxy_e->clear(); pi2dxy_e->clear(); pi1dz_e->clear(); pi2dz_e->clear();
+		
+   		mumC2->clear();
+   		mumNHits->clear(); mumNPHits->clear();
+   		mupC2->clear();
+   		mupNHits->clear(); mupNPHits->clear();
+   		mumdxy->clear(); mupdxy->clear(); mumdz->clear(); mupdz->clear(); muon_dca->clear();
+		
+   		tri_Dim25->clear(); tri_JpsiTk->clear(); tri_JpsiTkTk->clear();
+		
+   		mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
+   		mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
+   		//Trigger Selector
+   		drTrg_m1->clear();
+   		drTrg_m2->clear();
+   }
 }
 
 bool JPsiKs0::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
