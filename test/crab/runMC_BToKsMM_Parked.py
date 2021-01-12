@@ -68,12 +68,12 @@ def main():
 
         config.General.requestName = None
         #config.General.workArea = 'ZMuondecay'
-        config.General.workArea = 'testParkedMC_RES'
+        config.General.workArea = 'testParked_onlyGenNR'
 	config.General.transferOutputs = True
 	config.General.transferLogs = False
 
         config.JobType.pluginName = 'Analysis'
-	config.JobType.psetName = '/afs/cern.ch/work/g/gayalasa/public/B0Analysis/CMSSW_10_6_12/src/myAnalyzers/BtoKsMuMu/test/MCPsiks0Rootupler.py' #MC Parked configfile
+	config.JobType.psetName = '/afs/cern.ch/work/g/gayalasa/public/B0Analysis/CMSSW_10_6_12/src/myAnalyzers/BtoKsMuMu/test/MC_onlygen_Psiks0Rootupler.py' #MC Parked configfile
 	config.JobType.allowUndistributedCMSSW = True
 
         config.Data.inputDataset = None
@@ -95,8 +95,8 @@ def main():
 
         # Will submit one task for each of these input datasets.
         inputDatasets = [ 
-                          #'/BdToK0sMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
-                          '/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
+                          '/BdToK0sMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
+                          #'/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
                  	]
  
         for inDS in inputDatasets:
