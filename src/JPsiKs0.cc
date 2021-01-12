@@ -325,7 +325,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   
   // for the non-resonant channel 
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && !isRes_) {
-	std::cout<< "only gen test ok "<< std::cout;  
+	std::cout<< "only gen test ok "<< std::endl;  
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
