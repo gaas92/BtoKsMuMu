@@ -325,6 +325,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   
   // for the non-resonant channel 
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && !isRes_) {
+	std::cout<< "only gen test ok "<< std::cout;  
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
@@ -1055,7 +1056,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    //fill the tree and clear the vectors
    if (nB > 0 || OnlyGen_) 
      {
-       //std::cout << "filling tree" << endl;
+       std::cout << "filling tree" << endl;
        tree_->Fill();
      }
    // *********
@@ -1393,7 +1394,8 @@ JPsiKs0::beginJob()
 	 tree_->Branch("drTrg_m2", &drTrg_m2);
   }
     // gen
-  if (isMC_) {
+  if (isMC_ || OnlyGen_) {
+
      tree_->Branch("gen_b_p4",      "TLorentzVector",  &gen_b_p4);
      tree_->Branch("gen_jpsi_p4",   "TLorentzVector",  &gen_jpsi_p4);
      tree_->Branch("gen_pionks0_p4","TLorentzVector",  &gen_ks0_p4);
