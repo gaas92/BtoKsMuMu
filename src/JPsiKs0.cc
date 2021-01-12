@@ -1056,8 +1056,9 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    //fill the tree and clear the vectors
    if (nB > 0 || OnlyGen_) 
      {
-       std::cout << "filling tree" << endl;
+       std::cout << "filling tree" << std::endl;
        tree_->Fill();
+	   std::cout << "fill ok" << std::endl;
      }
    // *********
 
