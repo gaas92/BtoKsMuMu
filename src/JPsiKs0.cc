@@ -1066,7 +1066,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    trigger = 0;
    std::cout << "ok 1067" <<std::endl;	
    B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
-   std::cout << "ok 1069" std::endl;
+   std::cout << "ok 1069" << std::endl;
    B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
 
    B_J_mass->clear();  B_J_px->clear();  B_J_py->clear();  B_J_pz->clear();
