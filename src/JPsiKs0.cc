@@ -422,6 +422,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   if ( triggerResults_handle.isValid()) {
    std::cout << "Triggers ok ..." <<std::endl;	  
    const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+   std::vector<std::string> const& names = TheTriggerNames.triggerNames(); //new 
+   for (unsigned i = 0; i < TheTriggerNames.size(); ++i) {
+      std::cout << names[i] << "  " << TheTriggerNames.triggerName(i) << std::endl;
+   }
    unsigned int NTRIGGERS = 20;
    // de acuerdo con https://indico.cern.ch/event/988495/contributions/4161361/attachments/2166530/3656840/Slides_210104_ERDUpdate.pdf
    // los Trigger de BParking son : HLT_Mu7_IP4, HLT_Mu9_IP5, HLT_Mu9_IP6, HLT_Mu12_IP6
