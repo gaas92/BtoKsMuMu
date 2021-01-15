@@ -420,12 +420,12 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //origen /afs/cern.ch/user/j/jmejiagu/work/public/data2015_RunII/HI/CMSSW_8_0_31/src/Ponia/OniaPhoton/src/Bu_JpsiK_PAT.cc
   trigger = 0;
   if ( triggerResults_handle.isValid()) {
-   std::cout << "Triggers ok ..." <<std::endl;	  
-   const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
-   std::vector<std::string> const& names = TheTriggerNames.triggerNames(); //new 
-   for (unsigned i = 0; i < TheTriggerNames.size(); ++i) {
-      std::cout << names[i] << "  " << TheTriggerNames.triggerName(i) << std::endl;
-   }
+   //std::cout << "Triggers ok ..." <<std::endl;	  
+   //const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+   //std::vector<std::string> const& names = TheTriggerNames.triggerNames(); //new 
+   //for (unsigned i = 0; i < TheTriggerNames.size(); ++i) {
+   //   std::cout << names[i] << "  " << TheTriggerNames.triggerName(i) << std::endl;
+   //}
    unsigned int NTRIGGERS = 20;
    // de acuerdo con https://indico.cern.ch/event/988495/contributions/4161361/attachments/2166530/3656840/Slides_210104_ERDUpdate.pdf
    // los Trigger de BParking son : HLT_Mu7_IP4, HLT_Mu9_IP5, HLT_Mu9_IP6, HLT_Mu12_IP6
@@ -447,10 +447,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      for (int version = 1; version < 9; version++) {
        std::stringstream ss;
        ss << TriggersToTest[i] << "_v" << version;
-	   std::cout << "Looking for: " << ss.rdbuf() << std::endl; 
+	   //std::cout << "Looking for: " << ss.rdbuf() << std::endl; 
        unsigned int bit = TheTriggerNames.triggerIndex(edm::InputTag(ss.str()).label());
-	   std::cout << "Resulting bit: "<< bit << std::endl;
-	   std::cout << "trigger handle size: "<< triggerResults_handle->size() << std::endl;
+	   //std::cout << "Resulting bit: "<< bit << std::endl;
+	   //std::cout << "trigger handle size: "<< triggerResults_handle->size() << std::endl;
        if (bit < triggerResults_handle->size() && triggerResults_handle->accept(bit) && !triggerResults_handle->error(bit)) {
          trigger += (1<<i);
          break;
@@ -529,10 +529,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     // std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
     for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
         std::string filterName = obj.filterLabels()[h];
-        // std::cout << "\t\tfilterlabes:  " << h << filterName << "\n";
+        std::cout << "\t\tfilterlabes:  " << h << filterName << "\n";
         if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
             isTriggerMuon = true;
-            // std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
+            std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
         }
 	    //else{ isTriggerMuon = false; }
     }
