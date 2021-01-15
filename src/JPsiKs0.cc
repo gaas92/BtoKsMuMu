@@ -446,6 +446,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   std::cout << "Looking for: " << ss.rdbuf() << std::endl; 
        unsigned int bit = TheTriggerNames.triggerIndex(edm::InputTag(ss.str()).label());
 	   std::cout << "Resulting bit: "<< bit << std::endl;
+	   std::cout << "trigger handle size: "<< triggerResults_handle->size() << std::endl;
        if (bit < triggerResults_handle->size() && triggerResults_handle->accept(bit) && !triggerResults_handle->error(bit)) {
          trigger += (1<<i);
          break;
