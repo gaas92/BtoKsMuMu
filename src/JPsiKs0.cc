@@ -420,6 +420,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   //origen /afs/cern.ch/user/j/jmejiagu/work/public/data2015_RunII/HI/CMSSW_8_0_31/src/Ponia/OniaPhoton/src/Bu_JpsiK_PAT.cc
   trigger = 0;
   if ( triggerResults_handle.isValid()) {
+   std::cout << "Triggers ok ..." <<std::endl;	  
    const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
    unsigned int NTRIGGERS = 20;
    // de acuerdo con https://indico.cern.ch/event/988495/contributions/4161361/attachments/2166530/3656840/Slides_210104_ERDUpdate.pdf
@@ -1093,22 +1094,22 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    		bDecayVtxX->clear(); bDecayVtxY->clear(); bDecayVtxZ->clear(); 
    		bDecayVtxXE->clear(); bDecayVtxYE->clear(); bDecayVtxZE->clear(); 
    		bDecayVtxXYE->clear(); bDecayVtxXZE->clear(); bDecayVtxYZE->clear();  
-		
+
    		VDecayVtxX->clear(); VDecayVtxY->clear(); VDecayVtxZ->clear();
    		VDecayVtxXE->clear(); VDecayVtxYE->clear(); VDecayVtxZE->clear();
    		VDecayVtxXYE->clear(); VDecayVtxXZE->clear(); VDecayVtxYZE->clear();
-		
+
    		pi1dxy->clear(); pi2dxy->clear(); pi1dz->clear(); pi2dz->clear();
    		pi1dxy_e->clear(); pi2dxy_e->clear(); pi1dz_e->clear(); pi2dz_e->clear();
-		
+
    		mumC2->clear();
    		mumNHits->clear(); mumNPHits->clear();
    		mupC2->clear();
    		mupNHits->clear(); mupNPHits->clear();
    		mumdxy->clear(); mupdxy->clear(); mumdz->clear(); mupdz->clear(); muon_dca->clear();
-		
+
    		tri_Dim25->clear(); tri_JpsiTk->clear(); tri_JpsiTkTk->clear();
-		
+
    		mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    		mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
    		//Trigger Selector
