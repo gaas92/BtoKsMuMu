@@ -421,7 +421,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   trigger = 0;
   if ( triggerResults_handle.isValid()) {
    //std::cout << "Triggers ok ..." <<std::endl;	  
-   //const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+   const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
    //std::vector<std::string> const& names = TheTriggerNames.triggerNames(); //new 
    //for (unsigned i = 0; i < TheTriggerNames.size(); ++i) {
    //   std::cout << names[i] << "  " << TheTriggerNames.triggerName(i) << std::endl;
