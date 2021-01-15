@@ -443,6 +443,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      for (int version = 1; version < 9; version++) {
        std::stringstream ss;
        ss << TriggersToTest[i] << "_v" << version;
+	   std::cout << "Looking for: "<< ss << std::endl; 
        unsigned int bit = TheTriggerNames.triggerIndex(edm::InputTag(ss.str()).label());
        if (bit < triggerResults_handle->size() && triggerResults_handle->accept(bit) && !triggerResults_handle->error(bit)) {
          trigger += (1<<i);
@@ -1065,7 +1066,6 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    nB = 0; nMu = 0;
    trigger = 0;
-   std::cout << "ok 1067" <<std::endl;
    if (!OnlyGen_){	
    		B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
    		B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
@@ -1085,7 +1085,6 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    		B_Prob->clear(); B_J_Prob->clear(); B_ks0_Prob->clear();
    } 
    // *********
-   std::cout << "1087 ok "<< std::endl;	
    nVtx = 0;
    priVtxX = 0; priVtxY = 0; priVtxZ = 0; 
    priVtxXE = 0; priVtxYE = 0; priVtxZE = 0; priVtxCL = 0;
