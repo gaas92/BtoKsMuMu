@@ -110,6 +110,8 @@ JPsiKs0::JPsiKs0(const edm::ParameterSet& iConfig)
   mumdxy(0), mupdxy(0), mumdz(0), mupdz(0),
   muon_dca(0),
 
+  trg_dzm1(0), trg_dzm2(0)
+
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
   mu1soft(0), mu2soft(0), mu1tight(0), mu2tight(0), 
@@ -646,7 +648,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		}
       }
       //if ((dRMuonMatching1 != -1) | (dRMuonMatching2 != -1)) std::cout << "matching ok ..." << std::endl;
-	  std::cout << "distaNCE TO TRIGGER :" << dzm1_trg << " & " << dzm2_trg << std::endl;
+	  //std::cout << "distaNCE TO TRIGGER :" << dzm1_trg << " & " << dzm2_trg << std::endl;
 	  // Measure distance between tracks at their closest approach
 	  ClosestApproachInRPhi cApp;
 	  cApp.calculate(mu1State, mu2State);
@@ -1041,6 +1043,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   mumdz->push_back(glbTrackM->dz(bestVtx.position()) );
 		   mupdz->push_back(glbTrackP->dz(bestVtx.position()) );
 		   muon_dca->push_back(dca);
+		   trg_dzm1->push_back(dzm1_trg);
+		   trg_dzm2->push_back(dzm2_trg);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
@@ -1119,6 +1123,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    		mupC2->clear();
    		mupNHits->clear(); mupNPHits->clear();
    		mumdxy->clear(); mupdxy->clear(); mumdz->clear(); mupdz->clear(); muon_dca->clear();
+		trg_dzm1->clear(); trg_dzm2->clear();   
 
    		tri_Dim25->clear(); tri_JpsiTk->clear(); tri_JpsiTkTk->clear();
 
@@ -1390,6 +1395,8 @@ JPsiKs0::beginJob()
      tree_->Branch("mumdxy",&mumdxy);
      tree_->Branch("mupdxy",&mupdxy);
      tree_->Branch("muon_dca",&muon_dca);
+     tree_->Branch("trg_dzm1",&trg_dzm1);
+     tree_->Branch("trg_dzm2",&trg_dzm2);
    
      tree_->Branch("tri_Dim25",&tri_Dim25);
      tree_->Branch("tri_JpsiTk",&tri_JpsiTk);
