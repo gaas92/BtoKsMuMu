@@ -447,12 +447,12 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	 "L1_SingleMu9er1p5", "L1_SingleMu8er1p5", "L1_SingleMu7er1p5", "L1_SingleMu6er1p5"}; //16-19
 
    for (unsigned int i = 0; i < NTRIGGERS; i++) {
-	 for (unsigned h = 0; h < TheTriggerNames.size(); ++h){
-		std::string triggerName = TheTriggerNames.triggerName(i); 
+	 for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
+		std::string triggerName = TheTriggerNames.triggerName(h); 
 		if (triggerName.find(TriggersToTest[i]) != std::string::npos ){
 			std::cout<< "Find " << triggerName << " found !!" << std::endl; 
 		} 
-		std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(i)<< " | looking for: "<< TriggersToTest[i] << std::endl;
+		std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(h)<< " | looking for: "<< TriggersToTest[i] << std::endl;
 	 }
      //for (int version = 1; version < 9; version++) {
      //  std::stringstream ss;
