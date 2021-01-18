@@ -618,7 +618,8 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  //Match with TriggerMuons, BParking Nano MuonTriggerSelector emulation 
 	  float dRMuonMatching1 = -1.; 	
 	  float dRMuonMatching2 = -1.;
-	  float dzm1_trg, dzm2_trg = 10.0;
+	  float dzm1_trg = 10.0;
+	  float dzm2_trg = 10.0;
 	   	
       for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
         float dR1 = reco::deltaR(triggeringMuons[iTrg], *iMuon1);
