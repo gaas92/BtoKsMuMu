@@ -528,7 +528,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     isTriggerMuon = false;
     // std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
     for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
-        //std::string filterName = obj.filterLabels()[h];
+        std::string filterName = obj.filterLabels()[h];
         //std::cout << "\t\tfilterlabes:  " << h << filterName << "\n";
         if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
             isTriggerMuon = true;
