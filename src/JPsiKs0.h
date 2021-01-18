@@ -126,6 +126,7 @@ private:
   std::vector<int>         *mupNHits, *mupNPHits;
   std::vector<float>       *mumdxy, *mupdxy, *mumdz, *mupdz;
   std::vector<float>       *muon_dca;
+  std::vector<float>       *trg_dzm1, *trg_dzm2;
 
   std::vector<int>         *tri_Dim25, *tri_JpsiTk, *tri_JpsiTkTk;
  
