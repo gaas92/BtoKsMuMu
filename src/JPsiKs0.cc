@@ -645,7 +645,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		}
       }
       //if ((dRMuonMatching1 != -1) | (dRMuonMatching2 != -1)) std::cout << "matching ok ..." << std::endl;
-	  
+	  std::cout << "distaNCE TO TRIGGER :" << dzm1_trg << " & " << dzm2_trg << std::endl;
 	  // Measure distance between tracks at their closest approach
 	  ClosestApproachInRPhi cApp;
 	  cApp.calculate(mu1State, mu2State);
