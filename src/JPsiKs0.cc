@@ -528,11 +528,11 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     isTriggerMuon = false;
     // std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
     for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
-        std::string filterName = obj.filterLabels()[h];
-        std::cout << "\t\tfilterlabes:  " << h << filterName << "\n";
+        //std::string filterName = obj.filterLabels()[h];
+        //std::cout << "\t\tfilterlabes:  " << h << filterName << "\n";
         if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
             isTriggerMuon = true;
-            std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
+            //std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
         }
 	    //else{ isTriggerMuon = false; }
     }
@@ -618,25 +618,31 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  //Match with TriggerMuons, BParking Nano MuonTriggerSelector emulation 
 	  float dRMuonMatching1 = -1.; 	
 	  float dRMuonMatching2 = -1.;
+	  float dzm1_trg, dzm2_trg = 10.0;
 	   	
       for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
         float dR1 = reco::deltaR(triggeringMuons[iTrg], *iMuon1);
         float dR2 = reco::deltaR(triggeringMuons[iTrg], *iMuon2);
         // std::cout << "\n\t\tdR = " << dR << "\n";
-	      if((dR1 < dRMuonMatching1 || dRMuonMatching1 == -1) && dR1 < maxdR_){
-          	dRMuonMatching1 = dR1;
-          	// float eta = muon.eta() - triggeringMuons[iTrg].eta();
-          	// float phi = muon.phi() - triggeringMuons[iTrg].phi();
-          	// dR_H = std::sqrt(eta*eta+phi*phi);
-
-          	// std::cout << "\n\t\t dR_H"<< iTrg <<" = " << dR_H
-          	//   << "\n\t\treco (pt, eta, phi) = " << muon.pt() << " " << muon.eta() << " " << muon.phi() << " " 
-          	//   << "\n\t\tHLT (pt, eta, phi)  = " << triggeringMuons[iTrg].pt() << " " << triggeringMuons[iTrg].eta() << " " << triggeringMuons[iTrg].phi()
-          	//   << std::endl;
-	      }
-	      if((dR2 < dRMuonMatching2 || dRMuonMatching2 == -1) && dR2 < maxdR_){
-          	dRMuonMatching2 = dR2;	 
-		  }
+		if (abs(triggeringMuons[iTrg].vz() - iMuon1.vz()) < dzm1_trg){
+		  dzm1_trg = abs(triggeringMuons[iTrg].vz() - iMuon1.vz());
+		}
+		if (abs(triggeringMuons[iTrg].vz() - iMuon2.vz())) {
+		  dzm2_trg = abs(triggeringMuons[iTrg].vz() - iMuon2.vz());
+		}
+	    if((dR1 < dRMuonMatching1 || dRMuonMatching1 == -1) && dR1 < maxdR_){
+        	dRMuonMatching1 = dR1;
+        	// float eta = muon.eta() - triggeringMuons[iTrg].eta();
+        	// float phi = muon.phi() - triggeringMuons[iTrg].phi();
+        	// dR_H = std::sqrt(eta*eta+phi*phi);
+        	// std::cout << "\n\t\t dR_H"<< iTrg <<" = " << dR_H
+        	//   << "\n\t\treco (pt, eta, phi) = " << muon.pt() << " " << muon.eta() << " " << muon.phi() << " " 
+        	//   << "\n\t\tHLT (pt, eta, phi)  = " << triggeringMuons[iTrg].pt() << " " << triggeringMuons[iTrg].eta() << " " << triggeringMuons[iTrg].phi()
+        	//   << std::endl;
+	    }
+	    if((dR2 < dRMuonMatching2 || dRMuonMatching2 == -1) && dR2 < maxdR_){
+        	dRMuonMatching2 = dR2;	 
+		}
       }
       //if ((dRMuonMatching1 != -1) | (dRMuonMatching2 != -1)) std::cout << "matching ok ..." << std::endl;
 	  
