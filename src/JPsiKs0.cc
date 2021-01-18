@@ -110,7 +110,7 @@ JPsiKs0::JPsiKs0(const edm::ParameterSet& iConfig)
   mumdxy(0), mupdxy(0), mumdz(0), mupdz(0),
   muon_dca(0),
 
-  trg_dzm1(0), trg_dzm2(0)
+  trg_dzm1(0), trg_dzm2(0),
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
