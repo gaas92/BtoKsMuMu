@@ -446,18 +446,21 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	 "L1_SingleMu9er1p5", "L1_SingleMu8er1p5", "L1_SingleMu7er1p5", "L1_SingleMu6er1p5"}; //16-19
 
    for (unsigned int i = 0; i < NTRIGGERS; i++) {
-     for (int version = 1; version < 9; version++) {
-       std::stringstream ss;
-       ss << TriggersToTest[i] << "_v" << version;
-	   //std::cout << "Looking for: " << ss.rdbuf() << std::endl; 
-       unsigned int bit = TheTriggerNames.triggerIndex(edm::InputTag(ss.str()).label());
-	   //std::cout << "Resulting bit: "<< bit << std::endl;
-	   //std::cout << "trigger handle size: "<< triggerResults_handle->size() << std::endl;
-       if (bit < triggerResults_handle->size() && triggerResults_handle->accept(bit) && !triggerResults_handle->error(bit)) {
-         trigger += (1<<i);
-         break;
-       }
-     }
+	 for (unsigned h = 0; h < TheTriggerNames.size(); ++h){
+		std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(i) << std::endl;
+	 }
+     //for (int version = 1; version < 9; version++) {
+     //  std::stringstream ss;
+     //  ss << TriggersToTest[i] << "_v" << version;
+	 //  //std::cout << "Looking for: " << ss.rdbuf() << std::endl; 
+     //  unsigned int bit = TheTriggerNames.triggerIndex(edm::InputTag(ss.str()).label());
+	 //  //std::cout << "Resulting bit: "<< bit << std::endl;
+	 //  //std::cout << "trigger handle size: "<< triggerResults_handle->size() << std::endl;
+     //  if (bit < triggerResults_handle->size() && triggerResults_handle->accept(bit) && !triggerResults_handle->error(bit)) {
+     //    trigger += (1<<i);
+     //    break;
+     //  }
+     //}
    }
   } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
   
