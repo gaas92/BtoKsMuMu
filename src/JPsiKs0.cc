@@ -447,7 +447,11 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    for (unsigned int i = 0; i < NTRIGGERS; i++) {
 	 for (unsigned h = 0; h < TheTriggerNames.size(); ++h){
-		std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(i) << std::endl;
+		std::string triggerName = TheTriggerNames.triggerName(i); 
+		if (triggerName.find(TriggersToTest[i]) != std::string::npos ){
+			std::cout<< "Find " << triggerName << " found !!" << std::endl; 
+		} 
+		//std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(i) << std::endl;
 	 }
      //for (int version = 1; version < 9; version++) {
      //  std::stringstream ss;
