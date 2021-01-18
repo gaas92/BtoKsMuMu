@@ -625,10 +625,10 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         float dR2 = reco::deltaR(triggeringMuons[iTrg], *iMuon2);
         // std::cout << "\n\t\tdR = " << dR << "\n";
 		if (abs(triggeringMuons[iTrg].vz() - iMuon1->vz()) < dzm1_trg){
-		  dzm1_trg = abs(triggeringMuons[iTrg].vz() - iMuon1.vz());
+		  dzm1_trg = abs(triggeringMuons[iTrg].vz() - iMuon1->vz());
 		}
 		if (abs(triggeringMuons[iTrg].vz() - iMuon2->vz())) {
-		  dzm2_trg = abs(triggeringMuons[iTrg].vz() - iMuon2.vz());
+		  dzm2_trg = abs(triggeringMuons[iTrg].vz() - iMuon2->vz());
 		}
 	    if((dR1 < dRMuonMatching1 || dRMuonMatching1 == -1) && dR1 < maxdR_){
         	dRMuonMatching1 = dR1;
