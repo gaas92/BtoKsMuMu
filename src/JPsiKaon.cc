@@ -112,7 +112,7 @@ JPsiKaon::JPsiKaon(const edm::ParameterSet& iConfig)
   B_J_charge1(0), B_J_charge2(0),
 
   // Primary Vertex (PV)
-  nVtx(0), nTrk(0),
+  nVtx(0),
   priVtxX(0), priVtxY(0), priVtxZ(0), priVtxXE(0), priVtxYE(0), priVtxZE(0), priVtxCL(0),
   priVtxXYE(0), priVtxXZE(0), priVtxYZE(0),
   
@@ -183,7 +183,6 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
   priVtxCL = ChiSquaredProbability((double)(bestVtx.chi2()),(double)(bestVtx.ndof())); 
   nVtx = primaryVertices_handle->size(); 
-  nTrk = bestVtx.nTracks();
 
   lumiblock = iEvent.id().luminosityBlock();
   run = iEvent.id().run();
@@ -546,7 +545,7 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    B_DecayVtxXE->clear();    B_DecayVtxYE->clear();    B_DecayVtxZE->clear();
    B_DecayVtxXYE->clear();   B_DecayVtxXZE->clear();   B_DecayVtxYZE->clear();
 
-   nVtx = 0; nTrk = 0;
+   nVtx = 0; 
    priVtxX = 0;     priVtxY = 0;     priVtxZ = 0; 
    priVtxXE = 0;    priVtxYE = 0;    priVtxZE = 0; priVtxCL = 0;
    priVtxXYE = 0;   priVtxXZE = 0;   priVtxYZE = 0;    
@@ -644,7 +643,6 @@ JPsiKaon::beginJob()
   tree_->Branch("priVtxCL",&priVtxCL, "priVtxCL/f");
 
   tree_->Branch("nVtx",       &nVtx);
-  tree_->Branch("nTks",       &nTks);
   tree_->Branch("run",        &run,       "run/I");
   tree_->Branch("event",      &event,     "event/I");
   tree_->Branch("lumiblock",&lumiblock,"lumiblock/I");

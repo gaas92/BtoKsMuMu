@@ -140,6 +140,7 @@ private:
  
   // vertice primario CON mayor Pt
   unsigned int             nVtx;
+  unsigned int             nTrk;
   float                    priVtxX, priVtxY, priVtxZ, priVtxXE, priVtxYE, priVtxZE, priVtxCL;
   float                    priVtxXYE, priVtxXZE, priVtxYZE;
  

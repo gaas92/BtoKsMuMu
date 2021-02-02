@@ -119,7 +119,7 @@ JPsiKs0::JPsiKs0(const edm::ParameterSet& iConfig)
   //Trigger Selector
   drTrg_m1(0), drTrg_m2(0),
 
-  nVtx(0),
+  nVtx(0), nTrk(0),
   priVtxX(0), priVtxY(0), priVtxZ(0), priVtxXE(0), priVtxYE(0), priVtxZE(0), priVtxCL(0),
   priVtxXYE(0), priVtxXZE(0), priVtxYZE(0),
  
@@ -493,6 +493,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   priVtxCL = ChiSquaredProbability((double)(bestVtx.chi2()),(double)(bestVtx.ndof())); 
 
   nVtx = recVtxs->size();
+  nTrk = bestVtx.nTracks();
 
   lumiblock = iEvent.id().luminosityBlock();
   run = iEvent.id().run();
@@ -1110,7 +1111,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    		B_Prob->clear(); B_J_Prob->clear(); B_ks0_Prob->clear();
    } 
    // *********
-   nVtx = 0;
+   nVtx = 0; nTrk = 0;
    priVtxX = 0; priVtxY = 0; priVtxZ = 0; 
    priVtxXE = 0; priVtxYE = 0; priVtxZE = 0; priVtxCL = 0;
    priVtxXYE = 0;   priVtxXZE = 0;   priVtxYZE = 0;
@@ -1359,6 +1360,7 @@ JPsiKs0::beginJob()
      tree_->Branch("priVtxCL",&priVtxCL, "priVtxCL/f");
    
      tree_->Branch("nVtx",       &nVtx);
+     tree_->Branch("nTrk",       &nTrk);
      tree_->Branch("run",        &run,       "run/I");
      tree_->Branch("event",        &event,     "event/I");
      tree_->Branch("lumiblock",&lumiblock,"lumiblock/I");
