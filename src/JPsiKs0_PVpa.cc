@@ -119,7 +119,7 @@ JPsiKs0_PVpa::JPsiKs0_PVpa(const edm::ParameterSet& iConfig)
   //Trigger Selector
   drTrg_m1(0), drTrg_m2(0),
 
-  nVtx(0),
+  nVtx(0), nTks(0), TrkIndex(0),
   priVtxX(0), priVtxY(0), priVtxZ(0), priVtxXE(0), priVtxYE(0), priVtxZE(0), priVtxCL(0),
   priVtxXYE(0), priVtxXZE(0), priVtxYZE(0),
  
@@ -476,21 +476,21 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   reco::Vertex bestVtx;
   reco::Vertex bestVtxBS;
 
-  // get primary vertex
+  // get primary vertex Change to get PV by best Pointing Angle
   edm::Handle<std::vector<reco::Vertex> > recVtxs;
   iEvent.getByToken(primaryVertices_Label, recVtxs);
-  bestVtx = *(recVtxs->begin());
-  
-  priVtxX = bestVtx.x();
-  priVtxY = bestVtx.y();
-  priVtxZ = bestVtx.z();
-  priVtxXE = bestVtx.covariance(0, 0);
-  priVtxYE = bestVtx.covariance(1, 1);
-  priVtxZE = bestVtx.covariance(2, 2);
-  priVtxXYE = bestVtx.covariance(0, 1);
-  priVtxXZE = bestVtx.covariance(0, 2);
-  priVtxYZE = bestVtx.covariance(1, 2);
-  priVtxCL = ChiSquaredProbability((double)(bestVtx.chi2()),(double)(bestVtx.ndof())); 
+  //bestVtx = *(recVtxs->begin());
+  //
+  //priVtxX = bestVtx.x();
+  //priVtxY = bestVtx.y();
+  //priVtxZ = bestVtx.z();
+  //priVtxXE = bestVtx.covariance(0, 0);
+  //priVtxYE = bestVtx.covariance(1, 1);
+  //priVtxZE = bestVtx.covariance(2, 2);
+  //priVtxXYE = bestVtx.covariance(0, 1);
+  //priVtxXZE = bestVtx.covariance(0, 2);
+  //priVtxYZE = bestVtx.covariance(1, 2);
+  //priVtxCL = ChiSquaredProbability((double)(bestVtx.chi2()),(double)(bestVtx.ndof())); 
 
   nVtx = recVtxs->size();
 
@@ -924,6 +924,47 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 		   if ( T1CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi1KP;
 		   if ( T2CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi2KP;
 		   if ( T2CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi2KP;	 
+		   //Get bestPVtx by best ointing angle 	
+		   // ********************* loop over all the primary vertices and we choose the one with the best pointing angle ****************
+
+           Double_t priVtxX_t = -10000.0;
+           Double_t priVtxY_t = -10000.0;
+           Double_t priVtxZ_t = -10000.0;
+           Double_t priVtxXE_t = -10000.0;
+           Double_t priVtxYE_t = -10000.0;
+           Double_t priVtxZE_t = -10000.0;
+           Double_t priVtxXZE_t = -10000.0;
+           Double_t priVtxXYE_t = -10000.0;
+           Double_t priVtxYZE_t = -10000.0;
+           Double_t priVtxCL_t = -10000.0;
+           Double_t lip1 = -1000000.0;
+		   unsigned int TrkIndex_t = 0;
+		   int nTks_t = 0;
+           for(size_t i = 0; i < recVtxs->size(); ++i) {
+                const reco::Vertex &vtx = (*recVtxs)[i];
+
+                Double_t dx1 = (*bDecayVertexMC).position().x() - vtx.x();
+                Double_t dy1 = (*bDecayVertexMC).position().y() - vtx.y();
+                Double_t dz1 = (*bDecayVertexMC).position().z() - vtx.z();
+                float cosAlphaXYb1 = ( bCandMC->currentState().globalMomentum().x() * dx1 + bCandMC->currentState().globalMomentum().y()*dy1 + bCandMC->currentState().globalMomentum().z()*dz1  )/( sqrt(dx1*dx1+dy1*dy1+dz1*dz1)* bCandMC->currentState().globalMomentum().mag() );
+
+                if(cosAlphaXYb1>lip1){
+                    lip1 = cosAlphaXYb1 ;
+                    priVtxX_t = vtx.x();
+                    priVtxY_t = vtx.y();
+                    priVtxZ_t = vtx.z();
+                    priVtxXE_t = vtx.covariance(0, 0);
+                    priVtxYE_t = vtx.covariance(1, 1);
+                    priVtxZE_t = vtx.covariance(2, 2);
+                    priVtxXYE_t = vtx.covariance(0, 1);
+                    priVtxXZE_t = vtx.covariance(0, 2);
+                    priVtxYZE_t = vtx.covariance(1, 2);
+                    priVtxCL_t = ChiSquaredProbability((double)(vtx.chi2()),(double)(vtx.ndof())); 
+					TrkIndex_t = i;
+					nTks_t    = vtx.nTracks();
+                    bestVtx = vtx;
+                }
+            }
 
 		   // fill candidate variables now
 		   
@@ -987,6 +1028,20 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 		   B_Prob    ->push_back(B_Prob_tmp);
 		   B_J_Prob  ->push_back(J_Prob_tmp);
 		   B_ks0_Prob ->push_back(ks0_Prob_tmp);
+
+           //Best Pointing angle PV
+           priVtxX->push_back(priVtxX_t);
+		   priVtxY->push_back(priVtxY_t);
+		   priVtxZ->push_back(priVtxZ_t);
+		   priVtxXE->push_back(priVtxXE_t); 
+		   priVtxYE->push_back(priVtxYE_t); 
+		   priVtxZE->push_back(priVtxZE_t); 
+		   priVtxXZE->push_back(priVtxXZE_t);
+		   priVtxXYE->push_back(priVtxXYE_t);
+		   priVtxYZE->push_back(priVtxYZE_t);
+		   priVtxCL->push_back(priVtxCL_t); 
+		   TrkIndex->push_back(TrkIndex_t);
+           nTks->push_back(nTks_t);
 
 	       // ************
 		   bDecayVtxX->push_back((*bDecayVertexMC).position().x());
@@ -1108,12 +1163,15 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
    		B_Ks0_chi2->clear(); B_J_chi2->clear(); B_chi2->clear();
    		B_Prob->clear(); B_J_Prob->clear(); B_ks0_Prob->clear();
+
+		// *********
+   		nTks->clear(); priVtxCL->clear(); TrkIndex->clear();
+
+   		priVtxX->clear(); priVtxY->clear(); priVtxZ->clear(); 
+   		priVtxXE->clear(); priVtxYE->clear(); priVtxZE->clear(); priVtxCL->clear();
+   		priVtxXYE->clear(); priVtxXZE->clear(); priVtxYZE->clear();   
    } 
-   // *********
    nVtx = 0;
-   priVtxX = 0; priVtxY = 0; priVtxZ = 0; 
-   priVtxXE = 0; priVtxYE = 0; priVtxZE = 0; priVtxCL = 0;
-   priVtxXYE = 0;   priVtxXZE = 0;   priVtxYZE = 0;
    if (!OnlyGen_){
    		bDecayVtxX->clear(); bDecayVtxY->clear(); bDecayVtxZ->clear(); 
    		bDecayVtxXE->clear(); bDecayVtxYE->clear(); bDecayVtxZE->clear(); 
@@ -1347,16 +1405,18 @@ JPsiKs0_PVpa::beginJob()
           
      // *************************
    
-     tree_->Branch("priVtxX",&priVtxX, "priVtxX/f");
-     tree_->Branch("priVtxY",&priVtxY, "priVtxY/f");
-     tree_->Branch("priVtxZ",&priVtxZ, "priVtxZ/f");
-     tree_->Branch("priVtxXE",&priVtxXE, "priVtxXE/f");
-     tree_->Branch("priVtxYE",&priVtxYE, "priVtxYE/f");
-     tree_->Branch("priVtxZE",&priVtxZE, "priVtxZE/f");
-     tree_->Branch("priVtxXYE",&priVtxXYE, "priVtxXYE/f");
-     tree_->Branch("priVtxXZE",&priVtxXZE, "priVtxXZE/f");
-     tree_->Branch("priVtxYZE",&priVtxYZE, "priVtxYZE/f");
-     tree_->Branch("priVtxCL",&priVtxCL, "priVtxCL/f");
+     tree_->Branch("priVtxX",&priVtxX);
+     tree_->Branch("priVtxY",&priVtxY);
+     tree_->Branch("priVtxZ",&priVtxZ);
+     tree_->Branch("priVtxXE",&priVtxXE);
+     tree_->Branch("priVtxYE",&priVtxYE);
+     tree_->Branch("priVtxZE",&priVtxZE);
+     tree_->Branch("priVtxXYE",&priVtxXYE);
+     tree_->Branch("priVtxXZE",&priVtxXZE);
+     tree_->Branch("priVtxYZE",&priVtxYZE);
+     tree_->Branch("priVtxCL",&priVtxCL);
+     tree_->Branch("nTks",&nTks);
+     tree_->Branch("TrkIndex",&TrkIndex);
    
      tree_->Branch("nVtx",       &nVtx);
      tree_->Branch("run",        &run,       "run/I");

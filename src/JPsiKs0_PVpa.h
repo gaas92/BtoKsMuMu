@@ -138,10 +138,12 @@ private:
  
   int                      muAcc, muTrig, weight;
  
-  // vertice primario CON mayor Pt
+  // vertice primario CON mejor pointing angle
   unsigned int             nVtx;
-  float                    priVtxX, priVtxY, priVtxZ, priVtxXE, priVtxYE, priVtxZE, priVtxCL;
-  float                    priVtxXYE, priVtxXZE, priVtxYZE;
+  std::vector<unsigned int> *nTks;
+  std::vector<int>         *TrkIndex;
+  std::vector<float>       *priVtxX, *priVtxY, *priVtxZ, *priVtxXE, *priVtxYE, *priVtxZE, *priVtxCL;
+  std::vector<float>       *priVtxXYE, *priVtxXZE, *priVtxYZE;
  
   // ********************************** ************************************************************************
 
