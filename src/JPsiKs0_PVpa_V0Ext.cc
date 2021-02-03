@@ -124,7 +124,9 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   nVtx(0), nTks(0), TrkIndex(0), PVTriggDz(0),
   priVtxX(0), priVtxY(0), priVtxZ(0), priVtxXE(0), priVtxYE(0), priVtxZE(0), priVtxCL(0),
   priVtxXYE(0), priVtxXZE(0), priVtxYZE(0),
- 
+
+  trackContainer(0),
+
   // ************************ ****************************************************
 
   bDecayVtxX(0), bDecayVtxY(0), bDecayVtxZ(0), bDecayVtxXE(0), bDecayVtxYE(0), bDecayVtxZE(0),
@@ -132,8 +134,6 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   
   VDecayVtxX(0), VDecayVtxY(0), VDecayVtxZ(0), VDecayVtxXE(0), VDecayVtxYE(0), VDecayVtxZE(0),
   VDecayVtxXYE(0), VDecayVtxXZE(0), VDecayVtxYZE(0), 
-
-  trackContainer(0),
 
   // *******************************************************
   nB(0), nMu(0),
