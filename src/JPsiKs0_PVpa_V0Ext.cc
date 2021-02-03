@@ -133,6 +133,8 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   VDecayVtxX(0), VDecayVtxY(0), VDecayVtxZ(0), VDecayVtxXE(0), VDecayVtxYE(0), VDecayVtxZE(0),
   VDecayVtxXYE(0), VDecayVtxXZE(0), VDecayVtxYZE(0), 
 
+  trackContainer(0),
+
   // *******************************************************
   nB(0), nMu(0),
   B_mass(0), B_px(0), B_py(0), B_pz(0),
@@ -742,13 +744,16 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	   //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
 	   if(psi_vFit_noMC->currentState().mass()<1.1 || psi_vFit_noMC->currentState().mass()>22.0) continue;
 
+       // Vector containing Candidates used (avoid repeating)
+       vector<pat::PackedCandidate> usedTracks;
+
 	   //  ***************  
        // USING V0 CONTAINER 
 	   if ( theV0PtrHandle->size()>0 && thePATMuonHandle->size()>=2 ){ 
 	    for ( vector<VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee ){
 		   
 		   //get Lam tracks from V0 candidate
-		   vector<pat::PackedCandidate> v0daughters;
+		     vector<pat::PackedCandidate> v0daughters;
 		     vector<Track> theDaughterTracks;
 			 const pat::PackedCandidate* track1 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0));
 			 const pat::PackedCandidate* track2 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1));
@@ -990,6 +995,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		     // cout<< "*Number of Muons : " << nMu_tmp << endl;
 		   } // end nB==0		     
 		
+		   usedTracks.push_back(v0daughters[0]);	
+		   usedTracks.push_back(v0daughters[1]);	
+
 		   B_mass->push_back(bCandMC->currentState().mass());
 		   B_px->push_back(bCandMC->currentState().globalMomentum().x());
 		   B_py->push_back(bCandMC->currentState().globalMomentum().y());
@@ -1061,6 +1069,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            nTks->push_back(nTks_t);
 		   PVTriggDz->push_back(PVTriggDz_t);
 
+           trackContainer->push_back(1);
 	       // ************
 		   bDecayVtxX->push_back((*bDecayVertexMC).position().x());
 		   bDecayVtxY->push_back((*bDecayVertexMC).position().y());
@@ -1151,7 +1160,465 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	     }
 	
 	   // USING LOST TRACKS
-       
+       if ( lost_Track_Handle->size()>=2 && thePATMuonHandle->size()>=2 ){ 
+	    for(View<pat::PackedCandidate>::const_iterator iTrack1 = lost_Track_Handle->begin(); iTrack1 != lost_Track_Handle->end(); ++iTrack1 ){
+	      //quality cuts track1
+		  // taken from original V0 Producer
+		  // https://github.com/cms-sw/cmssw/blob/ba6e8604a35283e39e89bc031766843d0afc3240/RecoVertex/V0Producer/python/generalV0Candidates_cfi.py
+		  // && https://github.com/cms-sw/cmssw/blob/ba6e8604a35283e39e89bc031766843d0afc3240/RecoVertex/V0Producer/src/V0Fitter.cc
+          if(iTrack1->charge()==0) continue;
+	      if(fabs(iTrack1->pdgId())!=211) continue;
+	      if(iTrack1->pt()<0.55) continue;
+	      if(iTrack1->numberOfHits()<3)continue; // V0 Producer uses numberOfValidHits
+		  double ipsigXY_T1 = std::abs(iTrack1->dxy(theBeamSpot->position()) / iTrack1->dxyError());
+          double ipsigZ_T1 = std::abs(iTrack1->dz(theBeamSpot->position()) / iTrack1->dzError());
+          if (ipsigXY_T1 < 2.0) continue;
+		  if (ipsigZ_T1 < -1.0) continue;
+          
+		  for(View<pat::PackedCandidate>::const_iterator iTrack2 = iTrack1+1; iTrack2 != lost_Track_Handle->end(); ++iTrack2 ){
+			 //quality cuts track2
+		     if(iTrack1==iTrack2) continue;
+		     if(iTrack2->charge()==0) continue;
+		     if(fabs(iTrack2->pdgId())!=211) continue;
+		     if(iTrack2->pt()<0.55) continue;
+		     if(iTrack2->numberOfHits()<3)continue; // // V0 Producer uses numberOfValidHits
+             double ipsigXY_T2 = std::abs(iTrack2->dxy(theBeamSpot->position()) / iTrack2->dxyError());
+             double ipsigZ_T2 = std::abs(iTrack2->dz(theBeamSpot->position()) / iTrack2->dzError());
+             if (ipsigXY_T2 < 2.0) continue;
+		     if (ipsigZ_T2 < -1.0) continue;
+		     if(iTrack1->charge() == iTrack2->charge()) continue;
+
+		     //Now let's checks if our muons do not use the same tracks as we are using now
+		     if ( IsTheSame(*iTrack1,*iMuon1) || IsTheSame(*iTrack1,*iMuon2) ) continue;
+		     if ( IsTheSame(*iTrack2,*iMuon1) || IsTheSame(*iTrack2,*iMuon2) ) continue;
+             
+			 //Avoid using the same tracks 
+			 bool areTracksUsed = false;
+			 for (unsigned int jTrk=0; jTrk<usedTracks.size(); ++jTrk){
+				if ( IsTheSame(*iTrack1, usedTracks[jTrk]) || IsTheSame(*iTrack2, usedTracks[jTrk]) ) areTracksUsed = true;
+			 }
+			 if (areTracksUsed) continue;
+
+		     //get Lam tracks from V0 candidate
+		     vector<pat::PackedCandidate> v0daughters;
+		     vector<Track> theDaughterTracks;
+			 //const pat::PackedCandidate* track1 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0));
+			 //const pat::PackedCandidate* track2 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1));
+
+			 //if (track1->pt() < 0.55 || track2->pt() < 0.55) continue;
+
+
+		     v0daughters.push_back( *iTrack1 );
+		     v0daughters.push_back( *iTrack2 );
+		     		     
+		     for(unsigned int j = 0; j < v0daughters.size(); ++j)
+		       {
+			 theDaughterTracks.push_back(v0daughters[j].pseudoTrack());
+		       }
+		     			
+		     // it does not have sences here. 
+		     //if ( IsTheSame(*theDaughterTracks[0],*iMuon1) || IsTheSame(*theDaughterTracks[0],*iMuon2) ) continue;
+		     //if ( IsTheSame(*theDaughterTracks[1],*iMuon1) || IsTheSame(*theDaughterTracks[1],*iMuon2) ) continue;
+		     
+		     //Now let's see if these two tracks make a vertex
+		     reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
+		     reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));		     
+		     
+			 //close aproach beetween tracks
+             FreeTrajectoryState pi1State = pion1TT.impactPointTSCP().theState();
+	         FreeTrajectoryState pi2State = pion2TT.impactPointTSCP().theState();
+	         ClosestApproachInRPhi pion_cApp;
+             pion_cApp.calculate(pi1State, pi2State);
+	  		 if( !pion_cApp.status() ) continue;
+	  		 float pion_dca = fabs( pion_cApp.distance() );	
+	         if (pion_dca < 0. || dca > 1.0) continue;  // Cut for V0 Container 
+
+
+
+
+		     ParticleMass pion_mass = 0.13957018;
+		     ParticleMass Ks0_mass = 0.497614;
+		     float pion_sigma = pion_mass*1.e-6;
+		     float Ks0_sigma = Ks0_mass*1.e-6;
+		     
+		     //initial chi2 and ndf before kinematic fits.
+		     float chi = 0.;
+		     float ndf = 0.;
+		     vector<RefCountedKinematicParticle> pionParticles;
+		     // vector<RefCountedKinematicParticle> muonParticles;
+		     try {
+		       pionParticles.push_back(pFactory.particle(pion1TT,pion_mass,chi,ndf,pion_sigma));
+		       pionParticles.push_back(pFactory.particle(pion2TT,pion_mass,chi,ndf,pion_sigma));
+		     }
+		     catch(...) {
+		       //std::cout<<" Exception caught ... continuing 3 "<<std::endl;
+		       continue;
+		     }
+		     
+		     RefCountedKinematicTree Ks0VertexFitTree;
+		     try{
+		       Ks0VertexFitTree = fitter.fit(pionParticles); 
+		     }
+		     catch(...) {
+		       //std::cout<<" Exception caught ... continuing 4 "<<std::endl;                   
+		       continue;
+		     }
+		     if (!Ks0VertexFitTree->isValid()) 
+		       {
+			 //std::cout << "invalid vertex from the Ks0 vertex fit" << std::endl;
+			 continue; 
+		       }
+		     Ks0VertexFitTree->movePointerToTheTop();
+		     
+		     RefCountedKinematicParticle Ks0_vFit_noMC = Ks0VertexFitTree->currentParticle();
+		     RefCountedKinematicVertex Ks0_vFit_vertex_noMC = Ks0VertexFitTree->currentDecayVertex();
+		     
+		     if( Ks0_vFit_vertex_noMC->chiSquared() < 0 )
+		       { 
+			 //std::cout << "negative chisq from ks fit" << endl;
+			 continue;
+		       }
+		     //std::cout << "pass Fit continues ... "<< std::endl;
+		     //some loose cuts go here
+		     
+		     if(Ks0_vFit_vertex_noMC->chiSquared()>50) continue;
+		     if(Ks0_vFit_noMC->currentState().mass()<0.45 || Ks0_vFit_noMC->currentState().mass()>0.55) continue;
+		     
+		     Ks0VertexFitTree->movePointerToTheFirstChild();
+		     RefCountedKinematicParticle T1CandMC = Ks0VertexFitTree->currentParticle();
+		     
+		     Ks0VertexFitTree->movePointerToTheNextChild();
+		     RefCountedKinematicParticle T2CandMC = Ks0VertexFitTree->currentParticle();
+		     
+		     //  Ks0  mass constrain
+		     // do mass constrained vertex fit
+		     // creating the constraint with a small sigma to put in the resulting covariance 
+		     // matrix in order to avoid singularities
+		     // JPsi mass constraint is applied in the final B fit
+		     
+		     KinematicParticleFitter csFitterKs;
+		     KinematicConstraint * ks_c = new MassKinematicConstraint(Ks0_mass,Ks0_sigma);
+		     // add mass constraint to the ks0 fit to do a constrained fit:  
+		     
+		     Ks0VertexFitTree = csFitterKs.fit(ks_c,Ks0VertexFitTree);
+		     if (!Ks0VertexFitTree->isValid()){
+		       //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
+		       continue; 
+		     }
+		     //std::cout << "pass 424 continues ... "<< std::endl;
+		     //aca chinga a su madre todo
+			 
+		     Ks0VertexFitTree->movePointerToTheTop();
+		     RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
+		     
+		     //Now we are ready to combine!
+		     // JPsi mass constraint is applied in the final Bd fit,
+		     
+		     vector<RefCountedKinematicParticle> vFitMCParticles;
+		     vFitMCParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
+		     vFitMCParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
+		     vFitMCParticles.push_back(ks0_vFit_withMC);
+		     
+		     MultiTrackKinematicConstraint *  j_psi_c = new  TwoTrackMassKinematicConstraint(psi_mass);
+		     //KinematicConstrainedVertexFitter kcvFitter;
+		     //RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles, j_psi_c);
+
+			 //no mass constrain 
+			 KinematicParticleVertexFitter kcvFitter;
+			 RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
+		     if (!vertexFitTree->isValid()) {
+		       //std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
+		       continue;
+		     }
+		     
+		     vertexFitTree->movePointerToTheTop();		     
+		     
+		     RefCountedKinematicParticle bCandMC = vertexFitTree->currentParticle();
+		     RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
+		     if (!bDecayVertexMC->vertexIsValid()){
+		       //std::cout << "B MC fit vertex is not valid" << endl;
+		       continue;
+		     }
+		     
+		     if(bCandMC->currentState().mass()<4.5 || bCandMC->currentState().mass()>6.0) continue;
+		     
+		     if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ) 
+		       {
+			     //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
+			     continue;
+		       }
+		     //std::cout << "pass 461 continues ... "<< std::endl;
+		     double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
+		     if(B_Prob_tmp<0.01)
+		       {
+			    continue;
+		       }		     
+		     //std::cout << "pass 467" <<std::endl;
+		   // get children from final B fit
+		   vertexFitTree->movePointerToTheFirstChild();
+		   RefCountedKinematicParticle mu1CandMC = vertexFitTree->currentParticle();
+		   vertexFitTree->movePointerToTheNextChild();
+		   RefCountedKinematicParticle mu2CandMC = vertexFitTree->currentParticle();
+		   
+		   vertexFitTree->movePointerToTheNextChild();
+		   RefCountedKinematicParticle Ks0CandMC = vertexFitTree->currentParticle();
+		   
+		   KinematicParameters psiMu1KP = mu1CandMC->currentState().kinematicParameters();
+		   KinematicParameters psiMu2KP = mu2CandMC->currentState().kinematicParameters();
+		   KinematicParameters psiMupKP;
+		   KinematicParameters psiMumKP;
+	       
+		   if ( mu1CandMC->currentState().particleCharge() > 0 ) psiMupKP = psiMu1KP;
+		   if ( mu1CandMC->currentState().particleCharge() < 0 ) psiMumKP = psiMu1KP;
+		   if ( mu2CandMC->currentState().particleCharge() > 0 ) psiMupKP = psiMu2KP;
+		   if ( mu2CandMC->currentState().particleCharge() < 0 ) psiMumKP = psiMu2KP;	 
+
+ 		   GlobalVector Jp1vec(mu1CandMC->currentState().globalMomentum().x(),
+				       mu1CandMC->currentState().globalMomentum().y(),
+ 				       mu1CandMC->currentState().globalMomentum().z());
+
+ 		   GlobalVector Jp2vec(mu2CandMC->currentState().globalMomentum().x(),
+				       mu2CandMC->currentState().globalMomentum().y(),
+ 				       mu2CandMC->currentState().globalMomentum().z());
+
+ 		   GlobalVector Ks0p1vec(T1CandMC->currentState().globalMomentum().x(),
+				        T1CandMC->currentState().globalMomentum().y(),
+ 				        T1CandMC->currentState().globalMomentum().z());
+
+ 		   GlobalVector Ks0p2vec(T2CandMC->currentState().globalMomentum().x(),
+					T2CandMC->currentState().globalMomentum().y(),
+					T2CandMC->currentState().globalMomentum().z());
+
+		   KinematicParameters Ks0Pi1KP = T1CandMC->currentState().kinematicParameters();
+		   KinematicParameters Ks0Pi2KP = T2CandMC->currentState().kinematicParameters();
+		   KinematicParameters Ks0PipKP;
+		   KinematicParameters Ks0PimKP;
+	       
+		   if ( T1CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi1KP;
+		   if ( T1CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi1KP;
+		   if ( T2CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi2KP;
+		   if ( T2CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi2KP;	 
+		   //Get bestPVtx by best ointing angle 	
+		   // ********************* loop over all the primary vertices and we choose the one with the best pointing angle ****************
+
+           Double_t priVtxX_t = -10000.0;
+           Double_t priVtxY_t = -10000.0;
+           Double_t priVtxZ_t = -10000.0;
+           Double_t priVtxXE_t = -10000.0;
+           Double_t priVtxYE_t = -10000.0;
+           Double_t priVtxZE_t = -10000.0;
+           Double_t priVtxXZE_t = -10000.0;
+           Double_t priVtxXYE_t = -10000.0;
+           Double_t priVtxYZE_t = -10000.0;
+           Double_t priVtxCL_t = -10000.0;
+           Double_t lip1 = -1000000.0;
+		   Double_t PVTriggDz_t = 100000.0;
+		   unsigned int TrkIndex_t = 0;
+		   int nTks_t = 0;
+           for(size_t i = 0; i < recVtxs->size(); ++i) {
+                const reco::Vertex &vtx = (*recVtxs)[i];
+
+                Double_t dx1 = (*bDecayVertexMC).position().x() - vtx.x();
+                Double_t dy1 = (*bDecayVertexMC).position().y() - vtx.y();
+                Double_t dz1 = (*bDecayVertexMC).position().z() - vtx.z();
+                float cosAlphaXYb1 = ( bCandMC->currentState().globalMomentum().x() * dx1 + bCandMC->currentState().globalMomentum().y()*dy1 + bCandMC->currentState().globalMomentum().z()*dz1  )/( sqrt(dx1*dx1+dy1*dy1+dz1*dz1)* bCandMC->currentState().globalMomentum().mag() );
+
+                if(cosAlphaXYb1>lip1){
+                    lip1 = cosAlphaXYb1 ;
+                    priVtxX_t = vtx.x();
+                    priVtxY_t = vtx.y();
+                    priVtxZ_t = vtx.z();
+                    priVtxXE_t = vtx.covariance(0, 0);
+                    priVtxYE_t = vtx.covariance(1, 1);
+                    priVtxZE_t = vtx.covariance(2, 2);
+                    priVtxXYE_t = vtx.covariance(0, 1);
+                    priVtxXZE_t = vtx.covariance(0, 2);
+                    priVtxYZE_t = vtx.covariance(1, 2);
+                    priVtxCL_t = ChiSquaredProbability((double)(vtx.chi2()),(double)(vtx.ndof())); 
+					TrkIndex_t = i;
+					nTks_t    = vtx.nTracks();
+					for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
+						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
+						if (PVTriggDz_tt < PVTriggDz_t){
+							PVTriggDz_t = PVTriggDz_tt;
+						}
+					}
+                    bestVtx = vtx;
+                }
+            }
+
+		   // fill candidate variables now
+		   
+		   if(nB==0){		    
+		     nMu  = nMu_tmp;
+		     // cout<< "*Number of Muons : " << nMu_tmp << endl;
+		   } // end nB==0	
+
+		   usedTracks.push_back(v0daughters[0]);	
+		   usedTracks.push_back(v0daughters[1]);
+
+		   B_mass->push_back(bCandMC->currentState().mass());
+		   B_px->push_back(bCandMC->currentState().globalMomentum().x());
+		   B_py->push_back(bCandMC->currentState().globalMomentum().y());
+		   B_pz->push_back(bCandMC->currentState().globalMomentum().z());
+		
+		   B_Ks0_mass->push_back( Ks0_vFit_noMC->currentState().mass() );
+		   B_Ks0_px->push_back( Ks0_vFit_noMC->currentState().globalMomentum().x() );
+		   B_Ks0_py->push_back( Ks0_vFit_noMC->currentState().globalMomentum().y() );
+		   B_Ks0_pz->push_back( Ks0_vFit_noMC->currentState().globalMomentum().z() );
+
+		   B_J_mass->push_back( psi_vFit_noMC->currentState().mass() );
+		   B_J_px->push_back( psi_vFit_noMC->currentState().globalMomentum().x() );
+		   B_J_py->push_back( psi_vFit_noMC->currentState().globalMomentum().y() );
+		   B_J_pz->push_back( psi_vFit_noMC->currentState().globalMomentum().z() );
+
+		   B_Ks0_pt1->push_back(Ks0p1vec.perp());
+		   B_Ks0_px1->push_back(Ks0Pi1KP.momentum().x());
+		   B_Ks0_py1->push_back(Ks0Pi1KP.momentum().y());
+		   B_Ks0_pz1->push_back(Ks0Pi1KP.momentum().z());
+		   B_Ks0_px1_track->push_back(v0daughters[0].px());
+		   B_Ks0_py1_track->push_back(v0daughters[0].py());
+		   B_Ks0_pz1_track->push_back(v0daughters[0].pz());
+		   B_Ks0_charge1->push_back(T1CandMC->currentState().particleCharge());
+
+		   B_Ks0_pt2->push_back(Ks0p2vec.perp());
+		   B_Ks0_px2->push_back(Ks0Pi2KP.momentum().x());
+		   B_Ks0_py2->push_back(Ks0Pi2KP.momentum().y());
+		   B_Ks0_pz2->push_back(Ks0Pi2KP.momentum().z());
+		   B_Ks0_px2_track->push_back(v0daughters[1].px());
+		   B_Ks0_py2_track->push_back(v0daughters[1].py());
+		   B_Ks0_pz2_track->push_back(v0daughters[1].pz());
+		   B_Ks0_charge2->push_back(T2CandMC->currentState().particleCharge());
+
+		   B_J_pt1->push_back(Jp1vec.perp());
+		   B_J_px1->push_back(psiMu1KP.momentum().x());
+		   B_J_py1->push_back(psiMu1KP.momentum().y());
+		   B_J_pz1->push_back(psiMu1KP.momentum().z());
+		   B_J_charge1->push_back(mu1CandMC->currentState().particleCharge());
+
+		   B_J_pt2->push_back(Jp2vec.perp());
+		   B_J_px2->push_back(psiMu2KP.momentum().x());
+		   B_J_py2->push_back(psiMu2KP.momentum().y());
+		   B_J_pz2->push_back(psiMu2KP.momentum().z());
+		   B_J_charge2->push_back(mu2CandMC->currentState().particleCharge());
+
+		   B_Ks0_chi2->push_back(Ks0_vFit_vertex_noMC->chiSquared());
+		   B_J_chi2->push_back(psi_vFit_vertex_noMC->chiSquared());
+		   B_chi2->push_back(bDecayVertexMC->chiSquared());
+
+		   //double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
+		   //double J_Prob_tmp   = TMath::Prob(psi_vFit_vertex_noMC->chiSquared(),(int)psi_vFit_vertex_noMC->degreesOfFreedom());
+		   double ks0_Prob_tmp  = TMath::Prob(Ks0_vFit_vertex_noMC->chiSquared(),(int)Ks0_vFit_vertex_noMC->degreesOfFreedom());
+		   B_Prob    ->push_back(B_Prob_tmp);
+		   B_J_Prob  ->push_back(J_Prob_tmp);
+		   B_ks0_Prob ->push_back(ks0_Prob_tmp);
+
+           //Best Pointing angle PV
+           priVtxX->push_back(priVtxX_t);
+		   priVtxY->push_back(priVtxY_t);
+		   priVtxZ->push_back(priVtxZ_t);
+		   priVtxXE->push_back(priVtxXE_t); 
+		   priVtxYE->push_back(priVtxYE_t); 
+		   priVtxZE->push_back(priVtxZE_t); 
+		   priVtxXZE->push_back(priVtxXZE_t);
+		   priVtxXYE->push_back(priVtxXYE_t);
+		   priVtxYZE->push_back(priVtxYZE_t);
+		   priVtxCL->push_back(priVtxCL_t); 
+		   TrkIndex->push_back(TrkIndex_t);
+           nTks->push_back(nTks_t);
+		   PVTriggDz->push_back(PVTriggDz_t);
+
+           trackContainer->push_back(2);
+	       // ************
+		   bDecayVtxX->push_back((*bDecayVertexMC).position().x());
+		   bDecayVtxY->push_back((*bDecayVertexMC).position().y());
+		   bDecayVtxZ->push_back((*bDecayVertexMC).position().z());
+		   bDecayVtxXE->push_back(bDecayVertexMC->error().cxx());
+		   bDecayVtxYE->push_back(bDecayVertexMC->error().cyy());
+		   bDecayVtxZE->push_back(bDecayVertexMC->error().czz());
+		   bDecayVtxXYE->push_back(bDecayVertexMC->error().cyx());
+		   bDecayVtxXZE->push_back(bDecayVertexMC->error().czx());
+		   bDecayVtxYZE->push_back(bDecayVertexMC->error().czy());
+
+		   VDecayVtxX->push_back( Ks0_vFit_vertex_noMC->position().x() );
+		   VDecayVtxY->push_back( Ks0_vFit_vertex_noMC->position().y() );
+		   VDecayVtxZ->push_back( Ks0_vFit_vertex_noMC->position().z() );
+		   VDecayVtxXE->push_back( Ks0_vFit_vertex_noMC->error().cxx() );
+		   VDecayVtxYE->push_back( Ks0_vFit_vertex_noMC->error().cyy() );
+		   VDecayVtxZE->push_back( Ks0_vFit_vertex_noMC->error().czz() );
+		   VDecayVtxXYE->push_back( Ks0_vFit_vertex_noMC->error().cyx() );
+		   VDecayVtxXZE->push_back( Ks0_vFit_vertex_noMC->error().czx() );
+		   VDecayVtxYZE->push_back( Ks0_vFit_vertex_noMC->error().czy() );
+
+           // ********************* muon-trigger-machint**************** 
+		   
+		   const pat::Muon* muon1 = &(*iMuon1);
+		   const pat::Muon* muon2 = &(*iMuon2);
+
+		   int tri_Dim25_tmp = 0, tri_JpsiTk_tmp = 0,  tri_JpsiTkTk_tmp = 0;
+		   
+		   if (muon1->triggerObjectMatchByPath("HLT_Dimuon25_Jpsi_v*")!=nullptr && muon2->triggerObjectMatchByPath("HLT_Dimuon25_Jpsi_v*")!=nullptr) tri_Dim25_tmp = 1;
+		   if (muon1->triggerObjectMatchByPath("HLT_DoubleMu4_JpsiTrk_Displaced_v*")!=nullptr && muon2->triggerObjectMatchByPath("HLT_DoubleMu4_JpsiTrk_Displaced_v*")!=nullptr) tri_JpsiTk_tmp = 1;
+		   if (muon1->triggerObjectMatchByPath("HLT_DoubleMu4_JpsiTrkTrk_Displaced_v*")!=nullptr && muon2->triggerObjectMatchByPath("HLT_DoubleMu4_JpsiTrkTrk_Displaced_v*")!=nullptr) tri_JpsiTkTk_tmp = 1;
+		   
+		   tri_Dim25->push_back( tri_Dim25_tmp );	       
+		   tri_JpsiTk->push_back( tri_JpsiTk_tmp );
+           tri_JpsiTkTk->push_back( tri_JpsiTkTk_tmp );
+
+ 	       // ************
+		  
+		   mu1soft->push_back(iMuon1->isSoftMuon(bestVtx) );
+		   mu2soft->push_back(iMuon2->isSoftMuon(bestVtx) );
+		   mu1tight->push_back(iMuon1->isTightMuon(bestVtx) );
+		   mu2tight->push_back(iMuon2->isTightMuon(bestVtx) );
+		   mu1PF->push_back(iMuon1->isPFMuon());
+		   mu2PF->push_back(iMuon2->isPFMuon());
+		   mu1loose->push_back(muon::isLooseMuon(*iMuon1));
+		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
+
+           //Trigger Selector
+           drTrg_m1->push_back(dRMuonMatching1);
+	       drTrg_m2->push_back(dRMuonMatching2);
+		   std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
+
+		   mumC2->push_back( glbTrackM->normalizedChi2() );
+		   mumNHits->push_back( glbTrackM->numberOfValidHits() );
+		   mumNPHits->push_back( glbTrackM->hitPattern().numberOfValidPixelHits() );	       
+		   mupC2->push_back( glbTrackP->normalizedChi2() );
+		   mupNHits->push_back( glbTrackP->numberOfValidHits() );
+		   mupNPHits->push_back( glbTrackP->hitPattern().numberOfValidPixelHits() );
+           mumdxy->push_back(glbTrackM->dxy(bestVtx.position()) );
+		   mupdxy->push_back(glbTrackP->dxy(bestVtx.position()) );
+		   mumdz->push_back(glbTrackM->dz(bestVtx.position()) );
+		   mupdz->push_back(glbTrackP->dz(bestVtx.position()) );
+		   muon_dca->push_back(dca);
+		   trg_dzm1->push_back(dzm1_trg);
+		   trg_dzm2->push_back(dzm2_trg);
+
+		   pi1dxy->push_back(v0daughters[0].dxy());
+		   pi2dxy->push_back(v0daughters[1].dxy());
+		   pi1dz->push_back(v0daughters[0].dz());
+		   pi2dz->push_back(v0daughters[1].dz());
+
+		   pi1dxy_e->push_back(v0daughters[0].dxyError());
+		   pi2dxy_e->push_back(v0daughters[1].dxyError());
+		   pi1dz_e->push_back(v0daughters[0].dzError());
+		   pi2dz_e->push_back(v0daughters[1].dzError());
+
+		   // try refitting the primary without the tracks in the B reco candidate		   
+		   //std::cout<< "pass all" << std::endl;
+		   nB++;	       
+		   
+		   /////////////////////////////////////////////////
+		   pionParticles.clear();
+		   muonParticles.clear();
+		   //vFitMCParticles.clear();
+		  
+
+		   }//end lostTrack Track2 
+		}//end lostTrack Track1  
+	   }// end Lost Track Candidates
+	
 	   // USING PACKED ParticleFlow Candidate
        if ( pPFC_Handle->size()>=2 && thePATMuonHandle->size()>=2 ){ 
 	    for(View<pat::PackedCandidate>::const_iterator iTrack1 = pPFC_Handle->begin(); iTrack1 != pPFC_Handle->end(); ++iTrack1 ){
@@ -1184,6 +1651,13 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		     //Now let's checks if our muons do not use the same tracks as we are using now
 		     if ( IsTheSame(*iTrack1,*iMuon1) || IsTheSame(*iTrack1,*iMuon2) ) continue;
 		     if ( IsTheSame(*iTrack2,*iMuon1) || IsTheSame(*iTrack2,*iMuon2) ) continue;
+             
+			 //Avoid using the same tracks 
+			 bool areTracksUsed = false;
+			 for (unsigned int jTrk=0; jTrk<usedTracks.size(); ++jTrk){
+				if ( IsTheSame(*iTrack1, usedTracks[jTrk]) || IsTheSame(*iTrack2, usedTracks[jTrk]) ) areTracksUsed = true;
+			 }
+			 if (areTracksUsed) continue;
 
 		     //get Lam tracks from V0 candidate
 		     vector<pat::PackedCandidate> v0daughters;
@@ -1210,6 +1684,18 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		     reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
 		     reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));		     
 		     
+			 //close aproach beetween tracks
+             FreeTrajectoryState pi1State = pion1TT.impactPointTSCP().theState();
+	         FreeTrajectoryState pi2State = pion2TT.impactPointTSCP().theState();
+	         ClosestApproachInRPhi pion_cApp;
+             pion_cApp.calculate(pi1State, pi2State);
+	  		 if( !pion_cApp.status() ) continue;
+	  		 float pion_dca = fabs( pion_cApp.distance() );	
+	         if (pion_dca < 0. || dca > 1.0) continue;  // Cut for V0 Container 
+
+
+
+
 		     ParticleMass pion_mass = 0.13957018;
 		     ParticleMass Ks0_mass = 0.497614;
 		     float pion_sigma = pion_mass*1.e-6;
@@ -1499,6 +1985,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            nTks->push_back(nTks_t);
 		   PVTriggDz->push_back(PVTriggDz_t);
 
+           trackContainer->push_back(3);
 	       // ************
 		   bDecayVtxX->push_back((*bDecayVertexMC).position().x());
 		   bDecayVtxY->push_back((*bDecayVertexMC).position().y());
@@ -1588,7 +2075,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   }//end pPF Track2 
 		}//end pPF Track1  
 	   }// end pPFC
-	   
+	
+	usedTracks.clear();    
 	}// END MUON2
     }// END MUON1
   }
@@ -1628,6 +2116,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		priVtxX->clear(); priVtxY->clear(); priVtxZ->clear(); 
    		priVtxXE->clear(); priVtxYE->clear(); priVtxZE->clear(); priVtxCL->clear();
    		priVtxXYE->clear(); priVtxXZE->clear(); priVtxYZE->clear();   
+		trackContainer->clear();   
    } 
    nVtx = 0;
    if (!OnlyGen_){
@@ -1671,7 +2160,12 @@ bool JPsiKs0_PVpa_V0Ext::IsTheSame(const pat::GenericParticle& tk, const pat::Mu
   if (DeltaEta < 0.02 && DeltaP < 0.02) return true;
   return false;
 }
-
+bool JPsiKs0_PVpa_V0Ext::IsTheSame(const pat::GenericParticle& tk1, const pat::GenericParticle& tk2){
+  double DeltaEta = fabs(tk2.eta()-tk1.eta());
+  double DeltaP   = fabs(tk2.p()-tk1.p());
+  if (DeltaEta < 0.02 && DeltaP < 0.02) return true;
+  return false;
+}
 bool JPsiKs0_PVpa_V0Ext::isAncestor(const reco::Candidate* ancestor, const reco::Candidate * particle) {
     if (ancestor == particle ) return true;
     for (size_t i=0; i< particle->numberOfMothers(); i++) {
@@ -1882,7 +2376,8 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("nTks",&nTks);
      tree_->Branch("TrkIndex",&TrkIndex);
      tree_->Branch("PVTriggDz",&PVTriggDz);
-	 
+
+     tree_->Branch("trackContainer",&trackContainer);
    
      tree_->Branch("nVtx",       &nVtx);
      tree_->Branch("run",        &run,       "run/I");

@@ -148,6 +148,9 @@ private:
   std::vector<float>       *priVtxX, *priVtxY, *priVtxZ, *priVtxXE, *priVtxYE, *priVtxZE, *priVtxCL;
   std::vector<float>       *priVtxXYE, *priVtxXZE, *priVtxYZE;
  
+  // Track Container used for B candidate ...
+  std::vector<int>         *trackContainer; // 1 = V0 Container, 2 = lost Tracks , 3 = Packed PF Candidates
+
   // ********************************** ************************************************************************
 
   std::vector<float>       *bDecayVtxX, *bDecayVtxY, *bDecayVtxZ;
