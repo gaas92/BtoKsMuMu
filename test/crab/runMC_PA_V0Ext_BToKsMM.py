@@ -85,7 +85,7 @@ def main():
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
         config.Data.outputDatasetTag = None
-	config.Data.outLFNDirBase = '/store/user/g/gayalasa/V0Ext_test/'
+	config.Data.outLFNDirBase = '/store/user/gayalasa/V0Ext_test/'
 	#config.Site.storageSite = 'T3_US_FNALLPC'
 	config.Site.storageSite = 'T3_CH_CERNBOX'
         config.Site.whitelist = ['T2_US*']
