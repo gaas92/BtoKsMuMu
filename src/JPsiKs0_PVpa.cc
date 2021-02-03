@@ -962,7 +962,7 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
                     priVtxYZE_t = vtx.covariance(1, 2);
                     priVtxCL_t = ChiSquaredProbability((double)(vtx.chi2()),(double)(vtx.ndof())); 
 					TrkIndex_t = i;
-					nTks_t    = vtx.nTracks(0.5);
+					nTks_t    = vtx.tracksSize();
 					for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
 						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
 						if (PVTriggDz_tt < PVTriggDz_t){

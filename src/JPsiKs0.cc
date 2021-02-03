@@ -493,7 +493,7 @@ void JPsiKs0::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   priVtxCL = ChiSquaredProbability((double)(bestVtx.chi2()),(double)(bestVtx.ndof())); 
 
   nVtx = recVtxs->size();
-  nTrk = bestVtx.nTracks();
+  nTrk = bestVtx.tracksSize();
 
   lumiblock = iEvent.id().luminosityBlock();
   run = iEvent.id().run();

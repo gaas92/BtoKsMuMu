@@ -977,7 +977,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
                     priVtxYZE_t = vtx.covariance(1, 2);
                     priVtxCL_t = ChiSquaredProbability((double)(vtx.chi2()),(double)(vtx.ndof())); 
 					TrkIndex_t = i;
-					nTks_t    = vtx.nTracks();
+					nTks_t    = vtx.tracksSize();
 					for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
 						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
 						if (PVTriggDz_tt < PVTriggDz_t){
@@ -1436,7 +1436,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
                     priVtxYZE_t = vtx.covariance(1, 2);
                     priVtxCL_t = ChiSquaredProbability((double)(vtx.chi2()),(double)(vtx.ndof())); 
 					TrkIndex_t = i;
-					nTks_t    = vtx.nTracks();
+					nTks_t    = vtx.tracksSize();
 					for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
 						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
 						if (PVTriggDz_tt < PVTriggDz_t){
@@ -1896,7 +1896,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
                     priVtxYZE_t = vtx.covariance(1, 2);
                     priVtxCL_t = ChiSquaredProbability((double)(vtx.chi2()),(double)(vtx.ndof())); 
 					TrkIndex_t = i;
-					nTks_t    = vtx.nTracks();
+					nTks_t    = vtx.tracksSize();
 					for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
 						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
 						if (PVTriggDz_tt < PVTriggDz_t){
