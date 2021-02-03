@@ -119,7 +119,7 @@ JPsiKs0_PVpa::JPsiKs0_PVpa(const edm::ParameterSet& iConfig)
   //Trigger Selector
   drTrg_m1(0), drTrg_m2(0),
 
-  nVtx(0), nTks(0), TrkIndex(0),
+  nVtx(0), nTks(0), TrkIndex(0), PVTriggDz(0),
   priVtxX(0), priVtxY(0), priVtxZ(0), priVtxXE(0), priVtxYE(0), priVtxZE(0), priVtxCL(0),
   priVtxXYE(0), priVtxXZE(0), priVtxYZE(0),
  
@@ -938,6 +938,7 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
            Double_t priVtxYZE_t = -10000.0;
            Double_t priVtxCL_t = -10000.0;
            Double_t lip1 = -1000000.0;
+		   Double_t PVTriggDz_t = 100000.0;
 		   unsigned int TrkIndex_t = 0;
 		   int nTks_t = 0;
            for(size_t i = 0; i < recVtxs->size(); ++i) {
@@ -962,6 +963,12 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
                     priVtxCL_t = ChiSquaredProbability((double)(vtx.chi2()),(double)(vtx.ndof())); 
 					TrkIndex_t = i;
 					nTks_t    = vtx.nTracks();
+					for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
+						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
+						if (PVTriggDz_tt < PVTriggDz_t){
+							PVTriggDz_t = PVTriggDz_tt;
+						}
+					}
                     bestVtx = vtx;
                 }
             }
@@ -1042,6 +1049,7 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 		   priVtxCL->push_back(priVtxCL_t); 
 		   TrkIndex->push_back(TrkIndex_t);
            nTks->push_back(nTks_t);
+		   PVTriggDz->push_back(PVTriggDz_t);
 
 	       // ************
 		   bDecayVtxX->push_back((*bDecayVertexMC).position().x());
@@ -1166,7 +1174,7 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
 		// *********
    		nTks->clear(); priVtxCL->clear(); TrkIndex->clear();
-
+		PVTriggDz->clear();   
    		priVtxX->clear(); priVtxY->clear(); priVtxZ->clear(); 
    		priVtxXE->clear(); priVtxYE->clear(); priVtxZE->clear(); priVtxCL->clear();
    		priVtxXYE->clear(); priVtxXZE->clear(); priVtxYZE->clear();   
@@ -1417,6 +1425,8 @@ JPsiKs0_PVpa::beginJob()
      tree_->Branch("priVtxCL",&priVtxCL);
      tree_->Branch("nTks",&nTks);
      tree_->Branch("TrkIndex",&TrkIndex);
+     tree_->Branch("PVTriggDz",&PVTriggDz);
+	 
    
      tree_->Branch("nVtx",       &nVtx);
      tree_->Branch("run",        &run,       "run/I");

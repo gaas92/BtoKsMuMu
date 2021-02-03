@@ -142,6 +142,7 @@ private:
   unsigned int             nVtx;
   std::vector<unsigned int> *nTks;
   std::vector<int>         *TrkIndex;
+  std::vector<float>       *PVTriggDz;
   std::vector<float>       *priVtxX, *priVtxY, *priVtxZ, *priVtxXE, *priVtxYE, *priVtxZE, *priVtxCL;
   std::vector<float>       *priVtxXYE, *priVtxXZE, *priVtxYZE;
  
