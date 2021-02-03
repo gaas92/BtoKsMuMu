@@ -79,6 +79,7 @@ public:
   int const getMuCat(reco::Muon const& muon) const;
   bool IsTheSame(const reco::Track& tk, const pat::Muon& mu);
   bool IsTheSame(const pat::GenericParticle& tk, const pat::Muon& mu);
+  bool IsTheSame(const pat::GenericParticle& tk1, const pat::GenericParticle& tk2);
   bool isAncestor(const reco::Candidate*, const reco::Candidate*);
   bool isAncestor(int, const reco::Candidate*);
   double GetLifetime(TLorentzVector, TVector3, TVector3);
