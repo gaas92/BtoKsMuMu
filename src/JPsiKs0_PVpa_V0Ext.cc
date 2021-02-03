@@ -1151,30 +1151,51 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	     }
 	
 	   // USING LOST TRACKS
-       /*
+       
 	   // USING PACKED ParticleFlow Candidate
        if ( pPFC_Handle->size()>=2 && thePATMuonHandle->size()>=2 ){ 
-	    for(View<pat::PackedCandidate>::const_iterator iTrack1 = thePATTrackHandle->begin(); iTrack1 != thePATTrackHandle->end(); ++iTrack1 ){
-	       //quality cuts track1
-		   // taken from original V0 Producer
-		   // https://github.com/cms-sw/cmssw/blob/ba6e8604a35283e39e89bc031766843d0afc3240/RecoVertex/V0Producer/python/generalV0Candidates_cfi.py
-		   // && https://github.com/cms-sw/cmssw/blob/ba6e8604a35283e39e89bc031766843d0afc3240/RecoVertex/V0Producer/src/V0Fitter.cc
-           if(iTrack1->charge()==0) continue;
-	       if(fabs(iTrack1->pdgId())!=211) continue;
-	       if(iTrack1->pt()<0.55) continue;
-	       if(iTrack1->numberOfValidHits()<3)continue;
-		
-		   //get Lam tracks from V0 candidate
-		   vector<pat::PackedCandidate> v0daughters;
+	    for(View<pat::PackedCandidate>::const_iterator iTrack1 = pPFC_Handle->begin(); iTrack1 != pPFC_Handle->end(); ++iTrack1 ){
+	      //quality cuts track1
+		  // taken from original V0 Producer
+		  // https://github.com/cms-sw/cmssw/blob/ba6e8604a35283e39e89bc031766843d0afc3240/RecoVertex/V0Producer/python/generalV0Candidates_cfi.py
+		  // && https://github.com/cms-sw/cmssw/blob/ba6e8604a35283e39e89bc031766843d0afc3240/RecoVertex/V0Producer/src/V0Fitter.cc
+          if(iTrack1->charge()==0) continue;
+	      if(fabs(iTrack1->pdgId())!=211) continue;
+	      if(iTrack1->pt()<0.55) continue;
+	      if(iTrack1->numberOfValidHits()<3)continue;
+		  double ipsigXY_T1 = std::abs(iTrack1->dxy(*theBeamSpot) / iTrack1->dxyError());
+          double ipsigZ_T1 = std::abs(iTrack1->dz(*theBeamSpot) / iTrack1->dzError());
+          if (ipsigXY_T1 < 2.0) continue;
+		  if (ipsigZ_T1 < -1.0) continue;
+          
+		  for(View<pat::PackedCandidate>::const_iterator iTrack2 = iTrack1+1; iTrack2 != pPFC_Handle->end(); ++iTrack2 ){
+			 //quality cuts track2
+		     if(iTrack1==iTrack2) continue;
+		     if(iTrack2->charge()==0) continue;
+		     if(fabs(iTrack2->pdgId())!=211) continue;
+		     if(iTrack2->pt()<0.55) continue;
+		     if(iTrack2->numberOfValidHits()<3)continue;
+             double ipsigXY_T2 = std::abs(iTrack2->dxy(*theBeamSpot) / iTrack2->dxyError());
+             double ipsigZ_T2 = std::abs(iTrack2->dz(*theBeamSpot) / iTrack2->dzError());
+             if (ipsigXY_T2 < 2.0) continue;
+		     if (ipsigZ_T2 < -1.0) continue;
+		     if(iTrack1->charge() == iTrack2->charge()) continue;
+
+		     //Now let's checks if our muons do not use the same tracks as we are using now
+		     if ( IsTheSame(*iTrack1,*iMuon1) || IsTheSame(*iTrack1,*iMuon2) ) continue;
+		     if ( IsTheSame(*iTrack2,*iMuon1) || IsTheSame(*iTrack2,*iMuon2) ) continue;
+
+		     //get Lam tracks from V0 candidate
+		     vector<pat::PackedCandidate> v0daughters;
 		     vector<Track> theDaughterTracks;
-			 const pat::PackedCandidate* track1 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0));
-			 const pat::PackedCandidate* track2 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1));
+			 //const pat::PackedCandidate* track1 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0));
+			 //const pat::PackedCandidate* track2 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1));
 
-			 if (track1->pt() < 0.55 || track2->pt() < 0.55) continue;
+			 //if (track1->pt() < 0.55 || track2->pt() < 0.55) continue;
 
 
-		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0))) );
-		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1))) );
+		     v0daughters.push_back( *iTrack1 );
+		     v0daughters.push_back( *iTrack2 );
 		     		     
 		     for(unsigned int j = 0; j < v0daughters.size(); ++j)
 		       {
@@ -1565,8 +1586,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		  
 
 		   }//end pPF Track2 
+		}//end pPF Track1  
 	   }// end pPFC
-	   */
+	   
 	}// END MUON2
     }// END MUON1
   }
