@@ -68,7 +68,7 @@ def main():
 
         config.General.requestName = None
         #config.General.workArea = 'ZMuondecay'
-        config.General.workArea = 'testParked_onlyGenNR'
+        config.General.workArea = 'testV0Ext'
 	config.General.transferOutputs = True
 	config.General.transferLogs = False
 
