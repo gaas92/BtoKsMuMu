@@ -1162,9 +1162,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
           if(iTrack1->charge()==0) continue;
 	      if(fabs(iTrack1->pdgId())!=211) continue;
 	      if(iTrack1->pt()<0.55) continue;
-	      if(iTrack1->numberOfValidHits()<3)continue;
-		  double ipsigXY_T1 = std::abs(iTrack1->dxy(*theBeamSpot) / iTrack1->dxyError());
-          double ipsigZ_T1 = std::abs(iTrack1->dz(*theBeamSpot) / iTrack1->dzError());
+	      if(iTrack1->numberOfHits()<3)continue; // V0 Producer uses numberOfValidHits
+		  double ipsigXY_T1 = std::abs(iTrack1->dxy(theBeamSpot->position()) / iTrack1->dxyError());
+          double ipsigZ_T1 = std::abs(iTrack1->dz(theBeamSpot->position()) / iTrack1->dzError());
           if (ipsigXY_T1 < 2.0) continue;
 		  if (ipsigZ_T1 < -1.0) continue;
           
@@ -1174,9 +1174,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		     if(iTrack2->charge()==0) continue;
 		     if(fabs(iTrack2->pdgId())!=211) continue;
 		     if(iTrack2->pt()<0.55) continue;
-		     if(iTrack2->numberOfValidHits()<3)continue;
-             double ipsigXY_T2 = std::abs(iTrack2->dxy(*theBeamSpot) / iTrack2->dxyError());
-             double ipsigZ_T2 = std::abs(iTrack2->dz(*theBeamSpot) / iTrack2->dzError());
+		     if(iTrack2->numberOfHits()<3)continue; // // V0 Producer uses numberOfValidHits
+             double ipsigXY_T2 = std::abs(iTrack2->dxy(theBeamSpot->position()) / iTrack2->dxyError());
+             double ipsigZ_T2 = std::abs(iTrack2->dz(theBeamSpot->position()) / iTrack2->dzError());
              if (ipsigXY_T2 < 2.0) continue;
 		     if (ipsigZ_T2 < -1.0) continue;
 		     if(iTrack1->charge() == iTrack2->charge()) continue;
