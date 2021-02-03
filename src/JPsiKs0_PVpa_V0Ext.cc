@@ -1665,6 +1665,12 @@ bool JPsiKs0_PVpa_V0Ext::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
   if (DeltaEta < 0.02 && DeltaP < 0.02) return true;
   return false;
 }
+bool JPsiKs0_PVpa_V0Ext::IsTheSame(const pat::GenericParticle& tk, const pat::Muon& mu){
+  double DeltaEta = fabs(mu.eta()-tk.eta());
+  double DeltaP   = fabs(mu.p()-tk.p());
+  if (DeltaEta < 0.02 && DeltaP < 0.02) return true;
+  return false;
+}
 
 bool JPsiKs0_PVpa_V0Ext::isAncestor(const reco::Candidate* ancestor, const reco::Candidate * particle) {
     if (ancestor == particle ) return true;
