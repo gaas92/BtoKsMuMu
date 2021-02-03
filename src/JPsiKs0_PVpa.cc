@@ -866,7 +866,7 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 		       continue;
 		     }
 		     
-		     if(bCandMC->currentState().mass()<5.0 || bCandMC->currentState().mass()>6.0) continue;
+		     if(bCandMC->currentState().mass()<4.5 || bCandMC->currentState().mass()>6.0) continue;
 		     
 		     if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ) 
 		       {

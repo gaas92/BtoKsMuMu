@@ -96,11 +96,12 @@ private:
  
   // ----------member data ---------------------------
   edm::EDGetTokenT<edm::View<pat::Muon>> dimuon_Label;
-  edm::EDGetTokenT<edm::View<pat::PackedCandidate>> trakCollection_label;
   edm::EDGetTokenT<reco::VertexCollection> primaryVertices_Label;
   edm::EDGetTokenT<reco::BeamSpot> BSLabel_;
   edm::EDGetTokenT<edm::TriggerResults> triggerResults_Label;
   edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
+  edm::EDGetTokenT<edm::View<pat::PackedCandidate>> Lost_track_label;
+  edm::EDGetTokenT<edm::View<pat::PackedCandidate>> pPFC_track_label;
 
   //Trigger Muon Selector
   edm::EDGetTokenT<std::vector<pat::TriggerObjectStandAlone>> triggerObjects_;

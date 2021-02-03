@@ -86,11 +86,13 @@
 JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   :
   dimuon_Label(consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("dimuons"))),
-  trakCollection_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("Trak"))),
   primaryVertices_Label(consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("primaryVertices"))),
   BSLabel_(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("bslabel"))),
   triggerResults_Label(consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("TriggerResults"))),
-  v0PtrCollection_(consumes<reco::VertexCompositePtrCandidateCollection>(iConfig.getParameter<edm::InputTag>("secundaryVerticesPtr"))),	       
+  v0PtrCollection_(consumes<reco::VertexCompositePtrCandidateCollection>(iConfig.getParameter<edm::InputTag>("secundaryVerticesPtr"))),	
+  Lost_track_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("Lost_Tracks"))), 
+  pPFC_track_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("pPFC_Tracks"))), 
+
   //Trigger Muon Selecctor 
   triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
 
@@ -183,12 +185,15 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   edm::Handle<std::vector<reco::VertexCompositePtrCandidate>> theV0PtrHandle;
   iEvent.getByToken(v0PtrCollection_,  theV0PtrHandle);
 
+  //Single Track Handles ...
+  edm::Handle< View<pat::PackedCandidate> > lost_Track_Handle;
+  iEvent.getByToken(Lost_track_label,lost_Track_Handle);
+  edm::Handle< View<pat::PackedCandidate> > pPFC_Handle;
+  iEvent.getByToken(pPFC_track_label,pPFC_Handle);
+
   // Kinematic fit
   edm::ESHandle<TransientTrackBuilder> theB; 
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB); 
-
-  edm::Handle< View<pat::PackedCandidate> > thePATTrackHandle;
-  iEvent.getByToken(trakCollection_label,thePATTrackHandle);
 
   edm::Handle< View<pat::Muon> > thePATMuonHandle;
   iEvent.getByToken(dimuon_Label,thePATMuonHandle);
@@ -866,7 +871,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		       continue;
 		     }
 		     
-		     if(bCandMC->currentState().mass()<5.0 || bCandMC->currentState().mass()>6.0) continue;
+		     if(bCandMC->currentState().mass()<4.5 || bCandMC->currentState().mass()>6.0) continue;
 		     
 		     if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ) 
 		       {
