@@ -1,7 +1,7 @@
 // -*- C++ -*-
 //
-// Package:    JPsiKs0_PVpa
-// Class:      JPsiKs0_PVpa
+// Package:    JPsiKs0_PVpa_V0Ext
+// Class:      JPsiKs0_PVpa_V0Ext
 // 
 //=================================================
 // original author:  Jhovanny Andres Mejia        |
@@ -13,7 +13,7 @@
 #include <memory>
 
 // user include files
-#include "myAnalyzers/BtoKsMuMu/src/JPsiKs0_PVpa.h"
+#include "myAnalyzers/BtoKsMuMu/src/JPsiKs0_PVpa_V0Ext.h"
 
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
@@ -83,7 +83,7 @@
 //
 // constructors and destructor
 //
-JPsiKs0_PVpa::JPsiKs0_PVpa(const edm::ParameterSet& iConfig)
+JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   :
   dimuon_Label(consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("dimuons"))),
   trakCollection_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("Trak"))),
@@ -162,13 +162,13 @@ JPsiKs0_PVpa::JPsiKs0_PVpa(const edm::ParameterSet& iConfig)
    //now do what ever initialization is needed
 }
 
-JPsiKs0_PVpa::~JPsiKs0_PVpa()
+JPsiKs0_PVpa_V0Ext::~JPsiKs0_PVpa_V0Ext()
 {
 
 }
 
 // ------------ method called to for each event  ------------
-void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
+void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
   using std::vector;
   using namespace edm;
@@ -962,7 +962,7 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
                     priVtxYZE_t = vtx.covariance(1, 2);
                     priVtxCL_t = ChiSquaredProbability((double)(vtx.chi2()),(double)(vtx.ndof())); 
 					TrkIndex_t = i;
-					nTks_t    = vtx.nTracks(0.5);
+					nTks_t    = vtx.nTracks();
 					for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
 						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
 						if (PVTriggDz_tt < PVTriggDz_t){
@@ -1209,28 +1209,28 @@ void JPsiKs0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
    }
 }
 
-bool JPsiKs0_PVpa::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
+bool JPsiKs0_PVpa_V0Ext::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
   double DeltaEta = fabs(mu.eta()-tk.eta());
   double DeltaP   = fabs(mu.p()-tk.p());
   if (DeltaEta < 0.02 && DeltaP < 0.02) return true;
   return false;
 }
 
-bool JPsiKs0_PVpa::isAncestor(const reco::Candidate* ancestor, const reco::Candidate * particle) {
+bool JPsiKs0_PVpa_V0Ext::isAncestor(const reco::Candidate* ancestor, const reco::Candidate * particle) {
     if (ancestor == particle ) return true;
     for (size_t i=0; i< particle->numberOfMothers(); i++) {
         if (isAncestor(ancestor,particle->mother(i))) return true;
     }
     return false;
 }
-bool JPsiKs0_PVpa::isAncestor(int a_pdgId, const reco::Candidate * particle) {
+bool JPsiKs0_PVpa_V0Ext::isAncestor(int a_pdgId, const reco::Candidate * particle) {
     if (a_pdgId == particle->pdgId() ) return true;
     for (size_t i=0; i< particle->numberOfMothers(); i++) {
         if (isAncestor(a_pdgId,particle->mother(i))) return true;
     }
     return false;
 }
-double JPsiKs0_PVpa::GetLifetime(TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx) {
+double JPsiKs0_PVpa_V0Ext::GetLifetime(TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx) {
    TVector3 pv_dv = decay_vtx - production_vtx;
    TVector3 b_p3  = b_p4.Vect();
    pv_dv.SetZ(0.);
@@ -1239,7 +1239,7 @@ double JPsiKs0_PVpa::GetLifetime(TLorentzVector b_p4, TVector3 production_vtx, T
    return lxy*b_p4.M()/b_p3.Mag();
 }
 //Try to print mc Tree
-std::string JPsiKs0_PVpa::printName(int pdgid){
+std::string JPsiKs0_PVpa_V0Ext::printName(int pdgid){
     std::unordered_map<int, std::string> umap;
     umap[11]  = "e-";
     umap[-11] = "e+";
@@ -1298,7 +1298,7 @@ std::string JPsiKs0_PVpa::printName(int pdgid){
 
     return retstr;
 }
-void JPsiKs0_PVpa::printMCtree(const reco::Candidate* mother, int indent=0){
+void JPsiKs0_PVpa_V0Ext::printMCtree(const reco::Candidate* mother, int indent=0){
     if (mother == NULL){
          std::cout << "end tree" << std::endl;
          return;
@@ -1324,7 +1324,7 @@ void JPsiKs0_PVpa::printMCtree(const reco::Candidate* mother, int indent=0){
     }
 }
 
-void JPsiKs0_PVpa::printMCtreeUP(const reco::Candidate* daughter, int indent = 0){
+void JPsiKs0_PVpa_V0Ext::printMCtreeUP(const reco::Candidate* daughter, int indent = 0){
     if (daughter == NULL){
         std::cout << "end tree" << std::endl;
         return;
@@ -1347,7 +1347,7 @@ void JPsiKs0_PVpa::printMCtreeUP(const reco::Candidate* daughter, int indent = 0
 // ------------ method called once each job just before starting event loop  ------------
 
 void 
-JPsiKs0_PVpa::beginJob()
+JPsiKs0_PVpa_V0Ext::beginJob()
 {
 
   std::cout << "Beginning analyzer job with value of doMC = " << doMC_ << std::endl;
@@ -1515,11 +1515,11 @@ JPsiKs0_PVpa::beginJob()
 
 
 // ------------ method called once each job just after ending the event loop  ------------
-void JPsiKs0_PVpa::endJob() {
+void JPsiKs0_PVpa_V0Ext::endJob() {
   tree_->GetDirectory()->cd();
   tree_->Write();
 }
 
 //define this as a plug-in
-DEFINE_FWK_MODULE(JPsiKs0_PVpa);
+DEFINE_FWK_MODULE(JPsiKs0_PVpa_V0Ext);
 
