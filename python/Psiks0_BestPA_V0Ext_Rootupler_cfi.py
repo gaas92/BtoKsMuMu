@@ -13,6 +13,6 @@ rootuple = cms.EDAnalyzer('JPsiKs0_PVpa_V0Ext',
                           objects = cms.InputTag("slimmedPatTrigger"),
                           OnlyBest = cms.bool(False),
                           isMC = cms.bool(False),
-                          isRes = cms.bool(True),     # if reco MC resonant  
+                          isRes = cms.bool(False),     # if reco MC resonant  
                           OnlyGen = cms.bool(False),
                           )
