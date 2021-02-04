@@ -225,7 +225,6 @@ McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
 	    }// end for daugters (for muons)
 	    if (nm==2) {
 			gen_jpsi_p4 = gen_muon1_p4 + gen_muon2_p4;
-	        gen_b_ct = GetLifetime(gen_b_p4,gen_b_vtx,gen_jpsi_vtx);
 			//std::cout << "muons ok"<< std::endl;
 		} 	  
 	    else foundit-=nm;
@@ -236,7 +235,6 @@ McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
 			  foundit++;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
 			  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
-			  gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx); 
 			   
 		    }// end if K0s
 	    }// end for B daughters for Ks0
@@ -260,8 +258,8 @@ McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
         //where the thetal is the angle between the
         //direction of the m-(m+) lepton and the K+(K-)
         //in this case we can calculate three anlges M-/Ks, M+/Ks, Dim/Ks
-        muonCMp = cmboost( getTLV(gen_muon2_p4) );
-        muonCMn = cmboost( getTLV(gen_muon1_p4) );
+        muonCMp = cmboost( gen_muon2_p4 );
+        muonCMn = cmboost( gen_muon1_p4 );
         
         Cos_T_LL = ( muonCMp.x()*muonCMn.x() 
                    + muonCMp.y()*muonCMn.y() 
