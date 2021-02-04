@@ -1431,7 +1431,7 @@ JPsiKs0::beginJob()
 
      tree_->Branch("gen_b_p4",      "TLorentzVector",  &gen_b_p4);
      tree_->Branch("gen_jpsi_p4",   "TLorentzVector",  &gen_jpsi_p4);
-     tree_->Branch("gen_pionks0_p4","TLorentzVector",  &gen_ks0_p4);
+     tree_->Branch("gen_ks0_p4" ,   "TLorentzVector",  &gen_ks0_p4);
      tree_->Branch("gen_muon1_p4",  "TLorentzVector",  &gen_muon1_p4);
      tree_->Branch("gen_muon2_p4",  "TLorentzVector",  &gen_muon2_p4);
      tree_->Branch("gen_pion1_p4",  "TLorentzVector",  &gen_pion1_p4);
