@@ -80,7 +80,7 @@ def main():
 	config.Data.inputDBS = 'global'
    #     config.Data.splitting = 'Automatic'
         config.Data.splitting = 'FileBased'
-        config.Data.unitsPerJob = 10
+        config.Data.unitsPerJob = 5
    #     config.Data.totalUnits = 30
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
@@ -125,7 +125,7 @@ def main():
         for inDS in inputDatasets:
              # inDS is of the form /A/B/C. Since B is unique for each inDS, use this in the CRAB request name.
             #config.General.requestName = inDS.split('/')[1]+'-'+inDS.split('/')[2]
-            config.General.requestName = inDS.split('/')[1]
+            config.General.requestName = inDS.split('/')[1]+'-'+inDS.split('/')[2]
             config.Data.inputDataset = inDS
             config.Data.outputDatasetTag = '%s_%s' % (config.General.workArea, config.General.requestName)
             # Submit.
