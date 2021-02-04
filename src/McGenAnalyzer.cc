@@ -241,15 +241,15 @@ McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
       } // end if B0
       if (foundit>=5) {
         // Aqui creemos el boost al CM del dilepton
-        ROOT::Math::PxPyPzMVector gen_dilep(gen_jpsi_p4.Px(), gen_jpsi_p4.Py(), gen_jpsi_p4.Pz(), gen_jpsi_p4.M());
+        math::XYZTLorentzVector gen_dilep(gen_jpsi_p4.Px(), gen_jpsi_p4.Py(), gen_jpsi_p4.Pz(), gen_jpsi_p4.M());
         ROOT::Math::Boost gen_cmboost(gen_dilep.BoostToCM());
 
-        ROOT::Math::PxPyPzMVector gen_kaon(gen_ks0_p4.Px(), gen_ks0_p4.Py(), gen_ks0_p4.Pz(), gen_ks0_p4.M());
-        ROOT::Math::XYZTVector  gen_kaonCM(  gen_cmboost( gen_kaon )  );
-        ROOT::Math::XYZTVector  gen_muonCMP, gen_muonCMN;
+        math::XYZTLorentzVector gen_kaon(gen_ks0_p4.Px(), gen_ks0_p4.Py(), gen_ks0_p4.Pz(), gen_ks0_p4.M());
+        math::XYZTLorentzVector  gen_kaonCM(  gen_cmboost( gen_kaon )  );
+        math::XYZTLorentzVector  gen_muonCMP, gen_muonCMN;
 
-        ROOT::Math::PxPyPzMVector gen_muon1(gen_muon1_p4.Px(), gen_muon1_p4.Py(), gen_muon1_p4.Pz(), gen_muon1_p4.M());
-        ROOT::Math::PxPyPzMVector gen_muon2(gen_muon2_p4.Px(), gen_muon2_p4.Py(), gen_muon2_p4.Pz(), gen_muon2_p4.M());
+        math::XYZTLorentzVector gen_muon1(gen_muon1_p4.Px(), gen_muon1_p4.Py(), gen_muon1_p4.Pz(), gen_muon1_p4.M());
+         math::XYZTLorentzVector gen_muon2(gen_muon2_p4.Px(), gen_muon2_p4.Py(), gen_muon2_p4.Pz(), gen_muon2_p4.M());
 
         gen_muonCMP = gen_cmboost(gen_muon2);
         gen_muonCMN = gen_cmboost(gen_muon1);
