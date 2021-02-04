@@ -899,7 +899,6 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     reco::TransientTrack pionTT((*theB).build(theDaughterTracks[pion_I]));
 		     reco::TransientTrack protonTT((*theB).build(theDaughterTracks[proton_I]));		     
 		     
-		     ParticleMass pion_mass = 0.13957018;
 		     ParticleMass proton_mass = 0.938272;
 			 ParticleMass lambda0_mass = 1.115683;
 
@@ -908,8 +907,8 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     float lambda0_sigma = lambda0_mass*1.e-6;
 		     
 		     //initial chi2 and ndf before kinematic fits.
-		     float chi = 0.;
-		     float ndf = 0.;
+		     //float chi = 0.;
+		     //float ndf = 0.;
 		     vector<RefCountedKinematicParticle> trackParticles;
 		     // vector<RefCountedKinematicParticle> muonParticles;
 		     try {
