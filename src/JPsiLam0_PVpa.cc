@@ -902,7 +902,6 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     ParticleMass proton_mass = 0.938272;
 			 ParticleMass lambda0_mass = 1.115683;
 
-		     float pion_sigma = pion_mass*1.e-6;
 			 float proton_sigma = proton_mass*1.e-6;
 		     float lambda0_sigma = lambda0_mass*1.e-6;
 		     
