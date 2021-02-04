@@ -163,7 +163,7 @@ private:
 
   std::vector<float>       *B_mass, *LB_mass, *B_px, *B_py, *B_pz;
  
-  std::vector<float>       *B_Ks0_mass, LB_L0_mass, *B_Ks0_px, *B_Ks0_py, *B_Ks0_pz;
+  std::vector<float>       *B_Ks0_mass, *LB_L0_mass, *B_Ks0_px, *B_Ks0_py, *B_Ks0_pz;
   std::vector<float>       *B_Ks0_pt1, *B_Ks0_px1, *B_Ks0_py1, *B_Ks0_pz1;
   std::vector<float>       *B_Ks0_pt2, *B_Ks0_px2, *B_Ks0_py2, *B_Ks0_pz2;
   
