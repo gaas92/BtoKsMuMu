@@ -1296,8 +1296,8 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
    nB = 0; nMu = 0;
    trigger = 0;
    if (!OnlyGen_){	
-   		B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
-   		B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
+   		B_mass->clear(); LB_mass->clear();   B_px->clear();    B_py->clear();    B_pz->clear();
+   		B_Ks0_mass->clear(); LB_L0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
 
    		B_J_mass->clear();  B_J_px->clear();  B_J_py->clear();  B_J_pz->clear();
 
@@ -1500,11 +1500,13 @@ JPsiLam0_PVpa::beginJob()
      tree_->Branch("nMu",&nMu,"nMu/i");
    
      tree_->Branch("B_mass", &B_mass);
+     tree_->Branch("LB_mass", &LB_mass);
      tree_->Branch("B_px", &B_px);
      tree_->Branch("B_py", &B_py);
      tree_->Branch("B_pz", &B_pz);
    
      tree_->Branch("B_Ks0_mass", &B_Ks0_mass);
+     tree_->Branch("LB_L0_mass", &LB_L0_mass);
      tree_->Branch("B_Ks0_px", &B_Ks0_px);
      tree_->Branch("B_Ks0_py", &B_Ks0_py);
      tree_->Branch("B_Ks0_pz", &B_Ks0_pz);
