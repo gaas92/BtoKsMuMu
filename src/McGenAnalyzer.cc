@@ -241,36 +241,29 @@ McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
       } // end if B0
       if (foundit>=5) {
         // Aqui creemos el boost al CM del dilepton
-        //auto dilep = math::XYZTLorentzVector(psi_vFit_noMC->currentState().globalMomentum().x(),
-        //                                     psi_vFit_noMC->currentState().globalMomentum().y(),
-        //                                     psi_vFit_noMC->currentState().globalMomentum().z(),
-        //                                     psi_vFit_noMC->currentState().mass());
-        //    
-        //auto k0vec = math::XYZTLorentzVector(Ks0CandMC->currentState().globalMomentum().x(),
-        //                                     Ks0CandMC->currentState().globalMomentum().y(),
-        //                                     Ks0CandMC->currentState().globalMomentum().z(),
-        //                                     Ks0CandMC->currentState().mass());
-        //ROOT::Math::Boost cmboost(gen_jpsi_p4.BoostToCM());
-        ROOT::Math::Boost cmboost(gen_jpsi_p4.Boost());
-            
-        math::XYZTLorentzVector kaonCM(  cmboost( gen_ks0_p4 )  );
-        math::XYZTLorentzVector dimuCM(  cmboost( gen_jpsi_p4 ) );
-        math::XYZTLorentzVector muonCMp, muonCMn; 
-        //where the thetal is the angle between the
-        //direction of the m-(m+) lepton and the K+(K-)
-        //in this case we can calculate three anlges M-/Ks, M+/Ks, Dim/Ks
-        muonCMp = cmboost( gen_muon2_p4 );
-        muonCMn = cmboost( gen_muon1_p4 );
+        ROOT::Math::PxPyPzMVector gen_dilep(gen_jpsi_p4.Px(), gen_jpsi_p4.Py(), gen_jpsi_p4.Pz(), gen_jpsi_p4.M());
+        ROOT::Math::Boost gen_cmboost(gen_dilep.BoostToCM());
+
+        ROOT::Math::PxPyPzMVector gen_kaon(gen_ks0_p4.Px(), gen_ks0_p4.Py(), gen_ks0_p4.Pz(), gen_ks0_p4.M());
+        ROOT::Math::XYZTVector  gen_kaonCM(  gen_cmboost( gen_kaon )  );
+        ROOT::Math::XYZTVector  gen_muonCMP, gen_muonCMN;
+
+        ROOT::Math::PxPyPzMVector gen_muon1(gen_muon1_p4.Px(), gen_muon1_p4.Py(), gen_muon1_p4.Pz(), gen_muon1_p4.M());
+        ROOT::Math::PxPyPzMVector gen_muon2(gen_muon2_p4.Px(), gen_muon2_p4.Py(), gen_muon2_p4.Pz(), gen_muon2_p4.M());
+
+        gen_muonCMP = gen_cmboost(gen_muon2);
+        gen_muonCMN = gen_cmboost(gen_muon1);
         
-        Cos_T_LL = ( muonCMp.x()*muonCMn.x() 
-                   + muonCMp.y()*muonCMn.y() 
-                   + muonCMp.z()*muonCMn.z() ) / (muonCMp.P()*muonCMn.P() );
-        Cos_T_L1 = ( muonCMp.x()*kaonCM.x() 
-                   + muonCMp.y()*kaonCM.y() 
-                   + muonCMp.z()*kaonCM.z() ) / (muonCMp.P()*kaonCM.P() );
-        Cos_T_L2 = ( muonCMn.x()*kaonCM.x() 
-                   + muonCMn.y()*kaonCM.y() 
-                   + muonCMn.z()*kaonCM.z() ) / (muonCMn.P()*kaonCM.P() );
+        Cos_T_LL = ( gen_muonCMP.x()*gen_muonCMN.x() 
+                   + gen_muonCMP.y()*gen_muonCMN.y() 
+                   + gen_muonCMP.z()*gen_muonCMN.z() ) / (gen_muonCMP.P()*gen_muonCMN.P() );
+
+        Cos_T_L1 = ( gen_muonCMP.x()*gen_kaonCM.x() 
+                   + gen_muonCMP.y()*gen_kaonCM.y() 
+                   + gen_muonCMP.z()*gen_kaonCM.z() ) / (gen_muonCMP.P()*gen_kaonCM.P() );
+        Cos_T_L2 = ( gen_muonCMN.x()*gen_kaonCM.x() 
+                   + gen_muonCMN.y()*gen_kaonCM.y() 
+                   + gen_muonCMN.z()*gen_kaonCM.z() ) / (gen_muonCMN.P()*gen_kaonCM.P() );
 
         tree_->Fill();
         break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0 //NOPIONS , 6-pi1, 7-pi2
