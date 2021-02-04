@@ -144,9 +144,8 @@ bool McGenAnalyzer::isAncestor(int a_pdgId, const reco::Candidate * particle) {
 //
 
 // ------------ method called for each event  ------------
-void
-McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
-
+void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
+  std::cout<< "frnklfnrsdf"<< std::endl;
   bool debug = true;
 
   gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
