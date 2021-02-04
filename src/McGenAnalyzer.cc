@@ -250,7 +250,8 @@ McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
         //                                     Ks0CandMC->currentState().globalMomentum().y(),
         //                                     Ks0CandMC->currentState().globalMomentum().z(),
         //                                     Ks0CandMC->currentState().mass());
-        ROOT::Math::Boost cmboost(gen_jpsi_p4.BoostToCM());
+        //ROOT::Math::Boost cmboost(gen_jpsi_p4.BoostToCM());
+        ROOT::Math::Boost cmboost(gen_jpsi_p4.Boost());
             
         math::XYZTLorentzVector kaonCM(  cmboost( gen_ks0_p4 )  );
         math::XYZTLorentzVector dimuCM(  cmboost( gen_jpsi_p4 ) );
@@ -274,6 +275,7 @@ McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
         tree_->Fill();
         break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0 //NOPIONS , 6-pi1, 7-pi2
       }
+    }// end for pruned  
   }// end if pruned
 }// end analize
 
