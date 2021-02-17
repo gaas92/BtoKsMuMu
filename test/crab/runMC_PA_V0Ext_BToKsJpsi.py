@@ -68,12 +68,12 @@ def main():
 
         config.General.requestName = None
         #config.General.workArea = 'ZMuondecay'
-        config.General.workArea = 'V0Ext_nonResMC'
+        config.General.workArea = 'V0Ext_ResMC'
 	config.General.transferOutputs = True
 	config.General.transferLogs = False
 
         config.JobType.pluginName = 'Analysis'
-	config.JobType.psetName = '/afs/cern.ch/work/g/gayalasa/public/B0Analysis/CMSSW_10_6_12/src/myAnalyzers/BtoKsMuMu/test/MCmumuks0Rootupler.py' #MC Parked configfile
+	config.JobType.psetName = '/afs/cern.ch/work/g/gayalasa/public/B0Analysis/CMSSW_10_6_12/src/myAnalyzers/BtoKsMuMu/test/MCJpsiks0Rootupler.py' #MC Parked configfile
 	config.JobType.allowUndistributedCMSSW = True
 
         config.Data.inputDataset = None
@@ -85,7 +85,7 @@ def main():
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
         config.Data.outputDatasetTag = None
-	config.Data.outLFNDirBase = '/store/user/gayalasa/V0Ext_nonResMC/'
+	config.Data.outLFNDirBase = '/store/user/gayalasa/V0Ext_ResMC/'
 	#config.Site.storageSite = 'T3_US_FNALLPC'
 	config.Site.storageSite = 'T3_CH_CERNBOX'
         config.Site.whitelist = ['T2_US*']
@@ -95,8 +95,8 @@ def main():
 
         # Will submit one task for each of these input datasets.
         inputDatasets = [ 
-                          '/BdToK0sMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
-                          #'/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
+                          #'/BdToK0sMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
+                          '/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
                  	]
  
         for inDS in inputDatasets:
