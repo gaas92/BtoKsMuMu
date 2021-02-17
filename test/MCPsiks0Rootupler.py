@@ -54,7 +54,8 @@ process.source = cms.Source("PoolSource",
 #                                        throw = cms.bool(False)
 #                                        )
 
-process.load("myAnalyzers.BtoKsMuMu.Psiks0Rootupler_cfi")
+#process.load("myAnalyzers.BtoKsMuMu.Psiks0Rootupler_cfi")
+process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
 process.rootuple.isMC = cms.bool(True) 
 process.rootuple.isRes = cms.bool(True) 
 process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
