@@ -51,11 +51,15 @@ process.source = cms.Source("PoolSource",
 #                                        )
 
 process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_pPFC_Rootupler_cfi")
+process.rootuple.isMC = cms.bool(True) 
+process.rootuple.isRes = cms.bool(False) 
+process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
+
 #process.rootuple.isMC = cms.bool(True) # this is only for test
 
 process.TFileService = cms.Service("TFileService",
 
-       fileName = cms.string('Rootuple_Bdtojpiks0_PARKED_Bpa_PVExt_MiniAOD.root'),
+       fileName = cms.string('Rootuple_Bdtojpiks0_PARKED_Bpa_pPFC_MiniAOD.root'),
 )
 
 #process.mySequence = cms.Sequence(
