@@ -224,7 +224,7 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	        	}
 	        }
 		    else {
-            std::cout << "muon2 else" << std::endl;
+            std::cout << "muon2 ok else" << std::endl;
 	        	gen_muon2_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
 	        	nm++;
 	        }
@@ -240,14 +240,16 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			const reco::Candidate *gdau = dau->daughter(k); 
 			if (gdau->pdgId()==310){ //is K0s
 			  foundit++;
+        std::cout << "Ks0 ok"<< std::endl;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
 			  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
 			   
 		    }// end if K0s
 	    }// end for B daughters for Ks0
       } // end if B0
-      if (foundit>=5) {
+      if ((gen_muon1_p4.Pt() != 0) && (gen_muon2_p4.Pt() != 0) && (gen_ks0_p4.Pt() != 0) ) {
         // Aqui creemos el boost al CM del dilepton
+        std::cout  << "Fill Chingadera ok " << std::endl;
         math::XYZTLorentzVector gen_dilep(gen_jpsi_p4.Px(), gen_jpsi_p4.Py(), gen_jpsi_p4.Pz(), gen_jpsi_p4.M());
         ROOT::Math::Boost gen_cmboost(gen_dilep.BoostToCM());
 
