@@ -116,7 +116,7 @@ class McGenAnalyzer : public edm::EDAnalyzer {
 McGenAnalyzer::McGenAnalyzer(const edm::ParameterSet& iConfig)
  //:number_daughters(0), number_daughtersJ(0), bplus(0), costhetaL(0.0), costhetaKL(0.0), costhetaLJ(0.0), costhetaKLJ(0.0)
 {
-  std::cout << "INITIALIZER?" << std::endl;
+  //std::cout << "INITIALIZER?" << std::endl;
   genCands_ = consumes<std::vector<reco::GenParticle>>(edm::InputTag("genParticles"));
   
 }
@@ -145,7 +145,7 @@ bool McGenAnalyzer::isAncestor(int a_pdgId, const reco::Candidate * particle) {
 
 // ------------ method called for each event  ------------
 void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
-  std::cout<< "frnklfnrsdf"<< std::endl;
+  //std::cout<< "frnklfnrsdf"<< std::endl;
   bool debug = true;
 
   gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
@@ -171,9 +171,9 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   iEvent.getByToken(genCands_, pruned);
 
   //JHOVANNYS
-  if (debug) std::cout << "PRUNED? \n";
-  //std::cout << "SIZE = " << pruned->size() << std::endl;
+  if (debug) std::cout << "PRUNED? " << pruned.isValid() std::endl;
   if ( pruned.isValid() ) {
+    std::cout << "SIZE = " << pruned->size() << std::endl;
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
@@ -185,7 +185,7 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		//printMCtree(dau, 0);
 	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
 	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
-		int nm=0;
+		  int nm=0;
 	    for (size_t k=0; k<dau->numberOfDaughters(); k++) {
 	      const reco::Candidate *mm = dau->daughter(k);     
 	      if (mm->pdgId()==13 && !isAncestor(443,mm)) { foundit++;  // cames from B but not J/p
