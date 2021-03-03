@@ -9,10 +9,10 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 
 process.source = cms.Source("PoolSource",
-        fileNames = cms.untracked.vstring( open('my_gen-NF_files.txt').readlines())
-        #fileNames = cms.untracked.vstring(
-        #    ['file:/eos/user/g/gayalasa/Step0-BPHnoFilters_B0toK0MM/crab_2018-PrivateMC-Step0-BPHnoFilters_B0toK0MM-2021-01-27-19-15/210127_181518/0000/BPH_B0toK0MM_GenNF_1.root']
-        #)
+        #fileNames = cms.untracked.vstring( open('my_gen-NF_files.txt').readlines())
+        fileNames = cms.untracked.vstring(
+            ['/store/mc/RunIIAutumn18DR/BdToK0sMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/GEN-SIM-DIGI-RAW/PUPoissonAve20_102X_upgrade2018_realistic_v15-v2/100000/001BF693-83CF-4648-AC6B-43B3EB4EAE30.root']
+        )
 		)
 
 
