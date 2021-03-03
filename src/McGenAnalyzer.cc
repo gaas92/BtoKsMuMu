@@ -171,7 +171,7 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   iEvent.getByToken(genCands_, pruned);
 
   //JHOVANNYS
-  if (debug) std::cout << "PRUNED? " << pruned.isValid() std::endl;
+  if (debug) std::cout << "PRUNED? " << pruned.isValid() << std::endl;
   if ( pruned.isValid() ) {
     std::cout << "SIZE = " << pruned->size() << std::endl;
     int foundit = 0;
