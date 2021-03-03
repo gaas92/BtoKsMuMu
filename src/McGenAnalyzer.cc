@@ -199,12 +199,14 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	            const reco::Candidate *mu = mm->daughter(m);
 	            if (mu->pdgId()==13 ) { //&& mu->status()==1) {
 	              nm++;
+                std::cout << "muon1 ok" << std::endl;
 	              gen_muon1_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
 	              break;
 	            }
 	          }
 	        } 
 		    else {
+            std::cout << "muon1 ok else " << std::endl;
 	          gen_muon1_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
 	          nm++;
 	        }
@@ -215,12 +217,14 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	        	  const reco::Candidate *mu = mm->daughter(m);
 	        	  if (mu->pdgId()==-13 ) { //&& mu->status()==1) {
 	        	    nm++;
+                std::cout << "muon2 ok" << std::endl;
 	        	    gen_muon2_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
 	        	    break;
 	        	  }
 	        	}
 	        }
 		    else {
+            std::cout << "muon2 else" << std::endl;
 	        	gen_muon2_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
 	        	nm++;
 	        }
@@ -228,7 +232,7 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	    }// end for daugters (for muons)
 	    if (nm==2) {
 			gen_jpsi_p4 = gen_muon1_p4 + gen_muon2_p4;
-			//std::cout << "muons ok"<< std::endl;
+			std::cout << "muons ok"<< std::endl;
 		} 	  
 	    else foundit-=nm;
 	    // end for B daughters for dimuon
