@@ -85,6 +85,10 @@ class McGenAnalyzer : public edm::EDAnalyzer {
       virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
       virtual void endJob() override;
 
+      void printMCtree(const reco::Candidate *, int);
+      std::string printName(int);
+
+
       // ----------member data ---------------------------
       edm::EDGetTokenT<std::vector<reco::GenParticle>> genCands_;
       
@@ -323,6 +327,89 @@ McGenAnalyzer::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
   //desc.addUntracked<edm::InputTag>("tracks","ctfWithMaterialTracks");
   //descriptions.addDefault(desc);
 }
+std::string McGenAnalyzer::printName(int pdgid){
+  std::unordered_map<int, std::string> umap;
+  umap[11]  = "e-";
+  umap[-11] = "e+";
+  umap[13]  = "mu-";
+  umap[-13] = "mu+";
+  umap[22]  = "gamma";
+  umap[23]  = "Z";
+  umap[12]  = "Ve";
+  umap[14]  = "Vmu";
+  umap[-14] = "-Vmu";
+  umap[15]  = "tau-";
+  umap[-15] = "tau+";
+  umap[16]  = "Vtau";
+  umap[-16] = "-Vtau";
+  umap[111] = "pi0";
+  umap[211] = "pi+";
+  umap[-211]= "pi-";
+	umap[310] = "Ks0";
+	umap[443] = "Jpsi";
+	umap[511] = "B0";
+	umap[-511]= "B0-";
+	umap[521] = "B+";
+	umap[-521]= "B-";
+	umap[311] = "K0";
+	umap[130] = "Kl0";
+	umap[321] = "K+";
+	umap[-321]= "K-";
+	umap[413] = "D*(2010)+";
+	umap[-413]= "D*(2010)-";
+	umap[421] = "D0";
+	umap[-421]= "D0-";
+	umap[411] = "D+";
+	umap[-411]= "D-";
+	umap[415] = "D*2(2460)+";
+	umap[-415]= "D*2(2460)-";
+	umap[423] = "D*(2007)0";
+	umap[-423]= "D*(2007)0-"; 
+	umap[10411] = "D*0(2400)+";
+	umap[-10411] = "D*0(2400)-";
+	umap[2212]  = "p";
+	umap[-2212] = "p-";
+	umap[2112]  = "n";
+	umap[-2112] = "n-";
+	umap[21] = "g";
+	umap[20213] = "a1(1260)+";
+	umap[-20213]= "a1(1260)-";
 
+
+    std::string retstr;
+    if (umap.find(pdgid) == umap.end()){
+        retstr = std::to_string(pdgid);
+    }
+    else{
+        retstr = umap.at(pdgid);
+    }
+
+    return retstr;
+}
+void McGenAnalyzer::printMCtree(const reco::Candidate* mother, int indent=0){
+    if (mother == NULL){
+         std::cout << "end tree" << std::endl;
+         return;
+    }
+    if (mother->numberOfDaughters() > 0){
+        if(indent){
+                std::cout << std::setw(indent) << " ";
+        }
+        std::cout << printName(mother->pdgId()) <<" has "<< mother->numberOfDaughters() <<" daughters " <<std::endl;
+    }
+    int extraIndent = 0;
+    for (size_t i=0; i< mother->numberOfDaughters(); i++){
+        const reco::Candidate * daughter = mother->daughter(i);
+        if (mother->numberOfDaughters() > 0){
+            if(indent){
+                std::cout << std::setw(indent) << " ";
+            }
+            std::cout << " daugter "<< i+1 <<": "<<  printName(daughter->pdgId()) << " with Pt: ";
+            std::cout << daughter->pt() << " | Eta: "<< daughter->eta() << " | Phi: "<< daughter->phi() << " | mass: "<< daughter->mass() << std::endl;
+            extraIndent+=4;
+        }
+        if (daughter->numberOfDaughters()) printMCtree(daughter, indent+extraIndent);
+    }
+}
 //define this as a plug-in
 DEFINE_FWK_MODULE(McGenAnalyzer);
