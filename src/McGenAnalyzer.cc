@@ -180,9 +180,9 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       const reco::Candidate *dau = &(*pruned)[i];
       if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
 	    foundit++;
-		//std::cout<< "|--XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX--|"<< std::endl;
-		//std::cout<<"Found B0 printing Decay Tree ..."<< std::endl;
-		//printMCtree(dau, 0);
+		  std::cout<< "|--XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX--|"<< std::endl;
+		  std::cout<<"Found B0 printing Decay Tree ..."<< std::endl;
+		  printMCtree(dau, 0);
 	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
 	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
 		  int nm=0;
