@@ -959,7 +959,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     	Lam0VertexFitTree->movePointerToTheTop();
 			 }
 			 catch (...){
-				if (debug) std::cout<< "Lamb0 Vertex Fit Tree empty or not valid" std::endl;
+				if (debug) std::cout<< "Lamb0 Vertex Fit Tree empty or not valid"<< std::endl;
 				continue;
 			 }
 		     RefCountedKinematicParticle Lam0_vFit_noMC = Lam0VertexFitTree->currentParticle();
@@ -1003,7 +1003,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     	Lam0VertexFitTree->movePointerToTheTop();
 			 }
 			 catch(...){
-				if (debug) std::cout<< "Lamb0 mass constrained Vertex Fit Tree empty or not valid" std::endl; 
+				if (debug) std::cout<< "Lamb0 mass constrained Vertex Fit Tree empty or not valid" <<std::endl; 
 				continue;
 			 }
 
