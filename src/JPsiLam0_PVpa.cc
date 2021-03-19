@@ -877,8 +877,13 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		          //continue;
 		        }
 		        
-		        vertexFitTree->movePointerToTheTop();		     
-		        
+				try {
+		        	vertexFitTree->movePointerToTheTop();		     
+				}
+				catch (...){
+					if(debug) std::cout<< "B Vertex empty or not valid" << std::endl;
+					//continue ; // we are not interested in the B decay ...
+				}
 		        RefCountedKinematicParticle bCandMC = vertexFitTree->currentParticle();
 		        RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
 		        if (!bDecayVertexMC->vertexIsValid()){
@@ -1027,8 +1032,13 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		       //continue;
 		     }
 		     
-		     LbvertexFitTree->movePointerToTheTop();		     
-		     
+			 try {
+		     	LbvertexFitTree->movePointerToTheTop();		     
+			 }
+			 catch (...){
+				 if (debug) std::cout<<"Lambda B Vertex empty or not valid" << std::endl;
+				 continue;
+			 }
 		     RefCountedKinematicParticle LbCandMC = LbvertexFitTree->currentParticle();
 		     RefCountedKinematicVertex LbDecayVertexMC = LbvertexFitTree->currentDecayVertex();
 		     if (!LbDecayVertexMC->vertexIsValid()){
