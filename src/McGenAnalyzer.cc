@@ -270,6 +270,7 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
         Cos_T_L1 = ( gen_muonCMP.x()*gen_kaonCM.x() 
                    + gen_muonCMP.y()*gen_kaonCM.y() 
                    + gen_muonCMP.z()*gen_kaonCM.z() ) / (gen_muonCMP.P()*gen_kaonCM.P() );
+                   
         Cos_T_L2 = ( gen_muonCMN.x()*gen_kaonCM.x() 
                    + gen_muonCMN.y()*gen_kaonCM.y() 
                    + gen_muonCMN.z()*gen_kaonCM.z() ) / (gen_muonCMN.P()*gen_kaonCM.P() );

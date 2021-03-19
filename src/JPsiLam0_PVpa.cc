@@ -504,7 +504,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   //emulate BParking MuonTriggerSelector 
   std::vector<pat::TriggerObjectStandAlone> triggeringMuons;
   int int_obj = 0;
-  bool debug = false;
+  bool debug = true;
   const double maxdR_ = 0.1;
   // std::cout << "\n\n\n------------>>>>>>NEW RECORD NEW RECORD NEW RECORD NEW RECORD"<<"\n";
  
@@ -708,9 +708,13 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	      //std::cout << "caught an exception in the psi vertex fit" << std::endl;
 	      continue; 
 	    }
-
-	  psiVertexFitTree->movePointerToTheTop();
-	  
+      try{
+	  	psiVertexFitTree->movePointerToTheTop();
+	  }
+	  catch(...){
+		if(debug) std::cout<< "psi vertex empry or not valid" <<std::endl;
+		continue;  
+	  }
 	  RefCountedKinematicParticle psi_vFit_noMC = psiVertexFitTree->currentParticle();//masa del J/psi
 	  RefCountedKinematicVertex psi_vFit_vertex_noMC = psiVertexFitTree->currentDecayVertex();//vertice del J/psi
 	  
@@ -796,8 +800,13 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			 //std::cout << "invalid vertex from the Ks0 vertex fit" << std::endl;
 			 //continue; 
 		       }
-		     Ks0VertexFitTree->movePointerToTheTop();
-		     
+			 try{  
+		     	Ks0VertexFitTree->movePointerToTheTop();
+			 }
+			 catch(...){
+				if (debug) std::cout<<"Ks0 Vertex fit empty or not valid" << std::endl;
+				//continue; we are not interested in the Ks0 Fit
+			 }
 		     RefCountedKinematicParticle Ks0_vFit_noMC = Ks0VertexFitTree->currentParticle();
 		     RefCountedKinematicVertex Ks0_vFit_vertex_noMC = Ks0VertexFitTree->currentDecayVertex();
 		     //aca chinga a su madre todo
@@ -838,8 +847,14 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		        }
 		        //std::cout << "pass 424 continues ... "<< std::endl;
 		     
-			 
-		        Ks0VertexFitTree->movePointerToTheTop();
+			    try {
+		        	Ks0VertexFitTree->movePointerToTheTop();
+				}
+				catch(...){
+					if(debug) std::cout << "Ks0 mass constrained vertex fit empty or not valid" << std::endl;
+					//continue; we are not interested in the ks0 fit 
+				}
+
 		        RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
 		        
 		        //Now we are ready to combine!
@@ -940,8 +955,13 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			 //std::cout << "invalid vertex from the Ks0 vertex fit" << std::endl;
 			   continue; 
 		       }
-		     Lam0VertexFitTree->movePointerToTheTop();
-		     
+			 try {  
+		     	Lam0VertexFitTree->movePointerToTheTop();
+			 }
+			 catch (...){
+				if (debug) std::cout<< "Lamb0 Vertex Fit Tree empty or not valid" std::endl;
+				continue;
+			 }
 		     RefCountedKinematicParticle Lam0_vFit_noMC = Lam0VertexFitTree->currentParticle();
 		     RefCountedKinematicVertex Lam0_vFit_vertex_noMC = Lam0VertexFitTree->currentDecayVertex();
 		     
@@ -979,9 +999,15 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     }
 		     //std::cout << "pass 424 continues ... "<< std::endl;
 		     //aca chinga a su madre todo
-			 
-		     Lam0VertexFitTree->movePointerToTheTop();
-		     RefCountedKinematicParticle Lam0_vFit_withMC = Lam0VertexFitTree->currentParticle();
+			 try{
+		     	Lam0VertexFitTree->movePointerToTheTop();
+			 }
+			 catch(...){
+				if (debug) std::cout<< "Lamb0 mass constrained Vertex Fit Tree empty or not valid" std::endl; 
+				continue;
+			 }
+
+			 RefCountedKinematicParticle Lam0_vFit_withMC = Lam0VertexFitTree->currentParticle();
 		     
 		     //Now we are ready to combine!
 		     
