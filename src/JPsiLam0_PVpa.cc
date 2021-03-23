@@ -770,8 +770,8 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     //if ( IsTheSame(*theDaughterTracks[1],*iMuon1) || IsTheSame(*theDaughterTracks[1],*iMuon2) ) continue;
 		     
 		     //Now let's see if these two tracks make a vertex
-		     //reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
-		     //reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));		     
+		     reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
+		     reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));		     
 		     
 		     ParticleMass pion_mass = 0.13957018;
 		     ParticleMass Ks0_mass = 0.497614;
