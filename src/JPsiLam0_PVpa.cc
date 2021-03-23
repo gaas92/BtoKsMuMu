@@ -1166,13 +1166,13 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     // cout<< "*Number of Muons : " << nMu_tmp << endl;
 		   } // end nB==0		     
 		
-		   B_mass->push_back(b_mass_tmp);
+		   //B_mass->push_back(b_mass_tmp);
 		   LB_mass->push_back(LbCandMC->currentState().mass());
 		   B_px->push_back(LbCandMC->currentState().globalMomentum().x());
 		   B_py->push_back(LbCandMC->currentState().globalMomentum().y());
 		   B_pz->push_back(LbCandMC->currentState().globalMomentum().z());
 		
-		   B_Ks0_mass->push_back( Ks0_mass_tmp );
+		   //B_Ks0_mass->push_back( Ks0_mass_tmp );
 		   LB_L0_mass->push_back( Lam0_vFit_noMC->currentState().mass() );
 		   B_Ks0_px->push_back( Lam0_vFit_noMC->currentState().globalMomentum().x() );
 		   B_Ks0_py->push_back( Lam0_vFit_noMC->currentState().globalMomentum().y() );
@@ -1546,13 +1546,13 @@ JPsiLam0_PVpa::beginJob()
      tree_->Branch("nB",&nB,"nB/i");
      tree_->Branch("nMu",&nMu,"nMu/i");
    
-     tree_->Branch("B_mass", &B_mass);
+     //tree_->Branch("B_mass", &B_mass);
      tree_->Branch("LB_mass", &LB_mass);
      tree_->Branch("B_px", &B_px);
      tree_->Branch("B_py", &B_py);
      tree_->Branch("B_pz", &B_pz);
    
-     tree_->Branch("B_Ks0_mass", &B_Ks0_mass);
+     //tree_->Branch("B_Ks0_mass", &B_Ks0_mass);
      tree_->Branch("LB_L0_mass", &LB_L0_mass);
      tree_->Branch("B_Ks0_px", &B_Ks0_px);
      tree_->Branch("B_Ks0_py", &B_Ks0_py);
