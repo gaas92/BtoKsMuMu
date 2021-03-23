@@ -744,7 +744,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	       for ( vector<VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee )
 		 {
 		   //get Lam tracks from V0 candidate fot the B --> Ks0 Decay, omit all continues 
-		   vector<pat::PackedCandidate> v0daughters;
+		     vector<pat::PackedCandidate> v0daughters;
 		     vector<Track> theDaughterTracks;
 			 const pat::PackedCandidate* track1 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0));
 			 const pat::PackedCandidate* track2 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1));
@@ -914,6 +914,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 			 //MAKE LAMBDA FIT 
              //Now let's see if these two tracks make a vertex
+			 if (debug) std::cout << "Ks0 - B0 Vtx ok" << std::endl;
 			 int pion_I = 0;
 			 int proton_I = 0;
 			 if (v0daughters[0].pt() > v0daughters[1].pt() ){
