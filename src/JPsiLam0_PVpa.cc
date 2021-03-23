@@ -777,7 +777,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     ParticleMass Ks0_mass = 0.497614;
 		     float pion_sigma = pion_mass*1.e-6;
 		     float Ks0_sigma = Ks0_mass*1.e-6;
-		     /*
+		     ///*
 		     //initial chi2 and ndf before kinematic fits.
 		     float chi = 0.;
 		     float ndf = 0.;
@@ -916,7 +916,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			 catch (...){
 				 std::cout << "B0 Ks0 Vertex fit chinga a su madre " << std::endl;
 			 }
-             */
+             //*/
 			 //MAKE LAMBDA FIT 
              //Now let's see if these two tracks make a vertex
 			 //if (debug) std::cout << "Ks0 - B0 Vtx ok" << std::endl;
@@ -1052,7 +1052,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		       continue;
 		     }
 		     
-		     if(LbCandMC->currentState().mass()<4.5 || LbCandMC->currentState().mass()>6.5) continue;
+		     if(LbCandMC->currentState().mass()<4.7 || LbCandMC->currentState().mass()>6.7) continue;
 		     
 		     if(LbDecayVertexMC->chiSquared()<0 || LbDecayVertexMC->chiSquared()>50 ) 
 		       {
