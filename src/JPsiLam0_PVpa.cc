@@ -756,7 +756,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0))) );
 		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1))) );
-		     /*		     
+		     		     
 		     for(unsigned int j = 0; j < v0daughters.size(); ++j)
 		       {
 			 theDaughterTracks.push_back(v0daughters[j].pseudoTrack());
@@ -774,7 +774,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     ParticleMass Ks0_mass = 0.497614;
 		     float pion_sigma = pion_mass*1.e-6;
 		     float Ks0_sigma = Ks0_mass*1.e-6;
-		     
+		     /*
 		     //initial chi2 and ndf before kinematic fits.
 		     float chi = 0.;
 		     float ndf = 0.;
