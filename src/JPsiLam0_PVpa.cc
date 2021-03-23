@@ -248,7 +248,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
       const reco::Candidate *dau = &(*pruned)[i];
-      if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
+      if ( (abs(dau->pdgId()) == 5122) ) { //&& (dau->status() == 2) ) { //Lambda b 
 	    foundit++;
 	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
 	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
@@ -300,7 +300,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	    } // end for B daughters for jpsi
         for (size_t k=0; k<dau->numberOfDaughters(); k++){
 			const reco::Candidate *gdau = dau->daughter(k);
-			if (gdau->pdgId()==310){ //is K0s
+			if (gdau->pdgId()==3122){ //is Lambda0
 			  foundit++;
 			  gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
 			  gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
