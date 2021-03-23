@@ -506,7 +506,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   //emulate BParking MuonTriggerSelector 
   std::vector<pat::TriggerObjectStandAlone> triggeringMuons;
   int int_obj = 0;
-  bool debug = true;
+  bool debug = false;
   const double maxdR_ = 0.1;
   // std::cout << "\n\n\n------------>>>>>>NEW RECORD NEW RECORD NEW RECORD NEW RECORD"<<"\n";
  
@@ -765,8 +765,8 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		       }
 		     			
 		     // it does not have sences here. 
-		     //if ( IsTheSame(*theDaughterTracks[0],*iMuon1) || IsTheSame(*theDaughterTracks[0],*iMuon2) ) continue;
-		     //if ( IsTheSame(*theDaughterTracks[1],*iMuon1) || IsTheSame(*theDaughterTracks[1],*iMuon2) ) continue;
+		     if ( IsTheSame(*theDaughterTracks[0],*iMuon1) || IsTheSame(*theDaughterTracks[0],*iMuon2) ) continue;
+		     if ( IsTheSame(*theDaughterTracks[1],*iMuon1) || IsTheSame(*theDaughterTracks[1],*iMuon2) ) continue;
 		     
 		     //Now let's see if these two tracks make a vertex
 		     reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
