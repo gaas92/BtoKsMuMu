@@ -68,7 +68,7 @@ def main():
 
         config.General.requestName = None
         #config.General.workArea = 'ZMuondecay'
-        config.General.workArea = 'V0ExtData'
+        config.General.workArea = 'LambdaB'
 	config.General.transferOutputs = True
 	config.General.transferLogs = False
 
