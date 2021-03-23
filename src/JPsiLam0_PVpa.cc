@@ -865,6 +865,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 		        	//Now we are ready to combine!
 		        	// JPsi mass constraint is applied in the final Bd fit,
+					std::cout << "me lleva la V%&$&" << std::endl;
 
 		        	vector<RefCountedKinematicParticle> vFitMCParticles;
 		        	vFitMCParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
