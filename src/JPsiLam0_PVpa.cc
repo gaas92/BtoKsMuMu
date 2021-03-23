@@ -819,7 +819,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     	RefCountedKinematicParticle Ks0_vFit_noMC = Ks0VertexFitTree->currentParticle();
 		     	RefCountedKinematicVertex Ks0_vFit_vertex_noMC = Ks0VertexFitTree->currentDecayVertex();
 		     	//aca chinga a su madre todo
-	
+
              	try {
 		     	   if( Ks0_vFit_vertex_noMC->chiSquared() < 0 )
 		     	     { 
@@ -828,26 +828,26 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     	     }
 		     	   //std::cout << "pass Fit continues ... "<< std::endl;
 		     	   //some loose cuts go here
-		     	   
+
 		     	   //if(Ks0_vFit_vertex_noMC->chiSquared()>50) continue;
 		     	   //if(Ks0_vFit_noMC->currentState().mass()<0.45 || Ks0_vFit_noMC->currentState().mass()>0.55) continue; 
-		     	   
+
 		     	   Ks0VertexFitTree->movePointerToTheFirstChild();
 		     	   RefCountedKinematicParticle T1CandMC = Ks0VertexFitTree->currentParticle();
-		     	   
+
 		     	   Ks0VertexFitTree->movePointerToTheNextChild();
 		     	   RefCountedKinematicParticle T2CandMC = Ks0VertexFitTree->currentParticle();
-		     	   
+
 		     	   //  Ks0  mass constrain
 		     	   // do mass constrained vertex fit
 		     	   // creating the constraint with a small sigma to put in the resulting covariance 
 		     	   // matrix in order to avoid singularities
 		     	   // JPsi mass constraint is applied in the final B fit
-		     	   
+
 		     	   KinematicParticleFitter csFitterKs;
 		     	   KinematicConstraint * ks_c = new MassKinematicConstraint(Ks0_mass,Ks0_sigma);
 		     	   // add mass constraint to the ks0 fit to do a constrained fit:  
-		     	   
+
 		     	   Ks0VertexFitTree = csFitterKs.fit(ks_c,Ks0VertexFitTree);
 		     	   if (!Ks0VertexFitTree->isValid()){
 		     	     //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
@@ -864,7 +864,6 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     	   RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
 		     	   //Now we are ready to combine!
 		     	   // JPsi mass constraint is applied in the final Bd fit,
-					std::cout << "me lleva la V%&$&" << std::e
 		     	   vector<RefCountedKinematicParticle> vFitMCParticles;
 		     	   vFitMCParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
 		     	   vFitMCParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
