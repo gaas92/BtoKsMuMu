@@ -250,6 +250,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       const reco::Candidate *dau = &(*pruned)[i];
       if ( (abs(dau->pdgId()) == 5122) ) { //&& (dau->status() == 2) ) { //Lambda b 
 	    foundit++;
+		std::cout<< "Lambda B Found" << std::endl;
 	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
 	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
 	    for (size_t k=0; k<dau->numberOfDaughters(); k++) {
@@ -769,8 +770,8 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     //if ( IsTheSame(*theDaughterTracks[1],*iMuon1) || IsTheSame(*theDaughterTracks[1],*iMuon2) ) continue;
 		     
 		     //Now let's see if these two tracks make a vertex
-		     reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
-		     reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));		     
+		     //reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
+		     //reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));		     
 		     
 		     ParticleMass pion_mass = 0.13957018;
 		     ParticleMass Ks0_mass = 0.497614;
@@ -944,7 +945,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		     vector<RefCountedKinematicParticle> trackParticles;
 		     // vector<RefCountedKinematicParticle> muonParticles;
 		     try {
-		       trackParticles.push_back(pFactory.particle(pion1TT,pion_mass,chi,ndf,pion_sigma));
+		       trackParticles.push_back(pFactory.particle(pionTT,pion_mass,chi,ndf,pion_sigma));
 		       trackParticles.push_back(pFactory.particle(protonTT,proton_mass,chi,ndf,proton_sigma));
 		     }
 		     catch(...) {
