@@ -743,10 +743,11 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	       
 	       for ( vector<VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee )
 		 {
-			 /* 
+			 /
 		     //get Lam tracks from V0 candidate fot the B --> Ks0 Decay, omit all continues 
 		     vector<pat::PackedCandidate> v0daughters;
 		     vector<Track> theDaughterTracks;
+			 
 			 const pat::PackedCandidate* track1 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0));
 			 const pat::PackedCandidate* track2 = dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1));
 
@@ -755,7 +756,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0))) );
 		     v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1))) );
-		     		     
+		     /*		     
 		     for(unsigned int j = 0; j < v0daughters.size(); ++j)
 		       {
 			 theDaughterTracks.push_back(v0daughters[j].pseudoTrack());
