@@ -1551,13 +1551,13 @@ JPsiLam0_PVpa::beginJob()
      tree_->Branch("nB",&nB,"nB/i");
      tree_->Branch("nMu",&nMu,"nMu/i");
    
-     //tree_->Branch("B_mass", &B_mass);
+     tree_->Branch("B_mass", &B_mass);
      tree_->Branch("LB_mass", &LB_mass);
      tree_->Branch("B_px", &B_px);
      tree_->Branch("B_py", &B_py);
      tree_->Branch("B_pz", &B_pz);
    
-     //tree_->Branch("B_Ks0_mass", &B_Ks0_mass);
+     tree_->Branch("B_Ks0_mass", &B_Ks0_mass);
      tree_->Branch("LB_L0_mass", &LB_L0_mass);
      tree_->Branch("B_Ks0_px", &B_Ks0_px);
      tree_->Branch("B_Ks0_py", &B_Ks0_py);
