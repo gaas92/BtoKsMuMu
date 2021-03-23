@@ -800,129 +800,118 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		       //std::cout<<" Exception caught ... continuing 4 "<<std::endl;                   
 		       continue;
 		     }
-		     if (!Ks0VertexFitTree->isValid()) 
-		       {
+		     if (!Ks0VertexFitTree->isValid()) {
 			 //std::cout << "invalid vertex from the Ks0 vertex fit" << std::endl;
 			 //continue; 
-		       }
+		     }
+			 bool goodKs0VtxFit = true;  
+			 float b_mass_tmp = -1.;
+			 float Ks0_mass_tmp = -1.;
 			 try{  
 		     	Ks0VertexFitTree->movePointerToTheTop();
 			 }
 			 catch(...){
 				if (debug) std::cout<<"Ks0 Vertex fit empty or not valid" << std::endl;
+				goodKs0VtxFit = false;
 				//continue; we are not interested in the Ks0 Fit
 			 }
-		     RefCountedKinematicParticle Ks0_vFit_noMC = Ks0VertexFitTree->currentParticle();
-		     RefCountedKinematicVertex Ks0_vFit_vertex_noMC = Ks0VertexFitTree->currentDecayVertex();
-		     //aca chinga a su madre todo
-			 float b_mass_tmp = -1.;
-			 float Ks0_mass_tmp = -1.;
-             try {
-		        if( Ks0_vFit_vertex_noMC->chiSquared() < 0 )
-		          { 
-			    //std::cout << "negative chisq from ks fit" << endl;
-			    //continue;
-		          }
-		        //std::cout << "pass Fit continues ... "<< std::endl;
-		        //some loose cuts go here
-		        
-		        //if(Ks0_vFit_vertex_noMC->chiSquared()>50) continue;
-		        //if(Ks0_vFit_noMC->currentState().mass()<0.45 || Ks0_vFit_noMC->currentState().mass()>0.55) continue; 
-		        
-		        Ks0VertexFitTree->movePointerToTheFirstChild();
-		        RefCountedKinematicParticle T1CandMC = Ks0VertexFitTree->currentParticle();
-		        
-		        Ks0VertexFitTree->movePointerToTheNextChild();
-		        RefCountedKinematicParticle T2CandMC = Ks0VertexFitTree->currentParticle();
-		        
-		        //  Ks0  mass constrain
-		        // do mass constrained vertex fit
-		        // creating the constraint with a small sigma to put in the resulting covariance 
-		        // matrix in order to avoid singularities
-		        // JPsi mass constraint is applied in the final B fit
-		        
-		        KinematicParticleFitter csFitterKs;
-		        KinematicConstraint * ks_c = new MassKinematicConstraint(Ks0_mass,Ks0_sigma);
-		        // add mass constraint to the ks0 fit to do a constrained fit:  
-		        
-		        Ks0VertexFitTree = csFitterKs.fit(ks_c,Ks0VertexFitTree);
-		        if (!Ks0VertexFitTree->isValid()){
-		          //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
-		          //continue; 
-		        }
-		        //std::cout << "pass 424 continues ... "<< std::endl;
-		     	bool goodKs0Fit = true;
-			    try {
-		        	Ks0VertexFitTree->movePointerToTheTop();
-				}
-				catch(...){
-					if(debug) std::cout << "Ks0 mass constrained vertex fit empty or not valid" << std::endl;
-					//continue; we are not interested in the ks0 fit 
-					goodKs0Fit = false;
-				}
-                if (goodKs0Fit){
-		        	RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
-
-		        	//Now we are ready to combine!
-		        	// JPsi mass constraint is applied in the final Bd fit,
-					std::cout << "me lleva la V%&$&" << std::endl;
-
-		        	vector<RefCountedKinematicParticle> vFitMCParticles;
-		        	vFitMCParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
-		        	vFitMCParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
-		        	vFitMCParticles.push_back(ks0_vFit_withMC);
-
-		        	MultiTrackKinematicConstraint *  j_psi_c = new  TwoTrackMassKinematicConstraint(psi_mass);
-		        	//KinematicConstrainedVertexFitter kcvFitter;
-		        	//RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles, j_psi_c);
-
-			    	//no mass constrain 
-			    	KinematicParticleVertexFitter kcvFitter;
-			    	RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
-		        	if (!vertexFitTree->isValid()) {
-		        	  //std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
-		        	  //continue;
-		        	}
-
+			 if (goodKs0VtxFit){
+		     	RefCountedKinematicParticle Ks0_vFit_noMC = Ks0VertexFitTree->currentParticle();
+		     	RefCountedKinematicVertex Ks0_vFit_vertex_noMC = Ks0VertexFitTree->currentDecayVertex();
+		     	//aca chinga a su madre todo
+	
+             	try {
+		     	   if( Ks0_vFit_vertex_noMC->chiSquared() < 0 )
+		     	     { 
+			 	   //std::cout << "negative chisq from ks fit" << endl;
+			 	   //continue;
+		     	     }
+		     	   //std::cout << "pass Fit continues ... "<< std::endl;
+		     	   //some loose cuts go here
+		     	   
+		     	   //if(Ks0_vFit_vertex_noMC->chiSquared()>50) continue;
+		     	   //if(Ks0_vFit_noMC->currentState().mass()<0.45 || Ks0_vFit_noMC->currentState().mass()>0.55) continue; 
+		     	   
+		     	   Ks0VertexFitTree->movePointerToTheFirstChild();
+		     	   RefCountedKinematicParticle T1CandMC = Ks0VertexFitTree->currentParticle();
+		     	   
+		     	   Ks0VertexFitTree->movePointerToTheNextChild();
+		     	   RefCountedKinematicParticle T2CandMC = Ks0VertexFitTree->currentParticle();
+		     	   
+		     	   //  Ks0  mass constrain
+		     	   // do mass constrained vertex fit
+		     	   // creating the constraint with a small sigma to put in the resulting covariance 
+		     	   // matrix in order to avoid singularities
+		     	   // JPsi mass constraint is applied in the final B fit
+		     	   
+		     	   KinematicParticleFitter csFitterKs;
+		     	   KinematicConstraint * ks_c = new MassKinematicConstraint(Ks0_mass,Ks0_sigma);
+		     	   // add mass constraint to the ks0 fit to do a constrained fit:  
+		     	   
+		     	   Ks0VertexFitTree = csFitterKs.fit(ks_c,Ks0VertexFitTree);
+		     	   if (!Ks0VertexFitTree->isValid()){
+		     	     //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
+		     	     //continue; 
+		     	   }
+		     	   //std::cout << "pass 424 continues ... "<< std::endl;
+			 	   try {
+		     	   	Ks0VertexFitTree->movePointerToTheTop();
+					}
+					catch(...){
+						if(debug) std::cout << "Ks0 mass constrained vertex fit empty or not valid" << std::endl;
+						//continue; we are not interested in the ks0 fit 
+					}
+		     	   RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
+		     	   //Now we are ready to combine!
+		     	   // JPsi mass constraint is applied in the final Bd fit,
+					std::cout << "me lleva la V%&$&" << std::e
+		     	   vector<RefCountedKinematicParticle> vFitMCParticles;
+		     	   vFitMCParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
+		     	   vFitMCParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
+		     	   vFitMCParticles.push_back(ks0_vFit_withMC);
+		     	   MultiTrackKinematicConstraint *  j_psi_c = new  TwoTrackMassKinematicConstraint(psi_mass);
+		     	   //KinematicConstrainedVertexFitter kcvFitter;
+		     	   //RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles, j_psi_c);
+			 	   //no mass constrain 
+			 	   KinematicParticleVertexFitter kcvFitter;
+			 	   RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
+		     	   if (!vertexFitTree->isValid()) {
+		     	     //std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
+		     	     //continue;
+		     	   }
 					try {
-		        		vertexFitTree->movePointerToTheTop();		     
+		     	   	vertexFitTree->movePointerToTheTop();		     
 					}
 					catch (...){
 						if(debug) std::cout<< "B Vertex empty or not valid" << std::endl;
 						//continue ; // we are not interested in the B decay ...
 					}
-		        	RefCountedKinematicParticle bCandMC = vertexFitTree->currentParticle();
-		        	RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
-		        	if (!bDecayVertexMC->vertexIsValid()){
-		        	  //std::cout << "B MC fit vertex is not valid" << endl;
-		        	  //continue;
-		        	}
-
-		        	//if(bCandMC->currentState().mass()<4.5 || bCandMC->currentState().mass()>6.0) continue;
-
-		        	if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ) 
-		        	  {
-			    	    //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
-			    	    //continue;
-		        	  }
-		        	//std::cout << "pass 461 continues ... "<< std::endl;
-		        	double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
-		        	if(B_Prob_tmp<0.01)
-		        	  {
-			    	   //continue;
-		        	  }		     
-		        	//std::cout << "pass 467" <<std::endl;
-
+		     	   RefCountedKinematicParticle bCandMC = vertexFitTree->currentParticle();
+		     	   RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
+		     	   if (!bDecayVertexMC->vertexIsValid()){
+		     	     //std::cout << "B MC fit vertex is not valid" << endl;
+		     	     //continue;
+		     	   }
+		     	   //if(bCandMC->currentState().mass()<4.5 || bCandMC->currentState().mass()>6.0) continue;
+		     	   if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ) 
+		     	     {
+			 	       //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
+			 	       //continue;
+		     	     }
+		     	   //std::cout << "pass 461 continues ... "<< std::endl;
+		     	   double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
+		     	   if(B_Prob_tmp<0.01)
+		     	     {
+			 	      //continue;
+		     	     }		     
+		     	   //std::cout << "pass 467" <<std::endl;
 					b_mass_tmp = bCandMC->currentState().mass();
 					Ks0_mass_tmp =  Ks0_vFit_noMC->currentState().mass();
-				}
-				else {
-					b_mass_tmp = 0;
-					Ks0_mass_tmp = 0;
-				}
+
 			 }
 			 catch (...){
 				 std::cout << "B0 Ks0 Vertex fit chinga a su madre " << std::endl;
+			 }
 			 }
              //*/
 			 //MAKE LAMBDA FIT 
