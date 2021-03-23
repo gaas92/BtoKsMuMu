@@ -133,9 +133,11 @@ JPsiLam0_PVpa::JPsiLam0_PVpa(const edm::ParameterSet& iConfig)
 
   // *******************************************************
   nB(0), nMu(0),
-  B_mass(0), LB_mass(0), B_px(0), B_py(0), B_pz(0),
+  //B_mass(0),
+  LB_mass(0), B_px(0), B_py(0), B_pz(0),
   
-  B_Ks0_mass(0), LB_L0_mass(0), B_Ks0_px(0), B_Ks0_py(0), B_Ks0_pz(0),
+  //B_Ks0_mass(0),
+  LB_L0_mass(0), B_Ks0_px(0), B_Ks0_py(0), B_Ks0_pz(0),
   B_Ks0_pt1(0), B_Ks0_px1(0), B_Ks0_py1(0), B_Ks0_pz1(0), 
   B_Ks0_pt2(0), B_Ks0_px2(0), B_Ks0_py2(0), B_Ks0_pz2(0), 
 
@@ -1343,8 +1345,10 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
    nB = 0; nMu = 0;
    trigger = 0;
    if (!OnlyGen_){	
-   		B_mass->clear(); LB_mass->clear();   B_px->clear();    B_py->clear();    B_pz->clear();
-   		B_Ks0_mass->clear(); LB_L0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
+   		//B_mass->clear(); 
+		LB_mass->clear();   B_px->clear();    B_py->clear();    B_pz->clear();
+   		//B_Ks0_mass->clear();
+		LB_L0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
 
    		B_J_mass->clear();  B_J_px->clear();  B_J_py->clear();  B_J_pz->clear();
 
