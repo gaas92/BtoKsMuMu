@@ -918,7 +918,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			 //if (debug) std::cout << "Ks0 - B0 Vtx ok" << std::endl;
 			 int pion_I = 0;
 			 int proton_I = 0;
-			 if (v0daughters[0].pt() > v0daughters[1].pt() ){
+			 if (v0daughters[0].p() > v0daughters[1].p() ){
 				pion_I = 1;
 				proton_I = 0; 
 			 }
