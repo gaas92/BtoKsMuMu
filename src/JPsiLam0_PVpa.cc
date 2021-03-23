@@ -743,7 +743,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	       
 	       for ( vector<VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee )
 		 {
-			 /
+			 
 		     //get Lam tracks from V0 candidate fot the B --> Ks0 Decay, omit all continues 
 		     vector<pat::PackedCandidate> v0daughters;
 		     vector<Track> theDaughterTracks;
