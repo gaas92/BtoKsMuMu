@@ -851,11 +851,10 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		          //continue; 
 		        }
 		        //std::cout << "pass 424 continues ... "<< std::endl;
-		     
+		     	bool goodKs0Fit = true;
 			    try {
 		        	Ks0VertexFitTree->movePointerToTheTop();
 				}
-				bool goodKs0Fit = true;
 				catch(...){
 					if(debug) std::cout << "Ks0 mass constrained vertex fit empty or not valid" << std::endl;
 					//continue; we are not interested in the ks0 fit 
@@ -863,19 +862,19 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 				}
                 if (goodKs0Fit){
 		        	RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
-		        	
+
 		        	//Now we are ready to combine!
 		        	// JPsi mass constraint is applied in the final Bd fit,
-		        	
+
 		        	vector<RefCountedKinematicParticle> vFitMCParticles;
 		        	vFitMCParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
 		        	vFitMCParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
 		        	vFitMCParticles.push_back(ks0_vFit_withMC);
-		        	
+
 		        	MultiTrackKinematicConstraint *  j_psi_c = new  TwoTrackMassKinematicConstraint(psi_mass);
 		        	//KinematicConstrainedVertexFitter kcvFitter;
 		        	//RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles, j_psi_c);
-	
+
 			    	//no mass constrain 
 			    	KinematicParticleVertexFitter kcvFitter;
 			    	RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
@@ -883,7 +882,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		        	  //std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
 		        	  //continue;
 		        	}
-		        	
+
 					try {
 		        		vertexFitTree->movePointerToTheTop();		     
 					}
@@ -897,9 +896,9 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		        	  //std::cout << "B MC fit vertex is not valid" << endl;
 		        	  //continue;
 		        	}
-		        	
+
 		        	//if(bCandMC->currentState().mass()<4.5 || bCandMC->currentState().mass()>6.0) continue;
-		        	
+
 		        	if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ) 
 		        	  {
 			    	    //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
@@ -912,7 +911,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			    	   //continue;
 		        	  }		     
 		        	//std::cout << "pass 467" <<std::endl;
-	
+
 					b_mass_tmp = bCandMC->currentState().mass();
 					Ks0_mass_tmp =  Ks0_vFit_noMC->currentState().mass();
 				}
