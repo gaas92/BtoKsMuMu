@@ -1320,7 +1320,7 @@ void JPsiLam0_PVpa::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 		   nB++;	       
 		   
 		   /////////////////////////////////////////////////
-		   pionParticles.clear();
+		   //pionParticles.clear();
 		   muonParticles.clear();
 		   //vFitMCParticles.clear();
 		  
