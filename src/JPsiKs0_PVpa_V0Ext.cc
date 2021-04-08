@@ -1120,7 +1120,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
-		   std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
+		   //std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
 		   mumNHits->push_back( glbTrackM->numberOfValidHits() );
@@ -2084,9 +2084,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    //fill the tree and clear the vectors
    if (nB > 0 || OnlyGen_) 
      {
-       std::cout << "filling tree" << std::endl;
+       //std::cout << "filling tree" << std::endl;
        tree_->Fill();
-	   std::cout << "fill ok" << std::endl;
+	   //std::cout << "fill ok" << std::endl;
      }
    // *********
 
