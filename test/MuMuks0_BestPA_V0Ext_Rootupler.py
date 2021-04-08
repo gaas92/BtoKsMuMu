@@ -53,6 +53,7 @@ process.source = cms.Source("PoolSource",
 process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
 process.rootuple.isMC = cms.bool(True) # this is only for test
 process.rootuple.isRes = cms.bool(False)
+process.rootuple.OnlyGen = cms.bool(True)
 
 process.TFileService = cms.Service("TFileService",
 
