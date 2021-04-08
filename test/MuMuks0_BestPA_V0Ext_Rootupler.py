@@ -19,7 +19,7 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(open('Res_noProbeFilterDecayFilter_MiniAOD.txt').readlines()
+    fileNames = cms.untracked.vstring(open('noProbeFilterDecayFilter_MiniAOD.txt').readlines()
 
         #Parked Data
         #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/2129F080-982D-A649-8D20-4944620E99A6.root',
@@ -52,11 +52,11 @@ process.source = cms.Source("PoolSource",
 
 process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
 process.rootuple.isMC = cms.bool(True) # this is only for test
-process.rootuple.isRes = cms.bool(True)
+process.rootuple.isRes = cms.bool(False)
 
 process.TFileService = cms.Service("TFileService",
 
-       fileName = cms.string('Rootuple_Bdtojpiks0_PARKED_Bpa_PVExt_MiniAOD.root'),
+       fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD.root'),
 )
 
 #process.mySequence = cms.Sequence(
