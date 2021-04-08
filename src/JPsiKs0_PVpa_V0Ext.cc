@@ -340,10 +340,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   
   
   // for the non-resonant channel 
-  std::cout<< "is MC ? " << isMC_ << std::endl;
-  std::cout<< "is onlyGen ? " << OnlyGen_ << std::endl;
-  std::cout<< "is pruned ? " << pruned.isValid() << std::endl;
-  std::cout<< "is is res? " << isRes_ << std::endl;
+  //std::cout<< "is MC ? " << isMC_ << std::endl;
+  //std::cout<< "is onlyGen ? " << OnlyGen_ << std::endl;
+  //std::cout<< "is pruned ? " << pruned.isValid() << std::endl;
+  //std::cout<< "is is res? " << isRes_ << std::endl;
 
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && !isRes_) {
 	std::cout<< "only gen test ok "<< std::endl;  
