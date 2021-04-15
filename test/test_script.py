@@ -4,4 +4,3 @@ for f in files_my_gen:
     if len(f) < 10:
         print f
 
-print files_my_gen
