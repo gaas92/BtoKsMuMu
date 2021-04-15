@@ -18,8 +18,9 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.load("FWCore.MessageLogger.MessageLogger_cfi")
 #process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
+files_my_gen = [string for string in open('Res_noProbeFilterDecayFilter_MiniAOD.txt').readlines() if string != ""]
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(open('Res_noProbeFilterDecayFilter_MiniAOD.txt').readlines()
+    fileNames = cms.untracked.vstring(files_my_gen
 
         #Parked Data
         #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/2129F080-982D-A649-8D20-4944620E99A6.root',
