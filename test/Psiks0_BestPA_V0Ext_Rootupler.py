@@ -18,7 +18,7 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.load("FWCore.MessageLogger.MessageLogger_cfi")
 #process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
-files_my_gen = [string for string in open('Res_noProbeFilterDecayFilter_MiniAOD.txt').readlines() if string != ""]
+files_my_gen = [string for string in open('Res_noProbeFilterDecayFilter_MiniAOD.txt').readlines() if len(string) > 10]
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(files_my_gen
 
