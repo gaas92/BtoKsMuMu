@@ -2,3 +2,5 @@ files_my_gen = [string for string in open('noProbeFilterDecayFilter_MiniAOD.txt'
 
 for f in files_my_gen:
     print f
+
+print files_my_gen
