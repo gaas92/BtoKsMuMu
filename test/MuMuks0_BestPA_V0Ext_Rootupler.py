@@ -20,7 +20,7 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 files_my_gen = [string for string in open('myGenFiles/noProbeFilterDecayFilter_MiniAOD_4.txt').readlines() if len(string) > 10]
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(files_my_gen
+    fileNames = cms.untracked.vstring('file:/eos/user/g/gayalasa/PrivateMC-2018B0toKs0MuMu_BPH_noProbeFilterDecayFilter/PrivateMC-2018-B0toKs0MuMu_BPH_noProbeFilterDecayFilter/crab_PrivateMC-2018-B0toKs0MuMu_BPH_noProbeFilterDecayFilter-2021-04-19-18-03/210419_160325/0002/step3-MINIAODSIM-B0toKs0MuMu_BPH_noProbeFilterDecayFilter-result_2322.root'
 
         #Parked Data
         #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/2129F080-982D-A649-8D20-4944620E99A6.root',
@@ -59,7 +59,7 @@ process.rootuple.GenParticles = cms.InputTag("prunedGenParticles")
 
 process.TFileService = cms.Service("TFileService",
 
-       fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD_4.root'),
+       fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD_3.root'),
 )
 
 #process.mySequence = cms.Sequence(
