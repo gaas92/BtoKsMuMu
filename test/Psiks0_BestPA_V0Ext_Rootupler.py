@@ -18,7 +18,7 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.load("FWCore.MessageLogger.MessageLogger_cfi")
 #process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
-files_my_gen = [string for string in open('myGenFiles/Res_noProbeFilterDecayFilter_MiniAOD_2.txt').readlines() if len(string) > 10]
+files_my_gen = [string for string in open('myGenFiles/Res_noProbeFilterDecayFilter_MiniAOD_3.txt').readlines() if len(string) > 10]
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(files_my_gen
 
@@ -59,7 +59,7 @@ process.rootuple.GenParticles = cms.InputTag("prunedGenParticles")
 
 process.TFileService = cms.Service("TFileService",
 
-       fileName = cms.string('Rootuple_Bdtojpiks0_PARKED_Bpa_PVExt_MiniAOD_2.root'),
+       fileName = cms.string('Rootuple_Bdtojpiks0_PARKED_Bpa_PVExt_MiniAOD_3.root'),
 )
 
 #process.mySequence = cms.Sequence(
