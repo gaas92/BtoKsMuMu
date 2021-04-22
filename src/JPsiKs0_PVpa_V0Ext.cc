@@ -346,7 +346,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //std::cout<< "is is res? " << isRes_ << std::endl;
 
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && !isRes_) {
-	std::cout<< "only gen test ok "<< std::endl;  
+	//std::cout<< "only gen test ok "<< std::endl;  
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
@@ -1584,7 +1584,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
-		   std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
+		   //std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
 		   mumNHits->push_back( glbTrackM->numberOfValidHits() );
@@ -2041,7 +2041,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
-		   std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
+		   //std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
 		   mumNHits->push_back( glbTrackM->numberOfValidHits() );
@@ -2305,7 +2305,7 @@ void
 JPsiKs0_PVpa_V0Ext::beginJob()
 {
 
-  std::cout << "Beginning analyzer job with value of doMC = " << doMC_ << std::endl;
+  //std::cout << "Beginning analyzer job with value of doMC = " << doMC_ << std::endl;
 
   edm::Service<TFileService> fs;
   tree_ = fs->make<TTree>("ntuple","Bs->mu mu Ks0 ntuple");
