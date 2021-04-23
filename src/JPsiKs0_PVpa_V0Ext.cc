@@ -160,6 +160,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
 
   run(0), event(0),
   lumiblock(0),
+  ngen(0),
   trigger(0)
 
 {
@@ -253,6 +254,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   gen_b_ct = -9999.;
   gen_ks0_ct = -9999.;
   // for resonant in jpsi 
+  ngen = 0
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && isRes_) {   
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
@@ -319,7 +321,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		    }// end if K0s
 		}// end of B daughters for Ks0
       } // end in B0
-      if (foundit>=5) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0,// NO PIONS 6-pi1, 7-pi2
+      if (foundit>=5){
+		ngen++;
+	  }  //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0,// NO PIONS 6-pi1, 7-pi2
     } // for i
     //if (foundit!=5) {
     //  gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
@@ -413,7 +417,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		    }// end if K0s
 	    }// end for B daughters for Ks0
       } // end if B0
-      if (foundit>=5) break; //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0 //NOPIONS , 6-pi1, 7-pi2
+      if (foundit>=5){
+		  ngen++;
+	  } //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0 //NOPIONS , 6-pi1, 7-pi2
     } // for gen particlea
     //if (foundit!=5) {
     //  gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
@@ -2097,6 +2103,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
    nB = 0; nMu = 0;
    trigger = 0;
+   ngen = 0;
    if (!OnlyGen_){	
    		B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
    		B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
@@ -2452,7 +2459,7 @@ JPsiKs0_PVpa_V0Ext::beginJob()
   }
     // gen
   if (isMC_ || OnlyGen_) {
-
+	 tree_->Branch("ngen", &ngen, "ngen/I");
      tree_->Branch("gen_b_p4",      "TLorentzVector",  &gen_b_p4);
      tree_->Branch("gen_jpsi_p4",   "TLorentzVector",  &gen_jpsi_p4);
      tree_->Branch("gen_ks0_p4" ,   "TLorentzVector",  &gen_ks0_p4);
