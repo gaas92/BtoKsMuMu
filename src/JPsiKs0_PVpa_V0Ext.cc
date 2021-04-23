@@ -254,7 +254,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   gen_b_ct = -9999.;
   gen_ks0_ct = -9999.;
   // for resonant in jpsi 
-  ngen = 0
+  ngen = 0;
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && isRes_) {   
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
