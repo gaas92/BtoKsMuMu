@@ -547,7 +547,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
     // checa que al menos un elemento sea un muon (ID=83)
     // que pasa con los demas?
-    if(debug) std::cout << "\tfilterIds size:   " << obj.filterIds().size()<< "\n";
+    //if(debug) std::cout << "\tfilterIds size:   " << obj.filterIds().size()<< "\n";
     for (unsigned h = 0; h < obj.filterIds().size(); ++h)
     	if(obj.filterIds()[h] == 83){ 
         	isTriggerMuon = true; 
@@ -596,9 +596,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   }//trigger objects
 
   if(debug){    
-    std::cout << "\n Total n of triggering muons = " << triggeringMuons.size() << std::endl;
+    std::cout << "\n\t>>> Total n of triggering muons = " << triggeringMuons.size() << std::endl;
     for(auto ij : triggeringMuons){
-	    std::cout << " \t>>> components (pt, eta, phi) = (" << ij.pt() << ", " << ij.eta() << ", " << ij.phi() << ")\n";
+	    std::cout << " \t>>>>>>> components (pt, eta, phi) = (" << ij.pt() << ", " << ij.eta() << ", " << ij.phi() << ")\n";
     }
   }
   
