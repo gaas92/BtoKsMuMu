@@ -562,15 +562,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     // exista hltL3 y Park
     isTriggerMuon = false;
     // std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
+	std::vector<std::string> filterName_names = obj.pathNames();
     for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
         std::string filterName = obj.filterLabels()[h];
-		std::string filterName_name;
-		try {
-			filterName_name = obj.pathNames()[h];
-		} 
-		catch ( ... ){
-			std::cout << "Error in " << filterName << std::endl;
-		}
+		
         //if (debug) std::cout << "\t\tfilterlabel:  " << h << filterName << "\n";
         //if (debug) std::cout << "\t\tfiltername:  " << h << filterName_name << "\n";
         if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
