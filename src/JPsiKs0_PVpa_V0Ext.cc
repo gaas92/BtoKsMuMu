@@ -587,7 +587,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
 
     if(debug){ 
-        std::cout << "\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
+        std::cout << "\n\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
       	//Print trigger object collection and type
 	    std::cout << "\t\t\tCollection: " << obj.collection() << std::endl;
 	    std::cout << "\t\t\tFilter Label: " << filterLabel << std::endl;
@@ -596,7 +596,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   }//trigger objects
 
   if(debug){    
-    std::cout << "\n\t>>> Total n of triggering muons = " << triggeringMuons.size() << std::endl;
+    std::cout << " \t>>> Total n of triggering muons = " << triggeringMuons.size() << std::endl;
     for(auto ij : triggeringMuons){
 	    std::cout << " \t>>>>>>> components (pt, eta, phi) = (" << ij.pt() << ", " << ij.eta() << ", " << ij.phi() << ")\n";
     }
