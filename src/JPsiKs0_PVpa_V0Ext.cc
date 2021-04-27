@@ -561,8 +561,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     // Ahora checa que dentro de los filterlabes en al menos uno
     // exista hltL3 y Park
     isTriggerMuon = false;
-    // std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
+    std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
 	std::vector<std::string> filterName_names = obj.pathNames();
+	std::cout << "\tfilterNames size: " << filterName_names.size() << std::endl;
     for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
         std::string filterName = obj.filterLabels()[h];
 		
