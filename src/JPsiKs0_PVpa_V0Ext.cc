@@ -561,20 +561,26 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     // Ahora checa que dentro de los filterlabes en al menos uno
     // exista hltL3 y Park
     isTriggerMuon = false;
-    std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
-	std::vector<std::string> filterName_names = obj.pathNames();
-	std::cout << "\tfilterNames size: " << filterName_names.size() << std::endl;
+    //std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
+	std::string filterLabel;
+	std::string filterName_;
     for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
         std::string filterName = obj.filterLabels()[h];
 		
         //if (debug) std::cout << "\t\tfilterlabel:  " << h << filterName << "\n";
-        //if (debug) std::cout << "\t\tfiltername:  " << h << filterName_name << "\n";
         if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
             isTriggerMuon = true;
+			filterLabel = filterName;
+			break;
             //std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
         }
 	    //else{ isTriggerMuon = false; }
     }
+	if(isTriggerMuon){
+		for (unsigned h = 0; h < obj.pathNames().size(); ++h){   
+        		std::string filterName_ = obj.pathNames()[h];
+    	}
+	}
     //std::cout << "\n\n\n";
     if(!isTriggerMuon) continue;
     triggeringMuons.push_back(obj);
@@ -584,6 +590,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
         std::cout << "\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
       	//Print trigger object collection and type
 	    std::cout << "\t\t\tCollection: " << obj.collection() << std::endl;
+	    std::cout << "\t\t\tFilter Label: " << filterLabel << std::endl;
+		std::cout << "\t\t\tFilter Name: " << filterName_ << std::endl;
     }
   }//trigger objects
 
