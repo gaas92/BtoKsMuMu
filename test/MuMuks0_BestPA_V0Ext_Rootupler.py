@@ -20,12 +20,12 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
 files_my_gen = [string for string in open('myGenFiles/noProbeFilterDecayFilter_MiniAOD_4.txt').readlines() if len(string) > 10]
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(files_my_gen
+    fileNames = cms.untracked.vstring(  #files_my_gen
 
         #Parked Data
         #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/2129F080-982D-A649-8D20-4944620E99A6.root',
         #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/12C659FD-D961-6640-9C3D-48CD12A0D033.root', 
-        #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/05030414-6C93-DC46-AD09-68D76E2FB466.root'
+        '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/05030414-6C93-DC46-AD09-68D76E2FB466.root'
 
         #MiniAOD UltraLegacy2018
         #'/store/data/Run2018A/Charmonium/MINIAOD/12Nov2019_UL2018_rsb-v1/10000/08F41CB9-8F1F-D44F-A5FC-D17E38328C4C.root',
@@ -52,14 +52,15 @@ process.source = cms.Source("PoolSource",
 #                                        )
 
 process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
-process.rootuple.isMC = cms.bool(True) # this is only for test
+#process.rootuple.isMC = cms.bool(True) # this is only for test
 process.rootuple.isRes = cms.bool(False)
-process.rootuple.OnlyGen = cms.bool(True)
+#process.rootuple.OnlyGen = cms.bool(True)
 process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
 
 process.TFileService = cms.Service("TFileService",
 
-       fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD_Gen4.root'),
+       fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD.root'),
+       #fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD_Gen4.root'),
 )
 
 #process.mySequence = cms.Sequence(

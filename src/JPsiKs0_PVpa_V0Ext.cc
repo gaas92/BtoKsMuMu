@@ -527,7 +527,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //emulate BParking MuonTriggerSelector 
   std::vector<pat::TriggerObjectStandAlone> triggeringMuons;
   int int_obj = 0;
-  bool debug = false;
+  bool debug = true;
   const double maxdR_ = 0.1;
   // std::cout << "\n\n\n------------>>>>>>NEW RECORD NEW RECORD NEW RECORD NEW RECORD"<<"\n";
  
@@ -547,7 +547,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
     // checa que al menos un elemento sea un muon (ID=83)
     // que pasa con los demas?
-    // std::cout << "\tfilterIds size:   " << obj.filterIds().size()<< "\n";
+    if(debug) std::cout << "\tfilterIds size:   " << obj.filterIds().size()<< "\n";
     for (unsigned h = 0; h < obj.filterIds().size(); ++h)
     	if(obj.filterIds()[h] == 83){ 
         	isTriggerMuon = true; 
