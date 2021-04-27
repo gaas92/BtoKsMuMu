@@ -527,7 +527,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //emulate BParking MuonTriggerSelector 
   std::vector<pat::TriggerObjectStandAlone> triggeringMuons;
   int int_obj = 0;
-  bool debug = true;
+  bool debug = false;
   const double maxdR_ = 0.1;
   // std::cout << "\n\n\n------------>>>>>>NEW RECORD NEW RECORD NEW RECORD NEW RECORD"<<"\n";
  
@@ -571,7 +571,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
         if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
             isTriggerMuon = true;
 			filterLabel = filterName;
-			break;
+			//break;
             //std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
         }
 	    //else{ isTriggerMuon = false; }
@@ -601,7 +601,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	    std::cout << " \t>>>>>>> components (pt, eta, phi) = (" << ij.pt() << ", " << ij.eta() << ", " << ij.phi() << ")\n";
     }
   }
-  
+  if (triggeringMuons.size() == 0){
+	  std::cout<< "No Trigger Muon !!!!!" << std::endl;
+  }
   //*****************************************
   //Let's begin by looking for J/psi->mu+mu-
 
