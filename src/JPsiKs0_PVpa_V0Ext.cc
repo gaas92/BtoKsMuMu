@@ -562,8 +562,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     // exista hltL3 y Park
     isTriggerMuon = false;
     //std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
-	std::string filterLabel;
-	std::string filterName_;
+	std::string filterLabel = "";
+	std::string filterName_ = "";
     for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
         std::string filterName = obj.filterLabels()[h];
 		
@@ -576,11 +576,11 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
         }
 	    //else{ isTriggerMuon = false; }
     }
-	if(isTriggerMuon){
-		for (unsigned h = 0; h < obj.pathNames().size(); ++h){   
-        		std::string filterName_ = obj.pathNames()[h];
-    	}
-	}
+	if(!isTriggerMuon) continue;
+	for (unsigned h = 0; h < obj.pathNames().size(); ++h){   
+        	std::string filterName_ = obj.pathNames()[h];
+    }
+	
     //std::cout << "\n\n\n";
     if(!isTriggerMuon) continue;
     triggeringMuons.push_back(obj);
@@ -596,7 +596,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   }//trigger objects
 
   if(debug){    
-    // std::cout << "\n Total n of triggering muons = " << triggeringMuons.size() << std::endl;
+    std::cout << "\n Total n of triggering muons = " << triggeringMuons.size() << std::endl;
     for(auto ij : triggeringMuons){
 	    std::cout << " \t>>> components (pt, eta, phi) = (" << ij.pt() << ", " << ij.eta() << ", " << ij.phi() << ")\n";
     }
