@@ -168,16 +168,16 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   Cos_T_LL  = 0; 
 
 
-  if (debug) std::cout << "HELLO FROM ANALYZER! " << std::endl;
+  //if (debug) std::cout << "HELLO FROM ANALYZER! " << std::endl;
  
   //edm::Handle<reco::GenParticleCollection> pruned;
   edm::Handle<std::vector<reco::GenParticle>> pruned; 
   iEvent.getByToken(genCands_, pruned);
 
   //JHOVANNYS
-  if (debug) std::cout << "PRUNED? " << pruned.isValid() << std::endl;
+  //if (debug) std::cout << "PRUNED? " << pruned.isValid() << std::endl;
   if ( pruned.isValid() ) {
-    std::cout << "SIZE = " << pruned->size() << std::endl;
+    //std::cout << "SIZE = " << pruned->size() << std::endl;
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
@@ -186,6 +186,7 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	    foundit++;
 		  std::cout<< "|--XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX--|"<< std::endl;
 		  std::cout<<"Found B0 printing Decay Tree ..."<< std::endl;
+      std::cout<< "size: " << dau->numberOfDaughters() << std::endl;
 		  //printMCtree(dau, 0);
 	    gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
 	    gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
