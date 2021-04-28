@@ -193,6 +193,7 @@ void McGenAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	    for (size_t k=0; k<dau->numberOfDaughters(); k++) {
 	      const reco::Candidate *mm = dau->daughter(k);     
 	      if (mm->pdgId()==13 /*&& !isAncestor(443,mm)*/) { foundit++;  // cames from B but not J/p
+        std::cout<< "Found muon" << std::endl;
 		    gen_jpsi_vtx.SetXYZ(mm->vx(),mm->vy(),mm->vz());
 	        if (mm->status()!=1) {
 	          for (size_t m=0; m<mm->numberOfDaughters(); m++) {
