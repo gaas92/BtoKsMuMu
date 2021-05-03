@@ -112,7 +112,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   mumdxy(0), mupdxy(0), mumdz(0), mupdz(0),
   muon_dca(0),
 
-  trg_dzm1(0), trg_dzm2(0),
+  trg_dzm1(0), trg_dzm2(0), dz_mumu(0),
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
@@ -667,9 +667,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	  //Match with TriggerMuons, BParking Nano MuonTriggerSelector emulation 
 	  float dRMuonMatching1 = -1.; 	
 	  float dRMuonMatching2 = -1.;
-	  float dzm1_trg = 10.0;
-	  float dzm2_trg = 10.0;
-	   	
+	  float dzm1_trg = 35.0;
+	  float dzm2_trg = 35.0;
+	  float dz_mumu_t = abs(iMuon1->vz() - iMuon2->vz());
+
       for(unsigned int iTrg=0; iTrg<triggeringMuons.size(); ++iTrg){
         float dR1 = reco::deltaR(triggeringMuons[iTrg], *iMuon1);
         float dR2 = reco::deltaR(triggeringMuons[iTrg], *iMuon2);
@@ -1159,7 +1160,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   mupdz->push_back(glbTrackP->dz(bestVtx.position()) );
 		   muon_dca->push_back(dca);
 		   trg_dzm1->push_back(dzm1_trg);
-		   trg_dzm2->push_back(dzm2_trg);
+		   trg_dzm2->push_back(dzm2_trg);dz_mumu_t
+		   dz_mumu->push_back(dz_mumu_t);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
@@ -1619,6 +1621,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon_dca->push_back(dca);
 		   trg_dzm1->push_back(dzm1_trg);
 		   trg_dzm2->push_back(dzm2_trg);
+		   dz_mumu->push_back(dz_mumu_t);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
@@ -2076,6 +2079,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon_dca->push_back(dca);
 		   trg_dzm1->push_back(dzm1_trg);
 		   trg_dzm2->push_back(dzm2_trg);
+		   dz_mumu->push_back(dz_mumu_t);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
@@ -2162,7 +2166,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		mupC2->clear();
    		mupNHits->clear(); mupNPHits->clear();
    		mumdxy->clear(); mupdxy->clear(); mumdz->clear(); mupdz->clear(); muon_dca->clear();
-		trg_dzm1->clear(); trg_dzm2->clear();   
+		trg_dzm1->clear(); trg_dzm2->clear(); dz_mumu->clear();  
 
    		tri_Dim25->clear(); tri_JpsiTk->clear(); tri_JpsiTkTk->clear();
 
@@ -2452,6 +2456,7 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("muon_dca",&muon_dca);
      tree_->Branch("trg_dzm1",&trg_dzm1);
      tree_->Branch("trg_dzm2",&trg_dzm2);
+     tree_->Branch("dz_mumu",&dz_mumu);
    
      tree_->Branch("tri_Dim25",&tri_Dim25);
      tree_->Branch("tri_JpsiTk",&tri_JpsiTk);
