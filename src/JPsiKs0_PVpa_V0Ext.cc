@@ -1160,7 +1160,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   mupdz->push_back(glbTrackP->dz(bestVtx.position()) );
 		   muon_dca->push_back(dca);
 		   trg_dzm1->push_back(dzm1_trg);
-		   trg_dzm2->push_back(dzm2_trg);dz_mumu_t
+		   trg_dzm2->push_back(dzm2_trg);
 		   dz_mumu->push_back(dz_mumu_t);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
