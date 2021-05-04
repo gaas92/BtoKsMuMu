@@ -791,6 +791,21 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	   //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
 	   if(psi_vFit_noMC->currentState().mass()<1.1 || psi_vFit_noMC->currentState().mass()>22.0) continue;
 
+	   //Muon1 Trigger Matching
+	   unsigned int muon1Trg_ = 0;
+	   for (unsigned int i = 0; i < NTRIGGERS; i++) {
+			std::string triggerName = TheTriggerNames.triggerName(h); 
+			triggerName += "*";
+			if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+				//if (triggerName.find(TriggersToTest[i]) != std::string::npos ){
+				muon1Trg_ += (1<<i);
+				std::cout<< " Muon 1 matched " << triggerName << std::endl; 
+			} 
+			//std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(h)<< " | looking for: "<< TriggersToTest[i] << std::endl;
+	   }	 
+
+
+
        // Vector containing Candidates used (avoid repeating)
        vector<pat::PackedCandidate> usedTracks;
 
