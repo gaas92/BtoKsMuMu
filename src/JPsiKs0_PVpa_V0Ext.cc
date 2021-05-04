@@ -190,7 +190,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //*********************************  
 
   //beam spot
-  edm::Handle<Reco::BeamSpot> theBeamSpotHandle;
+  edm::Handle<reco::BeamSpot> theBeamSpotHandle;
   iEvent.getByToken(BSLabel_, theBeamSpotHandle);
   const reco::BeamSpot* theBeamSpot = theBeamSpotHandle.product();
   math::XYZPoint referencePos(theBeamSpot->position());
