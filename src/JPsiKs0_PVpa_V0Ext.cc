@@ -148,6 +148,10 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
 
   pi1dxy(0), pi2dxy(0), pi1dz(0), pi2dz(0),
   pi1dxy_e(0), pi2dxy_e(0), pi1dz_e(0), pi2dz_e(0),
+  tkChi2_1(0), tkChi2_2(0), tkIPSigXY_1(0), tkTPSigXY_2(0),
+  tkIPSigZ_1(0), tkIPSigZ_2(0), tkDCA(0),  
+  cosThetaXYCut(0), cosThetaXYZCut(0),
+
   B_Ks0_charge1(0), B_Ks0_charge2(0),
 
   B_J_mass(0), B_J_px(0), B_J_py(0), B_J_pz(0),
@@ -184,6 +188,14 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //*********************************
   // Get event content information
   //*********************************  
+
+  //beam spot
+  edm::Handle<Reco::BeamSpot> theBeamSpotHandle;
+  iEvent.getByToken(BSLabel_, theBeamSpotHandle);
+  const reco::BeamSpot* theBeamSpot = theBeamSpotHandle.product();
+  math::XYZPoint referencePos(theBeamSpot->position());
+
+
 
   edm::Handle<std::vector<reco::VertexCompositePtrCandidate>> theV0PtrHandle;
   iEvent.getByToken(v0PtrCollection_,  theV0PtrHandle);
@@ -516,6 +528,23 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //priVtxXZE = bestVtx.covariance(0, 2);
   //priVtxYZE = bestVtx.covariance(1, 2);
   //priVtxCL = ChiSquaredProbability((double)(bestVtx.chi2()),(double)(bestVtx.ndof())); 
+  
+  //New Variables Needed:
+  //For Trigger studies:
+  // -Name of the trigger
+  // -Filters succed
+  //For V0 studies:
+  // tkChi2_1
+  // tkChi2_2
+  // tkIPSigXY_1
+  // tkTPSigXY_2
+  // tkIPSigZ_1
+  // tkIPSigZ_2
+  // tkDCA
+  // innerHit_tk1
+  // innerHit_tk2
+  // cosThetaXYCut
+  // cosThetaXYZCut
 
   nVtx = recVtxs->size();
 
@@ -801,8 +830,15 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		     
 		     //Now let's see if these two tracks make a vertex
 		     reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
-		     reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));		     
-		     
+		     reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));	
+
+		     FreeTrajectoryState tk1FTS = pion1TT.impactPointTSCP().theState();
+        	 FreeTrajectoryState tk2FTS = pion2TT.impactPointTSCP().theState();
+			 ClosestApproachInRPhi tkcApp;
+	         tkcApp.calculate(tk1FTS, tk2FTS);
+	         if( !tkcApp.status() ) continue;
+	         float tkdca_ = fabs( tkcApp.distance() );	 
+
 		     ParticleMass pion_mass = 0.13957018;
 		     ParticleMass Ks0_mass = 0.497614;
 		     float pion_sigma = pion_mass*1.e-6;
@@ -1172,6 +1208,30 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   pi2dxy_e->push_back(v0daughters[1].dxyError());
 		   pi1dz_e->push_back(v0daughters[0].dzError());
 		   pi2dz_e->push_back(v0daughters[1].dzError());
+           
+		   tkChi2_1->push_back(v0daughters[0].normalizedChi2());
+		   tkChi2_2->push_back(v0daughters[1].normalizedChi2());
+		   tkIPSigXY_1->push_back(std::abs(v0daughters[0].dxy(*theBeamSpot)/v0daughters[0].dxyError()) );
+		   tkTPSigXY_2->push_back(std::abs(v0daughters[1].dxy(*theBeamSpot)/v0daughters[1].dxyError()) );
+           tkIPSigZ_1->push_back(std::abs(v0daughters[0].dz(*theBeamSpot)/v0daughters[0].dzError()) );
+		   tkIPSigZ_2->push_back(std::abs(v0daughters[0].dz(*theBeamSpot)/v0daughters[0].dzError()) );
+ 
+		   tkDCA->push_back(tkdca_);
+		   // 2D pointing angle
+		   GlobalVector p1_(v0daughters[0].momentum());
+      	   GlobalVector p2_(v0daughters[1].momentum());
+		   GlobalVector totalP(p1_ + p2_);
+
+      	   double dx_ = Ks0_vFit_vertex_noMC->position().x() - referencePos.x();
+      	   double dy_ = Ks0_vFit_vertex_noMC->position().y() - referencePos.y();
+      	   double px_ = totalP.x();
+      	   double py_ = totalP.y();
+      	   double angleXY_ = (dx_ * px_ + dy_ * py_) / (sqrt(dx_ * dx_ + dy_ * dy_) * sqrt(px_ * px_ + py_ * py_));
+           cosThetaXYCut->push_back(angleXY_);
+           double dz_ = Ks0_vFit_vertex_noMC->position().z() - referencePos.z();
+           double pz_ = totalP.z();
+           double angleXYZ_ = (dx_ * px_ + dy_ * py_ + dz_ * pz_) / (sqrt(dx_ * dx_ + dy_ * dy_ + dz_ * dz_) * sqrt(px_ * px_ + py_ * py_ + pz_ * pz_));
+		   cosThetaXYZCut->push_back(angleXYZ_);
 
 		   // try refitting the primary without the tracks in the B reco candidate		   
 		   //std::cout<< "pass all" << std::endl;
@@ -2160,6 +2220,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
    		pi1dxy->clear(); pi2dxy->clear(); pi1dz->clear(); pi2dz->clear();
    		pi1dxy_e->clear(); pi2dxy_e->clear(); pi1dz_e->clear(); pi2dz_e->clear();
+		tkChi2_1->clear(); tkChi2_2->clear(); tkIPSigXY_1->clear(); tkTPSigXY_2->clear();
+        tkIPSigZ_1->clear(); tkIPSigZ_2->clear(); tkDCA->clear();
+        cosThetaXYCut->clear(); cosThetaXYZCut->clear();
 
    		mumC2->clear();
    		mumNHits->clear(); mumNPHits->clear();
@@ -2444,6 +2507,16 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("pi2dxy_e",&pi2dxy_e);
      tree_->Branch("pi1dz_e",&pi1dz_e);
      tree_->Branch("pi2dz_e",&pi2dz_e);
+	 
+     tree_->Branch("tkChi2_1",&tkChi2_1);
+     tree_->Branch("tkChi2_2",&tkChi2_2);
+     tree_->Branch("tkIPSigXY_1",&tkIPSigXY_1);
+     tree_->Branch("tkTPSigXY_2",&tkTPSigXY_2);
+     tree_->Branch("tkIPSigZ_1",&tkIPSigZ_1);
+     tree_->Branch("tkIPSigZ_2",&tkIPSigZ_2);
+     tree_->Branch("tkDCA",&tkDCA);
+     tree_->Branch("cosThetaXYCut",&cosThetaXYCut);
+     tree_->Branch("cosThetaXYZCut",&cosThetaXYZCut);
    
      tree_->Branch("mumC2",&mumC2);  
      tree_->Branch("mumNHits",&mumNHits);

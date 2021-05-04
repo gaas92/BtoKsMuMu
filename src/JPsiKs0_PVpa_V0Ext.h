@@ -178,6 +178,10 @@ private:
 
   std::vector<float>       *pi1dxy, *pi2dxy, *pi1dz, *pi2dz;
   std::vector<float>       *pi1dxy_e, *pi2dxy_e, *pi1dz_e, *pi2dz_e;
+  std::vector<float>       *tkChi2_1, *tkChi2_2, *tkIPSigXY_1, *tkTPSigXY_2;
+  std::vector<float>       *tkIPSigZ_1, *tkIPSigZ_2, *tkDCA; 
+  std::vector<float>       *cosThetaXYCut, *cosThetaXYZCut;
+ 
   std::vector<int>         *B_Ks0_charge1, *B_Ks0_charge2;
   
   std::vector<float>       *B_J_mass, *B_J_px, *B_J_py, *B_J_pz;
