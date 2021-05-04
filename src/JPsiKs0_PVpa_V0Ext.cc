@@ -118,7 +118,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
 
   mu1soft(0), mu2soft(0), mu1tight(0), mu2tight(0), 
   mu1PF(0), mu2PF(0), mu1loose(0), mu2loose(0),
-  muon1Trg(0), muon2Trg(0);
+  muon1Trg(0), muon2Trg(0),
 
   //Trigger Selector
   drTrg_m1(0), drTrg_m2(0),
