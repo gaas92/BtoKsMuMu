@@ -189,14 +189,6 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   // Get event content information
   //*********************************  
 
-  //beam spot
-  edm::Handle<reco::BeamSpot> theBeamSpotHandle;
-  iEvent.getByToken(BSLabel_, theBeamSpotHandle);
-  const reco::BeamSpot* theBeamSpot = theBeamSpotHandle.product();
-  math::XYZPoint referencePos(theBeamSpot->position());
-
-
-
   edm::Handle<std::vector<reco::VertexCompositePtrCandidate>> theV0PtrHandle;
   iEvent.getByToken(v0PtrCollection_,  theV0PtrHandle);
 
