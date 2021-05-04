@@ -1203,8 +1203,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            
 		   //tkChi2_1->push_back(v0daughters[0].normalizedChi2());
 		   //tkChi2_2->push_back(v0daughters[1].normalizedChi2());
-		   tkChi2_1->push_back(v0daughters[0].vertexNormalizedChi2());
-		   tkChi2_2->push_back(v0daughters[1].vertexNormalizedChi2());
+		   //tkChi2_1->push_back(v0daughters[0].vertexNormalizedChi2());
+		   //tkChi2_2->push_back(v0daughters[1].vertexNormalizedChi2());
+		   tkChi2_1->push_back(v0daughters[0].pseudoTrack().normalizedChi2());
+		   tkChi2_2->push_back(v0daughters[1].pseudoTrack().normalizedChi2());
 		   tkIPSigXY_1->push_back(std::abs(v0daughters[0].dxy(*theBeamSpot)/v0daughters[0].dxyError()) );
 		   tkTPSigXY_2->push_back(std::abs(v0daughters[1].dxy(*theBeamSpot)/v0daughters[1].dxyError()) );
            tkIPSigZ_1->push_back(std::abs(v0daughters[0].dz(*theBeamSpot)/v0daughters[0].dzError()) );
