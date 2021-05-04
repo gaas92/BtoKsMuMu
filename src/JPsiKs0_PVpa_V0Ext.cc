@@ -1214,10 +1214,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
  
 		   tkDCA->push_back(tkdca_);
 		   // 2D pointing angle
-		   GlobalVector p1_(v0daughters[0].momentum());
-      	   GlobalVector p2_(v0daughters[1].momentum());
-		   GlobalVector totalP(p1_ + p2_);
-
+		   //GlobalVector p1_(v0daughters[0].momentum());
+      	   //GlobalVector p2_(v0daughters[1].momentum());
+		   //GlobalVector totalP(p1_ + p2_);
+           auto totalP = v0daughters[0].momentum() + v0daughters[1].momentum();
       	   double dx_ = Ks0_vFit_vertex_noMC->position().x() - referencePos.x();
       	   double dy_ = Ks0_vFit_vertex_noMC->position().y() - referencePos.y();
       	   double px_ = totalP.x();
