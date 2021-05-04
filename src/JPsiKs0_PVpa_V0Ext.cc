@@ -118,6 +118,8 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
 
   mu1soft(0), mu2soft(0), mu1tight(0), mu2tight(0), 
   mu1PF(0), mu2PF(0), mu1loose(0), mu2loose(0),
+  muon1Trg(0), muon2Trg(0);
+
   //Trigger Selector
   drTrg_m1(0), drTrg_m2(0),
 
@@ -467,7 +469,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   	 "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18er1p5", "L1_SingleMu14er1p5", "L1_SingleMu12er1p5", "L1_SingleMu10er1p5", //10-15
 	 "L1_SingleMu9er1p5", "L1_SingleMu8er1p5", "L1_SingleMu7er1p5", "L1_SingleMu6er1p5"}; //16-19
 
-	 
+
   if ( triggerResults_handle.isValid()) {
    //std::cout << "Triggers ok ..." <<std::endl;	  
    const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
@@ -795,15 +797,18 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
 	   //Muon1 Trigger Matching
 	   unsigned int muon1Trg_ = 0;
+	   unsigned int muon2Trg_ = 0;
 	   for (unsigned int i = 0; i < NTRIGGERS; i++) {
 			std::string triggerName = TriggersToTest[i]; 
 			triggerName += "*";
 			if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
-				//if (triggerName.find(TriggersToTest[i]) != std::string::npos ){
 				muon1Trg_ += (1<<i);
-				std::cout<< " Muon 1 matched " << triggerName << std::endl; 
+				//std::cout<< " Muon 1 matched " << triggerName << std::endl; 
 			} 
-			//std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(h)<< " | looking for: "<< TriggersToTest[i] << std::endl;
+			if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+				muon2Trg_ += (1<<i);
+				//std::cout<< " Muon 1 matched " << triggerName << std::endl; 
+			} 
 	   }	 
 
 
@@ -1187,6 +1192,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   mu2PF->push_back(iMuon2->isPFMuon());
 		   mu1loose->push_back(muon::isLooseMuon(*iMuon1));
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
+  		   muon1Trg->push_back(muon1Trg_);
+		   muon2Trg->push_back(muon2Trg_);
 
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
@@ -1674,6 +1681,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   mu1loose->push_back(muon::isLooseMuon(*iMuon1));
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
 
+  		   muon1Trg->push_back(muon1Trg_);
+		   muon2Trg->push_back(muon2Trg_);
+
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
@@ -2160,6 +2170,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   mu1loose->push_back(muon::isLooseMuon(*iMuon1));
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
 
+  		   muon1Trg->push_back(muon1Trg_);
+		   muon2Trg->push_back(muon2Trg_);
+
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
@@ -2302,6 +2315,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
    		mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
    		mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
+
+		muon1Trg->clear(); muon2Trg->clear();
+
    		//Trigger Selector
    		drTrg_m1->clear();
    		drTrg_m2->clear();
@@ -2612,6 +2628,9 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("mu2PF",&mu2PF);
      tree_->Branch("mu1loose",&mu1loose);
      tree_->Branch("mu2loose",&mu2loose);
+	 tree_->Branch("muon1Trg",&muon1Trg);
+	 tree_->Branch("muon2Trg",&muon2Trg);
+
 	 //Trigger Selector
 	 tree_->Branch("drTrg_m1", &drTrg_m1);
 	 tree_->Branch("drTrg_m2", &drTrg_m2);
