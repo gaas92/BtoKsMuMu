@@ -1317,8 +1317,6 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	         if (pion_dca < 0. || dca > 1.0) continue;  // Cut for V0 Container 
 
 
-
-
 		     ParticleMass pion_mass = 0.13957018;
 		     ParticleMass Ks0_mass = 0.497614;
 		     float pion_sigma = pion_mass*1.e-6;
@@ -1688,6 +1686,34 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   pi2dxy_e->push_back(v0daughters[1].dxyError());
 		   pi1dz_e->push_back(v0daughters[0].dzError());
 		   pi2dz_e->push_back(v0daughters[1].dzError());
+
+		   //tkChi2_1->push_back(v0daughters[0].normalizedChi2());
+		   //tkChi2_2->push_back(v0daughters[1].normalizedChi2());
+		   //tkChi2_1->push_back(v0daughters[0].vertexNormalizedChi2());
+		   //tkChi2_2->push_back(v0daughters[1].vertexNormalizedChi2());
+		   tkChi2_1->push_back(v0daughters[0].pseudoTrack().normalizedChi2());
+		   tkChi2_2->push_back(v0daughters[1].pseudoTrack().normalizedChi2());
+		   tkIPSigXY_1->push_back(std::abs(v0daughters[0].dxy(referencePos)/v0daughters[0].dxyError()) );
+		   tkTPSigXY_2->push_back(std::abs(v0daughters[1].dxy(referencePos)/v0daughters[1].dxyError()) );
+           tkIPSigZ_1->push_back(std::abs(v0daughters[0].dz(referencePos)/v0daughters[0].dzError()) );
+		   tkIPSigZ_2->push_back(std::abs(v0daughters[0].dz(referencePos)/v0daughters[0].dzError()) );
+ 
+		   tkDCA->push_back(pion_dca);
+		   // 2D pointing angle
+		   //GlobalVector p1_(v0daughters[0].momentum());
+      	   //GlobalVector p2_(v0daughters[1].momentum());
+		   //GlobalVector totalP(p1_ + p2_);
+           auto totalP = v0daughters[0].momentum() + v0daughters[1].momentum();
+      	   double dx_ = Ks0_vFit_vertex_noMC->position().x() - referencePos.x();
+      	   double dy_ = Ks0_vFit_vertex_noMC->position().y() - referencePos.y();
+      	   double px_ = totalP.x();
+      	   double py_ = totalP.y();
+      	   double angleXY_ = (dx_ * px_ + dy_ * py_) / (sqrt(dx_ * dx_ + dy_ * dy_) * sqrt(px_ * px_ + py_ * py_));
+           cosThetaXYCut->push_back(angleXY_);
+           double dz_ = Ks0_vFit_vertex_noMC->position().z() - referencePos.z();
+           double pz_ = totalP.z();
+           double angleXYZ_ = (dx_ * px_ + dy_ * py_ + dz_ * pz_) / (sqrt(dx_ * dx_ + dy_ * dy_ + dz_ * dz_) * sqrt(px_ * px_ + py_ * py_ + pz_ * pz_));
+		   cosThetaXYZCut->push_back(angleXYZ_);
 
 		   // try refitting the primary without the tracks in the B reco candidate		   
 		   //std::cout<< "pass all" << std::endl;
@@ -2146,6 +2172,34 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   pi2dxy_e->push_back(v0daughters[1].dxyError());
 		   pi1dz_e->push_back(v0daughters[0].dzError());
 		   pi2dz_e->push_back(v0daughters[1].dzError());
+
+		   //tkChi2_1->push_back(v0daughters[0].normalizedChi2());
+		   //tkChi2_2->push_back(v0daughters[1].normalizedChi2());
+		   //tkChi2_1->push_back(v0daughters[0].vertexNormalizedChi2());
+		   //tkChi2_2->push_back(v0daughters[1].vertexNormalizedChi2());
+		   tkChi2_1->push_back(v0daughters[0].pseudoTrack().normalizedChi2());
+		   tkChi2_2->push_back(v0daughters[1].pseudoTrack().normalizedChi2());
+		   tkIPSigXY_1->push_back(std::abs(v0daughters[0].dxy(referencePos)/v0daughters[0].dxyError()) );
+		   tkTPSigXY_2->push_back(std::abs(v0daughters[1].dxy(referencePos)/v0daughters[1].dxyError()) );
+           tkIPSigZ_1->push_back(std::abs(v0daughters[0].dz(referencePos)/v0daughters[0].dzError()) );
+		   tkIPSigZ_2->push_back(std::abs(v0daughters[0].dz(referencePos)/v0daughters[0].dzError()) );
+ 
+		   tkDCA->push_back(pion_dca);
+		   // 2D pointing angle
+		   //GlobalVector p1_(v0daughters[0].momentum());
+      	   //GlobalVector p2_(v0daughters[1].momentum());
+		   //GlobalVector totalP(p1_ + p2_);
+           auto totalP = v0daughters[0].momentum() + v0daughters[1].momentum();
+      	   double dx_ = Ks0_vFit_vertex_noMC->position().x() - referencePos.x();
+      	   double dy_ = Ks0_vFit_vertex_noMC->position().y() - referencePos.y();
+      	   double px_ = totalP.x();
+      	   double py_ = totalP.y();
+      	   double angleXY_ = (dx_ * px_ + dy_ * py_) / (sqrt(dx_ * dx_ + dy_ * dy_) * sqrt(px_ * px_ + py_ * py_));
+           cosThetaXYCut->push_back(angleXY_);
+           double dz_ = Ks0_vFit_vertex_noMC->position().z() - referencePos.z();
+           double pz_ = totalP.z();
+           double angleXYZ_ = (dx_ * px_ + dy_ * py_ + dz_ * pz_) / (sqrt(dx_ * dx_ + dy_ * dy_ + dz_ * dz_) * sqrt(px_ * px_ + py_ * py_ + pz_ * pz_));
+		   cosThetaXYZCut->push_back(angleXYZ_);
 
 		   // try refitting the primary without the tracks in the B reco candidate		   
 		   //std::cout<< "pass all" << std::endl;
