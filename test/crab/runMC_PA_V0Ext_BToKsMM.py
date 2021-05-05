@@ -68,7 +68,7 @@ def main():
 
         config.General.requestName = None
         #config.General.workArea = 'ZMuondecay'
-        config.General.workArea = 'V49_nonResMC'
+        config.General.workArea = 'V5_nonResMC'
 	config.General.transferOutputs = True
 	config.General.transferLogs = False
 

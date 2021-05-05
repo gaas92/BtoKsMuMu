@@ -68,7 +68,7 @@ def main():
 
         config.General.requestName = None
         #config.General.workArea = 'ZMuondecay'
-        config.General.workArea = 'V0ExtData'
+        config.General.workArea = 'V5_Data'
 	config.General.transferOutputs = True
 	config.General.transferLogs = False
 
@@ -85,11 +85,11 @@ def main():
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
         config.Data.outputDatasetTag = None
-	config.Data.outLFNDirBase = '/store/user/gayalasa/V0Ext_BParkedData/'
+	config.Data.outLFNDirBase = '/store/user/gayalasa/V5_BParkedData/'
 	#config.Site.storageSite = 'T3_US_FNALLPC'
 	config.Site.storageSite = 'T3_CH_CERNBOX'
-        config.Site.whitelist = ['T2_US*']
-        config.Data.ignoreLocality = True
+        #config.Site.whitelist = ['T2_US*']
+        #config.Data.ignoreLocality = True
         #config.Site.storageSite = None # Choose your site. 
         #--------------------------------------------------------
 
