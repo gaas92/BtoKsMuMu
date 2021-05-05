@@ -89,7 +89,7 @@ def main():
 	#config.Site.storageSite = 'T3_US_FNALLPC'
 	config.Site.storageSite = 'T3_CH_CERNBOX'
         #config.Site.whitelist = ['T2_US*']
-        config.Data.ignoreLocality = True
+        #config.Data.ignoreLocality = True
         #config.Site.storageSite = None # Choose your site. 
         #--------------------------------------------------------
 
