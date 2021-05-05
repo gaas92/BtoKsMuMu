@@ -626,7 +626,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	    std::cout << " \t>>>>>>> components (pt, eta, phi) = (" << ij.pt() << ", " << ij.eta() << ", " << ij.phi() << ")\n";
     }
   }
-  if (triggeringMuons.size() == 0){
+  if (triggeringMuons.size() == 0 && debug){
 	  std::cout<< "No Trigger Muon !!!!!" << std::endl;
   }
   //*****************************************
