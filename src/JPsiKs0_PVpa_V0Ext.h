@@ -133,7 +133,7 @@ private:
   //Trigg2 info
   std::vector<float>       *trg2_dzm1, *trg2_dzm2;
   std::vector<float>       *PVTrigg2Dz;
-  std::vector<unsigned int*> *TriggerMuonIndex;
+  std::vector<unsigned int> *TriggerMuonIndex;
   std::vector<float>       *TriggerMuon_px, *TriggerMuon_py, *TriggerMuon_pz;
 
 
