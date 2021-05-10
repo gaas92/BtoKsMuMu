@@ -113,6 +113,11 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   muon_dca(0),
 
   trg_dzm1(0), trg_dzm2(0), dz_mumu(0),
+  
+  //Trigg2 info
+  trg2_dzm1(0), trg2_dzm2(0),
+  PVTrigg2Dz(0),
+  TriggerMuon(0),
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
@@ -631,6 +636,24 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   }
   //*****************************************
   //Let's begin by looking for J/psi->mu+mu-
+  std::vector<pat::Muon> triggeringMuons2;
+  std::vector<unsigned int> triggeringMuon2Index;
+  for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
+	  	unsigned int thisTriggerIndex = 0;
+	  	for (unsigned int i = 0; i < NTRIGGERS; i++) {
+			std::string triggerName = TriggersToTest[i]; 
+			triggerName += "*";
+			if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+				thisTriggerIndex += (1<<i);
+			}
+			if (thisTriggerIndex != 0){
+				triggeringMuons2.push_back(*iMuon1);
+				triggeringMuon2Index.push_back(thisTriggerIndex);
+			} 
+	   }
+
+  }
+	
 
   unsigned int nMu_tmp = thePATMuonHandle->size();
   if (!OnlyGen_){
@@ -2311,6 +2334,11 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		mumdxy->clear(); mupdxy->clear(); mumdz->clear(); mupdz->clear(); muon_dca->clear();
 		trg_dzm1->clear(); trg_dzm2->clear(); dz_mumu->clear();  
 
+  		//Trigg2 info
+  		trg2_dzm1->clear(); trg2_dzm2->clear();
+        PVTrigg2Dz->clear();
+  		TriggerMuon->clear();
+
    		tri_Dim25->clear(); tri_JpsiTk->clear(); tri_JpsiTkTk->clear();
 
    		mu1soft->clear(); mu2soft->clear(); mu1tight->clear(); mu2tight->clear();
@@ -2613,6 +2641,13 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("trg_dzm1",&trg_dzm1);
      tree_->Branch("trg_dzm2",&trg_dzm2);
      tree_->Branch("dz_mumu",&dz_mumu);
+   
+  	 //Trigg2 info
+     tree_->Branch("trg2_dzm1",&trg2_dzm1);
+     tree_->Branch("trg2_dzm2",&trg2_dzm2);
+     tree_->Branch("PVTrigg2Dz",&PVTrigg2Dz);
+     tree_->Branch("dz_mumu",&dz_mumu);
+     tree_->Branch("TriggerMuon", "TLorentzVector", &TriggerMuon);
    
      tree_->Branch("tri_Dim25",&tri_Dim25);
      tree_->Branch("tri_JpsiTk",&tri_JpsiTk);

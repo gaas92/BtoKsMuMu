@@ -130,6 +130,11 @@ private:
   std::vector<float>       *mumdxy, *mupdxy, *mumdz, *mupdz;
   std::vector<float>       *muon_dca;
   std::vector<float>       *trg_dzm1, *trg_dzm2, *dz_mumu;
+  //Trigg2 info
+  std::vector<float>       *trg2_dzm1, *trg2_dzm2;
+  std::vector<float>       *PVTrigg2Dz;
+  std::vector<TLorentzVector> *TriggerMuon;
+
 
   std::vector<int>         *tri_Dim25, *tri_JpsiTk, *tri_JpsiTkTk;
  
