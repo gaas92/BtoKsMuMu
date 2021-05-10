@@ -2647,7 +2647,8 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("trg2_dzm2",&trg2_dzm2);
      tree_->Branch("PVTrigg2Dz",&PVTrigg2Dz);
      tree_->Branch("dz_mumu",&dz_mumu);
-     tree_->Branch("TriggerMuon", "TLorentzVector", &TriggerMuon);
+     //tree_->Branch("TriggerMuon", "TLorentzVector", &TriggerMuon);
+     tree_->Branch("TriggerMuon", &TriggerMuon);
    
      tree_->Branch("tri_Dim25",&tri_Dim25);
      tree_->Branch("tri_JpsiTk",&tri_JpsiTk);
