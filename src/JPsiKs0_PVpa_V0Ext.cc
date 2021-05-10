@@ -746,6 +746,52 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
       }
       //if ((dRMuonMatching1 != -1) | (dRMuonMatching2 != -1)) std::cout << "matching ok ..." << std::endl;
 	  //std::cout << "distaNCE TO TRIGGER :" << dzm1_trg << " & " << dzm2_trg << std::endl;
+
+	  //Match with TriggerMuons, my Trigger emulation 
+	  float dR2MuonMatching1 = -1.; 	
+	  float dR2MuonMatching2 = -1.;
+	  float dz2m1_trg = 35.0;
+	  float dz2m2_trg = 35.0;
+	  unsigned int TriggIdx = 0;
+	  float tempTriggerMuon_px = -1.;
+	  float tempTriggerMuon_py = -1.;
+	  float tempTriggerMuon_pz = -1.;
+
+
+      for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
+        float dR1 = reco::deltaR(triggeringMuons2[iTrg], *iMuon1);
+        float dR2 = reco::deltaR(triggeringMuons2[iTrg], *iMuon2);
+        // std::cout << "\n\t\tdR = " << dR << "\n";
+		if (abs(triggeringMuons2[iTrg].vz() - iMuon1->vz()) < dzm1_trg){
+		  dz2m1_trg = abs(triggeringMuons2[iTrg].vz() - iMuon1->vz());
+		}
+		if (abs(triggeringMuons2[iTrg].vz() - iMuon2->vz())) {
+		  dz2m2_trg = abs(triggeringMuons2[iTrg].vz() - iMuon2->vz());
+		}
+	    if((dR1 < dR2MuonMatching1 || dR2MuonMatching2 == -1) && dR1 < maxdR_){
+        	dR2MuonMatching1 = dR1;
+			TriggIdx = triggeringMuon2Index[iTrg];
+			tempTriggerMuon_px = triggeringMuons2[iTrg].px();
+			tempTriggerMuon_py = triggeringMuons2[iTrg].py();
+			tempTriggerMuon_pz = triggeringMuons2[iTrg].pz();
+        	// float eta = muon.eta() - triggeringMuons[iTrg].eta();
+        	// float phi = muon.phi() - triggeringMuons[iTrg].phi();
+        	// dR_H = std::sqrt(eta*eta+phi*phi);
+        	// std::cout << "\n\t\t dR_H"<< iTrg <<" = " << dR_H
+        	//   << "\n\t\treco (pt, eta, phi) = " << muon.pt() << " " << muon.eta() << " " << muon.phi() << " " 
+        	//   << "\n\t\tHLT (pt, eta, phi)  = " << triggeringMuons[iTrg].pt() << " " << triggeringMuons[iTrg].eta() << " " << triggeringMuons[iTrg].phi()
+        	//   << std::endl;
+	    }
+	    if((dR2 < dR2MuonMatching2 || dR2MuonMatching2 == -1) && dR2 < maxdR_){
+        	dR2MuonMatching2 = dR2;
+			TriggIdx = triggeringMuon2Index[iTrg];
+			tempTriggerMuon_px = triggeringMuons2[iTrg].px();
+			tempTriggerMuon_py = triggeringMuons2[iTrg].py();
+			tempTriggerMuon_pz = triggeringMuons2[iTrg].pz();	 
+		}
+      }
+
+
 	  // Measure distance between tracks at their closest approach
 	  ClosestApproachInRPhi cApp;
 	  cApp.calculate(mu1State, mu2State);
@@ -1054,6 +1100,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            Double_t priVtxCL_t = -10000.0;
            Double_t lip1 = -1000000.0;
 		   Double_t PVTriggDz_t = 100000.0;
+		   Double_t PVTrigg2Dz_t = 100000.0;
 		   unsigned int TrkIndex_t = 0;
 		   int nTks_t = 0;
            for(size_t i = 0; i < recVtxs->size(); ++i) {
@@ -1082,6 +1129,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
 						if (PVTriggDz_tt < PVTriggDz_t){
 							PVTriggDz_t = PVTriggDz_tt;
+						}
+					}
+					for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
+						Double_t PVTriggDz_tt = abs(triggeringMuons2[iTrg].vz() - vtx.z());
+						if (PVTriggDz_tt < PVTrigg2Dz_t){
+							PVTrigg2Dz_t = PVTriggDz_tt;
 						}
 					}
                     bestVtx = vtx;
@@ -1238,6 +1291,15 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   trg_dzm1->push_back(dzm1_trg);
 		   trg_dzm2->push_back(dzm2_trg);
 		   dz_mumu->push_back(dz_mumu_t);
+
+		   //Trigg2 info
+  		   trg2_dzm1->push_back(dz2m1_trg);
+		   trg2_dzm2->push_back(dz2m2_trg);
+           PVTrigg2Dz->push_back(PVTrigg2Dz_t);
+  		   TriggerMuonIndex->push_back(TriggIdx);
+  		   TriggerMuon_px->push_back(tempTriggerMuon_px);
+		   TriggerMuon_py->push_back(tempTriggerMuon_py);
+		   TriggerMuon_pz->push_back(tempTriggerMuon_pz);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
@@ -1542,6 +1604,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            Double_t priVtxCL_t = -10000.0;
            Double_t lip1 = -1000000.0;
 		   Double_t PVTriggDz_t = 100000.0;
+		   Double_t PVTrigg2Dz_t = 100000.0;
 		   unsigned int TrkIndex_t = 0;
 		   int nTks_t = 0;
            for(size_t i = 0; i < recVtxs->size(); ++i) {
@@ -1570,6 +1633,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
 						if (PVTriggDz_tt < PVTriggDz_t){
 							PVTriggDz_t = PVTriggDz_tt;
+						}
+					}
+					for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
+						Double_t PVTriggDz_tt = abs(triggeringMuons2[iTrg].vz() - vtx.z());
+						if (PVTriggDz_tt < PVTrigg2Dz_t){
+							PVTrigg2Dz_t = PVTriggDz_tt;
 						}
 					}
                     bestVtx = vtx;
@@ -1727,6 +1796,15 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   trg_dzm1->push_back(dzm1_trg);
 		   trg_dzm2->push_back(dzm2_trg);
 		   dz_mumu->push_back(dz_mumu_t);
+
+		   //Trigg2 info
+  		   trg2_dzm1->push_back(dz2m1_trg);
+		   trg2_dzm2->push_back(dz2m2_trg);
+           PVTrigg2Dz->push_back(PVTrigg2Dz_t);
+  		   TriggerMuonIndex->push_back(TriggIdx);
+  		   TriggerMuon_px->push_back(tempTriggerMuon_px);
+		   TriggerMuon_py->push_back(tempTriggerMuon_py);
+		   TriggerMuon_pz->push_back(tempTriggerMuon_pz);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
@@ -2034,6 +2112,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            Double_t priVtxCL_t = -10000.0;
            Double_t lip1 = -1000000.0;
 		   Double_t PVTriggDz_t = 100000.0;
+		   Double_t PVTrigg2Dz_t = 100000.0;
 		   unsigned int TrkIndex_t = 0;
 		   int nTks_t = 0;
            for(size_t i = 0; i < recVtxs->size(); ++i) {
@@ -2062,6 +2141,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 						Double_t PVTriggDz_tt = abs(triggeringMuons[iTrg].vz() - vtx.z());
 						if (PVTriggDz_tt < PVTriggDz_t){
 							PVTriggDz_t = PVTriggDz_tt;
+						}
+					}
+					for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
+						Double_t PVTriggDz_tt = abs(triggeringMuons2[iTrg].vz() - vtx.z());
+						if (PVTriggDz_tt < PVTrigg2Dz_t){
+							PVTrigg2Dz_t = PVTriggDz_tt;
 						}
 					}
                     bestVtx = vtx;
@@ -2216,6 +2301,15 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   trg_dzm1->push_back(dzm1_trg);
 		   trg_dzm2->push_back(dzm2_trg);
 		   dz_mumu->push_back(dz_mumu_t);
+
+		   //Trigg2 info
+  		   trg2_dzm1->push_back(dz2m1_trg);
+		   trg2_dzm2->push_back(dz2m2_trg);
+           PVTrigg2Dz->push_back(PVTrigg2Dz_t);
+  		   TriggerMuonIndex->push_back(TriggIdx);
+  		   TriggerMuon_px->push_back(tempTriggerMuon_px);
+		   TriggerMuon_py->push_back(tempTriggerMuon_py);
+		   TriggerMuon_pz->push_back(tempTriggerMuon_pz);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
