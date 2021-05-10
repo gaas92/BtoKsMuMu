@@ -118,7 +118,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   trg2_dzm1(0), trg2_dzm2(0),
   PVTrigg2Dz(0),
   TriggerMuonIndex(0),
-  TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0);
+  TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0),
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
