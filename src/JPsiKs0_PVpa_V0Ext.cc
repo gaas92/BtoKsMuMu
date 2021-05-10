@@ -117,7 +117,8 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   //Trigg2 info
   trg2_dzm1(0), trg2_dzm2(0),
   PVTrigg2Dz(0),
-  TriggerMuon(0),
+  TriggerMuonIndex(0),
+  TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0);
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
@@ -2337,7 +2338,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   		//Trigg2 info
   		trg2_dzm1->clear(); trg2_dzm2->clear();
         PVTrigg2Dz->clear();
-  		TriggerMuon->clear();
+  		TriggerMuonIndex->clear();
+        TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear();
 
    		tri_Dim25->clear(); tri_JpsiTk->clear(); tri_JpsiTkTk->clear();
 
@@ -2646,9 +2648,10 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("trg2_dzm1",&trg2_dzm1);
      tree_->Branch("trg2_dzm2",&trg2_dzm2);
      tree_->Branch("PVTrigg2Dz",&PVTrigg2Dz);
-     tree_->Branch("dz_mumu",&dz_mumu);
-     //tree_->Branch("TriggerMuon", "TLorentzVector", &TriggerMuon);
-     tree_->Branch("TriggerMuon", &TriggerMuon);
+     tree_->Branch("TriggerMuonIndex", &TriggerMuonIndex);
+     tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
+     tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
+     tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
    
      tree_->Branch("tri_Dim25",&tri_Dim25);
      tree_->Branch("tri_JpsiTk",&tri_JpsiTk);
