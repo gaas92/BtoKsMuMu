@@ -644,7 +644,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   bm_pT = 0;
   for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
 	  	unsigned int thisTriggerIndex = 0;
-		float IPxy = iMuon1->dxy(referencePos);
+		//float IPxy = iMuon1->dxy(referencePos);
+		float IPxy = iMuon1->muonBestTrack()->dxy(referencePos)
 		if(iMuon1->pt() > bm_pT &&  IPxy > bm_IPxy){
 			bm_pT = iMuon1->pt();
 			bm_IPxy = IPxy;
