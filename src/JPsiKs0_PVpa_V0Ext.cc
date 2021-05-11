@@ -119,7 +119,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   PVTrigg2Dz(0),
   TriggerMuonIndex(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0),
-  bm_IPxy(0), bm_pT(0),
+  bm_IPxy(0), bm_pT(0), b_pT(0), b_TPxy(0),
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
@@ -642,6 +642,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   std::vector<unsigned int> triggeringMuon2Index;
   bm_IPxy = 0;
   bm_pT = 0;
+  b_IPxy = 0;
+  b_pT = 0;
   for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
 	  	unsigned int thisTriggerIndex = 0;
 		//float IPxy = iMuon1->dxy(referencePos);
@@ -650,6 +652,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 			bm_pT = iMuon1->pt();
 			bm_IPxy = IPxy;
 		}  
+        if(iMuon1->pt() > b_pT){
+			b_pT = iMuon1->pt();
+		}
+		if(IPxy > b_IPxy){
+			b_IPxy = IPxy;
+		}
 	  	for (unsigned int i = 0; i < NTRIGGERS; i++) {
 			std::string triggerName = TriggersToTest[i]; 
 			triggerName += "*";
@@ -2760,6 +2768,8 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
 	 tree_->Branch("bm_IPxy",&bm_IPxy,"bm_IPxy/f");
      tree_->Branch("bm_pT",&bm_pT,"bm_pT/f");
+	 tree_->Branch("b_IPxy",&b_IPxy,"b_IPxy/f");
+     tree_->Branch("b_pT",&b_pT,"b_pT/f");
    
      tree_->Branch("tri_Dim25",&tri_Dim25);
      tree_->Branch("tri_JpsiTk",&tri_JpsiTk);
