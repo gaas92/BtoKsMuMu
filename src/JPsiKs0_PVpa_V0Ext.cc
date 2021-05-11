@@ -119,6 +119,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   PVTrigg2Dz(0),
   TriggerMuonIndex(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0),
+  bm_IPxy(0), bm_pT(0),
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
@@ -639,8 +640,15 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //Let's begin by looking for J/psi->mu+mu-
   std::vector<pat::Muon> triggeringMuons2;
   std::vector<unsigned int> triggeringMuon2Index;
+  bm_IPxy = 0;
+  bm_pT = 0;
   for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
 	  	unsigned int thisTriggerIndex = 0;
+		float IPxy = iMuon1->dxy(referencePos);
+		if(iMuon1->pt() > bm_pT &&  IPxy > bm_IPxy){
+			bm_pT = iMuon1->pt();
+			bm_IPxy = IPxy;
+		}  
 	  	for (unsigned int i = 0; i < NTRIGGERS; i++) {
 			std::string triggerName = TriggersToTest[i]; 
 			triggerName += "*";
@@ -2380,6 +2388,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    nB = 0; nMu = 0;
    trigger = 0;
    ngen = 0;
+   bm_IPxy = 0;
+   bm_pT = 0;
+
    if (!OnlyGen_){	
    		B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
    		B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
@@ -2746,6 +2757,8 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
      tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
      tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
+	 tree_->Branch("bm_IPxy",&bm_IPxy,"bm_IPxy/f");
+     tree_->Branch("bm_pT",&bm_pT,"bm_pT/f");
    
      tree_->Branch("tri_Dim25",&tri_Dim25);
      tree_->Branch("tri_JpsiTk",&tri_JpsiTk);

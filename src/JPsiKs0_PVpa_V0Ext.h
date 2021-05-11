@@ -136,6 +136,7 @@ private:
   std::vector<float>       *PVTrigg2Dz;
   std::vector<unsigned int> *TriggerMuonIndex;
   std::vector<float>       *TriggerMuon_px, *TriggerMuon_py, *TriggerMuon_pz;
+  float                    bm_IPxy, bm_pT;
 
 
   std::vector<int>         *tri_Dim25, *tri_JpsiTk, *tri_JpsiTkTk;
