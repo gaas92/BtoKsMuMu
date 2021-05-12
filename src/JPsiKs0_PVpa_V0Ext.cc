@@ -115,11 +115,11 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   trg_dzm1(0), trg_dzm2(0), dz_mumu(0),
   
   //Trigg2 info
-  trg2_dzm1(0), trg2_dzm2(0),
-  PVTrigg2Dz(0),
-  TriggerMuonIndex(0),
-  TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0),
-  bm_IPxy(0), bm_pT(0), b_pT(0), b_IPxy(0),
+  //trg2_dzm1(0), trg2_dzm2(0),
+  //PVTrigg2Dz(0),
+  //TriggerMuonIndex(0),
+  //TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0),
+  //bm_IPxy(0), bm_pT(0), b_pT(0), b_IPxy(0),
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
@@ -637,42 +637,42 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	  std::cout<< "No Trigger Muon !!!!!" << std::endl;
   }
   //*****************************************
+  //Trigger 2 Test
+  //std::vector<pat::Muon> triggeringMuons2;
+  //std::vector<unsigned int> triggeringMuon2Index;
+  //bm_IPxy = 0;
+  //bm_pT = 0;
+  //b_IPxy = 0;
+  //b_pT = 0;
+  //for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
+  //  	unsigned int thisTriggerIndex = 0;
+  //	//float IPxy = iMuon1->dxy(referencePos);
+  //	float IPxy = iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError();
+  //	if(iMuon1->pt() > bm_pT &&  IPxy > bm_IPxy){
+  //		bm_pT = iMuon1->pt();
+  //		bm_IPxy = IPxy;
+  //	}  
+  //      if(iMuon1->pt() > b_pT){
+  //	b_pT = iMuon1->pt();
+  //	}
+  //	if(IPxy > b_IPxy){
+  //		b_IPxy = IPxy;
+  //	}
+  //  	for (unsigned int i = 0; i < NTRIGGERS; i++) {
+  //		std::string triggerName = TriggersToTest[i]; 
+  //		triggerName += "*";
+  //		if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+  //			thisTriggerIndex += (1<<i);
+  //		}
+  //		if (thisTriggerIndex != 0){
+  //			triggeringMuons2.push_back(*iMuon1);
+  //			triggeringMuon2Index.push_back(thisTriggerIndex);
+  //		} 
+  //   }
+  //
+  //}	
+  //*****************************************
   //Let's begin by looking for J/psi->mu+mu-
-  std::vector<pat::Muon> triggeringMuons2;
-  std::vector<unsigned int> triggeringMuon2Index;
-  bm_IPxy = 0;
-  bm_pT = 0;
-  b_IPxy = 0;
-  b_pT = 0;
-  for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
-	  	unsigned int thisTriggerIndex = 0;
-		//float IPxy = iMuon1->dxy(referencePos);
-		float IPxy = iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError();
-		if(iMuon1->pt() > bm_pT &&  IPxy > bm_IPxy){
-			bm_pT = iMuon1->pt();
-			bm_IPxy = IPxy;
-		}  
-        if(iMuon1->pt() > b_pT){
-			b_pT = iMuon1->pt();
-		}
-		if(IPxy > b_IPxy){
-			b_IPxy = IPxy;
-		}
-	  	for (unsigned int i = 0; i < NTRIGGERS; i++) {
-			std::string triggerName = TriggersToTest[i]; 
-			triggerName += "*";
-			if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
-				thisTriggerIndex += (1<<i);
-			}
-			if (thisTriggerIndex != 0){
-				triggeringMuons2.push_back(*iMuon1);
-				triggeringMuon2Index.push_back(thisTriggerIndex);
-			} 
-	   }
-
-  }
-	
-
   unsigned int nMu_tmp = thePATMuonHandle->size();
   if (!OnlyGen_){
    for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) 
@@ -1117,7 +1117,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            Double_t priVtxCL_t = -10000.0;
            Double_t lip1 = -1000000.0;
 		   Double_t PVTriggDz_t = 100000.0;
-		   Double_t PVTrigg2Dz_t = 100000.0;
+		   //Double_t PVTrigg2Dz_t = 100000.0;
 		   unsigned int TrkIndex_t = 0;
 		   int nTks_t = 0;
            for(size_t i = 0; i < recVtxs->size(); ++i) {
@@ -1148,12 +1148,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 							PVTriggDz_t = PVTriggDz_tt;
 						}
 					}
-					for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
-						Double_t PVTriggDz_tt = abs(triggeringMuons2[iTrg].vz() - vtx.z());
-						if (PVTriggDz_tt < PVTrigg2Dz_t){
-							PVTrigg2Dz_t = PVTriggDz_tt;
-						}
-					}
+					//for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
+					//	Double_t PVTriggDz_tt = abs(triggeringMuons2[iTrg].vz() - vtx.z());
+					//	if (PVTriggDz_tt < PVTrigg2Dz_t){
+					//		PVTrigg2Dz_t = PVTriggDz_tt;
+					//	}
+					//}
                     bestVtx = vtx;
                 }
             }
@@ -1310,13 +1310,13 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   dz_mumu->push_back(dz_mumu_t);
 
 		   //Trigg2 info
-  		   trg2_dzm1->push_back(dz2m1_trg);
-		   trg2_dzm2->push_back(dz2m2_trg);
-           PVTrigg2Dz->push_back(PVTrigg2Dz_t);
-  		   TriggerMuonIndex->push_back(TriggIdx);
-  		   TriggerMuon_px->push_back(tempTriggerMuon_px);
-		   TriggerMuon_py->push_back(tempTriggerMuon_py);
-		   TriggerMuon_pz->push_back(tempTriggerMuon_pz);
+  		   //trg2_dzm1->push_back(dz2m1_trg);
+		   //trg2_dzm2->push_back(dz2m2_trg);
+           //PVTrigg2Dz->push_back(PVTrigg2Dz_t);
+  		   //TriggerMuonIndex->push_back(TriggIdx);
+  		   //TriggerMuon_px->push_back(tempTriggerMuon_px);
+		   //TriggerMuon_py->push_back(tempTriggerMuon_py);
+		   //TriggerMuon_pz->push_back(tempTriggerMuon_pz);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
@@ -1621,7 +1621,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            Double_t priVtxCL_t = -10000.0;
            Double_t lip1 = -1000000.0;
 		   Double_t PVTriggDz_t = 100000.0;
-		   Double_t PVTrigg2Dz_t = 100000.0;
+		   //Double_t PVTrigg2Dz_t = 100000.0;
 		   unsigned int TrkIndex_t = 0;
 		   int nTks_t = 0;
            for(size_t i = 0; i < recVtxs->size(); ++i) {
@@ -1652,12 +1652,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 							PVTriggDz_t = PVTriggDz_tt;
 						}
 					}
-					for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
-						Double_t PVTriggDz_tt = abs(triggeringMuons2[iTrg].vz() - vtx.z());
-						if (PVTriggDz_tt < PVTrigg2Dz_t){
-							PVTrigg2Dz_t = PVTriggDz_tt;
-						}
-					}
+					//for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
+					//	Double_t PVTriggDz_tt = abs(triggeringMuons2[iTrg].vz() - vtx.z());
+					//	if (PVTriggDz_tt < PVTrigg2Dz_t){
+					//		PVTrigg2Dz_t = PVTriggDz_tt;
+					//	}
+					//}
                     bestVtx = vtx;
                 }
             }
@@ -1815,13 +1815,13 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   dz_mumu->push_back(dz_mumu_t);
 
 		   //Trigg2 info
-  		   trg2_dzm1->push_back(dz2m1_trg);
-		   trg2_dzm2->push_back(dz2m2_trg);
-           PVTrigg2Dz->push_back(PVTrigg2Dz_t);
-  		   TriggerMuonIndex->push_back(TriggIdx);
-  		   TriggerMuon_px->push_back(tempTriggerMuon_px);
-		   TriggerMuon_py->push_back(tempTriggerMuon_py);
-		   TriggerMuon_pz->push_back(tempTriggerMuon_pz);
+  		   //trg2_dzm1->push_back(dz2m1_trg);
+		   //trg2_dzm2->push_back(dz2m2_trg);
+           //PVTrigg2Dz->push_back(PVTrigg2Dz_t);
+  		   //TriggerMuonIndex->push_back(TriggIdx);
+  		   //TriggerMuon_px->push_back(tempTriggerMuon_px);
+		   //TriggerMuon_py->push_back(tempTriggerMuon_py);
+		   //TriggerMuon_pz->push_back(tempTriggerMuon_pz);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
@@ -2129,7 +2129,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            Double_t priVtxCL_t = -10000.0;
            Double_t lip1 = -1000000.0;
 		   Double_t PVTriggDz_t = 100000.0;
-		   Double_t PVTrigg2Dz_t = 100000.0;
+		   //Double_t PVTrigg2Dz_t = 100000.0;
 		   unsigned int TrkIndex_t = 0;
 		   int nTks_t = 0;
            for(size_t i = 0; i < recVtxs->size(); ++i) {
@@ -2160,12 +2160,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 							PVTriggDz_t = PVTriggDz_tt;
 						}
 					}
-					for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
-						Double_t PVTriggDz_tt = abs(triggeringMuons2[iTrg].vz() - vtx.z());
-						if (PVTriggDz_tt < PVTrigg2Dz_t){
-							PVTrigg2Dz_t = PVTriggDz_tt;
-						}
-					}
+					//for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
+					//	Double_t PVTriggDz_tt = abs(triggeringMuons2[iTrg].vz() - vtx.z());
+					//	if (PVTriggDz_tt < PVTrigg2Dz_t){
+					//		PVTrigg2Dz_t = PVTriggDz_tt;
+					//	}
+					//}
                     bestVtx = vtx;
                 }
             }
@@ -2320,13 +2320,13 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   dz_mumu->push_back(dz_mumu_t);
 
 		   //Trigg2 info
-  		   trg2_dzm1->push_back(dz2m1_trg);
-		   trg2_dzm2->push_back(dz2m2_trg);
-           PVTrigg2Dz->push_back(PVTrigg2Dz_t);
-  		   TriggerMuonIndex->push_back(TriggIdx);
-  		   TriggerMuon_px->push_back(tempTriggerMuon_px);
-		   TriggerMuon_py->push_back(tempTriggerMuon_py);
-		   TriggerMuon_pz->push_back(tempTriggerMuon_pz);
+  		   //trg2_dzm1->push_back(dz2m1_trg);
+		   //trg2_dzm2->push_back(dz2m2_trg);
+           //PVTrigg2Dz->push_back(PVTrigg2Dz_t);
+  		   //TriggerMuonIndex->push_back(TriggIdx);
+  		   //TriggerMuon_px->push_back(tempTriggerMuon_px);
+		   //TriggerMuon_py->push_back(tempTriggerMuon_py);
+		   //TriggerMuon_pz->push_back(tempTriggerMuon_pz);
 
 		   pi1dxy->push_back(v0daughters[0].dxy());
 		   pi2dxy->push_back(v0daughters[1].dxy());
@@ -2450,10 +2450,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		trg_dzm1->clear(); trg_dzm2->clear(); dz_mumu->clear();  
 
   		//Trigg2 info
-  		trg2_dzm1->clear(); trg2_dzm2->clear();
-        PVTrigg2Dz->clear();
-  		TriggerMuonIndex->clear();
-        TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear();
+  		//trg2_dzm1->clear(); trg2_dzm2->clear();
+        //PVTrigg2Dz->clear();
+  		//TriggerMuonIndex->clear();
+        //TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear();
 
    		tri_Dim25->clear(); tri_JpsiTk->clear(); tri_JpsiTkTk->clear();
 
@@ -2759,17 +2759,17 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("dz_mumu",&dz_mumu);
    
   	 //Trigg2 info
-     tree_->Branch("trg2_dzm1",&trg2_dzm1);
-     tree_->Branch("trg2_dzm2",&trg2_dzm2);
-     tree_->Branch("PVTrigg2Dz",&PVTrigg2Dz);
-     tree_->Branch("TriggerMuonIndex", &TriggerMuonIndex);
-     tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
-     tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
-     tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
-	 tree_->Branch("bm_IPxy",&bm_IPxy,"bm_IPxy/f");
-     tree_->Branch("bm_pT",&bm_pT,"bm_pT/f");
-	 tree_->Branch("b_IPxy",&b_IPxy,"b_IPxy/f");
-     tree_->Branch("b_pT",&b_pT,"b_pT/f");
+     //tree_->Branch("trg2_dzm1",&trg2_dzm1);
+     //tree_->Branch("trg2_dzm2",&trg2_dzm2);
+     //tree_->Branch("PVTrigg2Dz",&PVTrigg2Dz);
+     //tree_->Branch("TriggerMuonIndex", &TriggerMuonIndex);
+     //tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
+     //tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
+     //tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
+	 //tree_->Branch("bm_IPxy",&bm_IPxy,"bm_IPxy/f");
+     //tree_->Branch("bm_pT",&bm_pT,"bm_pT/f");
+	 //tree_->Branch("b_IPxy",&b_IPxy,"b_IPxy/f");
+     //tree_->Branch("b_pT",&b_pT,"b_pT/f");
    
      tree_->Branch("tri_Dim25",&tri_Dim25);
      tree_->Branch("tri_JpsiTk",&tri_JpsiTk);
