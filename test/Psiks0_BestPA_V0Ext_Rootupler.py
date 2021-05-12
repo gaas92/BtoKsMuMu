@@ -1,6 +1,6 @@
 import FWCore.ParameterSet.Config as cms
 process = cms.Process("Rootuple")
-
+ 
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_38T_cff')
 process.load('Configuration.StandardSequences.Reconstruction_cff')
@@ -18,7 +18,7 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.load("FWCore.MessageLogger.MessageLogger_cfi")
 #process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
-files_my_gen = [string for string in open('myGenFiles/Res_noProbeFilterDecayFilter_MiniAOD2_4.txt').readlines() if len(string) > 10]
+files_my_gen = [string for string in open('myGenFiles/Res_noProbeFilterDecayFilter_MiniAOD1_0.txt').readlines() if len(string) > 10]
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(files_my_gen
 
@@ -54,12 +54,12 @@ process.source = cms.Source("PoolSource",
 process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
 process.rootuple.isMC = cms.bool(True) # this is only for test
 process.rootuple.isRes = cms.bool(True)
-#process.rootuple.OnlyGen = cms.bool(True)
+process.rootuple.OnlyGen = cms.bool(True)
 process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
 
 process.TFileService = cms.Service("TFileService",
 
-       fileName = cms.string('Rootuple_Bdtojpiks0_PARKED_Bpa_PVExt_MiniAOD_24.root'),
+       fileName = cms.string('Rootuple_Bdtojpiks0_PARKED_Bpa_PVExt_MiniAOD_GEN_10.root'),
 )
 
 #process.mySequence = cms.Sequence(
