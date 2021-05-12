@@ -765,48 +765,48 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	  //std::cout << "distaNCE TO TRIGGER :" << dzm1_trg << " & " << dzm2_trg << std::endl;
 
 	  //Match with TriggerMuons, my Trigger emulation 
-	  float dR2MuonMatching1 = -1.; 	
-	  float dR2MuonMatching2 = -1.;
-	  float dz2m1_trg = 35.0;
-	  float dz2m2_trg = 35.0;
-	  unsigned int TriggIdx = 0;
-	  float tempTriggerMuon_px = -1.;
-	  float tempTriggerMuon_py = -1.;
-	  float tempTriggerMuon_pz = -1.;
-
-
-      for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
-        float dR1 = reco::deltaR(triggeringMuons2[iTrg], *iMuon1);
-        float dR2 = reco::deltaR(triggeringMuons2[iTrg], *iMuon2);
-        // std::cout << "\n\t\tdR = " << dR << "\n";
-		if (abs(triggeringMuons2[iTrg].vz() - iMuon1->vz()) < dzm1_trg){
-		  dz2m1_trg = abs(triggeringMuons2[iTrg].vz() - iMuon1->vz());
-		}
-		if (abs(triggeringMuons2[iTrg].vz() - iMuon2->vz())) {
-		  dz2m2_trg = abs(triggeringMuons2[iTrg].vz() - iMuon2->vz());
-		}
-	    if((dR1 < dR2MuonMatching1 || dR2MuonMatching2 == -1) && dR1 < maxdR_){
-        	dR2MuonMatching1 = dR1;
-			TriggIdx = triggeringMuon2Index[iTrg];
-			tempTriggerMuon_px = triggeringMuons2[iTrg].px();
-			tempTriggerMuon_py = triggeringMuons2[iTrg].py();
-			tempTriggerMuon_pz = triggeringMuons2[iTrg].pz();
-        	// float eta = muon.eta() - triggeringMuons[iTrg].eta();
-        	// float phi = muon.phi() - triggeringMuons[iTrg].phi();
-        	// dR_H = std::sqrt(eta*eta+phi*phi);
-        	// std::cout << "\n\t\t dR_H"<< iTrg <<" = " << dR_H
-        	//   << "\n\t\treco (pt, eta, phi) = " << muon.pt() << " " << muon.eta() << " " << muon.phi() << " " 
-        	//   << "\n\t\tHLT (pt, eta, phi)  = " << triggeringMuons[iTrg].pt() << " " << triggeringMuons[iTrg].eta() << " " << triggeringMuons[iTrg].phi()
-        	//   << std::endl;
-	    }
-	    if((dR2 < dR2MuonMatching2 || dR2MuonMatching2 == -1) && dR2 < maxdR_){
-        	dR2MuonMatching2 = dR2;
-			TriggIdx = triggeringMuon2Index[iTrg];
-			tempTriggerMuon_px = triggeringMuons2[iTrg].px();
-			tempTriggerMuon_py = triggeringMuons2[iTrg].py();
-			tempTriggerMuon_pz = triggeringMuons2[iTrg].pz();	 
-		}
-      }
+	  //float dR2MuonMatching1 = -1.; 	
+	  //float dR2MuonMatching2 = -1.;
+	  //float dz2m1_trg = 35.0;
+	  //float dz2m2_trg = 35.0;
+	  //unsigned int TriggIdx = 0;
+	  //float tempTriggerMuon_px = -1.;
+	  //float tempTriggerMuon_py = -1.;
+	  //float tempTriggerMuon_pz = -1.;
+      //
+      //
+      //for(unsigned int iTrg=0; iTrg<triggeringMuons2.size(); ++iTrg){
+      //  float dR1 = reco::deltaR(triggeringMuons2[iTrg], *iMuon1);
+      //  float dR2 = reco::deltaR(triggeringMuons2[iTrg], *iMuon2);
+      //  // std::cout << "\n\t\tdR = " << dR << "\n";
+	  //  if (abs(triggeringMuons2[iTrg].vz() - iMuon1->vz()) < dzm1_trg){
+	  //     dz2m1_trg = abs(triggeringMuons2[iTrg].vz() - iMuon1->vz());
+	  //  }
+	  //  if (abs(triggeringMuons2[iTrg].vz() - iMuon2->vz())) {
+	  //     dz2m2_trg = abs(triggeringMuons2[iTrg].vz() - iMuon2->vz());
+	  //  }
+	  //  if((dR1 < dR2MuonMatching1 || dR2MuonMatching2 == -1) && dR1 < maxdR_){
+      //  	dR2MuonMatching1 = dR1;
+	  //	TriggIdx = triggeringMuon2Index[iTrg];
+	  //	tempTriggerMuon_px = triggeringMuons2[iTrg].px();
+	  //	tempTriggerMuon_py = triggeringMuons2[iTrg].py();
+	  //	tempTriggerMuon_pz = triggeringMuons2[iTrg].pz();
+      //  	// float eta = muon.eta() - triggeringMuons[iTrg].eta();
+      //  	// float phi = muon.phi() - triggeringMuons[iTrg].phi();
+      //  	// dR_H = std::sqrt(eta*eta+phi*phi);
+      //  	// std::cout << "\n\t\t dR_H"<< iTrg <<" = " << dR_H
+      //  	//   << "\n\t\treco (pt, eta, phi) = " << muon.pt() << " " << muon.eta() << " " << muon.phi() << " " 
+      //  	//   << "\n\t\tHLT (pt, eta, phi)  = " << triggeringMuons[iTrg].pt() << " " << triggeringMuons[iTrg].eta() << " " << triggeringMuons[iTrg].phi()
+      //  	//   << std::endl;
+	  //  }
+	  //  if((dR2 < dR2MuonMatching2 || dR2MuonMatching2 == -1) && dR2 < maxdR_){
+      //  	dR2MuonMatching2 = dR2;
+	  //	TriggIdx = triggeringMuon2Index[iTrg];
+	  //	tempTriggerMuon_px = triggeringMuons2[iTrg].px();
+	  //	tempTriggerMuon_py = triggeringMuons2[iTrg].py();
+	  //	tempTriggerMuon_pz = triggeringMuons2[iTrg].pz();	 
+	  //  }
+      //}
 
 
 	  // Measure distance between tracks at their closest approach
