@@ -2397,8 +2397,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    nB = 0; nMu = 0;
    trigger = 0;
    ngen = 0;
-   bm_IPxy = 0;
-   bm_pT = 0;
+   //bm_IPxy = 0;
+   //bm_pT = 0;
 
    if (!OnlyGen_){	
    		B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
