@@ -198,7 +198,7 @@ private:
   std::vector<float>       *B_J_pt1, *B_J_px1, *B_J_py1, *B_J_pz1;
   std::vector<float>       *B_J_pt2, *B_J_px2, *B_J_py2, *B_J_pz2;
   std::vector<float>       *B_J_IP1, *B_J_IP2;
-  std::vector<int>         *B_J_charge1, *B_J_charge2, *B_J_inerT1, B_J_inerT2; //inerT new
+  std::vector<int>         *B_J_charge1, *B_J_charge2, *B_J_inerT1, *B_J_inerT2; //inerT new
   
   std::vector<float>       *B_Ks0_chi2, *B_J_chi2, *B_chi2;
   std::vector<float>       *B_Prob, *B_J_Prob, *B_ks0_Prob;
