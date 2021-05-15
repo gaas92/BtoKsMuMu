@@ -1225,7 +1225,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   B_J_pz1->push_back(psiMu1KP.momentum().z());
 		   B_J_IP1->push_back(iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError());
 		   B_J_charge1->push_back(mu1CandMC->currentState().particleCharge());
-           B_J_inerT1->push_back( !(iMuon1->innerTrack()->isNull()) );
+           B_J_inerT1->push_back( iMuon1->isGlobalMuon() );
 
 		   B_J_pt2->push_back(Jp2vec.perp());
 		   B_J_px2->push_back(psiMu2KP.momentum().x());
@@ -1233,7 +1233,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   B_J_pz2->push_back(psiMu2KP.momentum().z());
 		   B_J_IP2->push_back(iMuon2->muonBestTrack()->dxy(referencePos)/iMuon2->muonBestTrack()->dxyError());
 		   B_J_charge2->push_back(mu2CandMC->currentState().particleCharge());
-           B_J_inerT2->push_back( !(iMuon2->innerTrack()->isNull()) );
+           B_J_inerT2->push_back( iMuon2->isGlobalMuon() );
 
 		   B_Ks0_chi2->push_back(Ks0_vFit_vertex_noMC->chiSquared());
 		   B_J_chi2->push_back(psi_vFit_vertex_noMC->chiSquared());
@@ -1733,7 +1733,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   B_J_pz1->push_back(psiMu1KP.momentum().z());
 		   B_J_IP1->push_back(iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError());
 		   B_J_charge1->push_back(mu1CandMC->currentState().particleCharge());
-           B_J_inerT1->push_back( !(iMuon1->innerTrack()->isNull()) );
+           B_J_inerT1->push_back( iMuon1->isGlobalMuon() );
 
 		   B_J_pt2->push_back(Jp2vec.perp());
 		   B_J_px2->push_back(psiMu2KP.momentum().x());
@@ -1741,7 +1741,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   B_J_pz2->push_back(psiMu2KP.momentum().z());
 		   B_J_IP2->push_back(iMuon2->muonBestTrack()->dxy(referencePos)/iMuon2->muonBestTrack()->dxyError());
 		   B_J_charge2->push_back(mu2CandMC->currentState().particleCharge());
-           B_J_inerT2->push_back( !(iMuon2->innerTrack()->isNull()) );
+           B_J_inerT2->push_back( iMuon2->isGlobalMuon() );
 
 		   B_Ks0_chi2->push_back(Ks0_vFit_vertex_noMC->chiSquared());
 		   B_J_chi2->push_back(psi_vFit_vertex_noMC->chiSquared());
@@ -2242,7 +2242,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   B_J_pz1->push_back(psiMu1KP.momentum().z());
 		   B_J_IP1->push_back(iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError());
 		   B_J_charge1->push_back(mu1CandMC->currentState().particleCharge());
-           B_J_inerT1->push_back( !(iMuon1->innerTrack()->isNull()) );
+           B_J_inerT1->push_back( iMuon1->isGlobalMuon() );
 
 		   B_J_pt2->push_back(Jp2vec.perp());
 		   B_J_px2->push_back(psiMu2KP.momentum().x());
@@ -2250,7 +2250,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   B_J_pz2->push_back(psiMu2KP.momentum().z());
 		   B_J_IP2->push_back(iMuon2->muonBestTrack()->dxy(referencePos)/iMuon2->muonBestTrack()->dxyError());
 		   B_J_charge2->push_back(mu2CandMC->currentState().particleCharge());
-           B_J_inerT2->push_back( !(iMuon2->innerTrack()->isNull()) );
+           B_J_inerT2->push_back( iMuon2->isGlobalMuon() );
 
 		   B_Ks0_chi2->push_back(Ks0_vFit_vertex_noMC->chiSquared());
 		   B_J_chi2->push_back(psi_vFit_vertex_noMC->chiSquared());
