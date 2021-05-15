@@ -117,9 +117,9 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   //Trigg2 info
   //trg2_dzm1(0), trg2_dzm2(0),
   //PVTrigg2Dz(0),
-  //TriggerMuonIndex(0),
-  //TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0),
-  //bm_IPxy(0), bm_pT(0), b_pT(0), b_IPxy(0),
+  TriggerMuonIndex(0),
+  TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0),
+  bm_IPxy(0), bm_pT(0), ts_pT(0), ts_IPxy(0), nTriggerMuon(0),
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
@@ -166,7 +166,8 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   B_J_mass(0), B_J_px(0), B_J_py(0), B_J_pz(0),
   B_J_pt1(0), B_J_px1(0), B_J_py1(0), B_J_pz1(0), 
   B_J_pt2(0), B_J_px2(0), B_J_py2(0), B_J_pz2(0), 
-  B_J_charge1(0), B_J_charge2(0),
+  B_J_IP1(0), B_J_IP2(0),
+  B_J_charge1(0), B_J_charge2(0), B_J_inerT1(0), B_J_inerT2(0),
 
   B_Ks0_chi2(0), B_J_chi2(0), B_chi2(0),
   B_Prob(0), B_J_Prob(0), B_ks0_Prob(0),
@@ -468,14 +469,22 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //"HLT_Mu12_IP6","HLT_Mu9_IP5","HLT_Mu7_IP4","HLT_Mu9_IP4","HLT_Mu8_IP5","HLT_Mu8_IP6",
   //#V3.5
   //"HLT_Mu9_IP3","HLT_Mu9_IP0")
+
+  //std::string TriggersToTest[NTRIGGERS] = {
+  //   "HLT_Mu12_IP6", //0
+  //   "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-5
+  //   "HLT_Mu8_IP3","HLT_Mu8_IP5", "HLT_Mu8_IP6", //6-8
+  //   "HLT_Mu7_IP4", //9
+  //   "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18er1p5", "L1_SingleMu14er1p5", "L1_SingleMu12er1p5", "L1_SingleMu10er1p5", //10-15
+  //   "L1_SingleMu9er1p5", "L1_SingleMu8er1p5", "L1_SingleMu7er1p5", "L1_SingleMu6er1p5"}; //16-19
+
   std::string TriggersToTest[NTRIGGERS] = {
      "HLT_Mu12_IP6", //0
 	 "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-5
      "HLT_Mu8_IP3","HLT_Mu8_IP5", "HLT_Mu8_IP6", //6-8
      "HLT_Mu7_IP4", //9
-  	 "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18er1p5", "L1_SingleMu14er1p5", "L1_SingleMu12er1p5", "L1_SingleMu10er1p5", //10-15
-	 "L1_SingleMu9er1p5", "L1_SingleMu8er1p5", "L1_SingleMu7er1p5", "L1_SingleMu6er1p5"}; //16-19
-
+  	 "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18", "L1_SingleMu14", "L1_SingleMu12", "L1_SingleMu10", //10-15
+	 "L1_SingleMu9", "L1_SingleMu8", "L1_SingleMu7", "L1_SingleMu6"}; //16-19
 
   if ( triggerResults_handle.isValid()) {
    //std::cout << "Triggers ok ..." <<std::endl;	  
@@ -640,37 +649,47 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //Trigger 2 Test
   //std::vector<pat::Muon> triggeringMuons2;
   //std::vector<unsigned int> triggeringMuon2Index;
-  //bm_IPxy = 0;
-  //bm_pT = 0;
-  //b_IPxy = 0;
-  //b_pT = 0;
-  //for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
-  //  	unsigned int thisTriggerIndex = 0;
-  //	//float IPxy = iMuon1->dxy(referencePos);
-  //	float IPxy = iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError();
-  //	if(iMuon1->pt() > bm_pT &&  IPxy > bm_IPxy){
-  //		bm_pT = iMuon1->pt();
-  //		bm_IPxy = IPxy;
-  //	}  
-  //      if(iMuon1->pt() > b_pT){
-  //	b_pT = iMuon1->pt();
-  //	}
-  //	if(IPxy > b_IPxy){
-  //		b_IPxy = IPxy;
-  //	}
-  //  	for (unsigned int i = 0; i < NTRIGGERS; i++) {
-  //		std::string triggerName = TriggersToTest[i]; 
-  //		triggerName += "*";
-  //		if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
-  //			thisTriggerIndex += (1<<i);
-  //		}
-  //		if (thisTriggerIndex != 0){
-  //			triggeringMuons2.push_back(*iMuon1);
-  //			triggeringMuon2Index.push_back(thisTriggerIndex);
-  //		} 
-  //   }
-  //
-  //}	
+  bm_IPxy = 0;
+  bm_pT = 0;
+  ts_pT = 0;
+  ts_IPxy = 0;
+  nTriggerMuon = 0;
+  for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
+    unsigned int thisTriggerIndex = 0;
+  	//float IPxy = iMuon1->dxy(referencePos);
+  	float IPxy = iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError();
+
+    if(iMuon1->pt() > bm_pT){
+  	    bm_pT = iMuon1->pt();
+  	}
+  	if(IPxy > bm_IPxy){
+  		bm_IPxy = IPxy;
+  	}
+
+	if (iMuon1->pt() >= 6.0 && IPxy >= ts_IPxy){
+        ts_pT = iMuon1->pt();
+		ts_IPxy = IPxy;
+	} 
+	unsigned int thisTriggerIndex = 0;
+    for (unsigned int i = 0; i < NTRIGGERS; i++) {
+  		std::string triggerName = TriggersToTest[i]; 
+  		triggerName += "*";
+  		if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+  			thisTriggerIndex += (1<<i);
+  		}
+    }
+	if (thisTriggerIndex != 0){
+		nTriggerMuon ++;
+		TriggerMuonIndex->push_back(thisTriggerIndex);
+		TriggerMuon_IP->push_back(IPxy);
+		TriggerMuon_px->push_back(iMuon1->px());
+		TriggerMuon_py->push_back(iMuon1->py());
+		TriggerMuon_pz->push_back(iMuon1->pz());
+
+		TriggerMuon_ch->push_back(iMuon1->charge());  			
+  	} 
+  
+  }	
   //*****************************************
   //Let's begin by looking for J/psi->mu+mu-
   unsigned int nMu_tmp = thePATMuonHandle->size();
@@ -1205,13 +1224,17 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   B_J_px1->push_back(psiMu1KP.momentum().x());
 		   B_J_py1->push_back(psiMu1KP.momentum().y());
 		   B_J_pz1->push_back(psiMu1KP.momentum().z());
+		   B_J_IP1->push_back(iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError());
 		   B_J_charge1->push_back(mu1CandMC->currentState().particleCharge());
+           B_J_inerT1->push_back( !(iMuon1->innerTrack->isNull()) );
 
 		   B_J_pt2->push_back(Jp2vec.perp());
 		   B_J_px2->push_back(psiMu2KP.momentum().x());
 		   B_J_py2->push_back(psiMu2KP.momentum().y());
 		   B_J_pz2->push_back(psiMu2KP.momentum().z());
+		   B_J_IP2->push_back(iMuon2->muonBestTrack()->dxy(referencePos)/iMuon2->muonBestTrack()->dxyError());
 		   B_J_charge2->push_back(mu2CandMC->currentState().particleCharge());
+           B_J_inerT2->push_back( !(iMuon2->innerTrack->isNull()) );
 
 		   B_Ks0_chi2->push_back(Ks0_vFit_vertex_noMC->chiSquared());
 		   B_J_chi2->push_back(psi_vFit_vertex_noMC->chiSquared());
@@ -1709,13 +1732,17 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   B_J_px1->push_back(psiMu1KP.momentum().x());
 		   B_J_py1->push_back(psiMu1KP.momentum().y());
 		   B_J_pz1->push_back(psiMu1KP.momentum().z());
+		   B_J_IP1->push_back(iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError());
 		   B_J_charge1->push_back(mu1CandMC->currentState().particleCharge());
+           B_J_inerT1->push_back( !(iMuon1->innerTrack->isNull()) );
 
 		   B_J_pt2->push_back(Jp2vec.perp());
 		   B_J_px2->push_back(psiMu2KP.momentum().x());
 		   B_J_py2->push_back(psiMu2KP.momentum().y());
 		   B_J_pz2->push_back(psiMu2KP.momentum().z());
+		   B_J_IP2->push_back(iMuon2->muonBestTrack()->dxy(referencePos)/iMuon2->muonBestTrack()->dxyError());
 		   B_J_charge2->push_back(mu2CandMC->currentState().particleCharge());
+           B_J_inerT2->push_back( !(iMuon2->innerTrack->isNull()) );
 
 		   B_Ks0_chi2->push_back(Ks0_vFit_vertex_noMC->chiSquared());
 		   B_J_chi2->push_back(psi_vFit_vertex_noMC->chiSquared());
@@ -2214,13 +2241,17 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   B_J_px1->push_back(psiMu1KP.momentum().x());
 		   B_J_py1->push_back(psiMu1KP.momentum().y());
 		   B_J_pz1->push_back(psiMu1KP.momentum().z());
+		   B_J_IP1->push_back(iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError());
 		   B_J_charge1->push_back(mu1CandMC->currentState().particleCharge());
+           B_J_inerT1->push_back( !(iMuon1->innerTrack->isNull()) );
 
 		   B_J_pt2->push_back(Jp2vec.perp());
 		   B_J_px2->push_back(psiMu2KP.momentum().x());
 		   B_J_py2->push_back(psiMu2KP.momentum().y());
 		   B_J_pz2->push_back(psiMu2KP.momentum().z());
+		   B_J_IP2->push_back(iMuon2->muonBestTrack()->dxy(referencePos)/iMuon2->muonBestTrack()->dxyError());
 		   B_J_charge2->push_back(mu2CandMC->currentState().particleCharge());
+           B_J_inerT2->push_back( !(iMuon2->innerTrack->isNull()) );
 
 		   B_Ks0_chi2->push_back(Ks0_vFit_vertex_noMC->chiSquared());
 		   B_J_chi2->push_back(psi_vFit_vertex_noMC->chiSquared());
@@ -2369,7 +2400,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   // try refitting the primary without the tracks in the B reco candidate		   
 		   //std::cout<< "pass all" << std::endl;
 		   nB++;	       
-		   
+		    
 		   /////////////////////////////////////////////////
 		   pionParticles.clear();
 		   muonParticles.clear();
@@ -2412,8 +2443,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		B_Ks0_px1_track->clear(); B_Ks0_py1_track->clear(); B_Ks0_pz1_track->clear(); 
    		B_Ks0_px2_track->clear(); B_Ks0_py2_track->clear(); B_Ks0_pz2_track->clear(); 
 
-   		B_J_pt1->clear();  B_J_px1->clear();  B_J_py1->clear();  B_J_pz1->clear(), B_J_charge1->clear();
-   		B_J_pt2->clear();  B_J_px2->clear();  B_J_py2->clear();  B_J_pz2->clear(), B_J_charge2->clear();
+   		B_J_pt1->clear();  B_J_px1->clear();  B_J_py1->clear();  B_J_pz1->clear(), B_J_IP1->clear(); B_J_charge1->clear(); B_J_inerT1->clear();
+   		B_J_pt2->clear();  B_J_px2->clear();  B_J_py2->clear();  B_J_pz2->clear(), B_J_IP2->clear(); B_J_charge2->clear(); B_J_inerT2->clear();
 
    		B_Ks0_chi2->clear(); B_J_chi2->clear(); B_chi2->clear();
    		B_Prob->clear(); B_J_Prob->clear(); B_ks0_Prob->clear();
@@ -2425,6 +2456,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		priVtxXE->clear(); priVtxYE->clear(); priVtxZE->clear(); priVtxCL->clear();
    		priVtxXYE->clear(); priVtxXZE->clear(); priVtxYZE->clear();   
 		trackContainer->clear();   
+
+        TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); 
+		TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear(); TriggerMuon_ch->clear();
    } 
    nVtx = 0;
    if (!OnlyGen_){
@@ -2665,13 +2699,17 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("B_J_px1", &B_J_px1);
      tree_->Branch("B_J_py1", &B_J_py1);
      tree_->Branch("B_J_pz1", &B_J_pz1);
+     tree_->Branch("B_J_IP1", &B_J_IP1);
      tree_->Branch("B_J_charge1", &B_J_charge1);
+     tree_->Branch("B_J_inerT1", &B_J_inerT1);
    
      tree_->Branch("B_J_pt2", &B_J_pt2);
      tree_->Branch("B_J_px2", &B_J_px2);
      tree_->Branch("B_J_py2", &B_J_py2);
      tree_->Branch("B_J_pz2", &B_J_pz2);
+     tree_->Branch("B_J_IP2", &B_J_IP2);
      tree_->Branch("B_J_charge2", &B_J_charge2);
+     tree_->Branch("B_J_inerT2", &B_J_inerT2);
    
      tree_->Branch("B_chi2", &B_chi2);
      tree_->Branch("B_Ks0_chi2", &B_Ks0_chi2);
@@ -2762,14 +2800,17 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      //tree_->Branch("trg2_dzm1",&trg2_dzm1);
      //tree_->Branch("trg2_dzm2",&trg2_dzm2);
      //tree_->Branch("PVTrigg2Dz",&PVTrigg2Dz);
-     //tree_->Branch("TriggerMuonIndex", &TriggerMuonIndex);
-     //tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
-     //tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
-     //tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
-	 //tree_->Branch("bm_IPxy",&bm_IPxy,"bm_IPxy/f");
-     //tree_->Branch("bm_pT",&bm_pT,"bm_pT/f");
-	 //tree_->Branch("b_IPxy",&b_IPxy,"b_IPxy/f");
-     //tree_->Branch("b_pT",&b_pT,"b_pT/f");
+     tree_->Branch("TriggerMuonIndex", &TriggerMuonIndex);
+     tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
+     tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
+     tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
+     tree_->Branch("TriggerMuon_ch", &TriggerMuon_ch);
+     tree_->Branch("TriggerMuon_IP", &TriggerMuon_IP);
+	 tree_->Branch("bm_IPxy",&bm_IPxy,"bm_IPxy/f");
+     tree_->Branch("bm_pT",&bm_pT,"bm_pT/f");
+	 tree_->Branch("ts_pT",&ts_pT,"ts_pT/f");
+     tree_->Branch("ts_IPxy",&ts_IPxy,"b_pT/f");
+     tree_->Branch("nTriggerMuon",&nTriggerMuon,"nTriggerMuon/i");
    
      tree_->Branch("tri_Dim25",&tri_Dim25);
      tree_->Branch("tri_JpsiTk",&tri_JpsiTk);

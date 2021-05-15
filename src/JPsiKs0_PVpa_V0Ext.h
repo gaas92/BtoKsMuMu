@@ -134,9 +134,10 @@ private:
   //Trigg2 info
   //std::vector<float>       *trg2_dzm1, *trg2_dzm2;
   //std::vector<float>       *PVTrigg2Dz;
-  //std::vector<unsigned int> *TriggerMuonIndex;
-  //std::vector<float>       *TriggerMuon_px, *TriggerMuon_py, *TriggerMuon_pz;
-  //float                    bm_IPxy, bm_pT, b_pT, b_IPxy;
+  std::vector<unsigned int> *TriggerMuonIndex;
+  std::vector<float>        *TriggerMuon_px, *TriggerMuon_py, *TriggerMuon_pz, *TriggerMuon_ch, *TriggerMuon_IP;
+  float                      bm_IPxy, bm_pT, ts_pT, ts_IPxy;
+  int                        nTriggerMuon;
 
 
   std::vector<int>         *tri_Dim25, *tri_JpsiTk, *tri_JpsiTkTk;
@@ -144,7 +145,7 @@ private:
   std::vector<bool>        *mu1soft, *mu2soft, *mu1tight, *mu2tight;  
   std::vector<bool>        *mu1PF, *mu2PF, *mu1loose, *mu2loose;
   std::vector<unsigned int> *muon1Trg, *muon2Trg;
-
+ 
   //Triger Selector
   std::vector<float>       *drTrg_m1, *drTrg_m2; 
  
@@ -196,7 +197,8 @@ private:
   std::vector<float>       *B_J_mass, *B_J_px, *B_J_py, *B_J_pz;
   std::vector<float>       *B_J_pt1, *B_J_px1, *B_J_py1, *B_J_pz1;
   std::vector<float>       *B_J_pt2, *B_J_px2, *B_J_py2, *B_J_pz2;
-  std::vector<int>         *B_J_charge1, *B_J_charge2;
+  std::vector<float>       *B_J_IP1, *B_J_IP2;
+  std::vector<int>         *B_J_charge1, *B_J_charge2, *B_J_inerT1, B_J_inerT2; //inerT new
   
   std::vector<float>       *B_Ks0_chi2, *B_J_chi2, *B_chi2;
   std::vector<float>       *B_Prob, *B_J_Prob, *B_ks0_Prob;
