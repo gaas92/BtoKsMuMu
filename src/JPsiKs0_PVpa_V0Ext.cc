@@ -118,8 +118,8 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   //trg2_dzm1(0), trg2_dzm2(0),
   //PVTrigg2Dz(0),
   TriggerMuonIndex(0),
-  TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0),
-  bm_IPxy(0), bm_pT(0), ts_pT(0), ts_IPxy(0), nTriggerMuon(0),
+  TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0), TriggerMuon_IPE(0),
+  bm_IPxy(0), bm_IPxyE(0), bm_pT(0), ts_pT(0), ts_IPxy(0), ts_IPxyE(0), nTriggerMuon(0),
 
   tri_Dim25(0), tri_JpsiTk(0), tri_JpsiTkTk(0),
 
@@ -649,26 +649,32 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //Trigger 2 Test
   //std::vector<pat::Muon> triggeringMuons2;
   //std::vector<unsigned int> triggeringMuon2Index;
-  bm_IPxy = 0;
+  bm_IPxy  = 0;
+  bm_IPxyE = 0;
   bm_pT = 0;
   ts_pT = 0;
   ts_IPxy = 0;
+  ts_IPxyE = 0;
   nTriggerMuon = 0;
   for(View<pat::Muon>::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
     unsigned int thisTriggerIndex = 0;
   	//float IPxy = iMuon1->dxy(referencePos);
-  	float IPxy = iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError();
+  	float IPxy  = iMuon1->muonBestTrack()->dxy(referencePos);
+	float IPxyE = iMuon1->muonBestTrack()->dxyError();
 
     if(iMuon1->pt() > bm_pT){
   	    bm_pT = iMuon1->pt();
+		bm_IPxy = IPxy;
+		bm_IPxyE = IPxyE;
   	}
-  	if(IPxy > bm_IPxy){
-  		bm_IPxy = IPxy;
-  	}
+  	//if(IPxy > bm_IPxy){
+  	//	bm_IPxy = IPxy;
+  	//}
 
 	if (iMuon1->pt() >= 6.0 && IPxy >= ts_IPxy){
         ts_pT = iMuon1->pt();
-		ts_IPxy = IPxy;
+		ts_IPxy  = IPxy;
+		ts_IPxyE = IPxyE;
 	} 
     for (unsigned int i = 0; i < NTRIGGERS; i++) {
   		std::string triggerName = TriggersToTest[i]; 
@@ -681,6 +687,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		nTriggerMuon ++;
 		TriggerMuonIndex->push_back(thisTriggerIndex);
 		TriggerMuon_IP->push_back(IPxy);
+		TriggerMuon_IPE->push_back(IPxyE);
 		TriggerMuon_px->push_back(iMuon1->px());
 		TriggerMuon_py->push_back(iMuon1->py());
 		TriggerMuon_pz->push_back(iMuon1->pz());
@@ -2462,7 +2469,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		priVtxXYE->clear(); priVtxXZE->clear(); priVtxYZE->clear();   
 		trackContainer->clear();   
 
-        TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); 
+        TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
 		TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear(); TriggerMuon_ch->clear();
    } 
    nVtx = 0;
@@ -2811,10 +2818,13 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
      tree_->Branch("TriggerMuon_ch", &TriggerMuon_ch);
      tree_->Branch("TriggerMuon_IP", &TriggerMuon_IP);
+     tree_->Branch("TriggerMuon_IPE", &TriggerMuon_IPE);
 	 tree_->Branch("bm_IPxy",&bm_IPxy,"bm_IPxy/f");
+	 tree_->Branch("bm_IPxyE",&bm_IPxyE,"bm_IPxyE/f");
      tree_->Branch("bm_pT",&bm_pT,"bm_pT/f");
 	 tree_->Branch("ts_pT",&ts_pT,"ts_pT/f");
-     tree_->Branch("ts_IPxy",&ts_IPxy,"b_pT/f");
+     tree_->Branch("ts_IPxy",&ts_IPxy,"ts_IPxy/f");
+     tree_->Branch("ts_IPxyE",&ts_IPxyE,"ts_IPxyE/f");
      tree_->Branch("nTriggerMuon",&nTriggerMuon,"nTriggerMuon/i");
    
      tree_->Branch("tri_Dim25",&tri_Dim25);

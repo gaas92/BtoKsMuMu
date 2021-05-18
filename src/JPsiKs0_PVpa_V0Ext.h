@@ -135,8 +135,8 @@ private:
   //std::vector<float>       *trg2_dzm1, *trg2_dzm2;
   //std::vector<float>       *PVTrigg2Dz;
   std::vector<unsigned int> *TriggerMuonIndex;
-  std::vector<float>        *TriggerMuon_px, *TriggerMuon_py, *TriggerMuon_pz, *TriggerMuon_ch, *TriggerMuon_IP;
-  float                      bm_IPxy, bm_pT, ts_pT, ts_IPxy;
+  std::vector<float>        *TriggerMuon_px, *TriggerMuon_py, *TriggerMuon_pz, *TriggerMuon_ch, *TriggerMuon_IP, *TriggerMuon_IPE;
+  float                      bm_IPxy, bm_IPxyE, bm_pT, ts_pT, ts_IPxy, ts_IPxyE;
   int                        nTriggerMuon;
 
 
