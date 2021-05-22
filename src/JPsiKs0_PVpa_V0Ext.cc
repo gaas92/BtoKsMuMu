@@ -118,8 +118,8 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   //trg2_dzm1(0), trg2_dzm2(0),
   //PVTrigg2Dz(0),
   TriggerMuonIndex(0),
-  TriggerObjIndex(0),
-  TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
+  //TriggerObjIndex(0),
+  //TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0), TriggerMuon_IPE(0),
   bm_IPxy(0), bm_IPxyE(0), bm_pT(0), ts_pT(0), ts_IPxy(0), ts_IPxyE(0), nTriggerMuon(0),
 
@@ -626,17 +626,17 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	
     //std::cout << "\n\n\n";
     if(!isTriggerMuon) continue;
-    unsigned int thisTriggerIndex = 0;
-	for (unsigned int i = 0; i < NTRIGGERS; i++) {
-  		std::string triggerName = TriggersToTest[i]; 
-  		triggerName += "*";
-  		//if(obj.filter(triggerName)){ 
-  		//	thisTriggerIndex += (1<<i);
-  		//}
-    }
+    //unsigned int thisTriggerIndex = 0;
+	//for (unsigned int i = 0; i < NTRIGGERS; i++) {
+  	//	std::string triggerName = TriggersToTest[i]; 
+  	//	triggerName += "*";
+  	//	//if(obj.filter(triggerName)){ 
+  	//	//	thisTriggerIndex += (1<<i);
+  	//	//}
+    //}
     
-	if (thisTriggerIndex > 0) std::cout<< "Trigger Index ok" << std::endl;
-	else std::cout<<"Bad Trigger " << std::endl;
+	//if (thisTriggerIndex > 0) std::cout<< "Trigger Index ok" << std::endl;
+	//else std::cout<<"Bad Trigger " << std::endl;
 
     triggeringMuons.push_back(obj);
 
@@ -2483,8 +2483,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		priVtxXYE->clear(); priVtxXZE->clear(); priVtxYZE->clear();   
 		trackContainer->clear();   
 
-        TriggerObjIndex->clear();
-        TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
+        //TriggerObjIndex->clear();
+        //TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
 		TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear(); TriggerMuon_ch->clear();
