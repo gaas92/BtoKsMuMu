@@ -630,14 +630,14 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	for (unsigned int i = 0; i < NTRIGGERS; i++) {
   		std::string triggerName = TriggersToTest[i]; 
   		triggerName += "*";
-  		if(obj.filter(triggerName)){ 
-  			thisTriggerIndex += (1<<i);
-  		}
+  		//if(obj.filter(triggerName)){ 
+  		//	thisTriggerIndex += (1<<i);
+  		//}
     }
     
 	if (thisTriggerIndex > 0) std::cout<< "Trigger Index ok" << std::endl;
 	else std::cout<<"Bad Trigger " << std::endl;
-	
+
     triggeringMuons.push_back(obj);
 
 
