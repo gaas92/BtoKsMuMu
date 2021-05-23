@@ -629,7 +629,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     unsigned int thisTriggerIndex = 0;
 	const std::vector<std::string> objFilters = obj.filterLabels();
 	for (unsigned int k = 0; k < objFilters.size(); ++k){
-		std::string filterName = obj.filterLabels()[h];
+		std::string filterName = obj.filterLabels()[k];
 		if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
 			std::cout << filterName << std::endl;
 		}
