@@ -119,7 +119,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   //PVTrigg2Dz(0),
   TriggerMuonIndex(0),
   TriggerObjFilters(0),
-  //TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
+  TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0), TriggerMuon_IPE(0),
   bm_IPxy(0), bm_IPxyE(0), bm_pT(0), ts_pT(0), ts_IPxy(0), ts_IPxyE(0), nTriggerMuon(0),
 
@@ -2481,7 +2481,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		priVtxXYE->clear(); priVtxXZE->clear(); priVtxYZE->clear();   
 		trackContainer->clear();   
 
-        TriggerObjFilters->clear();
+        if ( !TriggerObjFilters->empty() )TriggerObjFilters->clear();
         //TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
