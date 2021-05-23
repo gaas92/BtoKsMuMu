@@ -614,7 +614,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
         if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
             isTriggerMuon = true;
 			filterLabel = filterName;
-			TriggerObjFilters->push_back(filterName);
+			//TriggerObjFilters->push_back(filterName);
 			//break;
             //std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
         }
@@ -2481,7 +2481,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		priVtxXYE->clear(); priVtxXZE->clear(); priVtxYZE->clear();   
 		trackContainer->clear();   
 
-        if ( !TriggerObjFilters->empty() )TriggerObjFilters->clear();
+        //if ( !TriggerObjFilters->empty() )TriggerObjFilters->clear();
         //TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
