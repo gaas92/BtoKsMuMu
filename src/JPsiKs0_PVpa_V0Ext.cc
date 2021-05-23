@@ -628,7 +628,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     if(!isTriggerMuon) continue;
     unsigned int thisTriggerIndex = 0;
 	const std::vector<std::string> objFilters = obj.filterLabels();
-	for (int k = 0; k < objFilters.size(); ++k){
+	for (unsigned int k = 0; k < objFilters.size(); ++k){
 		std::cout << obj.filterLabels()[k]<< std::endl;
 	}
 	//for (unsigned int i = 0; i < NTRIGGERS; i++) {
