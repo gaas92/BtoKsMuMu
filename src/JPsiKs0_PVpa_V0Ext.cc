@@ -118,7 +118,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   //trg2_dzm1(0), trg2_dzm2(0),
   //PVTrigg2Dz(0),
   TriggerMuonIndex(0),
-  TriggerObjFilters(0),
+  //TriggerObjFilters(0),
   TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0), TriggerMuon_IPE(0),
   bm_IPxy(0), bm_IPxyE(0), bm_pT(0), ts_pT(0), ts_IPxy(0), ts_IPxyE(0), nTriggerMuon(0),
@@ -614,8 +614,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
         if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
             isTriggerMuon = true;
 			filterLabel = filterName;
-			std::cout << filterName << std::endl;
-			TriggerObjFilters->push_back(new std::string (obj.filterLabels()[h]));
+			//std::cout << filterName << std::endl;
 			//break;
             //std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
         }
@@ -624,6 +623,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	if(!isTriggerMuon) continue;
 	for (unsigned h = 0; h < obj.pathNames().size(); ++h){   
         	std::string filterName_ = obj.pathNames()[h];
+			std::cout << filterName_ << std::endl;
     }
 	
     //std::cout << "\n\n\n";
