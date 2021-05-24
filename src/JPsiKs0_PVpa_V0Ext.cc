@@ -615,7 +615,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
             isTriggerMuon = true;
 			filterLabel = filterName;
 			std::cout << filterName << std::endl;
-			TriggerObjFilters->push_back(filterName);
+			TriggerObjFilters->push_back(new obj.filterLabels()[h]);
 			//break;
             //std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
         }
