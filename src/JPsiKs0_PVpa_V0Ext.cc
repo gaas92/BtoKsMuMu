@@ -119,6 +119,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   //PVTrigg2Dz(0),
   TriggerMuonIndex(0),
   TriggerObjIndex(0),
+  TriggerObjPrescale(0),
   TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0), TriggerMuon_IPE(0),
   bm_IPxy(0), bm_IPxyE(0), bm_pT(0), ts_pT(0), ts_IPxy(0), ts_IPxyE(0), nTriggerMuon(0),
@@ -628,9 +629,31 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		for (unsigned int i = 0; i < NTRIGGERS; i++) {
   			std::string triggerName = TriggersToTest[i]; 
   			if(filterName_.find(triggerName) != std::string::npos){ 
-				thisObjIndex += (1<<i)
+				thisObjIndex += (1<<i);
   				std::cout << triggerName << " Found in " << filterName_ << std::endl;
+				if (filterName_.find("part0") != std::string::npos){
+					std::cout << " -- 0 " << std::endl;
+				}
+				else if (filterName_.find("part1") != std::string::npos){
+					std::cout << " -- 1 " << std::endl;
+				}
+				else if (filterName_.find("part2") != std::string::npos){
+					std::cout << " -- 2 " << std::endl;
+				}
+				else if (filterName_.find("part3") != std::string::npos){
+					std::cout << " -- 3 " << std::endl;
+				}
+				else if (filterName_.find("part4") != std::string::npos){
+					std::cout << " -- 0 " << std::endl;
+				}
+				else if (filterName_.find("part5") != std::string::npos){
+					std::cout << " -- 5 " << std::endl;
+				}
+				else {
+					std::cout << "not found " << std::endl;
+				}
   			}
+			
     	}
     }
 	TriggerObjIndex->push_back(thisObjIndex);
@@ -2491,6 +2514,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		trackContainer->clear();   
 
         TriggerObjIndex->clear();
+		TriggerObjPrescale->clear();
         //TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
@@ -2838,6 +2862,7 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      //tree_->Branch("PVTrigg2Dz",&PVTrigg2Dz);
      tree_->Branch("TriggerMuonIndex", &TriggerMuonIndex);
      tree_->Branch("TriggerObjIndex", &TriggerObjIndex);
+     tree_->Branch("TriggerObjPrescale", &TriggerObjPrescale);
      tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
      tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
      tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
