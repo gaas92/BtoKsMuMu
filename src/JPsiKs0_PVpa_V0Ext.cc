@@ -621,18 +621,19 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	    //else{ isTriggerMuon = false; }
     }
 	if(!isTriggerMuon) continue;
+	unsigned int thisObjIndex = 0;
 	for (unsigned h = 0; h < obj.pathNames().size(); ++h){   
         std::string filterName_ = obj.pathNames()[h];
 		//std::cout << filterName_ << std::endl;
 		for (unsigned int i = 0; i < NTRIGGERS; i++) {
   			std::string triggerName = TriggersToTest[i]; 
   			if(filterName_.find(triggerName) != std::string::npos){ 
+				thisObjIndex += (1<<i)
   				std::cout << triggerName << " Found in " << filterName_ << std::endl;
   			}
     	}
-
     }
-	
+	TriggerObjIndex->push_back(thisObjIndex);
     //std::cout << "\n\n\n";
     if(!isTriggerMuon) continue;
 	//for (unsigned int i = 0; i < NTRIGGERS; i++) {
@@ -2489,7 +2490,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		priVtxXYE->clear(); priVtxXZE->clear(); priVtxYZE->clear();   
 		trackContainer->clear();   
 
-        //if ( !TriggerObjFilters->empty() )TriggerObjFilters->clear();
+        TriggerObjIndex->clear();
         //TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
@@ -2836,6 +2837,7 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      //tree_->Branch("trg2_dzm2",&trg2_dzm2);
      //tree_->Branch("PVTrigg2Dz",&PVTrigg2Dz);
      tree_->Branch("TriggerMuonIndex", &TriggerMuonIndex);
+     tree_->Branch("TriggerObjIndex", &TriggerObjIndex);
      tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
      tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
      tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
