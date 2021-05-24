@@ -614,6 +614,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
         if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
             isTriggerMuon = true;
 			filterLabel = filterName;
+			std::cout << filterName << std::endl;
 			TriggerObjFilters->push_back(filterName);
 			//break;
             //std::cout << "\t\tVVVVVVVV  Filter:   " << filterName<<"\n"; 
