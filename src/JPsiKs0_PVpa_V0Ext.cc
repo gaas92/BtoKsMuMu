@@ -701,10 +701,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	//std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
 
 
-	TriggerObj_px->push_back(obj.px());
-	TriggerObj_py->push_back(obj.py());
-	TriggerObj_pz->push_back(obj.pz());
-	TriggerObj_ch->push_back(obj.charge());
+	//TriggerObj_px->push_back(obj.px());
+	//TriggerObj_py->push_back(obj.py());
+	//TriggerObj_pz->push_back(obj.pz());
+	//TriggerObj_ch->push_back(obj.charge());
 
 	//std::cout << "IPxy Test: " << obj.dxyError() << std::endl;
     //float IPxy  = iMuon1->muonBestTrack()->dxy(referencePos);
@@ -775,7 +775,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   		if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
   			thisTriggerIndex += (1<<i);
   		}
-		else std::cout << "Trigger: " << triggerName << " Not matched" << std::endl;
+		//else std::cout << "Trigger: " << triggerName << " Not matched" << std::endl;
     }
 	if (thisTriggerIndex != 0){
 		nTriggerMuon ++;
