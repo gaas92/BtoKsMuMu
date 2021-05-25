@@ -634,7 +634,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   			if(filterName_.find(triggerName) != std::string::npos && isFirst){ 
 				thisObjIndex += (1<<i);
 				isFirst = false;
-  				std::cout << triggerName << " First found in " << filterName_ << std::endl;
+  				//std::cout << triggerName << " First found in " << filterName_ << std::endl;
 				if (filterName_.find("part0") != std::string::npos){
 					thisObjPrescale = thisObjPrescale + "0";
 				}
@@ -685,11 +685,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     	}//fin del loop sobre los path names
 		thisObjPrescale = thisObjPrescale + "/";
     }
-	std::bitset<32> binrep(thisObjIndex);
-	std::cout << "Trigger index: " << thisObjIndex << "| Bin: " << binrep <<std::endl;
-	std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
-	TriggerObjIndex->push_back(thisObjIndex);
-	TriggerObjPrescale->push_back(thisObjPrescale);
+
     //std::cout << "\n\n\n";
     if(!isTriggerMuon) continue;
 	//for (unsigned int i = 0; i < NTRIGGERS; i++) {
@@ -700,6 +696,22 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   	//	}
     //}
     
+	//std::bitset<32> binrep(thisObjIndex);
+	///std::cout << "Trigger index: " << thisObjIndex << "| Bin: " << binrep <<std::endl;
+	//std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
+
+
+	TriggerObj_px->push_back(obj.px());
+	TriggerObj_py->push_back(obj.py());
+	TriggerObj_pz->push_back(obj.pz());
+	TriggerObj_ch->push_back(obj.ch());
+	//TriggerObj_IP
+	//TriggerObj_IPE
+
+	TriggerObjIndex->push_back(thisObjIndex);
+	TriggerObjPrescale->push_back(thisObjPrescale);
+
+
 
     triggeringMuons.push_back(obj);
 
@@ -2548,7 +2560,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
         TriggerObjIndex->clear();
 		TriggerObjPrescale->clear();
-        //TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
+        TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
 		TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear(); TriggerMuon_ch->clear();
