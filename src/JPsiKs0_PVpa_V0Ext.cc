@@ -704,7 +704,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	float obj_px = obj.px();
 	float obj_py = obj.py();
 	float obj_pz = obj.pz();
-	//TriggerObj_px->push_back(obj_px);
+	TriggerObj_px->push_back(obj_px);
 	//TriggerObj_py->push_back(obj_py);
 	//TriggerObj_pz->push_back(obj_pz);
 	//TriggerObj_ch->push_back(obj.charge());
