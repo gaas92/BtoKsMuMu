@@ -700,7 +700,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	//std::cout << "Trigger index: " << thisObjIndex << "| Bin: " << binrep <<std::endl;
 	//std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
 
-
+    std::cout << "px: " << obj.px() << " py: " << obj.py() << " pz: " << obj.pz() << std::endl;
 	//TriggerObj_px->push_back(obj.px());
 	//TriggerObj_py->push_back(obj.py());
 	//TriggerObj_pz->push_back(obj.pz());
