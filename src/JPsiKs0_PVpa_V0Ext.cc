@@ -120,7 +120,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   TriggerMuonIndex(0),
   TriggerObjIndex(0),
   TriggerObjPrescale(0),
-  TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
+  //TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0), TriggerMuon_IPE(0),
   bm_IPxy(0), bm_IPxyE(0), bm_pT(0), ts_pT(0), ts_IPxy(0), ts_IPxyE(0), nTriggerMuon(0),
 
@@ -696,9 +696,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   	//	}
     //}
     
-	//std::bitset<32> binrep(thisObjIndex);
-	///std::cout << "Trigger index: " << thisObjIndex << "| Bin: " << binrep <<std::endl;
-	//std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
+	std::bitset<32> binrep(thisObjIndex);
+	std::cout << "Trigger index: " << thisObjIndex << "| Bin: " << binrep <<std::endl;
+	std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
 
 
 	//TriggerObj_px->push_back(obj.px());
@@ -2565,7 +2565,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
         TriggerObjIndex->clear();
 		TriggerObjPrescale->clear();
-        TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
+        //TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
 		TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear(); TriggerMuon_ch->clear();
