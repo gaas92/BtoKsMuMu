@@ -624,50 +624,69 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	if(!isTriggerMuon) continue;
 	unsigned int thisObjIndex = 0;
 	std::string thisObjPrescale = "";
-	for (unsigned h = 0; h < obj.pathNames().size(); ++h){   
-        std::string filterName_ = obj.pathNames()[h];
-		//std::cout << filterName_ << std::endl;
-		for (unsigned int i = 0; i < NTRIGGERS; i++) {
-  			std::string triggerName = TriggersToTest[i]; 
-  			if(filterName_.find(triggerName) != std::string::npos){ 
+	for (unsigned int i = 0; i < NTRIGGERS; i++){  
+		std::string triggerName = TriggersToTest[i];
+		bool isFirst = true;  
+		for (unsigned h = 0; h < obj.pathNames().size(); ++h) {
+			std::string filterName_ = obj.pathNames()[h];
+
+			//Si encuentra en el pathNames el trigger de interes y es el primero, pushear el index y asignar prescale
+  			if(filterName_.find(triggerName) != std::string::npos && isFirst){ 
 				thisObjIndex += (1<<i);
-  				std::cout << triggerName << " Found in " << filterName_ << std::endl;
+				isFirst = false;
+  				std::cout << triggerName << " First found in " << filterName_ << std::endl;
 				if (filterName_.find("part0") != std::string::npos){
-					//std::cout << " -- 0 " << std::endl;
 					thisObjPrescale = thisObjPrescale + "0";
 				}
 				else if (filterName_.find("part1") != std::string::npos){
-					//std::cout << " -- 1 " << std::endl;
 					thisObjPrescale = thisObjPrescale + "1";
 				}
 				else if (filterName_.find("part2") != std::string::npos){
-					//std::cout << " -- 2 " << std::endl;
 					thisObjPrescale = thisObjPrescale + "2";
 				}
 				else if (filterName_.find("part3") != std::string::npos){
-					//std::cout << " -- 3 " << std::endl;
 					thisObjPrescale = thisObjPrescale + "3";
 				}
 				else if (filterName_.find("part4") != std::string::npos){
-					//std::cout << " -- 0 " << std::endl;
 					thisObjPrescale = thisObjPrescale + "4";
 				}
 				else if (filterName_.find("part5") != std::string::npos){
-					//std::cout << " -- 5 " << std::endl;
 					thisObjPrescale = thisObjPrescale + "5";
 				}
 				else {
-					//std::cout << "not found " << std::endl;
-					thisObjPrescale = thisObjPrescale + "x";
+					thisObjPrescale = thisObjPrescale + "9";
 				}
   			}
-			else {
-					//thisObjPrescale = thisObjPrescale + "x";
+			//Si encuentra el pathName pero no es el primero, no pusheamos el index pero guardamos el prescale
+			else if (filterName_.find(triggerName) != std::string::npos){
+				if (filterName_.find("part0") != std::string::npos){
+					thisObjPrescale = thisObjPrescale + "0";
+				}
+				else if (filterName_.find("part1") != std::string::npos){
+					thisObjPrescale = thisObjPrescale + "1";
+				}
+				else if (filterName_.find("part2") != std::string::npos){
+					thisObjPrescale = thisObjPrescale + "2";
+				}
+				else if (filterName_.find("part3") != std::string::npos){
+					thisObjPrescale = thisObjPrescale + "3";
+				}
+				else if (filterName_.find("part4") != std::string::npos){
+					thisObjPrescale = thisObjPrescale + "4";
+				}
+				else if (filterName_.find("part5") != std::string::npos){
+					thisObjPrescale = thisObjPrescale + "5";
+				}
+				else {
+					thisObjPrescale = thisObjPrescale + "9";
+				}
 			}
-			
-    	}
+
+    	}//fin del loop sobre los path names
+		thisObjPrescale = thisObjPrescale + "/"
     }
-	std::cout << "Trigger index: " << thisObjIndex << std::endl;
+	std::bitset<32> binrep(thisObjIndex);
+	std::cout << "Trigger index: " << thisObjIndex << "| Bin: " << binrep <<std::endl;
 	std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
 	TriggerObjIndex->push_back(thisObjIndex);
     //std::cout << "\n\n\n";
