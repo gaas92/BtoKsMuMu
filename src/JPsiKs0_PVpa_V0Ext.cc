@@ -120,7 +120,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   TriggerMuonIndex(0),
   TriggerObjIndex(0),
   TriggerObjPrescale(0),
-  TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), //TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
+  TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), //TriggerObj_IP(0), TriggerObj_IPE(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0), TriggerMuon_IPE(0),
   bm_IPxy(0), bm_IPxyE(0), bm_pT(0), ts_pT(0), ts_IPxy(0), ts_IPxyE(0), nTriggerMuon(0),
 
@@ -707,12 +707,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	TriggerObj_px->push_back(obj_px);
 	TriggerObj_py->push_back(obj_py);
 	TriggerObj_pz->push_back(obj_pz);
-	int obj_ch = obj.charge();
+	float obj_ch = obj.charge();
 
-	//TriggerObj_ch->push_back(obj.charge());
-	const Track * tr=obj.bestTrack();
-	if(tr!=nullptr) std::cout << "Track ok" << std::endl;
-	else std::cout << "null ptr"<< std::endl;
+	TriggerObj_ch->push_back(obj_ch);
+	//const Track * tr=obj.bestTrack();
+	//if(tr!=nullptr) std::cout << "Track ok" << std::endl;
+	//else std::cout << "null ptr"<< std::endl;
 	//std::cout << "IPxy Test: " << obj.dxyError() << std::endl;
     //float IPxy  = iMuon1->muonBestTrack()->dxy(referencePos);
 	//float IPxyE = iMuon1->muonBestTrack()->dxyError();
@@ -2572,7 +2572,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
         TriggerObjIndex->clear();
 		TriggerObjPrescale->clear();
-        TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); //TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
+        TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); //TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
 		TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear(); TriggerMuon_ch->clear();
@@ -2923,6 +2923,7 @@ JPsiKs0_PVpa_V0Ext::beginJob()
 	 tree_->Branch("TriggerObj_px", &TriggerObj_px);
      tree_->Branch("TriggerObj_py", &TriggerObj_py);
      tree_->Branch("TriggerObj_pz", &TriggerObj_pz);
+     tree_->Branch("TriggerObj_ch", &TriggerObj_ch);
      tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
      tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
      tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
