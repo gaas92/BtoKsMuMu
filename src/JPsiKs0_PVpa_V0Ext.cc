@@ -623,6 +623,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     }
 	if(!isTriggerMuon) continue;
 	unsigned int thisObjIndex = 0;
+	std::string thisObjPrescale = "";
 	for (unsigned h = 0; h < obj.pathNames().size(); ++h){   
         std::string filterName_ = obj.pathNames()[h];
 		//std::cout << filterName_ << std::endl;
@@ -632,30 +633,42 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 				thisObjIndex += (1<<i);
   				std::cout << triggerName << " Found in " << filterName_ << std::endl;
 				if (filterName_.find("part0") != std::string::npos){
-					std::cout << " -- 0 " << std::endl;
+					//std::cout << " -- 0 " << std::endl;
+					thisObjPrescale = thisObjPrescale + "0";
 				}
 				else if (filterName_.find("part1") != std::string::npos){
-					std::cout << " -- 1 " << std::endl;
+					//std::cout << " -- 1 " << std::endl;
+					thisObjPrescale = thisObjPrescale + "1";
 				}
 				else if (filterName_.find("part2") != std::string::npos){
-					std::cout << " -- 2 " << std::endl;
+					//std::cout << " -- 2 " << std::endl;
+					thisObjPrescale = thisObjPrescale + "2";
 				}
 				else if (filterName_.find("part3") != std::string::npos){
-					std::cout << " -- 3 " << std::endl;
+					//std::cout << " -- 3 " << std::endl;
+					thisObjPrescale = thisObjPrescale + "3";
 				}
 				else if (filterName_.find("part4") != std::string::npos){
-					std::cout << " -- 0 " << std::endl;
+					//std::cout << " -- 0 " << std::endl;
+					thisObjPrescale = thisObjPrescale + "4";
 				}
 				else if (filterName_.find("part5") != std::string::npos){
-					std::cout << " -- 5 " << std::endl;
+					//std::cout << " -- 5 " << std::endl;
+					thisObjPrescale = thisObjPrescale + "5";
 				}
 				else {
-					std::cout << "not found " << std::endl;
+					//std::cout << "not found " << std::endl;
+					thisObjPrescale = thisObjPrescale + "9";
 				}
   			}
+			else {
+					thisObjPrescale = thisObjPrescale + "x";
+			}
 			
     	}
     }
+	std::cout << "Trigger index: " << thisObjIndex << std::endl;
+	std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
 	TriggerObjIndex->push_back(thisObjIndex);
     //std::cout << "\n\n\n";
     if(!isTriggerMuon) continue;
