@@ -658,11 +658,11 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 				}
 				else {
 					//std::cout << "not found " << std::endl;
-					thisObjPrescale = thisObjPrescale + "9";
+					thisObjPrescale = thisObjPrescale + "x";
 				}
   			}
 			else {
-					thisObjPrescale = thisObjPrescale + "x";
+					//thisObjPrescale = thisObjPrescale + "x";
 			}
 			
     	}
