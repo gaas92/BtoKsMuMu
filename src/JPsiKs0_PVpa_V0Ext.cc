@@ -683,12 +683,13 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 			}
 
     	}//fin del loop sobre los path names
-		thisObjPrescale = "/" + thisObjPrescale;
+		thisObjPrescale = thisObjPrescale + "/";
     }
 	std::bitset<32> binrep(thisObjIndex);
 	std::cout << "Trigger index: " << thisObjIndex << "| Bin: " << binrep <<std::endl;
 	std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
 	TriggerObjIndex->push_back(thisObjIndex);
+	TriggerObjPrescale->push_back(thisObjPrescale);
     //std::cout << "\n\n\n";
     if(!isTriggerMuon) continue;
 	//for (unsigned int i = 0; i < NTRIGGERS; i++) {
