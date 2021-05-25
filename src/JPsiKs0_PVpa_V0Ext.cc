@@ -120,7 +120,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   TriggerMuonIndex(0),
   TriggerObjIndex(0),
   TriggerObjPrescale(0),
-  //TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
+  TriggerObj_px(0), //TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), TriggerObj_IP(0), TriggerObj_IPE(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0), TriggerMuon_IPE(0),
   bm_IPxy(0), bm_IPxyE(0), bm_pT(0), ts_pT(0), ts_IPxy(0), ts_IPxyE(0), nTriggerMuon(0),
 
@@ -706,7 +706,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	float obj_pz = obj.pz();
 	obj_px = obj_px + 1;
 	obj_px = obj_py - 1;
-	TriggerObj_px->push_back(obj_px);
+	//TriggerObj_px->push_back(obj_px);
 	//TriggerObj_py->push_back(obj_py);
 	//TriggerObj_pz->push_back(obj_pz);
 	//TriggerObj_ch->push_back(obj.charge());
