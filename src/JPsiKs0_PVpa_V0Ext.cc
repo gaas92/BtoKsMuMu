@@ -707,9 +707,11 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	TriggerObj_px->push_back(obj_px);
 	TriggerObj_py->push_back(obj_py);
 	TriggerObj_pz->push_back(obj_pz);
+	int obj_ch = obj.charge();
+
 	//TriggerObj_ch->push_back(obj.charge());
 
-	//std::cout << "IPxy Test: " << obj.dxyError() << std::endl;
+	std::cout << "IPxy Test: " << obj.dxyError() << std::endl;
     //float IPxy  = iMuon1->muonBestTrack()->dxy(referencePos);
 	//float IPxyE = iMuon1->muonBestTrack()->dxyError();
 	//TriggerObj_IP
