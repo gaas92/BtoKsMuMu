@@ -701,9 +701,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	//std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
 
     std::cout << "px: " << obj.px() << " py: " << obj.py() << " pz: " << obj.pz() << std::endl;
-	//float obj_px = obj.px();
-	//float obj_py = obj.py();
-	//float obj_pz = obj.pz();
+	float obj_px = obj.px();
+	float obj_py = obj.py();
+	float obj_pz = obj.pz();
 	//TriggerObj_px->push_back(obj_px);
 	//TriggerObj_py->push_back(obj_py);
 	//TriggerObj_pz->push_back(obj_pz);
