@@ -701,9 +701,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	//std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
 
     std::cout << "px: " << obj.px() << " py: " << obj.py() << " pz: " << obj.pz() << std::endl;
-	TriggerObj_px->push_back(obj.px());
-	TriggerObj_py->push_back(obj.py());
-	TriggerObj_pz->push_back(obj.pz());
+	float obj_px = obj.px();
+	float obj_py = obj.py();
+	float obj_pz = obj.pz();
+	TriggerObj_px->push_back(obj_px);
+	TriggerObj_py->push_back(obj_py);
+	TriggerObj_pz->push_back(obj_pz);
 	//TriggerObj_ch->push_back(obj.charge());
 
 	//std::cout << "IPxy Test: " << obj.dxyError() << std::endl;
@@ -2565,7 +2568,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
         TriggerObjIndex->clear();
 		TriggerObjPrescale->clear();
-        //TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); //TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
+        TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); //TriggerObj_ch->clear(); TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
 		TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear(); TriggerMuon_ch->clear();
@@ -2913,9 +2916,9 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("TriggerMuonIndex", &TriggerMuonIndex);
      tree_->Branch("TriggerObjIndex", &TriggerObjIndex);
      tree_->Branch("TriggerObjPrescale", &TriggerObjPrescale);
-	 //tree_->Branch("TriggerObj_px", &TriggerObj_px);
-     //tree_->Branch("TriggerObj_py", &TriggerObj_py);
-     //tree_->Branch("TriggerObj_pz", &TriggerObj_pz);
+	 tree_->Branch("TriggerObj_px", &TriggerObj_px);
+     tree_->Branch("TriggerObj_py", &TriggerObj_py);
+     tree_->Branch("TriggerObj_pz", &TriggerObj_pz);
      tree_->Branch("TriggerMuon_px", &TriggerMuon_px);
      tree_->Branch("TriggerMuon_py", &TriggerMuon_py);
      tree_->Branch("TriggerMuon_pz", &TriggerMuon_pz);
