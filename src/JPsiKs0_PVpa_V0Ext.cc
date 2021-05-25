@@ -683,7 +683,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 			}
 
     	}//fin del loop sobre los path names
-		thisObjPrescale = thisObjPrescale + "/";
+		thisObjPrescale = "/" + thisObjPrescale;
     }
 	std::bitset<32> binrep(thisObjIndex);
 	std::cout << "Trigger index: " << thisObjIndex << "| Bin: " << binrep <<std::endl;
