@@ -112,7 +112,7 @@ process.TnP = cms.EDFilter("TagAndProbeProducer_MC",
 
 
 process.p = cms.Path(
-                    process.l1bits +
+                    #process.l1bits +
                     process.TnP
                     )
 
