@@ -441,10 +441,10 @@ tuple<uint, float, float, float> TagAndProbeProducer_MC::matchL1Muon(pat::Muon m
     if (i == skipIdx) continue;
     auto m = muonsL1.at(0,i);
     if (m.hwQual() < 12) continue;
-    float dR = dR(m.phi(), phiProp, m.eta(), muReco.eta());
+    float dR_ = dR(m.phi(), phiProp, m.eta(), muReco.eta());
     float dpt = fabs(muReco.pt() - m.pt())/muReco.pt();
-    if ((dR < best_dR && dpt < best_dpt) || (dpt + dR < best_dpt + best_dR)) {
-      best_dR = dR;
+    if ((dR_ < best_dR && dpt < best_dpt) || (dpt + dR_ < best_dpt + best_dR)) {
+      best_dR = dR_;
       best_dpt = dpt;
       idxMatch = i;
       best_pt = m.pt();
