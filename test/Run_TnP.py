@@ -63,17 +63,22 @@ process.maxEvents = cms.untracked.PSet(
 #    if os.path.isfile(flist[i]):
 #        flist[i] = 'file:' + flist[i]
 
-process.source = cms.Source("PoolSource",
-                            #fileNames = cms.untracked.vstring(tuple(flist)),
-                            fileNames = cms.untracked.vstring(
-                                '/store/mc/RunIIAutumn18MiniAOD/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/100000/08A85CD9-6209-9A41-AFDC-648C3688EA3D.root' 
-                            )#,
-                            #inputCommands=cms.untracked.vstring('keep *',
-                            #                                    'drop GenLumiInfoHeader_generator__SIM'),
-                            #skipBadFiles=cms.untracked.bool(True)
-                           )
+#process.source = cms.Source("PoolSource",
+#                            #fileNames = cms.untracked.vstring(tuple(flist)),
+#                            fileNames = cms.untracked.vstring(
+#                                '/store/mc/RunIIAutumn18MiniAOD/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/100000/08A85CD9-6209-9A41-AFDC-648C3688EA3D.root' 
+#                            ),
+#                            inputCommands=cms.untracked.vstring('keep *',
+#                                                                'drop GenLumiInfoHeader_generator__SIM'),
+#                            skipBadFiles=cms.untracked.bool(True)
+#                           )
 #process.source.duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
-
+process.source = cms.Source("PoolSource",
+    fileNames = cms.untracked.vstring(
+        #MC-RES /BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM
+        '/store/mc/RunIIAutumn18MiniAOD/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/100000/08A85CD9-6209-9A41-AFDC-648C3688EA3D.root' 
+ )
+)
 
 '''
 #####################   Output   ###################
@@ -89,7 +94,7 @@ outname = 'TagAndProbeTrigger_CAND.root'
 
 process.TFileService = cms.Service("TFileService",
       fileName = cms.string(outname),
-      closeFileFast = cms.untracked.bool(True)
+      #closeFileFast = cms.untracked.bool(True)
       )
 
 
