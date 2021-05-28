@@ -63,6 +63,14 @@ class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
    public:
       double dR(double, double, double, double);
       RefCountedKinematicTree FitJpsi_mumu(const edm::EventSetup&, pat::Muon, pat::Muon, bool);
+      struct kinFitResuts{
+        bool isValid = false;
+        double chi2 = -1;
+        double dof = -1;
+        double pval = -1;
+        bool isGood = false;
+      };
+      kinFitResuts fitQuality(RefCountedKinematicTree, double = -1);
 
       explicit TagAndProbeProducer_MC(const edm::ParameterSet&);
       ~TagAndProbeProducer_MC() {
@@ -108,13 +116,7 @@ class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
       double massJpsi  = 3.09691;
 
       TH2D* hMuonIdSF;
-      struct kinFitResuts{
-        bool isValid = false;
-        double chi2 = -1;
-        double dof = -1;
-        double pval = -1;
-        bool isGood = false;
-      };
+
 };
 
 
@@ -537,4 +539,18 @@ RefCountedKinematicTree TagAndProbeProducer_MC::FitJpsi_mumu(const edm::EventSet
   }
 }
 
+kinFitResuts TagAndProbeProducer_MC::fitQuality(RefCountedKinematicTree t, double pval_thr){
+  kinFitResuts out;
+  if(t->isValid()) {
+    out.isValid = true;
+    t->movePointerToTheTop();
+    out.chi2 = t->currentDecayVertex()->chiSquared();
+    out.dof = t->currentDecayVertex()->degreesOfFreedom();
+    out.pval = ChiSquaredProbability(out.chi2, out.dof);
+    if (pval_thr > 0) {
+      out.isGood = out.pval > pval_thr;
+    }
+  }
+  return out;
+}
 DEFINE_FWK_MODULE(TagAndProbeProducer_MC);
