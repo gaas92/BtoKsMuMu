@@ -108,6 +108,13 @@ class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
       double massJpsi  = 3.09691;
 
       TH2D* hMuonIdSF;
+      struct kinFitResuts{
+        bool isValid = false;
+        double chi2 = -1;
+        double dof = -1;
+        double pval = -1;
+        bool isGood = false;
+      };
 };
 
 
