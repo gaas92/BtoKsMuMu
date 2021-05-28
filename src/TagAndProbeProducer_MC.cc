@@ -475,11 +475,11 @@ void TagAndProbeProducer_MC::addToTree() {
   tree->Fill();
 }
 double TagAndProbeProducer_MC::dR(double p1, double p2, double e1, double e2){
-    auto dp = std::abs(p1 - p2);
-    if (dp > Float(M_PI)){
-      dp -= Float(2 * M_PI);
+    double dp = std::abs(p1 - p2);
+    if (dp > (M_PI)){
+      dp -= (2 * M_PI);
     }  
-    return std::sqrt((e1 - e2) * (e1 - e2) + dp * dp);
+    return std::sqrt( (e1 - e2) * (e1 - e2) + dp * dp );
 
 }
 DEFINE_FWK_MODULE(TagAndProbeProducer_MC);
