@@ -149,6 +149,7 @@ TagAndProbeProducer_MC::TagAndProbeProducer_MC(const edm::ParameterSet& iConfig)
 }
 
 bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& iSetup) {
+  std::cout << "EDFilter ok" << std::endl;
   isRealData = iEvent.isRealData() ? 1 : 0 ;
   runNum     = iEvent.id().run();
   lumiNum    = iEvent.luminosityBlock();
