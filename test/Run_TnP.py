@@ -66,12 +66,12 @@ process.source = cms.Source("PoolSource",
                             #fileNames = cms.untracked.vstring(tuple(flist)),
                             fileNames = cms.untracked.vstring(
                                 '/store/mc/RunIIAutumn18MiniAOD/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/100000/08A85CD9-6209-9A41-AFDC-648C3688EA3D.root' 
-                            ),
-                            inputCommands=cms.untracked.vstring('keep *',
-                                                                'drop GenLumiInfoHeader_generator__SIM'),
-                            skipBadFiles=cms.untracked.bool(True)
+                            )#,
+                            #inputCommands=cms.untracked.vstring('keep *',
+                            #                                    'drop GenLumiInfoHeader_generator__SIM'),
+                            #skipBadFiles=cms.untracked.bool(True)
                            )
-process.source.duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
+#process.source.duplicateCheckMode = cms.untracked.string('noDuplicateCheck')
 
 
 '''
