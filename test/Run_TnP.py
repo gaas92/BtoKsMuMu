@@ -79,7 +79,10 @@ process.source = cms.Source("PoolSource",
         '/store/mc/RunIIAutumn18MiniAOD/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/100000/08A85CD9-6209-9A41-AFDC-648C3688EA3D.root',
         '/store/mc/RunIIAutumn18MiniAOD/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/260000/51C3402C-206E-FA4E-9BCF-C1CD7DD79786.root' 
         #'/store/mc/RunIIAutumn18MiniAOD/BdToJpsiKstar_BMuonFilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/N1_102X_upgrade2018_realistic_v15-v1/00000/0923C65B-A0B1-6F4B-A7FB-54A2ECCFE4B3.root'
- )
+ ),
+    inputCommands=cms.untracked.vstring('keep *',
+                                        'drop GenLumiInfoHeader_generator__SIM'),
+    skipBadFiles=cms.untracked.bool(True)
 )
 
 '''
