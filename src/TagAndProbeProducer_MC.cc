@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <regex>
+#include <math.h>
 
 #include "TLorentzVector.h"
 #include "TTree.h"
@@ -43,6 +44,7 @@ using namespace std;
 
 class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
    public:
+      double dR(double, double, double, double);
       explicit TagAndProbeProducer_MC(const edm::ParameterSet&);
       ~TagAndProbeProducer_MC() {
         cout << "Total events in output tree: " << tree->GetEntries() << endl;
@@ -393,7 +395,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
 
     if(ptTagMu != -1) {
       outMap["massMuMu"] = (pTag + pProbe).M();
-      outMap["deltaR_tagProbe"] = vtxu::dR(pTag.Phi(), mProbe.phi(), pTag.Eta(), mProbe.eta());
+      outMap["deltaR_tagProbe"] = dR(pTag.Phi(), mProbe.phi(), pTag.Eta(), mProbe.eta());
       auto kinTree = vtxu::FitJpsi_mumu(iSetup, mTag, mProbe, false);
       auto res = vtxu::fitQuality(kinTree, 0.05);
       outMap["vtx_isValid"] = res.isValid;
@@ -439,7 +441,7 @@ tuple<uint, float, float, float> TagAndProbeProducer_MC::matchL1Muon(pat::Muon m
     if (i == skipIdx) continue;
     auto m = muonsL1.at(0,i);
     if (m.hwQual() < 12) continue;
-    float dR = vtxu::dR(m.phi(), phiProp, m.eta(), muReco.eta());
+    float dR = dR(m.phi(), phiProp, m.eta(), muReco.eta());
     float dpt = fabs(muReco.pt() - m.pt())/muReco.pt();
     if ((dR < best_dR && dpt < best_dpt) || (dpt + dR < best_dpt + best_dR)) {
       best_dR = dR;
@@ -472,5 +474,12 @@ void TagAndProbeProducer_MC::addToTree() {
 
   tree->Fill();
 }
+double TagAndProbeProducer_MC::dR(double p1, double p2, double e1, double e2){
+    auto dp = std::abs(p1 - p2);
+    if (dp > Float(M_PI)){
+      dp -= Float(2 * M_PI);
+    }  
+    return std::sqrt((e1 - e2) * (e1 - e2) + dp * dp);
 
+}
 DEFINE_FWK_MODULE(TagAndProbeProducer_MC);
