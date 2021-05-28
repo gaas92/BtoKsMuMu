@@ -539,7 +539,7 @@ RefCountedKinematicTree TagAndProbeProducer_MC::FitJpsi_mumu(const edm::EventSet
   }
 }
 
-kinFitResuts TagAndProbeProducer_MC::fitQuality(RefCountedKinematicTree t, double pval_thr){
+TagAndProbeProducer_MC::kinFitResuts TagAndProbeProducer_MC::fitQuality(RefCountedKinematicTree t, double pval_thr){
   kinFitResuts out;
   if(t->isValid()) {
     out.isValid = true;
