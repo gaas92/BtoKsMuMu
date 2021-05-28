@@ -45,6 +45,8 @@ using namespace std;
 class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
    public:
       double dR(double, double, double, double);
+      RefCountedKinematicTree FitJpsi_mumu(const edm::EventSetup&, pat::Muon, pat::Muon, bool);
+
       explicit TagAndProbeProducer_MC(const edm::ParameterSet&);
       ~TagAndProbeProducer_MC() {
         cout << "Total events in output tree: " << tree->GetEntries() << endl;
@@ -396,7 +398,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     if(ptTagMu != -1) {
       outMap["massMuMu"] = (pTag + pProbe).M();
       outMap["deltaR_tagProbe"] = dR(pTag.Phi(), mProbe.phi(), pTag.Eta(), mProbe.eta());
-      auto kinTree = vtxu::FitJpsi_mumu(iSetup, mTag, mProbe, false);
+      auto kinTree = FitJpsi_mumu(iSetup, mTag, mProbe, false);
       auto res = vtxu::fitQuality(kinTree, 0.05);
       outMap["vtx_isValid"] = res.isValid;
       outMap["vtx_chi2"] = res.chi2;
@@ -482,4 +484,33 @@ double TagAndProbeProducer_MC::dR(double p1, double p2, double e1, double e2){
     return std::sqrt( (e1 - e2) * (e1 - e2) + dp * dp );
 
 }
+RefCountedKinematicTree TagAndProbeProducer_MC::FitJpsi_mumu(const edm::EventSetup& iSetup, pat::Muon m1, pat::Muon m2, bool mass_constraint) {
+  // Get transient track builder
+  edm::ESHandle<TransientTrackBuilder> TTBuilder;
+  iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",TTBuilder);
+
+  reco::TransientTrack m1_tk = TTBuilder->build(m1.muonBestTrack());
+  reco::TransientTrack m2_tk = TTBuilder->build(m2.muonBestTrack());
+
+  std::vector<RefCountedKinematicParticle> parts;
+  KinematicParticleFactoryFromTransientTrack pFactory;
+  double chi = 0, ndf = 0;
+  float mMu = _MuMass_, dmMu = _MuMassErr_;
+  parts.push_back(pFactory.particle(m1_tk, mMu, chi, ndf, dmMu));
+  parts.push_back(pFactory.particle(m2_tk, mMu, chi, ndf, dmMu));
+
+  if (!mass_constraint) {
+    KinematicParticleVertexFitter VtxFitter;
+    RefCountedKinematicTree KinTree = VtxFitter.fit(parts);
+    return KinTree;
+  }
+  else {
+    ParticleMass mass = _JpsiMass_;
+    MultiTrackKinematicConstraint * mass_c = new TwoTrackMassKinematicConstraint(mass);
+    KinematicConstrainedVertexFitter kcVtxFitter;
+    RefCountedKinematicTree KinTree = kcVtxFitter.fit(parts, mass_c);
+    return KinTree;
+  }
+}
+
 DEFINE_FWK_MODULE(TagAndProbeProducer_MC);
