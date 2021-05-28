@@ -45,7 +45,6 @@
 // Needed for Chi2 computation
 #include "CommonTools/Statistics/interface/ChiSquaredProbability.h"
 
-
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 
 // L1 trigger
@@ -428,7 +427,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
       outMap["massMuMu"] = (pTag + pProbe).M();
       outMap["deltaR_tagProbe"] = dR(pTag.Phi(), mProbe.phi(), pTag.Eta(), mProbe.eta());
       auto kinTree = FitJpsi_mumu(iSetup, mTag, mProbe, false);
-      auto res = vtxu::fitQuality(kinTree, 0.05);
+      auto res = fitQuality(kinTree, 0.05);
       outMap["vtx_isValid"] = res.isValid;
       outMap["vtx_chi2"] = res.chi2;
       outMap["vtx_dof"] = res.dof;
