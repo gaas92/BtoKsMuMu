@@ -512,7 +512,7 @@ RefCountedKinematicTree TagAndProbeProducer_MC::FitJpsi_mumu(const edm::EventSet
   std::vector<RefCountedKinematicParticle> parts;
   KinematicParticleFactoryFromTransientTrack pFactory;
   double chi = 0, ndf = 0;
-  float mMu = _MuMass_, dmMu = _MuMassErr_;
+  float mMu = 0.1056583745, dmMu = 0.0000000024;
   parts.push_back(pFactory.particle(m1_tk, mMu, chi, ndf, dmMu));
   parts.push_back(pFactory.particle(m2_tk, mMu, chi, ndf, dmMu));
 
@@ -522,7 +522,7 @@ RefCountedKinematicTree TagAndProbeProducer_MC::FitJpsi_mumu(const edm::EventSet
     return KinTree;
   }
   else {
-    ParticleMass mass = _JpsiMass_;
+    ParticleMass mass = 3.096916;
     MultiTrackKinematicConstraint * mass_c = new TwoTrackMassKinematicConstraint(mass);
     KinematicConstrainedVertexFitter kcVtxFitter;
     RefCountedKinematicTree KinTree = kcVtxFitter.fit(parts, mass_c);
