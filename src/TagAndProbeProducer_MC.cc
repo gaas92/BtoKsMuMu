@@ -266,9 +266,9 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
 
   //vector<string> triggerTag = {"Mu12_IP6", "Mu9_IP5", "Mu7_IP4", "Mu9_IP4", "Mu9_IP6"};
   vector<string> triggerTag = {"Mu12_IP6",
-                               "HLT_Mu9_IP6", "HLT_Mu9_IP5", "HLT_Mu9_IP4", "HLT_Mu9_IP3", "HLT_Mu9_IP0",
-                               "HLT_Mu8_IP6", "HLT_Mu8_IP5", "HLT_Mu8_IP3",
-                               "HLT_Mu7_IP4"};
+                               "Mu9_IP6", "Mu9_IP5", "Mu9_IP4", "Mu9_IP3", "Mu9_IP0",
+                               "Mu8_IP6", "Mu8_IP5", "Mu8_IP3",
+                               "Mu7_IP4"};
   for(auto tag : triggerTag) outMap["prescale" + tag] = -1;
 
   const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
