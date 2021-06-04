@@ -1,4 +1,4 @@
-//taken from: https://github.com/ocerri/BPH_RDntuplizer/blob/master/plugins/TagAndProbeProducer_MC.cc
+//taken from: https://github.com/ocerri/BPH_RDntuplizer/blob/master/plugins/TagAndProbeProducer.cc
 //Original author: Olmo Cerri
 
 // system include files
@@ -6,7 +6,6 @@
 #include <iostream>
 #include <string>
 #include <regex>
-#include <math.h>
 
 #include "TLorentzVector.h"
 #include "TTree.h"
@@ -47,7 +46,6 @@
 #include "CommonTools/Statistics/interface/ChiSquaredProbability.h"
 
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
-
 // L1 trigger
 #include "CondFormats/L1TObjects/interface/L1GtTriggerMenu.h"
 #include "CondFormats/DataRecord/interface/L1GtTriggerMenuRcd.h"
@@ -58,11 +56,9 @@
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 
-//#include "VtxUtils.hh" 
-
 using namespace std;
 
-class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
+class TagAndProbeProducer : public edm::stream::EDFilter<> {
    public:
       double dR(double, double, double, double);
       RefCountedKinematicTree FitJpsi_mumu(const edm::EventSetup&, pat::Muon, pat::Muon, bool);
@@ -75,8 +71,8 @@ class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
       };
       kinFitResuts fitQuality(RefCountedKinematicTree, double = -1);
 
-      explicit TagAndProbeProducer_MC(const edm::ParameterSet&);
-      ~TagAndProbeProducer_MC() {
+      explicit TagAndProbeProducer(const edm::ParameterSet&);
+      ~TagAndProbeProducer() {
         cout << "Total events in output tree: " << tree->GetEntries() << endl;
       };
 
@@ -95,12 +91,9 @@ class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
       edm::EDGetTokenT<vector<reco::Vertex>> vtxSrc_;
       edm::EDGetTokenT<reco::BeamSpot> beamSpotSrc_;
 
-      edm::EDGetTokenT<vector<PileupSummaryInfo>> pileupMCSrc_;
-
       edm::Service<TFileService> fs;
 
       TH1I* hAllNvts;
-      TH1I* hAllNTrueIntMC;
       TH1I* hAllVtxZ;
       TTree* tree;
       map<string, float> outMap;
@@ -119,11 +112,10 @@ class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
       double massJpsi  = 3.09691;
 
       TH2D* hMuonIdSF;
-
 };
 
 
-TagAndProbeProducer_MC::TagAndProbeProducer_MC(const edm::ParameterSet& iConfig):
+TagAndProbeProducer::TagAndProbeProducer(const edm::ParameterSet& iConfig):
   L1triggerBitsSrc_(consumes<BXVector<GlobalAlgBlk>>( edm::InputTag("gtStage2Digis") )),
   L1triggerResultsSrc_(consumes<edm::TriggerResults>( edm::InputTag("l1bits") )),
   triggerBitsSrc_(consumes<edm::TriggerResults>( edm::InputTag("TriggerResults","","HLT") )),
@@ -132,23 +124,22 @@ TagAndProbeProducer_MC::TagAndProbeProducer_MC(const edm::ParameterSet& iConfig)
   muonSrc_( consumes<vector<pat::Muon>> ( edm::InputTag("slimmedMuons") ) ),
   vtxSrc_( consumes<vector<reco::Vertex>> ( edm::InputTag("offlineSlimmedPrimaryVertices") ) ),
   beamSpotSrc_( consumes<reco::BeamSpot> ( edm::InputTag("offlineBeamSpot") ) ),
-  pileupMCSrc_( consumes<vector<PileupSummaryInfo>> ( edm::InputTag("slimmedAddPileupInfo") ) ),
   muonIDScaleFactors( iConfig.getParameter<int>( "muonIDScaleFactors" ) ),
   requireTag( iConfig.getParameter<int>( "requireTag" ) ),
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {
   hAllNvts = fs->make<TH1I>("hAllNvts", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC = fs->make<TH1I>("hAllNTrueIntMC", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ = fs->make<TH1I>("hAllVtxZ", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
   tree = fs->make<TTree>( "T", "Events Tree from TAG AND PROBE");
+
   if (muonIDScaleFactors) {
-    //TFile fAux = TFile("/storage/user/ocerri/BPhysics/data/calibration/muonIDscaleFactors/Run2018ABCD_SF_MuonID_Jpsi.root", "READ");
-    //hMuonIdSF = (TH2D*) fAux.Get("NUM_SoftID_DEN_genTracks_pt_abseta");
+    TFile fAux = TFile("/storage/user/ocerri/BPhysics/data/calibration/muonIDscaleFactors/Run2018ABCD_SF_MuonID_Jpsi.root", "READ");
+    hMuonIdSF = (TH2D*) fAux.Get("NUM_SoftID_DEN_genTracks_pt_abseta");
   }
 
 }
 
-bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& iSetup) {
+bool TagAndProbeProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   isRealData = iEvent.isRealData() ? 1 : 0 ;
   runNum     = iEvent.id().run();
   lumiNum    = iEvent.luminosityBlock();
@@ -169,25 +160,11 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   hAllNvts->Fill((int)nRecoVtx);
   for(auto vtx : (*vtxHandle)) hAllVtxZ->Fill(vtx.position().z());
 
-  edm::Handle<vector<PileupSummaryInfo>> pileupMCHandle;
-  iEvent.getByToken(pileupMCSrc_, pileupMCHandle);
-  uint idxBX0 = -1;
-  for (uint i=0; i < pileupMCHandle->size(); i++) {
-    if (pileupMCHandle->at(i).getBunchCrossing() == 0) {
-      idxBX0 = i;
-      break;
-    }
-  }
-  float puMC = pileupMCHandle->at(idxBX0).getTrueNumInteractions();
-  outMap["nTrueIntMC"] = puMC;
-  hAllNTrueIntMC->Fill((int)puMC);
-
   edm::Handle<vector<pat::Muon>> muonHandle;
   iEvent.getByToken(muonSrc_, muonHandle);
   uint nMuons = muonHandle->size();
   if(nMuons < 2) return false;
   if (verbose) {cout << "\n\n =================  Event " << eventNum << " =================== " << endl;}
-
 
   edm::Handle<reco::BeamSpot> beamSpotHandle;
   iEvent.getByToken(beamSpotSrc_, beamSpotHandle);
@@ -265,7 +242,6 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
 
   // HLT trigger
 
-  //vector<string> triggerTag = {"Mu12_IP6", "Mu9_IP5", "Mu7_IP4", "Mu9_IP4", "Mu9_IP6"};
   vector<string> triggerTag = {"Mu12_IP6",
                                "Mu9_IP6", "Mu9_IP5", "Mu9_IP4", "Mu9_IP3", "Mu9_IP0",
                                "Mu8_IP6", "Mu8_IP5", "Mu8_IP3",
@@ -461,7 +437,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   return true;
 }
 
-tuple<uint, float, float, float> TagAndProbeProducer_MC::matchL1Muon(pat::Muon muReco, BXVector<l1t::Muon> muonsL1, uint skipIdx) {
+tuple<uint, float, float, float> TagAndProbeProducer::matchL1Muon(pat::Muon muReco, BXVector<l1t::Muon> muonsL1, uint skipIdx) {
   uint idxMatch = 9999;
   float best_dR = 1e6;
   float best_dpt = 1e6;
@@ -489,7 +465,7 @@ tuple<uint, float, float, float> TagAndProbeProducer_MC::matchL1Muon(pat::Muon m
   return out;
 }
 
-void TagAndProbeProducer_MC::addToTree() {
+void TagAndProbeProducer::addToTree() {
   if (!treeDeclared) {
     if(verbose) {cout << "\nCreating the branches in the output tree:\n";}
     tree->Branch("isRealData", &isRealData);
@@ -508,7 +484,7 @@ void TagAndProbeProducer_MC::addToTree() {
 
   tree->Fill();
 }
-double TagAndProbeProducer_MC::dR(double p1, double p2, double e1, double e2){
+double TagAndProbeProducer::dR(double p1, double p2, double e1, double e2){
     double dp = std::abs(p1 - p2);
     if (dp > (M_PI)){
       dp -= (2 * M_PI);
@@ -516,7 +492,7 @@ double TagAndProbeProducer_MC::dR(double p1, double p2, double e1, double e2){
     return std::sqrt( (e1 - e2) * (e1 - e2) + dp * dp );
 
 }
-RefCountedKinematicTree TagAndProbeProducer_MC::FitJpsi_mumu(const edm::EventSetup& iSetup, pat::Muon m1, pat::Muon m2, bool mass_constraint) {
+RefCountedKinematicTree TagAndProbeProducer::FitJpsi_mumu(const edm::EventSetup& iSetup, pat::Muon m1, pat::Muon m2, bool mass_constraint) {
   // Get transient track builder
   edm::ESHandle<TransientTrackBuilder> TTBuilder;
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",TTBuilder);
@@ -545,7 +521,7 @@ RefCountedKinematicTree TagAndProbeProducer_MC::FitJpsi_mumu(const edm::EventSet
   }
 }
 
-TagAndProbeProducer_MC::kinFitResuts TagAndProbeProducer_MC::fitQuality(RefCountedKinematicTree t, double pval_thr){
+TagAndProbeProducer::kinFitResuts TagAndProbeProducer::fitQuality(RefCountedKinematicTree t, double pval_thr){
   kinFitResuts out;
   if(t->isValid()) {
     out.isValid = true;
@@ -559,4 +535,4 @@ TagAndProbeProducer_MC::kinFitResuts TagAndProbeProducer_MC::fitQuality(RefCount
   }
   return out;
 }
-DEFINE_FWK_MODULE(TagAndProbeProducer_MC);
+DEFINE_FWK_MODULE(TagAndProbeProducer);
