@@ -133,8 +133,8 @@ TagAndProbeProducer::TagAndProbeProducer(const edm::ParameterSet& iConfig):
   tree = fs->make<TTree>( "T", "Events Tree from TAG AND PROBE");
 
   if (muonIDScaleFactors) {
-    TFile fAux = TFile("/storage/user/ocerri/BPhysics/data/calibration/muonIDscaleFactors/Run2018ABCD_SF_MuonID_Jpsi.root", "READ");
-    hMuonIdSF = (TH2D*) fAux.Get("NUM_SoftID_DEN_genTracks_pt_abseta");
+    //TFile fAux = TFile("/storage/user/ocerri/BPhysics/data/calibration/muonIDscaleFactors/Run2018ABCD_SF_MuonID_Jpsi.root", "READ");
+    //hMuonIdSF = (TH2D*) fAux.Get("NUM_SoftID_DEN_genTracks_pt_abseta");
   }
 
 }
