@@ -502,7 +502,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		std::string triggerName = TheTriggerNames.triggerName(h); 
 		if (triggerName.find(TriggersToTest[i]) != std::string::npos ){
 			trigger += (1<<i);
-			if(i == 5) std::cout<< TriggersToTest[i] <<" found in " << triggerName << " STR !!" << std::endl; 
+			if(i == 5) std::cout<< TriggersToTest[i] <<" found in " << triggerName << " bit shift: "<< (1<<i) << std::endl; 
 		} 
 		//std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(h)<< " | looking for: "<< TriggersToTest[i] << std::endl;
 	 }
