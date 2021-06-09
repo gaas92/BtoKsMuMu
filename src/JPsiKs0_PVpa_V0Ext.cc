@@ -522,11 +522,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
      //  }
      //}
    }
-  } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
-  if (GoodT){
+   if (GoodT){
 	  std::bitset<32> temp_bit(trigger);
 	  std::cout << "Good Trigger: " <<  trigger << "Bits: " << temp_bit << std::endl;
-  }
+   }
+  } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
+
   //*********************************
   //Now we get the primary vertex 
   //*********************************
