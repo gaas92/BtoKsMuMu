@@ -18,14 +18,14 @@ process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.load("FWCore.MessageLogger.MessageLogger_cfi")
 #process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
-files_my_gen = [string for string in open('myGenFiles/noProbeFilterDecayFilter_MiniAOD2_4.txt').readlines() if len(string) > 10]
+#files_my_gen = [string for string in open('myGenFiles/noProbeFilterDecayFilter_MiniAOD2_4.txt').readlines() if len(string) > 10]
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring(files_my_gen
+    fileNames = cms.untracked.vstring(#files_my_gen
 
         #Parked Data
-        #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/2129F080-982D-A649-8D20-4944620E99A6.root',
-        #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/12C659FD-D961-6640-9C3D-48CD12A0D033.root', 
-        #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/05030414-6C93-DC46-AD09-68D76E2FB466.root'
+        '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/2129F080-982D-A649-8D20-4944620E99A6.root',
+        '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/12C659FD-D961-6640-9C3D-48CD12A0D033.root', 
+        '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/05030414-6C93-DC46-AD09-68D76E2FB466.root'
         # Test on MC 
         #'/store/mc/RunIIAutumn18MiniAOD/BdToK0sMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/100000/17621299-2380-064D-A5E9-B78072D95A7D.root'   
 
@@ -54,15 +54,15 @@ process.source = cms.Source("PoolSource",
 #                                        )
 
 process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
-process.rootuple.isMC = cms.bool(True) # this is only for test
+process.rootuple.isMC = cms.bool(False) # this is only for test
 process.rootuple.isRes = cms.bool(False)
-process.rootuple.OnlyGen = cms.bool(True)
+process.rootuple.OnlyGen = cms.bool(False)
 process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
 
 process.TFileService = cms.Service("TFileService",
 
-       #fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD.root'),
-       fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD_GEN_24.root'),
+       fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD.root'),
+       #fileName = cms.string('Rootuple_BdtoMuMuks0_PARKED_Bpa_PVExt_MiniAOD_GEN_24.root'),
 )
 
 #process.mySequence = cms.Sequence(
