@@ -496,13 +496,16 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    //for (unsigned i = 0; i < TheTriggerNames.size(); ++i) {
    //   std::cout << names[i] << "  " << TheTriggerNames.triggerName(i) << std::endl;
    //}
-
+   bool GoodT = false;
    for (unsigned int i = 0; i < NTRIGGERS; i++) {
 	 for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
 		std::string triggerName = TheTriggerNames.triggerName(h); 
 		if (triggerName.find(TriggersToTest[i]) != std::string::npos ){
 			trigger += (1<<i);
-			if(i == 5) std::cout<< TriggersToTest[i] <<" found in " << triggerName << " bit shift: "<< (1<<i) << std::endl; 
+			if(i == 5){ 
+				std::cout<< TriggersToTest[i] <<" found in " << triggerName << " bit shift: "<< (1<<i) << std::endl;
+				GoodT = true;
+			} 
 		} 
 		//std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(h)<< " | looking for: "<< TriggersToTest[i] << std::endl;
 	 }
@@ -520,7 +523,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
      //}
    }
   } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
-  
+  if (GoodT){
+	  std::bitset<32> temp_bit(trigger);
+	  std::cout << "Good Trigger: " <<  trigger << "Bits: " << temp_bit << std::endl;
+  }
   //*********************************
   //Now we get the primary vertex 
   //*********************************
