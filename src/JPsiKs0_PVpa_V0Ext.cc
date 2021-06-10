@@ -496,7 +496,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    //for (unsigned i = 0; i < TheTriggerNames.size(); ++i) {
    //   std::cout << names[i] << "  " << TheTriggerNames.triggerName(i) << std::endl;
    //}
-   bool GoodT = false;
+   //bool GoodT = false;
    for (unsigned int i = 0; i < NTRIGGERS; i++) {
 	 bool found_ = false; 
 	 for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
@@ -504,10 +504,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		if (triggerName.find(TriggersToTest[i]) != std::string::npos && !found_){
 			trigger += (1<<i);
 			found_ = true;
-			if(i == 5){ 
-				std::cout<< TriggersToTest[i] <<" found in " << triggerName << " bit shift: "<< (1<<i) << std::endl;
-				GoodT = true;
-			} 
+			//if(i == 5){ 
+			//	std::cout<< TriggersToTest[i] <<" found in " << triggerName << " bit shift: "<< (1<<i) << std::endl;
+			//	GoodT = true;
+			//} 
 		} 
 		//std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(h)<< " | looking for: "<< TriggersToTest[i] << std::endl;
 	 }
@@ -524,10 +524,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
      //  }
      //}
    }
-   if (GoodT){
-	  std::bitset<32> temp_bit(trigger);
-	  std::cout << "Good Trigger: " <<  trigger << " Bits: " << temp_bit << std::endl;
-   }
+   //if (GoodT){
+   //  std::bitset<32> temp_bit(trigger);
+   //  std::cout << "Good Trigger: " <<  trigger << " Bits: " << temp_bit << std::endl;
+   //}
   } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
 
   //*********************************

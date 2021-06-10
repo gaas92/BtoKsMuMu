@@ -73,7 +73,7 @@ def main():
 	config.General.transferLogs = False
 
         config.JobType.pluginName = 'Analysis'
-	config.JobType.psetName = '/afs/cern.ch/work/g/gayalasa/public/B0Analysis/CMSSW_10_6_12/src/myAnalyzers/BtoKsMuMu/test/Psiks0_BestPA_V0Ext_Rootupler.py' #MC Parked configfile
+	config.JobType.psetName = '/afs/cern.ch/work/g/gayalasa/public/B0Analysis/CMSSW_10_6_12/src/myAnalyzers/BtoKsMuMu/test/MuMuks0_BestPA_V0Ext_Rootupler.py' #MC Parked configfile
 	config.JobType.allowUndistributedCMSSW = True
 
         config.Data.inputDataset = None
