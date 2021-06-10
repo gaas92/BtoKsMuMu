@@ -497,8 +497,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    //   std::cout << names[i] << "  " << TheTriggerNames.triggerName(i) << std::endl;
    //}
    bool GoodT = false;
-   for (unsigned int i = 0; i < NTRIGGERS; i++) {
-	 for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
+   for (unsigned int h = 0; h < TheTriggerNames.size(); ++h) {
+	 for (unsigned int i = 0; i < NTRIGGERS; i++){
 		std::string triggerName = TheTriggerNames.triggerName(h); 
 		bool found_ = false; 
 		if (triggerName.find(TriggersToTest[i]) != std::string::npos && !found_){
