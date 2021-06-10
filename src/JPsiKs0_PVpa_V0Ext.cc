@@ -501,9 +501,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	 bool found_ = false; 
 	 for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
 		std::string triggerName = TheTriggerNames.triggerName(h); 
-		if (triggerName.find(TriggersToTest[i]) != std::string::npos && !found){
+		if (triggerName.find(TriggersToTest[i]) != std::string::npos && !found_){
 			trigger += (1<<i);
-			found = true;
+			found_ = true;
 			if(i == 5){ 
 				std::cout<< TriggersToTest[i] <<" found in " << triggerName << " bit shift: "<< (1<<i) << std::endl;
 				GoodT = true;
