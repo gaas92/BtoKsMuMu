@@ -17,6 +17,3 @@
 <use   name="MagneticField/Engine"/>
 <use   name="CondFormats/L1TObjects"/>
 <flags   EDM_PLUGIN="1"/>
-<export>
-  <lib   name="1"/>
-</export>
