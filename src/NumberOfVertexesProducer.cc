@@ -178,7 +178,7 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
   if (verbose) {cout << "\n ==== TRIGGER PATHS ==== " << endl;}
 
-  //for (auto trgTag : triggerTags){(*outputNtuplizer)["prescale_" + trgTag] = 0;}
+  for (auto trgTag : triggerTags) outMap["prescale_" + trgTag] = 0;
 
 }
 
