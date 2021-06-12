@@ -17,5 +17,4 @@
 <use   name="RecoVertex/KinematicFitPrimitives"/>
 <use   name="TrackingTools/TransientTrack"/>
 <use   name="TrackingTools/Records"/>
-<flags   EDM_PLUGIN="1"/>
 
