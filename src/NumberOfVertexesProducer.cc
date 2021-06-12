@@ -40,6 +40,8 @@ class NumberOfVertexesProducer : public edm::EDProducer {
       void beginJob(const edm::EventSetup&) {};
       void produce(edm::Event& iEvent, const edm::EventSetup& iSetup) override;
 
+      void addToTree();
+
       // ----------member data ---------------------------
       edm::EDGetTokenT<edm::TriggerResults> triggerBitsSrc_;
       edm::EDGetTokenT <pat::PackedTriggerPrescales> triggerPrescalesSrc_;
@@ -172,6 +174,10 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   edm::Handle<vector<reco::Vertex>> vtxHandle;
   iEvent.getByToken(vtxSrc_, vtxHandle);
   auto primaryVtx = (*vtxHandle)[0];
+  
+  runNum     = iEvent.id().run();
+  lumiNum    = iEvent.luminosityBlock();
+  eventNum   = iEvent.id().event();
 
   //BPH trigger footprint
   regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9].*");
@@ -182,4 +188,23 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
 
 }
 
+void NumberOfVertexesProducer::addToTree() {
+  if (!treeDeclared) {
+    if(verbose) {cout << "\nCreating the branches in the output tree:\n";}
+    tree->Branch("isRealData", &isRealData);
+    tree->Branch("runNum", &runNum);
+    tree->Branch("lumiNum", &lumiNum);
+    tree->Branch("eventNum", &eventNum);
+
+    for(auto& kv : outMap) {
+      auto k = kv.first;
+      if(verbose) {cout << "\t" << k;}
+      tree->Branch(k.c_str(), &(outMap[k]));
+    }
+    treeDeclared = true;
+    if(verbose) {cout << "\n\n";}
+  }
+
+  tree->Fill();
+}
 DEFINE_FWK_MODULE(NumberOfVertexesProducer);
