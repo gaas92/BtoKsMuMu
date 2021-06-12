@@ -17,4 +17,5 @@
 <use   name="RecoVertex/KinematicFitPrimitives"/>
 <use   name="TrackingTools/TransientTrack"/>
 <use   name="TrackingTools/Records"/>
+<use   name="root"/>
 
