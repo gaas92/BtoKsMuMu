@@ -24,6 +24,11 @@
 #include <string>
 #include <regex>
 
+#include "TLorentzVector.h"
+#include "TTree.h"
+#include "TH2D.h"
+#include "TH1I.h"
+
 using namespace std;
 
 class NumberOfVertexesProducer : public edm::EDProducer {
