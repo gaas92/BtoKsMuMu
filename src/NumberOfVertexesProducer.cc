@@ -53,46 +53,46 @@ class NumberOfVertexesProducer : public edm::EDProducer {
       //map<string, TH1D*> hZvtxPassed;
 
       TH1I* hAllNvts_Mu12_IP6;
-      TH1I* hAllNTrueIntMC_Mu12_IP6;
+      TH1I* hNvtxPassed_Mu12_IP6;
       TH1I* hAllVtxZ_Mu12_IP6;
 
       
       TH1I* hAllNvts_Mu9_IP6;
-      TH1I* hAllNTrueIntMC_Mu9_IP6;
+      TH1I* hNvtxPassed_Mu9_IP6;
       TH1I* hAllVtxZ_Mu9_IP6;
 
       TH1I* hAllNvts_Mu9_IP5;
-      TH1I* hAllNTrueIntMC_Mu9_IP5;
+      TH1I* hNvtxPassed_Mu9_IP5;
       TH1I* hAllVtxZ_Mu9_IP5;
 
       TH1I* hAllNvts_Mu9_IP4;
-      TH1I* hAllNTrueIntMC_Mu9_IP4;
+      TH1I* hNvtxPassed_Mu9_IP4;
       TH1I* hAllVtxZ_Mu9_IP4;
 
       TH1I* hAllNvts_Mu9_IP3;
-      TH1I* hAllNTrueIntMC_Mu9_IP3;
+      TH1I* hNvtxPassed_Mu9_IP3;
       TH1I* hAllVtxZ_Mu9_IP3;
 
       TH1I* hAllNvts_Mu9_IP0;
-      TH1I* hAllNTrueIntMC_Mu9_IP0;
+      TH1I* hNvtxPassed_Mu9_IP0;
       TH1I* hAllVtxZ_Mu9_IP0;
 
 
       TH1I* hAllNvts_Mu8_IP6;
-      TH1I* hAllNTrueIntMC_Mu8_IP6;
+      TH1I* hNvtxPassed_Mu8_IP6;
       TH1I* hAllVtxZ_Mu8_IP6;
 
       TH1I* hAllNvts_Mu8_IP5;
-      TH1I* hAllNTrueIntMC_Mu8_IP5;
+      TH1I* hNvtxPassed_Mu8_IP5;
       TH1I* hAllVtxZ_Mu8_IP5;
 
       TH1I* hAllNvts_Mu8_IP3;
-      TH1I* hAllNTrueIntMC_Mu8_IP3;
+      TH1I* hNvtxPassed_Mu8_IP3;
       TH1I* hAllVtxZ_Mu8_IP3;
 
 
       TH1I* hAllNvts_Mu7_IP4;
-      TH1I* hAllNTrueIntMC_Mu7_IP4;
+      TH1I* hNvtxPassed_Mu7_IP4;
       TH1I* hAllVtxZ_Mu7_IP4;
 
       TTree* tree;
@@ -120,46 +120,46 @@ NumberOfVertexesProducer::NumberOfVertexesProducer(const edm::ParameterSet& iCon
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {
   hAllNvts_Mu12_IP6 = fs->make<TH1I>("hAllNvts_Mu12_IP6", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu12_IP6 = fs->make<TH1I>("hAllNTrueIntMC_Mu12_IP6", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu12_IP6 = fs->make<TH1I>("hNvtxPassed_Mu12_IP6", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu12_IP6 = fs->make<TH1I>("hAllVtxZ_Mu12_IP6", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
 
   hAllNvts_Mu9_IP6 = fs->make<TH1I>("hAllNvts_Mu9_IP6", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu9_IP6 = fs->make<TH1I>("hAllNTrueIntMC_Mu9_IP6", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP6 = fs->make<TH1I>("hNvtxPassed_Mu9_IP6", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP6 = fs->make<TH1I>("hAllVtxZ_Mu9_IP6", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
   hAllNvts_Mu9_IP5 = fs->make<TH1I>("hAllNvts_Mu9_IP5", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu9_IP5 = fs->make<TH1I>("hAllNTrueIntMC_Mu9_IP5", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP5 = fs->make<TH1I>("hNvtxPassed_Mu9_IP5", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP5 = fs->make<TH1I>("hAllVtxZ_Mu9_IP5", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
   hAllNvts_Mu9_IP4 = fs->make<TH1I>("hAllNvts_Mu9_IP4", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu9_IP4 = fs->make<TH1I>("hAllNTrueIntMC_Mu9_IP4", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP4 = fs->make<TH1I>("hNvtxPassed_Mu9_IP4", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP4 = fs->make<TH1I>("hAllVtxZ_Mu9_IP4", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
   hAllNvts_Mu9_IP3 = fs->make<TH1I>("hAllNvts_Mu9_IP3", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu9_IP3 = fs->make<TH1I>("hAllNTrueIntMC_Mu9_IP3", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP3 = fs->make<TH1I>("hNvtxPassed_Mu9_IP3", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP3 = fs->make<TH1I>("hAllVtxZ_Mu9_IP3", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
   hAllNvts_Mu9_IP0 = fs->make<TH1I>("hAllNvts_Mu9_IP0", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu9_IP0 = fs->make<TH1I>("hAllNTrueIntMC_Mu9_IP0", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP0 = fs->make<TH1I>("hNvtxPassed_Mu9_IP0", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP0 = fs->make<TH1I>("hAllVtxZ_Mu9_IP0", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
 
   hAllNvts_Mu8_IP6 = fs->make<TH1I>("hAllNvts_Mu8_IP6", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu8_IP6 = fs->make<TH1I>("hAllNTrueIntMC_Mu8_IP6", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu8_IP6 = fs->make<TH1I>("hNvtxPassed_Mu8_IP6", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu8_IP6 = fs->make<TH1I>("hAllVtxZ_Mu8_IP6", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
   hAllNvts_Mu8_IP5 = fs->make<TH1I>("hAllNvts_Mu8_IP5", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu8_IP5 = fs->make<TH1I>("hAllNTrueIntMC_Mu8_IP5", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu8_IP5 = fs->make<TH1I>("hNvtxPassed_Mu8_IP5", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu8_IP5 = fs->make<TH1I>("hAllVtxZ_Mu8_IP5", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
   hAllNvts_Mu8_IP3 = fs->make<TH1I>("hAllNvts_Mu8_IP3", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu8_IP3 = fs->make<TH1I>("hAllNTrueIntMC_Mu8_IP3", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu8_IP3 = fs->make<TH1I>("hNvtxPassed_Mu8_IP3", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu8_IP3 = fs->make<TH1I>("hAllVtxZ_Mu8_IP3", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
 
   hAllNvts_Mu7_IP4 = fs->make<TH1I>("hAllNvts_Mu7_IP4", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hAllNTrueIntMC_Mu7_IP4 = fs->make<TH1I>("hAllNTrueIntMC_Mu7_IP4", "Number of true interactions generated in MC", 101, -0.5, 100.5);
+  hNvtxPassed_Mu7_IP4 = fs->make<TH1I>("hNvtxPassed_Mu7_IP4", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ_Mu7_IP4 = fs->make<TH1I>("hAllVtxZ_Mu7_IP4", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
 
   tree = fs->make<TTree>( "T", "Events Tree from N Vtx Produccer");
@@ -207,36 +207,38 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
       if (match && triggerPrescales->getPrescaleForIndex(i) > 0) trgActive[trgTag] = true;
       if (match && triggerBits->accept(i)) trgPassed[trgTag] = true;
 
-       for (int part = 0; part <= 5; part++) {
-         regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
-         if (regex_match(trgName, rule)) {
-           // (*outputNtuplizer)[Form("prescale_%s_part%d", trgTag.c_str(), part)] = triggerPrescales->getPrescaleForIndex(i);
-           if (triggerPrescales->getPrescaleForIndex(i) > 0) outMap["prescale_" + trgTag]++;
-         }
-       }
+       //for (int part = 0; part <= 5; part++) {
+       //  regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
+       //  if (regex_match(trgName, rule)) {
+       //    outMap[Form("prescale_%s_part%d", trgTag.c_str(), part)] = triggerPrescales->getPrescaleForIndex(i);
+       //    if (triggerPrescales->getPrescaleForIndex(i) > 0) outMap["prescale_" + trgTag]++;
+       //  }
+       //}
 
     }
 
   }
 
   auto Nvtx = vtxHandle->size();
-
-  //for (auto kv : hNvtx) {
-  //  if(trgActive[kv.first]) {
-  //    if (verbose) {cout << "Filling active " << kv.first << endl;}
-  //    kv.second->Fill(Nvtx);
-  //  }
-//
-  //  if(trgPassed[kv.first]) {
-  //    if (verbose) {cout << "Filling passed " << kv.first << endl;}
-  //    hNvtxPassed[kv.first]->Fill(Nvtx);
-  //    for(auto vtx : (*vtxHandle)) hZvtxPassed[kv.first]->Fill(vtx.position().z());
-  //  }
-  //}
+  bool something_to_fill = false;
+  if(trgActive["Mu12_IP6"]) {
+    if (verbose) {cout << "Filling active " << "Mu12_IP6" << endl;}
+    hAllNvts_Mu12_IP6->Fill(Nvtx);
+    outMap["Nvtx_Mu12_IP6_A"] = Nvtx; 
+    something_to_fill = true
+  }
+  if(trgPassed["Mu12_IP6"]) {
+    if (verbose) {cout << "Filling passed " << Mu12_IP6 << endl;}
+    hNvtxPassed_Mu12_IP6->Fill(Nvtx);
+    for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu12_IP6->Fill(vtx.position().z());
+    outMap["Nvtx_Mu12_IP6_P"] = Nvtx; 
+    something_to_fill = true
+  }
+  
 
   outMap["N_vertexes"] = Nvtx;
 
-  addToTree();
+  if(something_to_fill) addToTree();
 
   if (verbose) {cout << "======================== " << endl;}
   return;
