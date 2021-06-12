@@ -19,5 +19,5 @@
 <use   name="TrackingTools/Records"/>
 <flags   EDM_PLUGIN="1"/>
 <export>
-   <lib name="myAnalyzersBtoKsMuMu">
+   <lib name="myAnalyzersBtoKsMuMu"/>
 </export>
