@@ -97,6 +97,7 @@ class NumberOfVertexesProducer : public edm::EDProducer {
 
       TTree* tree;
       map<string, float> outMap;
+      bool treeDeclared = false;
 
       bool isRealData;
       unsigned int runNum;
@@ -175,6 +176,7 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   iEvent.getByToken(vtxSrc_, vtxHandle);
   auto primaryVtx = (*vtxHandle)[0];
   
+  isRealData = iEvent.isRealData() ? 1 : 0 ;
   runNum     = iEvent.id().run();
   lumiNum    = iEvent.luminosityBlock();
   eventNum   = iEvent.id().event();
