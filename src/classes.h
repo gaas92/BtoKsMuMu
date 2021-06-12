@@ -12,16 +12,16 @@ namespace {
     std::map<std::string, float> dummy_i1;
     edm::Wrapper<std::map<std::string,float>> dummy_wi1;
 
-    std::vector<string> dummy_s2;
-    edm::Wrapper<std::vector<string>> dummy_w2;
-
-    std::map<std::string, std::vector<float>> dummy_i3;
-    edm::Wrapper<std::map<std::string,std::vector<float>>> dummy_wi3;
-
-    std::char_traits<char> d4;
-    std::basic_string<char,std::char_traits<char> > d5;
-    std::pair<const std::basic_string<char,std::char_traits<char> >,std::vector<float> > d6;
-    edm::Wrapper<std::pair<const std::basic_string<char,std::char_traits<char> >,std::vector<float> >> wd6;
+    //std::vector<string> dummy_s2;
+    //edm::Wrapper<std::vector<string>> dummy_w2;
+//
+    //std::map<std::string, std::vector<float>> dummy_i3;
+    //edm::Wrapper<std::map<std::string,std::vector<float>>> dummy_wi3;
+//
+    //std::char_traits<char> d4;
+    //std::basic_string<char,std::char_traits<char> > d5;
+    //std::pair<const std::basic_string<char,std::char_traits<char> >,std::vector<float> > d6;
+    //edm::Wrapper<std::pair<const std::basic_string<char,std::char_traits<char> >,std::vector<float> >> wd6;
 
     // pat::PackedCandidate dummy_ci2;
     // std::pair<const std::basic_string<char,std::char_traits<char> >,pat::PackedCandidate> dummy_pi2;
