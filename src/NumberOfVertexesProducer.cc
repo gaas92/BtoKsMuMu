@@ -207,13 +207,13 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
       if (match && triggerPrescales->getPrescaleForIndex(i) > 0) trgActive[trgTag] = true;
       if (match && triggerBits->accept(i)) trgPassed[trgTag] = true;
 
-      // for (int part = 0; part <= 5; part++) {
-      //   regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
-      //   if (regex_match(trgName, rule)) {
-      //     // (*outputNtuplizer)[Form("prescale_%s_part%d", trgTag.c_str(), part)] = triggerPrescales->getPrescaleForIndex(i);
-      //     if (triggerPrescales->getPrescaleForIndex(i) > 0) (*outputNtuplizer)["prescale_" + trgTag]++;
-      //   }
-      // }
+       for (int part = 0; part <= 5; part++) {
+         regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
+         if (regex_match(trgName, rule)) {
+           // (*outputNtuplizer)[Form("prescale_%s_part%d", trgTag.c_str(), part)] = triggerPrescales->getPrescaleForIndex(i);
+           if (triggerPrescales->getPrescaleForIndex(i) > 0) outMap["prescale_" + trgTag]++;
+         }
+       }
 
     }
 
