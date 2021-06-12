@@ -18,4 +18,5 @@
 <use   name="TrackingTools/TransientTrack"/>
 <use   name="TrackingTools/Records"/>
 <use   name="root"/>
+<use   name="boost"/>
 
