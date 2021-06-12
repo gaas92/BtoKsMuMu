@@ -41,9 +41,9 @@ class NumberOfVertexesProducer : public edm::EDProducer {
       edm::EDGetTokenT<vector<reco::Vertex>> vtxSrc_;
 
       edm::Service<TFileService> fs;
-      map<string, TH1D*> hNvtx;
-      map<string, TH1D*> hNvtxPassed;
-      map<string, TH1D*> hZvtxPassed;
+      //map<string, TH1D*> hNvtx;
+      //map<string, TH1D*> hNvtxPassed;
+      //map<string, TH1D*> hZvtxPassed;
 
       vector<string> triggerTags = {"Mu12_IP6",
                                     "Mu9_IP6", "Mu9_IP5", "Mu9_IP4", "Mu9_IP3", "Mu9_IP0",
@@ -61,11 +61,11 @@ NumberOfVertexesProducer::NumberOfVertexesProducer(const edm::ParameterSet& iCon
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {
   produces<map<string, float>>("outputNtuplizer");
-  for (auto trgTag: triggerTags) {
-    hNvtx[trgTag] = fs->make<TH1D>(("hNvtx"+trgTag).c_str(), ("Number of vertexes from events with active "+trgTag).c_str(), 81, -0.5, 80.5);
-    hNvtxPassed[trgTag] = fs->make<TH1D>(("hNvtxPassed"+trgTag).c_str(), ("Number of vertexes from events with passed "+trgTag).c_str(), 81, -0.5, 80.5);
-    hZvtxPassed[trgTag] = fs->make<TH1D>(("hZvtxPassed"+trgTag).c_str(), ("Z position of vertexes from events with passed "+trgTag).c_str(), 100, -25., 25.);
-  }
+  //for (auto trgTag: triggerTags) {
+  //  hNvtx[trgTag] = fs->make<TH1D>(("hNvtx"+trgTag).c_str(), ("Number of vertexes from events with active "+trgTag).c_str(), 81, -0.5, 80.5);
+  //  hNvtxPassed[trgTag] = fs->make<TH1D>(("hNvtxPassed"+trgTag).c_str(), ("Number of vertexes from events with passed "+trgTag).c_str(), 81, -0.5, 80.5);
+  //  hZvtxPassed[trgTag] = fs->make<TH1D>(("hZvtxPassed"+trgTag).c_str(), ("Z position of vertexes from events with passed "+trgTag).c_str(), 100, -25., 25.);
+  //}
 }
 
 void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
@@ -121,18 +121,18 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   }
 
   auto Nvtx = vtxHandle->size();
-  for (auto kv : hNvtx) {
-    if(trgActive[kv.first]) {
-      if (verbose) {cout << "Filling active " << kv.first << endl;}
-      kv.second->Fill(Nvtx);
-    }
+  //for (auto kv : hNvtx) {
+  //  if(trgActive[kv.first]) {
+  //    if (verbose) {cout << "Filling active " << kv.first << endl;}
+  //    kv.second->Fill(Nvtx);
+  //  }
 
-    if(trgPassed[kv.first]) {
-      if (verbose) {cout << "Filling passed " << kv.first << endl;}
-      hNvtxPassed[kv.first]->Fill(Nvtx);
-      for(auto vtx : (*vtxHandle)) hZvtxPassed[kv.first]->Fill(vtx.position().z());
-    }
-  }
+  //  if(trgPassed[kv.first]) {
+  //    if (verbose) {cout << "Filling passed " << kv.first << endl;}
+  //    hNvtxPassed[kv.first]->Fill(Nvtx);
+  //    for(auto vtx : (*vtxHandle)) hZvtxPassed[kv.first]->Fill(vtx.position().z());
+  //  }
+  //}
 
   (*outputNtuplizer)["N_vertexes"] = vtxHandle->size();
 
