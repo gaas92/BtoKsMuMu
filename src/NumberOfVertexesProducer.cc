@@ -119,48 +119,48 @@ NumberOfVertexesProducer::NumberOfVertexesProducer(const edm::ParameterSet& iCon
   vtxSrc_( consumes<vector<reco::Vertex>> ( edm::InputTag("offlineSlimmedPrimaryVertices") ) ),
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {
-  hAllNvts_Mu12_IP6 = fs->make<TH1I>("hAllNvts_Mu12_IP6", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu12_IP6 = fs->make<TH1I>("hNvtxPassed_Mu12_IP6", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu12_IP6 = fs->make<TH1I>("hAllVtxZ_Mu12_IP6", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
+  hAllNvts_Mu12_IP6 = fs->make<TH1I>("hAllNvts_Mu12_IP6", "Number of vertexes from events with active Mu12_IP6", 101, -0.5, 100.5);
+  hNvtxPassed_Mu12_IP6 = fs->make<TH1I>("hNvtxPassed_Mu12_IP6", "Number of vertexes from events with passed Mu12_IP6", 101, -0.5, 100.5);
+  hAllVtxZ_Mu12_IP6 = fs->make<TH1I>("hAllVtxZ_Mu12_IP6", "Z position of vertexes from events with passed Mu12_IP6", 100, -25, 25);
 
 
-  hAllNvts_Mu9_IP6 = fs->make<TH1I>("hAllNvts_Mu9_IP6", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu9_IP6 = fs->make<TH1I>("hNvtxPassed_Mu9_IP6", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu9_IP6 = fs->make<TH1I>("hAllVtxZ_Mu9_IP6", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
+  hAllNvts_Mu9_IP6 = fs->make<TH1I>("hAllNvts_Mu9_IP6", "Number of vertexes from events with active Mu9_IP6", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP6 = fs->make<TH1I>("hNvtxPassed_Mu9_IP6", "Number of vertexes from events with passed Mu9_IP6", 101, -0.5, 100.5);
+  hAllVtxZ_Mu9_IP6 = fs->make<TH1I>("hAllVtxZ_Mu9_IP6", "Z position of vertexes from events with passed Mu9_IP6", 100, -25, 25);
 
-  hAllNvts_Mu9_IP5 = fs->make<TH1I>("hAllNvts_Mu9_IP5", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu9_IP5 = fs->make<TH1I>("hNvtxPassed_Mu9_IP5", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu9_IP5 = fs->make<TH1I>("hAllVtxZ_Mu9_IP5", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
+  hAllNvts_Mu9_IP5 = fs->make<TH1I>("hAllNvts_Mu9_IP5", "Number of vertexes from events with active Mu9_IP5", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP5 = fs->make<TH1I>("hNvtxPassed_Mu9_IP5", "Number of vertexes from events with passed Mu9_IP5", 101, -0.5, 100.5);
+  hAllVtxZ_Mu9_IP5 = fs->make<TH1I>("hAllVtxZ_Mu9_IP5", "Z position of vertexes from events with passed Mu9_IP5", 100, -25, 25);
 
-  hAllNvts_Mu9_IP4 = fs->make<TH1I>("hAllNvts_Mu9_IP4", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu9_IP4 = fs->make<TH1I>("hNvtxPassed_Mu9_IP4", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu9_IP4 = fs->make<TH1I>("hAllVtxZ_Mu9_IP4", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
+  hAllNvts_Mu9_IP4 = fs->make<TH1I>("hAllNvts_Mu9_IP4", "Number of vertexes from events with active Mu9_IP4", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP4 = fs->make<TH1I>("hNvtxPassed_Mu9_IP4", "Number of vertexes from events with passed Mu9_IP4", 101, -0.5, 100.5);
+  hAllVtxZ_Mu9_IP4 = fs->make<TH1I>("hAllVtxZ_Mu9_IP4", "Z position of vertexes from events with passed Mu9_IP4", 100, -25, 25);
 
-  hAllNvts_Mu9_IP3 = fs->make<TH1I>("hAllNvts_Mu9_IP3", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu9_IP3 = fs->make<TH1I>("hNvtxPassed_Mu9_IP3", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu9_IP3 = fs->make<TH1I>("hAllVtxZ_Mu9_IP3", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
+  hAllNvts_Mu9_IP3 = fs->make<TH1I>("hAllNvts_Mu9_IP3", "Number of vertexes from events with active Mu9_IP3", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP3 = fs->make<TH1I>("hNvtxPassed_Mu9_IP3", "Number of vertexes from events with passed Mu9_IP3", 101, -0.5, 100.5);
+  hAllVtxZ_Mu9_IP3 = fs->make<TH1I>("hAllVtxZ_Mu9_IP3", "Z position of vertexes from events with passed Mu9_IP3", 100, -25, 25);
 
-  hAllNvts_Mu9_IP0 = fs->make<TH1I>("hAllNvts_Mu9_IP0", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu9_IP0 = fs->make<TH1I>("hNvtxPassed_Mu9_IP0", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu9_IP0 = fs->make<TH1I>("hAllVtxZ_Mu9_IP0", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
-
-
-  hAllNvts_Mu8_IP6 = fs->make<TH1I>("hAllNvts_Mu8_IP6", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu8_IP6 = fs->make<TH1I>("hNvtxPassed_Mu8_IP6", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu8_IP6 = fs->make<TH1I>("hAllVtxZ_Mu8_IP6", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
-
-  hAllNvts_Mu8_IP5 = fs->make<TH1I>("hAllNvts_Mu8_IP5", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu8_IP5 = fs->make<TH1I>("hNvtxPassed_Mu8_IP5", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu8_IP5 = fs->make<TH1I>("hAllVtxZ_Mu8_IP5", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
-
-  hAllNvts_Mu8_IP3 = fs->make<TH1I>("hAllNvts_Mu8_IP3", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu8_IP3 = fs->make<TH1I>("hNvtxPassed_Mu8_IP3", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu8_IP3 = fs->make<TH1I>("hAllVtxZ_Mu8_IP3", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
+  hAllNvts_Mu9_IP0 = fs->make<TH1I>("hAllNvts_Mu9_IP0", "Number of vertexes from events with active Mu9_IP0", 101, -0.5, 100.5);
+  hNvtxPassed_Mu9_IP0 = fs->make<TH1I>("hNvtxPassed_Mu9_IP0", "Number of vertexes from events with passed Mu9_IP0", 101, -0.5, 100.5);
+  hAllVtxZ_Mu9_IP0 = fs->make<TH1I>("hAllVtxZ_Mu9_IP0", "Z position of vertexes from events with passed Mu9_IP0", 100, -25, 25);
 
 
-  hAllNvts_Mu7_IP4 = fs->make<TH1I>("hAllNvts_Mu7_IP4", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
-  hNvtxPassed_Mu7_IP4 = fs->make<TH1I>("hNvtxPassed_Mu7_IP4", "Number of true interactions generated in MC", 101, -0.5, 100.5);
-  hAllVtxZ_Mu7_IP4 = fs->make<TH1I>("hAllVtxZ_Mu7_IP4", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
+  hAllNvts_Mu8_IP6 = fs->make<TH1I>("hAllNvts_Mu8_IP6", "Number of vertexes from events with active Mu8_IP6", 101, -0.5, 100.5);
+  hNvtxPassed_Mu8_IP6 = fs->make<TH1I>("hNvtxPassed_Mu8_IP6", "Number of vertexes from events with passed Mu8_IP6", 101, -0.5, 100.5);
+  hAllVtxZ_Mu8_IP6 = fs->make<TH1I>("hAllVtxZ_Mu8_IP6", "Z position of vertexes from events with passed Mu8_IP6", 100, -25, 25);
+
+  hAllNvts_Mu8_IP5 = fs->make<TH1I>("hAllNvts_Mu8_IP5", "Number of vertexes from events with active Mu8_IP5", 101, -0.5, 100.5);
+  hNvtxPassed_Mu8_IP5 = fs->make<TH1I>("hNvtxPassed_Mu8_IP5", "Number of vertexes from events with passed Mu8_IP5", 101, -0.5, 100.5);
+  hAllVtxZ_Mu8_IP5 = fs->make<TH1I>("hAllVtxZ_Mu8_IP5", "Z position of vertexes from events with passed Mu8_IP5", 100, -25, 25);
+
+  hAllNvts_Mu8_IP3 = fs->make<TH1I>("hAllNvts_Mu8_IP3", "Number of vertexes from events with active Mu8_IP3", 101, -0.5, 100.5);
+  hNvtxPassed_Mu8_IP3 = fs->make<TH1I>("hNvtxPassed_Mu8_IP3", "Number of vertexes from events with passed Mu8_IP3", 101, -0.5, 100.5);
+  hAllVtxZ_Mu8_IP3 = fs->make<TH1I>("hAllVtxZ_Mu8_IP3", "Z position of vertexes from events with passed Mu8_IP5", 100, -25, 25);
+
+
+  hAllNvts_Mu7_IP4 = fs->make<TH1I>("hAllNvts_Mu7_IP4", "Number of vertexes from events with active Mu7_IP4", 101, -0.5, 100.5);
+  hNvtxPassed_Mu7_IP4 = fs->make<TH1I>("hNvtxPassed_Mu7_IP4", "Number of vertexes from events with passed Mu7_IP4", 101, -0.5, 100.5);
+  hAllVtxZ_Mu7_IP4 = fs->make<TH1I>("hAllVtxZ_Mu7_IP4", "Z position of vertexes from events with passed Mu7_IP4", 100, -25, 25);
 
   tree = fs->make<TTree>( "T", "Events Tree from N Vtx Produccer");
 }
