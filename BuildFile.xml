@@ -5,24 +5,19 @@
 <use   name="DataFormats/TrackReco"/>
 <use   name="DataFormats/StdDictionaries"/>
 <use   name="DataFormats/VertexReco"/>
-
 <use   name="CommonTools/UtilAlgos"/>
 <use   name="CondFormats/L1TObjects"/>
-
 <use   name="FWCore/Framework"/>
 <use   name="FWCore/PluginManager"/>
 <use   name="FWCore/ParameterSet"/>
 <use   name="FWCore/Utilities"/>
-
 <use   name="MagneticField/Engine"/>
-
 <use   name="RecoVertex/PrimaryVertexProducer"/>
 <use   name="RecoVertex/KinematicFit"/>
 <use   name="RecoVertex/KinematicFitPrimitives"/>
-
 <use   name="TrackingTools/TransientTrack"/>
 <use   name="TrackingTools/Records"/>
 <flags   EDM_PLUGIN="1"/>
 <export>
-   <lib name=myAnalyzersBtoKsMuMu>
+   <lib name="myAnalyzersBtoKsMuMu">
 </export>
