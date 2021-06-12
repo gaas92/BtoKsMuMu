@@ -45,6 +45,57 @@ class NumberOfVertexesProducer : public edm::EDProducer {
       //map<string, TH1D*> hNvtxPassed;
       //map<string, TH1D*> hZvtxPassed;
 
+      TH1I* hAllNvts_Mu12_IP6;
+      TH1I* hAllNTrueIntMC_Mu12_IP6;
+      TH1I* hAllVtxZ_Mu12_IP6;
+
+      
+      TH1I* hAllNvts_Mu9_IP6;
+      TH1I* hAllNTrueIntMC_Mu9_IP6;
+      TH1I* hAllVtxZ_Mu9_IP6;
+
+      TH1I* hAllNvts_Mu9_IP5;
+      TH1I* hAllNTrueIntMC_Mu9_IP5;
+      TH1I* hAllVtxZ_Mu9_IP5;
+
+      TH1I* hAllNvts_Mu9_IP4;
+      TH1I* hAllNTrueIntMC_Mu9_IP4;
+      TH1I* hAllVtxZ_Mu9_IP4;
+
+      TH1I* hAllNvts_Mu9_IP3;
+      TH1I* hAllNTrueIntMC_Mu9_IP3;
+      TH1I* hAllVtxZ_Mu9_IP3;
+
+      TH1I* hAllNvts_Mu9_IP0;
+      TH1I* hAllNTrueIntMC_Mu9_IP0;
+      TH1I* hAllVtxZ_Mu9_IP0;
+
+
+      TH1I* hAllNvts_Mu8_IP6;
+      TH1I* hAllNTrueIntMC_Mu8_IP6;
+      TH1I* hAllVtxZ_Mu8_IP6;
+
+      TH1I* hAllNvts_Mu8_IP5;
+      TH1I* hAllNTrueIntMC_Mu8_IP5;
+      TH1I* hAllVtxZ_Mu8_IP5;
+
+      TH1I* hAllNvts_Mu8_IP3;
+      TH1I* hAllNTrueIntMC_Mu8_IP3;
+      TH1I* hAllVtxZ_Mu8_IP3;
+
+
+      TH1I* hAllNvts_Mu7_IP4;
+      TH1I* hAllNTrueIntMC_Mu7_IP4;
+      TH1I* hAllVtxZ_Mu7_IP4;
+
+      TTree* tree;
+      map<string, float> outMap;
+
+      bool isRealData;
+      unsigned int runNum;
+      unsigned int lumiNum;
+      unsigned long long eventNum;
+
       vector<string> triggerTags = {"Mu12_IP6",
                                     "Mu9_IP6", "Mu9_IP5", "Mu9_IP4", "Mu9_IP3", "Mu9_IP0",
                                     "Mu8_IP6", "Mu8_IP5", "Mu8_IP3",
@@ -116,6 +167,13 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   edm::Handle<vector<reco::Vertex>> vtxHandle;
   iEvent.getByToken(vtxSrc_, vtxHandle);
   auto primaryVtx = (*vtxHandle)[0];
+
+  //BPH trigger footprint
+  regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9].*");
+  const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
+  if (verbose) {cout << "\n ==== TRIGGER PATHS ==== " << endl;}
+
+  //for (auto trgTag : triggerTags){(*outputNtuplizer)["prescale_" + trgTag] = 0;}
 
 }
 
