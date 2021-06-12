@@ -219,6 +219,28 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
 
   }
 
+  auto Nvtx = vtxHandle->size();
+
+  //for (auto kv : hNvtx) {
+  //  if(trgActive[kv.first]) {
+  //    if (verbose) {cout << "Filling active " << kv.first << endl;}
+  //    kv.second->Fill(Nvtx);
+  //  }
+//
+  //  if(trgPassed[kv.first]) {
+  //    if (verbose) {cout << "Filling passed " << kv.first << endl;}
+  //    hNvtxPassed[kv.first]->Fill(Nvtx);
+  //    for(auto vtx : (*vtxHandle)) hZvtxPassed[kv.first]->Fill(vtx.position().z());
+  //  }
+  //}
+
+  outMap["N_vertexes"] = Nvtx;
+
+  addToTree();
+
+  if (verbose) {cout << "======================== " << endl;}
+  return;
+
 }
 
 void NumberOfVertexesProducer::addToTree() {
