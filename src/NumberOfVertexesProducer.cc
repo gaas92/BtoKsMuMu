@@ -117,7 +117,7 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
       // }
 
     }
-
+ 
   }
 
   auto Nvtx = vtxHandle->size();
