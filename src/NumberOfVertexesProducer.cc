@@ -175,7 +175,7 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   edm::Handle<vector<reco::Vertex>> vtxHandle;
   iEvent.getByToken(vtxSrc_, vtxHandle);
   auto primaryVtx = (*vtxHandle)[0];
-  
+
   isRealData = iEvent.isRealData() ? 1 : 0 ;
   runNum     = iEvent.id().run();
   lumiNum    = iEvent.luminosityBlock();
@@ -187,6 +187,37 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   if (verbose) {cout << "\n ==== TRIGGER PATHS ==== " << endl;}
 
   for (auto trgTag : triggerTags) outMap["prescale_" + trgTag] = 0;
+
+  map<string, bool> trgActive;
+  map<string, bool> trgPassed;
+  for (auto trgTag : triggerTags) {
+    trgActive[trgTag] = false;
+    trgPassed[trgTag] = false;
+  }
+  
+  for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
+    auto trgName = names.triggerName(i);
+    if (!regex_match(trgName, txt_regex_path)) continue;
+    if (verbose) {
+      cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
+    }
+
+    for (auto trgTag : triggerTags){
+      bool match = trgName.substr(4, trgTag.size()) == trgTag.c_str();
+      if (match && triggerPrescales->getPrescaleForIndex(i) > 0) trgActive[trgTag] = true;
+      if (match && triggerBits->accept(i)) trgPassed[trgTag] = true;
+
+      // for (int part = 0; part <= 5; part++) {
+      //   regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
+      //   if (regex_match(trgName, rule)) {
+      //     // (*outputNtuplizer)[Form("prescale_%s_part%d", trgTag.c_str(), part)] = triggerPrescales->getPrescaleForIndex(i);
+      //     if (triggerPrescales->getPrescaleForIndex(i) > 0) (*outputNtuplizer)["prescale_" + trgTag]++;
+      //   }
+      // }
+
+    }
+
+  }
 
 }
 
