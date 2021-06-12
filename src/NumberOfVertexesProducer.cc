@@ -225,28 +225,28 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
     if (verbose) {cout << "Filling active " << "Mu12_IP6" << endl;}
     hAllNvts_Mu12_IP6->Fill(Nvtx);
     outMap["Nvtx_Mu12_IP6_A"] = Nvtx; 
-    something_to_fill = true
+    something_to_fill = true;
   }
   if(trgPassed["Mu12_IP6"]) {
     if (verbose) {cout << "Filling passed " << "Mu12_IP6" << endl;}
     hNvtxPassed_Mu12_IP6->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu12_IP6->Fill(vtx.position().z());
     outMap["Nvtx_Mu12_IP6_P"] = Nvtx; 
-    something_to_fill = true
+    something_to_fill = true;
   }
   
   if(trgActive["Mu9_IP6"]) {
     if (verbose) {cout << "Filling active " << "Mu9_IP6" << endl;}
     hAllNvts_Mu9_IP6->Fill(Nvtx);
     outMap["Nvtx_Mu9_IP6_A"] = Nvtx; 
-    something_to_fill = true
+    something_to_fill = true;
   }
   if(trgPassed["Mu9_IP6"]) {
     if (verbose) {cout << "Filling passed " << "Mu9_IP6" << endl;}
     hNvtxPassed_Mu9_IP6->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP6->Fill(vtx.position().z());
     outMap["Nvtx_Mu9_IP6_P"] = Nvtx; 
-    something_to_fill = true
+    something_to_fill = true;
   }
 
   outMap["N_vertexes"] = Nvtx;
