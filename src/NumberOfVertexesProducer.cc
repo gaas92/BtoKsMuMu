@@ -221,6 +221,8 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
 
   auto Nvtx = vtxHandle->size();
   bool something_to_fill = false;
+
+  //pT 12
   if(trgActive["Mu12_IP6"]) {
     if (verbose) {cout << "Filling active " << "Mu12_IP6" << endl;}
     hAllNvts_Mu12_IP6->Fill(Nvtx);
@@ -235,6 +237,8 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
     something_to_fill = true;
   }
   
+
+  //pT 9
   if(trgActive["Mu9_IP6"]) {
     if (verbose) {cout << "Filling active " << "Mu9_IP6" << endl;}
     hAllNvts_Mu9_IP6->Fill(Nvtx);
@@ -246,6 +250,122 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
     hNvtxPassed_Mu9_IP6->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP6->Fill(vtx.position().z());
     outMap["Nvtx_Mu9_IP6_P"] = Nvtx; 
+    something_to_fill = true;
+  }
+
+  if(trgActive["Mu9_IP5"]) {
+    if (verbose) {cout << "Filling active " << "Mu9_IP5" << endl;}
+    hAllNvts_Mu9_IP5->Fill(Nvtx);
+    outMap["Nvtx_Mu9_IP5_A"] = Nvtx; 
+    something_to_fill = true;
+  }
+  if(trgPassed["Mu9_IP5"]) {
+    if (verbose) {cout << "Filling passed " << "Mu9_IP5" << endl;}
+    hNvtxPassed_Mu9_IP5->Fill(Nvtx);
+    for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP5->Fill(vtx.position().z());
+    outMap["Nvtx_Mu9_IP5_P"] = Nvtx; 
+    something_to_fill = true;
+  }
+
+  if(trgActive["Mu9_IP4"]) {
+    if (verbose) {cout << "Filling active " << "Mu9_IP4" << endl;}
+    hAllNvts_Mu9_IP4->Fill(Nvtx);
+    outMap["Nvtx_Mu9_IP4_A"] = Nvtx; 
+    something_to_fill = true;
+  }
+  if(trgPassed["Mu9_IP4"]) {
+    if (verbose) {cout << "Filling passed " << "Mu9_IP4" << endl;}
+    hNvtxPassed_Mu9_IP4->Fill(Nvtx);
+    for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP4->Fill(vtx.position().z());
+    outMap["Nvtx_Mu9_IP4_P"] = Nvtx; 
+    something_to_fill = true;
+  }
+
+  if(trgActive["Mu9_IP3"]) {
+    if (verbose) {cout << "Filling active " << "Mu9_IP3" << endl;}
+    hAllNvts_Mu9_IP3->Fill(Nvtx);
+    outMap["Nvtx_Mu9_IP3_A"] = Nvtx; 
+    something_to_fill = true;
+  }
+  if(trgPassed["Mu9_IP3"]) {
+    if (verbose) {cout << "Filling passed " << "Mu9_IP3" << endl;}
+    hNvtxPassed_Mu9_IP3->Fill(Nvtx);
+    for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP3->Fill(vtx.position().z());
+    outMap["Nvtx_Mu9_IP3_P"] = Nvtx; 
+    something_to_fill = true;
+  }
+
+  if(trgActive["Mu9_IP0"]) {
+    if (verbose) {cout << "Filling active " << "Mu9_IP0" << endl;}
+    hAllNvts_Mu9_IP0->Fill(Nvtx);
+    outMap["Nvtx_Mu9_IP0_A"] = Nvtx; 
+    something_to_fill = true;
+  }
+  if(trgPassed["Mu9_IP0"]) {
+    if (verbose) {cout << "Filling passed " << "Mu9_IP0" << endl;}
+    hNvtxPassed_Mu9_IP0->Fill(Nvtx);
+    for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP0->Fill(vtx.position().z());
+    outMap["Nvtx_Mu9_IP0_P"] = Nvtx; 
+    something_to_fill = true;
+  }
+
+  
+  //pT 8
+  if(trgActive["Mu8_IP6"]) {
+    if (verbose) {cout << "Filling active " << "Mu8_IP6" << endl;}
+    hAllNvts_Mu8_IP6->Fill(Nvtx);
+    outMap["Nvtx_Mu8_IP6_A"] = Nvtx; 
+    something_to_fill = true;
+  }
+  if(trgPassed["Mu8_IP6"]) {
+    if (verbose) {cout << "Filling passed " << "Mu8_IP6" << endl;}
+    hNvtxPassed_Mu8_IP6->Fill(Nvtx);
+    for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu8_IP6->Fill(vtx.position().z());
+    outMap["Nvtx_Mu8_IP6_P"] = Nvtx; 
+    something_to_fill = true;
+  }
+
+  if(trgActive["Mu8_IP5"]) {
+    if (verbose) {cout << "Filling active " << "Mu8_IP5" << endl;}
+    hAllNvts_Mu8_IP5->Fill(Nvtx);
+    outMap["Nvtx_Mu8_IP5_A"] = Nvtx; 
+    something_to_fill = true;
+  }
+  if(trgPassed["Mu8_IP5"]) {
+    if (verbose) {cout << "Filling passed " << "Mu8_IP5" << endl;}
+    hNvtxPassed_Mu8_IP5->Fill(Nvtx);
+    for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu8_IP5->Fill(vtx.position().z());
+    outMap["Nvtx_Mu8_IP5_P"] = Nvtx; 
+    something_to_fill = true;
+  }
+
+  if(trgActive["Mu8_IP3"]) {
+    if (verbose) {cout << "Filling active " << "Mu8_IP3" << endl;}
+    hAllNvts_Mu8_IP3->Fill(Nvtx);
+    outMap["Nvtx_Mu8_IP3_A"] = Nvtx; 
+    something_to_fill = true;
+  }
+  if(trgPassed["Mu8_IP3"]) {
+    if (verbose) {cout << "Filling passed " << "Mu8_IP3" << endl;}
+    hNvtxPassed_Mu8_IP3->Fill(Nvtx);
+    for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu8_IP3->Fill(vtx.position().z());
+    outMap["Nvtx_Mu8_IP3_P"] = Nvtx; 
+    something_to_fill = true;
+  }
+
+
+  //pT 7 
+  if(trgActive["Mu7_IP4"]) {
+    if (verbose) {cout << "Filling active " << "Mu7_IP4" << endl;}
+    hAllNvts_Mu7_IP4->Fill(Nvtx);
+    outMap["Nvtx_Mu7_IP4_A"] = Nvtx; 
+    something_to_fill = true;
+  }
+  if(trgPassed["Mu7_IP4"]) {
+    if (verbose) {cout << "Filling passed " << "Mu7_IP4" << endl;}
+    hNvtxPassed_Mu7_IP4->Fill(Nvtx);
+    for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu7_IP4->Fill(vtx.position().z());
+    outMap["Nvtx_Mu7_IP4_P"] = Nvtx; 
     something_to_fill = true;
   }
 
