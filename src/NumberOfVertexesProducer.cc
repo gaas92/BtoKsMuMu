@@ -228,6 +228,7 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   
   unsigned int trigger = 0;
   unsigned int NTRIGGERS = 20;
+
   std::string TriggersToTest[NTRIGGERS] = {
      "HLT_Mu12_IP6", //0
 	   "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-5
@@ -244,7 +245,7 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
 	    for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
 		    std::string triggerName = TheTriggerNames.triggerName(h); 
 		    if (triggerName.find(TriggersToTest[i]) != std::string::npos && !found_){
-			    trigger += (1<<i);
+			    //trigger += (1<<i);
 			    found_ = true;
           something_to_fill = true;
           outMap[TriggersToTest[i]] = Nvtx; 
