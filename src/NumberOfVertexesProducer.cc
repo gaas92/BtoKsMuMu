@@ -225,7 +225,8 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   //Old used Trigger info
   auto Nvtx = vtxHandle->size();
   bool something_to_fill = false;
-
+  
+  unsigned int NTRIGGERS = 20;
   std::string TriggersToTest[NTRIGGERS] = {
      "HLT_Mu12_IP6", //0
 	   "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-5
