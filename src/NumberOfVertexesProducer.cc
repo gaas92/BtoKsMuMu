@@ -226,6 +226,7 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   auto Nvtx = vtxHandle->size();
   bool something_to_fill = false;
   
+  unsigned int trigger = 0;
   unsigned int NTRIGGERS = 20;
   std::string TriggersToTest[NTRIGGERS] = {
      "HLT_Mu12_IP6", //0
@@ -252,7 +253,7 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
     }
   } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
 
-
+  if(something_to_fill) outMap["Trigger_Int"] = trigger;
 
   //pT 12
   if(trgActive["Mu12_IP6"]) {
