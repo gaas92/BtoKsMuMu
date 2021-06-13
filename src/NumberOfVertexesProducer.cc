@@ -245,7 +245,7 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
 	    for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
 		    std::string triggerName = TheTriggerNames.triggerName(h); 
 		    if (triggerName.find(TriggersToTest[i]) != std::string::npos && !found_){
-			    //trigger += (1<<i);
+			    trigger += (1<<i);
 			    found_ = true;
           something_to_fill = true;
           outMap[TriggersToTest[i]] = Nvtx; 
