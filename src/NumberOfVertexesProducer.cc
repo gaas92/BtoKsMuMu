@@ -176,6 +176,10 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   iEvent.getByToken(vtxSrc_, vtxHandle);
   auto primaryVtx = (*vtxHandle)[0];
 
+  //Old used Trigger info
+  edm::Handle<edm::TriggerResults> triggerResults_handle;
+  iEvent.getByToken(triggerBitsSrc_, triggerResults_handle);
+
   isRealData = iEvent.isRealData() ? 1 : 0 ;
   runNum     = iEvent.id().run();
   lumiNum    = iEvent.luminosityBlock();
@@ -218,9 +222,36 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
     }
 
   }
-
+  //Old used Trigger info
   auto Nvtx = vtxHandle->size();
   bool something_to_fill = false;
+
+  std::string TriggersToTest[NTRIGGERS] = {
+     "HLT_Mu12_IP6", //0
+	   "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-5
+     "HLT_Mu8_IP3","HLT_Mu8_IP5", "HLT_Mu8_IP6", //6-8
+     "HLT_Mu7_IP4", //9
+  	 "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18", "L1_SingleMu14", "L1_SingleMu12", "L1_SingleMu10", //10-15
+	   "L1_SingleMu9", "L1_SingleMu8", "L1_SingleMu7", "L1_SingleMu6"}; //16-19
+
+  if ( triggerResults_handle.isValid()) {
+    const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+
+    for (unsigned int i = 0; i < NTRIGGERS; i++) {
+	    bool found_ = false; 
+	    for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
+		    std::string triggerName = TheTriggerNames.triggerName(h); 
+		    if (triggerName.find(TriggersToTest[i]) != std::string::npos && !found_){
+			    trigger += (1<<i);
+			    found_ = true;
+          something_to_fill = true;
+          outMap[TriggersToTest[i]] = Nvtx; 
+		    } 
+	    }
+    }
+  } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
+
+
 
   //pT 12
   if(trgActive["Mu12_IP6"]) {
