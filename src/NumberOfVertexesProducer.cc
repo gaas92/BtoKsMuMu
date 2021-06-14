@@ -146,7 +146,7 @@ NumberOfVertexesProducer::NumberOfVertexesProducer(const edm::ParameterSet& iCon
   hAllVtxZ_Mu9_IP5 = fs->make<TH1I>("hAllVtxZ_Mu9_IP5", "Z position of vertexes from events with passed Mu9_IP5", 100, -25, 25);
 
   hAllNvts_Mu9_IP4 = fs->make<TH1I>("hAllNvts_Mu9_IP4", "Number of vertexes from events with active Mu9_IP4", 101, -0.5, 100.5);
-  olds_Mu9_IP4 = fs->make<TH1I>("old_Mu9_IP4", "Number of vertexes from events with old trigger Mu9_IP4", 101, -0.5, 100.5);
+  old_Mu9_IP4 = fs->make<TH1I>("old_Mu9_IP4", "Number of vertexes from events with old trigger Mu9_IP4", 101, -0.5, 100.5);
   hNvtxPassed_Mu9_IP4 = fs->make<TH1I>("hNvtxPassed_Mu9_IP4", "Number of vertexes from events with passed Mu9_IP4", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP4 = fs->make<TH1I>("hAllVtxZ_Mu9_IP4", "Z position of vertexes from events with passed Mu9_IP4", 100, -25, 25);
 
