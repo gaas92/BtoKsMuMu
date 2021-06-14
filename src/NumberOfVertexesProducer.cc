@@ -53,45 +53,55 @@ class NumberOfVertexesProducer : public edm::EDProducer {
       //map<string, TH1D*> hZvtxPassed;
 
       TH1I* hAllNvts_Mu12_IP6;
+      TH1I* old_Mu12_IP6;
       TH1I* hNvtxPassed_Mu12_IP6;
       TH1I* hAllVtxZ_Mu12_IP6;
 
       
       TH1I* hAllNvts_Mu9_IP6;
+      TH1I* old_Mu9_IP6;
       TH1I* hNvtxPassed_Mu9_IP6;
       TH1I* hAllVtxZ_Mu9_IP6;
 
       TH1I* hAllNvts_Mu9_IP5;
+      TH1I* old_Mu9_IP5;
       TH1I* hNvtxPassed_Mu9_IP5;
       TH1I* hAllVtxZ_Mu9_IP5;
 
       TH1I* hAllNvts_Mu9_IP4;
+      TH1I* old_Mu9_IP4;
       TH1I* hNvtxPassed_Mu9_IP4;
       TH1I* hAllVtxZ_Mu9_IP4;
 
       TH1I* hAllNvts_Mu9_IP3;
+      TH1I* old_Mu9_IP3;
       TH1I* hNvtxPassed_Mu9_IP3;
       TH1I* hAllVtxZ_Mu9_IP3;
 
       TH1I* hAllNvts_Mu9_IP0;
+      TH1I* old_Mu9_IP0;
       TH1I* hNvtxPassed_Mu9_IP0;
       TH1I* hAllVtxZ_Mu9_IP0;
 
 
       TH1I* hAllNvts_Mu8_IP6;
+      TH1I* old_Mu8_IP6;
       TH1I* hNvtxPassed_Mu8_IP6;
       TH1I* hAllVtxZ_Mu8_IP6;
 
       TH1I* hAllNvts_Mu8_IP5;
+      TH1I* old_Mu8_IP5;
       TH1I* hNvtxPassed_Mu8_IP5;
       TH1I* hAllVtxZ_Mu8_IP5;
 
       TH1I* hAllNvts_Mu8_IP3;
+      TH1I* old_Mu8_IP3;
       TH1I* hNvtxPassed_Mu8_IP3;
       TH1I* hAllVtxZ_Mu8_IP3;
 
 
       TH1I* hAllNvts_Mu7_IP4;
+      TH1I* old_Mu7_IP4;
       TH1I* hNvtxPassed_Mu7_IP4;
       TH1I* hAllVtxZ_Mu7_IP4;
 
