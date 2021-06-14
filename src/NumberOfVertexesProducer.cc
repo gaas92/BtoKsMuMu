@@ -120,45 +120,55 @@ NumberOfVertexesProducer::NumberOfVertexesProducer(const edm::ParameterSet& iCon
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {
   hAllNvts_Mu12_IP6 = fs->make<TH1I>("hAllNvts_Mu12_IP6", "Number of vertexes from events with active Mu12_IP6", 101, -0.5, 100.5);
+  old_Mu12_IP6 = fs->make<TH1I>("old_Mu12_IP6", "Number of vertexes from events with old trigger Mu12_IP6", 101, -0.5, 100.5);
   hNvtxPassed_Mu12_IP6 = fs->make<TH1I>("hNvtxPassed_Mu12_IP6", "Number of vertexes from events with passed Mu12_IP6", 101, -0.5, 100.5);
   hAllVtxZ_Mu12_IP6 = fs->make<TH1I>("hAllVtxZ_Mu12_IP6", "Z position of vertexes from events with passed Mu12_IP6", 100, -25, 25);
 
 
   hAllNvts_Mu9_IP6 = fs->make<TH1I>("hAllNvts_Mu9_IP6", "Number of vertexes from events with active Mu9_IP6", 101, -0.5, 100.5);
+  old_Mu9_IP6 = fs->make<TH1I>("old_Mu9_IP6", "Number of vertexes from events with old trigger Mu9_IP6", 101, -0.5, 100.5);
   hNvtxPassed_Mu9_IP6 = fs->make<TH1I>("hNvtxPassed_Mu9_IP6", "Number of vertexes from events with passed Mu9_IP6", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP6 = fs->make<TH1I>("hAllVtxZ_Mu9_IP6", "Z position of vertexes from events with passed Mu9_IP6", 100, -25, 25);
 
   hAllNvts_Mu9_IP5 = fs->make<TH1I>("hAllNvts_Mu9_IP5", "Number of vertexes from events with active Mu9_IP5", 101, -0.5, 100.5);
+  old_Mu9_IP5 = fs->make<TH1I>("old_Mu9_IP5", "Number of vertexes from events with old trigger Mu9_IP5", 101, -0.5, 100.5);
   hNvtxPassed_Mu9_IP5 = fs->make<TH1I>("hNvtxPassed_Mu9_IP5", "Number of vertexes from events with passed Mu9_IP5", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP5 = fs->make<TH1I>("hAllVtxZ_Mu9_IP5", "Z position of vertexes from events with passed Mu9_IP5", 100, -25, 25);
 
   hAllNvts_Mu9_IP4 = fs->make<TH1I>("hAllNvts_Mu9_IP4", "Number of vertexes from events with active Mu9_IP4", 101, -0.5, 100.5);
+  olds_Mu9_IP4 = fs->make<TH1I>("old_Mu9_IP4", "Number of vertexes from events with old trigger Mu9_IP4", 101, -0.5, 100.5);
   hNvtxPassed_Mu9_IP4 = fs->make<TH1I>("hNvtxPassed_Mu9_IP4", "Number of vertexes from events with passed Mu9_IP4", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP4 = fs->make<TH1I>("hAllVtxZ_Mu9_IP4", "Z position of vertexes from events with passed Mu9_IP4", 100, -25, 25);
 
   hAllNvts_Mu9_IP3 = fs->make<TH1I>("hAllNvts_Mu9_IP3", "Number of vertexes from events with active Mu9_IP3", 101, -0.5, 100.5);
+  old_Mu9_IP3 = fs->make<TH1I>("old_Mu9_IP3", "Number of vertexes from events with old trigger Mu9_IP3", 101, -0.5, 100.5);
   hNvtxPassed_Mu9_IP3 = fs->make<TH1I>("hNvtxPassed_Mu9_IP3", "Number of vertexes from events with passed Mu9_IP3", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP3 = fs->make<TH1I>("hAllVtxZ_Mu9_IP3", "Z position of vertexes from events with passed Mu9_IP3", 100, -25, 25);
 
   hAllNvts_Mu9_IP0 = fs->make<TH1I>("hAllNvts_Mu9_IP0", "Number of vertexes from events with active Mu9_IP0", 101, -0.5, 100.5);
+  old_Mu9_IP0 = fs->make<TH1I>("old_Mu9_IP0", "Number of vertexes from events with old trigger Mu9_IP0", 101, -0.5, 100.5);
   hNvtxPassed_Mu9_IP0 = fs->make<TH1I>("hNvtxPassed_Mu9_IP0", "Number of vertexes from events with passed Mu9_IP0", 101, -0.5, 100.5);
   hAllVtxZ_Mu9_IP0 = fs->make<TH1I>("hAllVtxZ_Mu9_IP0", "Z position of vertexes from events with passed Mu9_IP0", 100, -25, 25);
 
 
   hAllNvts_Mu8_IP6 = fs->make<TH1I>("hAllNvts_Mu8_IP6", "Number of vertexes from events with active Mu8_IP6", 101, -0.5, 100.5);
+  old_Mu8_IP6 = fs->make<TH1I>("old_Mu8_IP6", "Number of vertexes from events with old trigger Mu8_IP6", 101, -0.5, 100.5);
   hNvtxPassed_Mu8_IP6 = fs->make<TH1I>("hNvtxPassed_Mu8_IP6", "Number of vertexes from events with passed Mu8_IP6", 101, -0.5, 100.5);
   hAllVtxZ_Mu8_IP6 = fs->make<TH1I>("hAllVtxZ_Mu8_IP6", "Z position of vertexes from events with passed Mu8_IP6", 100, -25, 25);
 
   hAllNvts_Mu8_IP5 = fs->make<TH1I>("hAllNvts_Mu8_IP5", "Number of vertexes from events with active Mu8_IP5", 101, -0.5, 100.5);
+  old_Mu8_IP5 = fs->make<TH1I>("old_Mu8_IP5", "Number of vertexes from events with old trigger Mu8_IP5", 101, -0.5, 100.5);
   hNvtxPassed_Mu8_IP5 = fs->make<TH1I>("hNvtxPassed_Mu8_IP5", "Number of vertexes from events with passed Mu8_IP5", 101, -0.5, 100.5);
   hAllVtxZ_Mu8_IP5 = fs->make<TH1I>("hAllVtxZ_Mu8_IP5", "Z position of vertexes from events with passed Mu8_IP5", 100, -25, 25);
 
   hAllNvts_Mu8_IP3 = fs->make<TH1I>("hAllNvts_Mu8_IP3", "Number of vertexes from events with active Mu8_IP3", 101, -0.5, 100.5);
+  old_Mu8_IP3 = fs->make<TH1I>("old_Mu8_IP3", "Number of vertexes from events with old trigger Mu8_IP3", 101, -0.5, 100.5);
   hNvtxPassed_Mu8_IP3 = fs->make<TH1I>("hNvtxPassed_Mu8_IP3", "Number of vertexes from events with passed Mu8_IP3", 101, -0.5, 100.5);
   hAllVtxZ_Mu8_IP3 = fs->make<TH1I>("hAllVtxZ_Mu8_IP3", "Z position of vertexes from events with passed Mu8_IP5", 100, -25, 25);
 
 
   hAllNvts_Mu7_IP4 = fs->make<TH1I>("hAllNvts_Mu7_IP4", "Number of vertexes from events with active Mu7_IP4", 101, -0.5, 100.5);
+  old_Mu7_IP4 = fs->make<TH1I>("old_Mu7_IP4", "Number of vertexes from events with old Mu7_IP4", 101, -0.5, 100.5);
   hNvtxPassed_Mu7_IP4 = fs->make<TH1I>("hNvtxPassed_Mu7_IP4", "Number of vertexes from events with passed Mu7_IP4", 101, -0.5, 100.5);
   hAllVtxZ_Mu7_IP4 = fs->make<TH1I>("hAllVtxZ_Mu7_IP4", "Z position of vertexes from events with passed Mu7_IP4", 100, -25, 25);
 
@@ -248,26 +258,58 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
 			    trigger += (1<<i);
 			    found_ = true;
           something_to_fill = true;
-          outMap[TriggersToTest[i]] = Nvtx; 
+          if (triggerName.find("HLT_Mu12_IP6") != std::string::npos){
+            old_Mu12_IP6->Fill(Nvtx);
+		      }
+
+          if (triggerName.find("HLT_Mu9_IP6") != std::string::npos){
+            old_Mu9_IP6->Fill(Nvtx);
+		      }
+          if (triggerName.find("HLT_Mu9_IP5") != std::string::npos){
+            old_Mu9_IP5->Fill(Nvtx);
+		      }
+          if (triggerName.find("HLT_Mu9_IP4") != std::string::npos){
+            old_Mu9_IP4->Fill(Nvtx);
+		      }
+          if (triggerName.find("HLT_Mu9_IP3") != std::string::npos){
+            old_Mu9_IP3->Fill(Nvtx);
+		      }
+          if (triggerName.find("HLT_Mu9_IP0") != std::string::npos){
+            old_Mu9_IP0->Fill(Nvtx);
+		      }
+
+          if (triggerName.find("HLT_Mu8_IP6") != std::string::npos){
+            old_Mu8_IP6->Fill(Nvtx);
+		      }     
+          if (triggerName.find("HLT_Mu8_IP5") != std::string::npos){
+            old_Mu8_IP5->Fill(Nvtx);
+		      }   
+          if (triggerName.find("HLT_Mu8_IP3") != std::string::npos){
+            old_Mu8_IP3->Fill(Nvtx);
+		      }
+
+          if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){
+            old_Mu7_IP4->Fill(Nvtx);
+		      }  
 		    } 
 	    }
     }
   } else std::cout << "*** NO triggerResults found " << iEvent.id().run() << "," << iEvent.id().event() << std::endl;
 
-  if(something_to_fill) outMap["Trigger_Int"] = trigger;
+  outMap["Trigger_Int"] = trigger;
 
   //pT 12
   if(trgActive["Mu12_IP6"]) {
     if (verbose) {cout << "Filling active " << "Mu12_IP6" << endl;}
     hAllNvts_Mu12_IP6->Fill(Nvtx);
-    outMap["Nvtx_Mu12_IP6_A"] = Nvtx; 
+    //outMap["Nvtx_Mu12_IP6_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu12_IP6"]) {
     if (verbose) {cout << "Filling passed " << "Mu12_IP6" << endl;}
     hNvtxPassed_Mu12_IP6->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu12_IP6->Fill(vtx.position().z());
-    outMap["Nvtx_Mu12_IP6_P"] = Nvtx; 
+    //outMap["Nvtx_Mu12_IP6_P"] = Nvtx; 
     something_to_fill = true;
   }
   
@@ -276,70 +318,70 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   if(trgActive["Mu9_IP6"]) {
     if (verbose) {cout << "Filling active " << "Mu9_IP6" << endl;}
     hAllNvts_Mu9_IP6->Fill(Nvtx);
-    outMap["Nvtx_Mu9_IP6_A"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP6_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu9_IP6"]) {
     if (verbose) {cout << "Filling passed " << "Mu9_IP6" << endl;}
     hNvtxPassed_Mu9_IP6->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP6->Fill(vtx.position().z());
-    outMap["Nvtx_Mu9_IP6_P"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP6_P"] = Nvtx; 
     something_to_fill = true;
   }
 
   if(trgActive["Mu9_IP5"]) {
     if (verbose) {cout << "Filling active " << "Mu9_IP5" << endl;}
     hAllNvts_Mu9_IP5->Fill(Nvtx);
-    outMap["Nvtx_Mu9_IP5_A"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP5_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu9_IP5"]) {
     if (verbose) {cout << "Filling passed " << "Mu9_IP5" << endl;}
     hNvtxPassed_Mu9_IP5->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP5->Fill(vtx.position().z());
-    outMap["Nvtx_Mu9_IP5_P"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP5_P"] = Nvtx; 
     something_to_fill = true;
   }
 
   if(trgActive["Mu9_IP4"]) {
     if (verbose) {cout << "Filling active " << "Mu9_IP4" << endl;}
     hAllNvts_Mu9_IP4->Fill(Nvtx);
-    outMap["Nvtx_Mu9_IP4_A"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP4_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu9_IP4"]) {
     if (verbose) {cout << "Filling passed " << "Mu9_IP4" << endl;}
     hNvtxPassed_Mu9_IP4->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP4->Fill(vtx.position().z());
-    outMap["Nvtx_Mu9_IP4_P"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP4_P"] = Nvtx; 
     something_to_fill = true;
   }
 
   if(trgActive["Mu9_IP3"]) {
     if (verbose) {cout << "Filling active " << "Mu9_IP3" << endl;}
     hAllNvts_Mu9_IP3->Fill(Nvtx);
-    outMap["Nvtx_Mu9_IP3_A"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP3_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu9_IP3"]) {
     if (verbose) {cout << "Filling passed " << "Mu9_IP3" << endl;}
     hNvtxPassed_Mu9_IP3->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP3->Fill(vtx.position().z());
-    outMap["Nvtx_Mu9_IP3_P"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP3_P"] = Nvtx; 
     something_to_fill = true;
   }
 
   if(trgActive["Mu9_IP0"]) {
     if (verbose) {cout << "Filling active " << "Mu9_IP0" << endl;}
     hAllNvts_Mu9_IP0->Fill(Nvtx);
-    outMap["Nvtx_Mu9_IP0_A"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP0_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu9_IP0"]) {
     if (verbose) {cout << "Filling passed " << "Mu9_IP0" << endl;}
     hNvtxPassed_Mu9_IP0->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu9_IP0->Fill(vtx.position().z());
-    outMap["Nvtx_Mu9_IP0_P"] = Nvtx; 
+    //outMap["Nvtx_Mu9_IP0_P"] = Nvtx; 
     something_to_fill = true;
   }
 
@@ -348,42 +390,42 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   if(trgActive["Mu8_IP6"]) {
     if (verbose) {cout << "Filling active " << "Mu8_IP6" << endl;}
     hAllNvts_Mu8_IP6->Fill(Nvtx);
-    outMap["Nvtx_Mu8_IP6_A"] = Nvtx; 
+    //outMap["Nvtx_Mu8_IP6_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu8_IP6"]) {
     if (verbose) {cout << "Filling passed " << "Mu8_IP6" << endl;}
     hNvtxPassed_Mu8_IP6->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu8_IP6->Fill(vtx.position().z());
-    outMap["Nvtx_Mu8_IP6_P"] = Nvtx; 
+    //outMap["Nvtx_Mu8_IP6_P"] = Nvtx; 
     something_to_fill = true;
   }
 
   if(trgActive["Mu8_IP5"]) {
     if (verbose) {cout << "Filling active " << "Mu8_IP5" << endl;}
     hAllNvts_Mu8_IP5->Fill(Nvtx);
-    outMap["Nvtx_Mu8_IP5_A"] = Nvtx; 
+    //outMap["Nvtx_Mu8_IP5_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu8_IP5"]) {
     if (verbose) {cout << "Filling passed " << "Mu8_IP5" << endl;}
     hNvtxPassed_Mu8_IP5->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu8_IP5->Fill(vtx.position().z());
-    outMap["Nvtx_Mu8_IP5_P"] = Nvtx; 
+    //outMap["Nvtx_Mu8_IP5_P"] = Nvtx; 
     something_to_fill = true;
   }
 
   if(trgActive["Mu8_IP3"]) {
     if (verbose) {cout << "Filling active " << "Mu8_IP3" << endl;}
     hAllNvts_Mu8_IP3->Fill(Nvtx);
-    outMap["Nvtx_Mu8_IP3_A"] = Nvtx; 
+    //outMap["Nvtx_Mu8_IP3_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu8_IP3"]) {
     if (verbose) {cout << "Filling passed " << "Mu8_IP3" << endl;}
     hNvtxPassed_Mu8_IP3->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu8_IP3->Fill(vtx.position().z());
-    outMap["Nvtx_Mu8_IP3_P"] = Nvtx; 
+    //outMap["Nvtx_Mu8_IP3_P"] = Nvtx; 
     something_to_fill = true;
   }
 
@@ -392,14 +434,14 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   if(trgActive["Mu7_IP4"]) {
     if (verbose) {cout << "Filling active " << "Mu7_IP4" << endl;}
     hAllNvts_Mu7_IP4->Fill(Nvtx);
-    outMap["Nvtx_Mu7_IP4_A"] = Nvtx; 
+    //outMap["Nvtx_Mu7_IP4_A"] = Nvtx; 
     something_to_fill = true;
   }
   if(trgPassed["Mu7_IP4"]) {
     if (verbose) {cout << "Filling passed " << "Mu7_IP4" << endl;}
     hNvtxPassed_Mu7_IP4->Fill(Nvtx);
     for(auto vtx : (*vtxHandle)) hAllVtxZ_Mu7_IP4->Fill(vtx.position().z());
-    outMap["Nvtx_Mu7_IP4_P"] = Nvtx; 
+    //outMap["Nvtx_Mu7_IP4_P"] = Nvtx; 
     something_to_fill = true;
   }
 
