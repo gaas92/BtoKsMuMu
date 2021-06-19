@@ -211,6 +211,15 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
   if (verbose) {cout << "\n ==== TRIGGER PATHS ==== " << endl;}
 
   //for (auto trgTag : triggerTags) outMap["prescale_" + trgTag] = 0;
+  unsigned int NTRIGGERS = 20;
+  std::string TriggersToTest[NTRIGGERS] = {
+     "Mu12_IP6", //0
+	   "Mu9_IP0","Mu9_IP3", "Mu9_IP4", "Mu9_IP5", "Mu9_IP6", //1-5
+     "Mu8_IP3","Mu8_IP5", "Mu8_IP6", //6-8
+     "Mu7_IP4", //9
+  	 "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18", "L1_SingleMu14", "L1_SingleMu12", "L1_SingleMu10", //10-15
+	   "L1_SingleMu9", "L1_SingleMu8", "L1_SingleMu7", "L1_SingleMu6"}; //16-19
+  unsigned int new_trigger = 0;
 
   map<string, bool> trgActive;
   map<string, bool> trgPassed;
@@ -229,8 +238,13 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
     for (auto trgTag : triggerTags){
       bool match = trgName.substr(4, trgTag.size()) == trgTag.c_str();
       if (match && triggerPrescales->getPrescaleForIndex(i) > 0) trgActive[trgTag] = true;
-      if (match && triggerBits->accept(i)) trgPassed[trgTag] = true;
-
+      if (match && triggerBits->accept(i)){
+        trgPassed[trgTag] = true;
+        for(unsigned int k = 0; k < NTRIGGERS; i++){
+		      if (trgTag.find(TriggersToTest[i]) != std::string::npos){
+            new_trigger += (1<<k);
+          }
+        }
        //for (int part = 0; part <= 5; part++) {
        //  regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
        //  if (regex_match(trgName, rule)) {
@@ -239,23 +253,15 @@ void NumberOfVertexesProducer::produce(edm::Event& iEvent, const edm::EventSetup
        //  }
        //}
 
+      }
     }
-
   }
+  outMap["NewTrigger_Int"] = new_trigger;
   //Old used Trigger info
   auto Nvtx = vtxHandle->size();
   bool something_to_fill = false;
   
   unsigned int trigger = 0;
-  unsigned int NTRIGGERS = 20;
-
-  std::string TriggersToTest[NTRIGGERS] = {
-     "HLT_Mu12_IP6", //0
-	   "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-5
-     "HLT_Mu8_IP3","HLT_Mu8_IP5", "HLT_Mu8_IP6", //6-8
-     "HLT_Mu7_IP4", //9
-  	 "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18", "L1_SingleMu14", "L1_SingleMu12", "L1_SingleMu10", //10-15
-	   "L1_SingleMu9", "L1_SingleMu8", "L1_SingleMu7", "L1_SingleMu6"}; //16-19
 
   if ( triggerResults_handle.isValid()) {
     const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
