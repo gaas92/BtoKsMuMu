@@ -84,6 +84,7 @@ process.source = cms.Source("PoolSource",
         #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/05030414-6C93-DC46-AD09-68D76E2FB466.root'
 
         #Files with problems in crab:
+        '/store/data/Run2018D/ParkingBPH1/MINIAOD/05May2019promptD-v1/50004/44EDA4E4-0807-8D4C-9ED5-6159DA0D5C2C.root',
         '/store/data/Run2018D/ParkingBPH1/MINIAOD/05May2019promptD-v1/50004/45F5AB3C-34F0-5949-A7AA-1B21643731DA.root'
  ),
     inputCommands=cms.untracked.vstring('keep *',
