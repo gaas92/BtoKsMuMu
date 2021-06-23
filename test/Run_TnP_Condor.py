@@ -74,8 +74,8 @@ process.GlobalTag = GlobalTag(process.GlobalTag, options.globalTag , '')
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(options.maxE)
 )
-
-files_my_gen = [string for string in open(options.input_file).readlines() if len(string) > 10]
+f
+files_my_gen = [string for string in open(options.inputFile).readlines() if len(string) > 10]
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
