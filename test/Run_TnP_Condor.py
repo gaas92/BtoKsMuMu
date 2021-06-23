@@ -1,7 +1,8 @@
 #Taken from: https://github.com/ocerri/BPH_RDntuplizer/blob/master/config/cmssw_privateMC_TagAndProbeTrigger.py
 import os, sys
 import FWCore.ParameterSet.Config as cms
-import FWCore.ParameterSet.VarParsing as VarParsing
+#import FWCore.ParameterSet.VarParsing as VarParsing
+from FWCore.ParameterSet.VarParsing import VarParsing
 
 from Configuration.StandardSequences.Eras import eras
 process = cms.Process('BPHRDntuplizer', eras.Run2_2018)
@@ -23,7 +24,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 ############ Command line args ################
 '''
 
-options = VarParsing.VarParsing('python')
+options = VarParsing('python')
 
 options.register('isMC', False,
                 VarParsing.multiplicity.singleton,
