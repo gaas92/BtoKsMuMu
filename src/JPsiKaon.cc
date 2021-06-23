@@ -212,6 +212,9 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if(iMuon2->charge() == 1) { glbTrackP = iMuon2->track();}
 	  if(iMuon2->charge() == -1){ glbTrackM = iMuon2->track();}
 	  
+	  if( !iMuon1->isSoftMuon(bestVtx)) continue;
+	  if( !iMuon2->isSoftMuon(bestVtx)) continue; 
+
 	  if( glbTrackP.isNull() || glbTrackM.isNull() ) 
 	    {
 	      //std::cout << "continue due to no track ref" << endl;
@@ -306,7 +309,7 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  double J_Prob_tmp   = TMath::Prob(psi_vFit_vertex_noMC->chiSquared(),(int)psi_vFit_vertex_noMC->degreesOfFreedom());
 	  if(J_Prob_tmp<0.01)
 	    {
-	      //continue;
+	      continue;
 	    }
 	  
 	  //Now that we have a J/psi candidate, we look for K^+ candidates
@@ -417,7 +420,8 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   KinematicParameters VCandKP = kCandMC->currentState().kinematicParameters();
 		   	       
 		   // ************ fill candidate variables now
-		   
+		   //add cuts by me
+		   if (bCandMC->currentState().globalMomentum().pt() < 8.0) continue 
 		   // Only save the first time
 		   if(nB==0){	    
 		     nMu  = nMu_tmp;
