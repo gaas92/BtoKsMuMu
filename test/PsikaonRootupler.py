@@ -33,17 +33,17 @@ process.source = cms.Source("PoolSource",
  )
 )
 
-process.triggerSelection = cms.EDFilter("TriggerResultsFilter",
-                                        triggerConditions = cms.vstring('HLT_Dimuon20_Jpsi_Barrel_Seagulls_v*',
-                                                                        'HLT_Dimuon25_Jpsi_v*',
-                                                                        'HLT_DoubleMu4_JpsiTrk_Displaced_v*',
-                                                                        'HLT_DoubleMu4_JpsiTrkTrk_Displaced_v*',
-                                                                        'HLT_DoubleMu4_Jpsi_Displaced_v*'                                   
-                                                                       ),
-                                        hltResults = cms.InputTag( "TriggerResults", "", "HLT" ),
-                                        l1tResults = cms.InputTag( "" ),
-                                        throw = cms.bool(False)
-                                        )
+#process.triggerSelection = cms.EDFilter("TriggerResultsFilter",
+#                                        triggerConditions = cms.vstring('HLT_Dimuon20_Jpsi_Barrel_Seagulls_v*',
+#                                                                        'HLT_Dimuon25_Jpsi_v*',
+#                                                                        'HLT_DoubleMu4_JpsiTrk_Displaced_v*',
+#                                                                        'HLT_DoubleMu4_JpsiTrkTrk_Displaced_v*',
+#                                                                        'HLT_DoubleMu4_Jpsi_Displaced_v*'                                   
+#                                                                       ),
+#                                        hltResults = cms.InputTag( "TriggerResults", "", "HLT" ),
+#                                        l1tResults = cms.InputTag( "" ),
+#                                        throw = cms.bool(False)
+#                                        )
 
 process.load("myAnalyzers.BtoKsMuMu.PsikaonRootupler_cfi")
 #process.rootuple.dimuons = cms.InputTag('slimmedMuons') 
@@ -52,14 +52,14 @@ process.TFileService = cms.Service("TFileService",
        fileName = cms.string('Rootuple_Bplus_2018UL-MiniAOD.root'),
 )
 
-process.mySequence = cms.Sequence(
-                                   process.triggerSelection *
-                                   process.rootuple
-				   )
+#process.mySequence = cms.Sequence(
+#                                   process.triggerSelection *
+#                                   process.rootuple
+#				   )
 
 #process.p = cms.Path(process.mySequence)
 
-process.p = cms.Path(process.triggerSelection*process.rootuple)
+process.p = cms.Path(process.rootuple)
 #process.p = cms.Path(process.rootuple)
 
 
