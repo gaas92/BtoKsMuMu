@@ -23,7 +23,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 ############ Command line args ################
 '''
 
-options = VarParsing('python')
+options = VarParsing.VarParsing('python')
 
 options.register('isMC', False,
                 VarParsing.multiplicity.singleton,
