@@ -421,7 +421,7 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   	       
 		   // ************ fill candidate variables now
 		   //add cuts by me
-		   if (bCandMC->currentState().globalMomentum().transverse() < 8.0) continue 
+		   if (bCandMC->currentState().globalMomentum().transverse() < 8.0) continue ;
 		   // Only save the first time
 		   if(nB==0){	    
 		     nMu  = nMu_tmp;
