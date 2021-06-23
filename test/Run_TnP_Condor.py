@@ -26,7 +26,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 options = VarParsing('python')
 
-options.register('isMC', False,
+options.register('isMC', True,
                 VarParsing.multiplicity.singleton,
                 VarParsing.varType.bool,
                 "Run MC or RD")
@@ -95,7 +95,7 @@ process.source = cms.Source("PoolSource",
 
 
 #outname = f'TagAndProbeTrigger_{ "MC" if options.isMC esle "RD"}_part{options.input_file[len(options.input_file)-7: len(options.input_file)-4]}.root'
-outname = 'TagAndProbeTrigger_{}_part{}.root'.format( "MC" if options.isMC esle "RD", str(options.input_file[len(options.input_file)-7: len(options.input_file)-4]) )
+outname = 'TagAndProbeTrigger_{}_part.root'.format( "MC" if options.isMC esle "RD")
 #outname = 'TagAndProbeTrigger_part.root'
 
 process.TFileService = cms.Service("TFileService",
