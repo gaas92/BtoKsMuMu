@@ -371,7 +371,7 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		    }
 		    
 		    //if ( (bCandMC->currentState().mass() < 5.0) || (bCandMC->currentState().mass() > 6.0) ) {
-		    if ( (bCandMC->currentState().mass() < 4.8) || (bCandMC->currentState().mass() > 6.0) ) {
+		    if ( (bCandMC->currentState().mass() < 5.0) || (bCandMC->currentState().mass() > 5.8) ) {
 		      continue;
 		    }
 		    
