@@ -93,7 +93,8 @@ process.source = cms.Source("PoolSource",
 '''
 
 
-outname = f'TagAndProbeTrigger_{ "MC" if options.isMC esle ""}_part{options.input_file[len(options.input_file)-7: len(options.input_file)-4]}.root'
+#outname = f'TagAndProbeTrigger_{ "MC" if options.isMC esle "RD"}_part{options.input_file[len(options.input_file)-7: len(options.input_file)-4]}.root'
+outname = 'TagAndProbeTrigger_{}_part{}.root'.format( "MC" if options.isMC esle "RD", options.input_file[len(options.input_file)-7: len(options.input_file)-4])
 
 process.TFileService = cms.Service("TFileService",
       fileName = cms.string(outname),
