@@ -218,8 +218,11 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	      continue;
 	    }
 
-	  if(iMuon1->track()->pt()<4.0) continue;
-	  if(iMuon2->track()->pt()<4.0) continue;
+	  //if(iMuon1->track()->pt()<4.0) continue;
+	  //if(iMuon2->track()->pt()<4.0) continue;
+
+	  if(iMuon1->track()->pt()<0.5) continue;
+	  if(iMuon2->track()->pt()<0.5) continue;
 
 	  if(!(glbTrackM->quality(reco::TrackBase::highPurity))) continue;
 	  if(!(glbTrackP->quality(reco::TrackBase::highPurity))) continue;	 
@@ -298,12 +301,12 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  //some loose cuts go here
 	  
 	  if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
-	  if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
+	  //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
 
 	  double J_Prob_tmp   = TMath::Prob(psi_vFit_vertex_noMC->chiSquared(),(int)psi_vFit_vertex_noMC->degreesOfFreedom());
 	  if(J_Prob_tmp<0.01)
 	    {
-	      continue;
+	      //continue;
 	    }
 	  
 	  //Now that we have a J/psi candidate, we look for K^+ candidates
@@ -314,7 +317,8 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		     //quality cuts
 		   if(iTrack1->charge()==0) continue;
 		   if(fabs(iTrack1->pdgId())!=211) continue;
-		   if(iTrack1->pt()<1.3) continue;
+		   //if(iTrack1->pt()<1.3) continue;
+		   if(iTrack1->pt()<1.0) continue;
 		   if(!(iTrack1->trackHighPurity())) continue;
 		   if(iTrack1->numberOfPixelHits()<1)continue;
 		   if(iTrack1->numberOfHits()<5)continue;
@@ -363,7 +367,8 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		      continue;
 		    }
 		    
-		    if ( (bCandMC->currentState().mass() < 5.0) || (bCandMC->currentState().mass() > 6.0) ) {
+		    //if ( (bCandMC->currentState().mass() < 5.0) || (bCandMC->currentState().mass() > 6.0) ) {
+		    if ( (bCandMC->currentState().mass() < 4.8) || (bCandMC->currentState().mass() > 6.0) ) {
 		      continue;
 		    }
 		    
