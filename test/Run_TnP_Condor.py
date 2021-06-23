@@ -60,6 +60,11 @@ options.register('inputFile', 'noProbeFilterDecayFilter_MiniAOD1_0.txt',
                 "input txt file"
 )
 
+options.register('saveInSync', False,
+                VarParsing.multiplicity.singleton,
+                VarParsing.varType.bool,
+                "save result file in sync")
+
 options.parseArguments()
 
 from Configuration.AlCa.GlobalTag import GlobalTag
@@ -97,6 +102,9 @@ process.source = cms.Source("PoolSource",
 #outname = f'TagAndProbeTrigger_{ "MC" if options.isMC else "RD"}_part{options.input_file[len(options.input_file)-7: len(options.input_file)-4]}.root'
 outname = 'TagAndProbeTrigger_{}_part{}.root'.format('MC' if options.isMC  else 'RD',  str(options.inputFile)[len(options.inputFile)-7: len(options.inputFile)-4])
 #outname = 'TagAndProbeTrigger_part.root'
+
+if options.saveInSync:
+    outname = '/eos/user/g/gayalasa/Sync/CondorResults/' + outname
 
 process.TFileService = cms.Service("TFileService",
       fileName = cms.string(outname),
