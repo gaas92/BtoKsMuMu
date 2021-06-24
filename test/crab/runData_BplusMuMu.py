@@ -139,6 +139,7 @@ def main():
                 print "Failed executing command %s for task %s: %s" % (options.crabCmd, projDir, hte.headers)
             except ClientException as cle:
                 print "Failed executing command %s for task %s: %s" % (options.crabCmd, projDir, cle)
+            break
 
 
 if __name__ == '__main__':
