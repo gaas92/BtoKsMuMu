@@ -61,7 +61,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, options.globalTag, '')
 #process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v20', '')# for 2017
 #process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v27', '')# for 2016
 
-process.MessageLogger.cerr.FwkReport.reportEvery = 10000
+process.MessageLogger.cerr.FwkReport.reportEvery = 100000
 process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 process.options.allowUnscheduled = cms.untracked.bool(True)
 process.load("FWCore.MessageLogger.MessageLogger_cfi")

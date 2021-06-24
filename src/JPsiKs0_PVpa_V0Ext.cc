@@ -229,6 +229,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //Trigger info
   edm::Handle<edm::TriggerResults> triggerResults_handle;
   iEvent.getByToken(triggerResults_Label, triggerResults_handle);
+  edm::Handle<pat::PackedTriggerPrescales> triggerPrescales;
+  iEvent.getByToken(triggerPrescalesSrc_, triggerPrescales);
 
   //Trigger Muon Selector
   edm::Handle<std::vector<pat::TriggerObjectStandAlone>> triggerObjects;
@@ -498,55 +500,51 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    //   std::cout << names[i] << "  " << TheTriggerNames.triggerName(i) << std::endl;
    //}
    //bool GoodT = false;
-   for (unsigned int i = 0; i < NTRIGGERS; i++) {
-	 bool found_ = false; 
-	 for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
-		std::string triggerName = TheTriggerNames.triggerName(h); 
-		if (triggerName.find(TriggersToTest[i]) != std::string::npos && !found_){
-			trigger += (1<<i);
-			found_ = true;
-			//if(i == 5){ 
-			//	std::cout<< TriggersToTest[i] <<" found in " << triggerName << " bit shift: "<< (1<<i) << std::endl;
-			//	GoodT = true;
-			//} 
-		} 
-		//std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(h)<< " | looking for: "<< TriggersToTest[i] << std::endl;
-	 }
-     //for (int version = 1; version < 9; version++) {
-     //  std::stringstream ss;
-     //  ss << TriggersToTest[i] << "_v" << version;
-	 //  //std::cout << "Looking for: " << ss.rdbuf() << std::endl; 
-     //  unsigned int bit = TheTriggerNames.triggerIndex(edm::InputTag(ss.str()).label());
-	 //  //std::cout << "Resulting bit: "<< bit << std::endl;
-	 //  //std::cout << "trigger handle size: "<< triggerResults_handle->size() << std::endl;
-     //  if (bit < triggerResults_handle->size() && triggerResults_handle->accept(bit) && !triggerResults_handle->error(bit)) {
-     //    trigger += (1<<i);
-     //    break;
-     //  }
-     //}
-   }
+   //for (unsigned int i = 0; i < NTRIGGERS; i++) {
+   // bool found_ = false; 
+   // for (unsigned int h = 0; h < TheTriggerNames.size(); ++h){
+   //	std::string triggerName = TheTriggerNames.triggerName(h); 
+   //	if (triggerName.find(TriggersToTest[i]) != std::string::npos && !found_){
+   //		trigger += (1<<i);
+   //		found_ = true;
+   //		//if(i == 5){ 
+   //		//	std::cout<< TriggersToTest[i] <<" found in " << triggerName << " bit shift: "<< (1<<i) << std::endl;
+   //		//	GoodT = true;
+   //		//} 
+   //	} 
+   //	//std::cout<< "Trigger to check: " << TheTriggerNames.triggerName(h)<< " | looking for: "<< TriggersToTest[i] << std::endl;
+   // }
+   //  //for (int version = 1; version < 9; version++) {
+   //  //  std::stringstream ss;
+   //  //  ss << TriggersToTest[i] << "_v" << version;
+   // //  //std::cout << "Looking for: " << ss.rdbuf() << std::endl; 
+   //  //  unsigned int bit = TheTriggerNames.triggerIndex(edm::InputTag(ss.str()).label());
+   // //  //std::cout << "Resulting bit: "<< bit << std::endl;
+   // //  //std::cout << "trigger handle size: "<< triggerResults_handle->size() << std::endl;
+   //  //  if (bit < triggerResults_handle->size() && triggerResults_handle->accept(bit) && !triggerResults_handle->error(bit)) {
+   //  //    trigger += (1<<i);
+   //  //    break;
+   //  //  }
+   //  //}
+   //}
    //Olmo Version
    for (unsigned int i = 0, n = triggerResults_handle->size(); i < n; ++i) {
     auto trgName = TheTriggerNames.triggerName(i);
-    if (verbose) {
-      cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
+    //if (verbose) {
+    // cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
+    //}
+
+    for (unsigned int k = 0; k < NTRIGGERS; k++){
+      std::string trgTag = TriggersToTest[k];	
+	  bool found_ = false; 
+      bool match = (triggerName.find(trgTag) != std::string::npos && !found_);
+      //bool match = trgName.substr(4, trgTag.size()) == trgTag.c_str();
+      if (triggerPrescales->getPrescaleForIndex(i) < 1) continue;
+      if (match && triggerResults_handle->accept(i)) {
+		  trigger += (1<<k);
+		  found_ = true;
+	  }
     }
-
-    for (auto trgTag : triggerTags){
-      bool match = trgName.substr(4, trgTag.size()) == trgTag.c_str();
-      if (match && triggerPrescales->getPrescaleForIndex(i) > 0) trgActive[trgTag] = true;
-      if (match && triggerBits->accept(i)) trgPassed[trgTag] = true;
-
-      // for (int part = 0; part <= 5; part++) {
-      //   regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
-      //   if (regex_match(trgName, rule)) {
-      //     // (*outputNtuplizer)[Form("prescale_%s_part%d", trgTag.c_str(), part)] = triggerPrescales->getPrescaleForIndex(i);
-      //     if (triggerPrescales->getPrescaleForIndex(i) > 0) (*outputNtuplizer)["prescale_" + trgTag]++;
-      //   }
-      // }
-
-    }
-
   }
 
 
@@ -749,13 +747,20 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		ts_IPxy  = IPxy;
 		ts_IPxyE = IPxyE;
 	} 
-    for (unsigned int i = 0; i < NTRIGGERS; i++) {
-  		std::string triggerName = TriggersToTest[i]; 
-  		triggerName += "*";
-  		if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
-  			thisTriggerIndex += (1<<i);
-  		}
-		//else std::cout << "Trigger: " << triggerName << " Not matched" << std::endl;
+    //for (unsigned int i = 0; i < NTRIGGERS; i++) {
+  	//	std::string triggerName = TriggersToTest[i]; 
+  	//	triggerName += "*";
+  	//	if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+  	//		thisTriggerIndex += (1<<i);
+  	//	}
+	//	//else std::cout << "Trigger: " << triggerName << " Not matched" << std::endl;
+    //}
+	//Olmo Method
+	for(unsigned int i = 0; i < NTRIGGERS; i++) {
+      std::string trgPath = TriggersToTest[i] + "_part*_v*";
+      if(iMuon1->triggered(trgPath.c_str())){
+		thisTriggerIndex += (1<<i);
+	  }
     }
 	if (thisTriggerIndex != 0){
 		nTriggerMuon ++;
