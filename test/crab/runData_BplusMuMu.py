@@ -98,7 +98,7 @@ def main():
                           '/DoubleMuonLowMass/Run2018A-12Nov2019_UL2018-v1/MINIAOD', # DoubleMuonLowMass A 
                           '/DoubleMuonLowMass/Run2018B-12Nov2019_UL2018-v1/MINIAOD',
                           '/DoubleMuonLowMass/Run2018C-12Nov2019_UL2018-v1/MINIAOD',
-                          '/DoubleMuonLowMass/Run2018D-12Nov2019_UL2018-v1/MINIAOD'
+                          '/DoubleMuonLowMass/Run2018D-12Nov2019_UL2018-v1/MINIAOD',
 
                           '/Charmonium/Run2018A-12Nov2019_UL2018_rsb-v1/MINIAOD', #Charmonium A 
                           '/Charmonium/Run2018B-12Nov2019_UL2018-v1/MINIAOD',
@@ -139,7 +139,7 @@ def main():
                 print "Failed executing command %s for task %s: %s" % (options.crabCmd, projDir, hte.headers)
             except ClientException as cle:
                 print "Failed executing command %s for task %s: %s" % (options.crabCmd, projDir, cle)
-            break
+            
 
 
 if __name__ == '__main__':
