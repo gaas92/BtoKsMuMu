@@ -36,7 +36,7 @@ options.register('onlyGen', False,
                 VarParsing.varType.bool,
                 "Run MC onlyGen level")
 
-options.register('globalTag', '102X_dataRun2_v11',
+options.register('globalTag', '102X_upgrade2018_realistic_v12',
                 VarParsing.multiplicity.singleton,
                 VarParsing.varType.string,
                 "Set global tag"
