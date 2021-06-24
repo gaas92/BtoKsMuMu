@@ -77,7 +77,7 @@ process.source = cms.Source("PoolSource",
 process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
 process.rootuple.isMC = cms.bool(True) # this is only for test
 process.rootuple.isRes = cms.bool(options.isRes)
-process.rootuple.OnlyGen = cms.bool(options.OnlyGen)
+process.rootuple.OnlyGen = cms.bool(options.onlyGen)
 process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
 
 
