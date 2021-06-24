@@ -537,7 +537,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     for (unsigned int k = 0; k < NTRIGGERS; k++){
       std::string trgTag = TriggersToTest[k];	
 	  bool found_ = false; 
-      bool match = (triggerName.find(trgTag) != std::string::npos && !found_);
+      bool match = (trgName.find(trgTag) != std::string::npos && !found_);
       //bool match = trgName.substr(4, trgTag.size()) == trgTag.c_str();
       if (triggerPrescales->getPrescaleForIndex(i) < 1) continue;
       if (match && triggerResults_handle->accept(i)) {
