@@ -104,6 +104,7 @@ private:
   edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
   edm::EDGetTokenT<edm::View<pat::PackedCandidate>> Lost_track_label;
   edm::EDGetTokenT<edm::View<pat::PackedCandidate>> pPFC_track_label;
+  edm::EDGetTokenT <pat::PackedTriggerPrescales> triggerPrescalesSrc_;
 
   //Trigger Muon Selector
   edm::EDGetTokenT<std::vector<pat::TriggerObjectStandAlone>> triggerObjects_;
@@ -136,7 +137,6 @@ private:
   //std::vector<float>       *PVTrigg2Dz;
   std::vector<unsigned int> *TriggerMuonIndex;
   std::vector<unsigned int> *TriggerObjIndex;
-  std::vector<std::string>  *TriggerObjPrescale;
   std::vector<float>        *TriggerObj_px, *TriggerObj_py, *TriggerObj_pz, *TriggerObj_ch, *TriggerObj_IP, *TriggerObj_IPE;
   std::vector<float>        *TriggerMuon_px, *TriggerMuon_py, *TriggerMuon_pz, *TriggerMuon_ch, *TriggerMuon_IP, *TriggerMuon_IPE;
   float                      bm_IPxy, bm_IPxyE, bm_pT, ts_pT, ts_IPxy, ts_IPxyE;

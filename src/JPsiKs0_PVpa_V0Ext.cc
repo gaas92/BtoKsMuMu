@@ -52,6 +52,7 @@
 #include "RecoVertex/VertexTools/interface/VertexDistance.h"
 #include "RecoVertex/VertexTools/interface/VertexDistance3D.h"
 #include "RecoVertex/VertexTools/interface/VertexDistanceXY.h"
+#include "DataFormats/PatCandidates/interface/PackedTriggerPrescales.h"
 
 #include "DataFormats/PatCandidates/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/GenericParticle.h"
@@ -92,6 +93,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   v0PtrCollection_(consumes<reco::VertexCompositePtrCandidateCollection>(iConfig.getParameter<edm::InputTag>("secundaryVerticesPtr"))),	
   Lost_track_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("Lost_Tracks"))), 
   pPFC_track_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("pPFC_Tracks"))), 
+  triggerPrescalesSrc_(consumes<pat::PackedTriggerPrescales>(edm::InputTag("patTrigger"))),
 
   //Trigger Muon Selecctor 
   triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
@@ -119,7 +121,6 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   //PVTrigg2Dz(0),
   TriggerMuonIndex(0),
   TriggerObjIndex(0),
-  TriggerObjPrescale(0),
   TriggerObj_px(0), TriggerObj_py(0), TriggerObj_pz(0), TriggerObj_ch(0), //TriggerObj_IP(0), TriggerObj_IPE(0),
   TriggerMuon_px(0), TriggerMuon_py(0), TriggerMuon_pz(0), TriggerMuon_ch(0), TriggerMuon_IP(0), TriggerMuon_IPE(0),
   bm_IPxy(0), bm_IPxyE(0), bm_pT(0), ts_pT(0), ts_IPxy(0), ts_IPxyE(0), nTriggerMuon(0),
@@ -491,7 +492,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
   if ( triggerResults_handle.isValid()) {
    //std::cout << "Triggers ok ..." <<std::endl;	  
-   const edm::TriggerNames & TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+   const edm::TriggerNames &TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
    //std::vector<std::string> const& names = TheTriggerNames.triggerNames(); //new 
    //for (unsigned i = 0; i < TheTriggerNames.size(); ++i) {
    //   std::cout << names[i] << "  " << TheTriggerNames.triggerName(i) << std::endl;
@@ -524,6 +525,32 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
      //  }
      //}
    }
+   //Olmo Version
+   for (unsigned int i = 0, n = triggerResults_handle->size(); i < n; ++i) {
+    auto trgName = TheTriggerNames.triggerName(i);
+    if (verbose) {
+      cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
+    }
+
+    for (auto trgTag : triggerTags){
+      bool match = trgName.substr(4, trgTag.size()) == trgTag.c_str();
+      if (match && triggerPrescales->getPrescaleForIndex(i) > 0) trgActive[trgTag] = true;
+      if (match && triggerBits->accept(i)) trgPassed[trgTag] = true;
+
+      // for (int part = 0; part <= 5; part++) {
+      //   regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
+      //   if (regex_match(trgName, rule)) {
+      //     // (*outputNtuplizer)[Form("prescale_%s_part%d", trgTag.c_str(), part)] = triggerPrescales->getPrescaleForIndex(i);
+      //     if (triggerPrescales->getPrescaleForIndex(i) > 0) (*outputNtuplizer)["prescale_" + trgTag]++;
+      //   }
+      // }
+
+    }
+
+  }
+
+
+
    //if (GoodT){
    //  std::bitset<32> temp_bit(trigger);
    //  std::cout << "Good Trigger: " <<  trigger << " Bits: " << temp_bit << std::endl;
@@ -632,68 +659,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     }
 	if(!isTriggerMuon) continue;
 	unsigned int thisObjIndex = 0;
-	std::string thisObjPrescale = "";
-	for (unsigned int i = 0; i < NTRIGGERS; i++){  
-		std::string triggerName = TriggersToTest[i];
-		bool isFirst = true;  
-		for (unsigned h = 0; h < obj.pathNames().size(); ++h) {
-			std::string filterName_ = obj.pathNames()[h];
 
-			//Si encuentra en el pathNames el trigger de interes y es el primero, pushear el index y asignar prescale
-  			if(filterName_.find(triggerName) != std::string::npos && isFirst){ 
-				thisObjIndex += (1<<i);
-				isFirst = false;
-  				//std::cout << triggerName << " First found in " << filterName_ << std::endl;
-				if (filterName_.find("part0") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "0";
-				}
-				else if (filterName_.find("part1") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "1";
-				}
-				else if (filterName_.find("part2") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "2";
-				}
-				else if (filterName_.find("part3") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "3";
-				}
-				else if (filterName_.find("part4") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "4";
-				}
-				else if (filterName_.find("part5") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "5";
-				}
-				else {
-					thisObjPrescale = thisObjPrescale + "9";
-				}
-  			}
-			//Si encuentra el pathName pero no es el primero, no pusheamos el index pero guardamos el prescale
-			else if (filterName_.find(triggerName) != std::string::npos){
-				if (filterName_.find("part0") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "0";
-				}
-				else if (filterName_.find("part1") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "1";
-				}
-				else if (filterName_.find("part2") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "2";
-				}
-				else if (filterName_.find("part3") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "3";
-				}
-				else if (filterName_.find("part4") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "4";
-				}
-				else if (filterName_.find("part5") != std::string::npos){
-					thisObjPrescale = thisObjPrescale + "5";
-				}
-				else {
-					thisObjPrescale = thisObjPrescale + "9";
-				}
-			}
-
-    	}//fin del loop sobre los path names
-		thisObjPrescale = thisObjPrescale + "/";
-    }
 
     //std::cout << "\n\n\n";
     if(!isTriggerMuon) continue;
@@ -707,7 +673,6 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
     
 	//std::bitset<32> binrep(thisObjIndex);
 	//std::cout << "Trigger index: " << thisObjIndex << "| Bin: " << binrep <<std::endl;
-	//std::cout << "Trigger Prescale: " << thisObjPrescale << std::endl;
 
     //std::cout << "px: " << obj.px() << " py: " << obj.py() << " pz: " << obj.pz() << " IPxyE: "<< obj.dxyError() << std::endl;
 	float obj_px = obj.px();
@@ -729,7 +694,6 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	//TriggerObj_IPE
 
 	TriggerObjIndex->push_back(thisObjIndex);
-	TriggerObjPrescale->push_back(thisObjPrescale);
 
 
 
@@ -2580,7 +2544,6 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		trackContainer->clear();   
 
         TriggerObjIndex->clear();
-		TriggerObjPrescale->clear();
         TriggerObj_px->clear(); TriggerObj_py->clear(); TriggerObj_pz->clear(); TriggerObj_ch->clear(); //TriggerObj_IP->clear(); TriggerObj_IPE->clear();
         
 		TriggerMuonIndex->clear(); TriggerMuon_IP->clear(); TriggerMuon_IPE->clear(); 
@@ -2928,7 +2891,6 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      //tree_->Branch("PVTrigg2Dz",&PVTrigg2Dz);
      tree_->Branch("TriggerMuonIndex", &TriggerMuonIndex);
      tree_->Branch("TriggerObjIndex", &TriggerObjIndex);
-     tree_->Branch("TriggerObjPrescale", &TriggerObjPrescale);
 	 tree_->Branch("TriggerObj_px", &TriggerObj_px);
      tree_->Branch("TriggerObj_py", &TriggerObj_py);
      tree_->Branch("TriggerObj_pz", &TriggerObj_pz);
