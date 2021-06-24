@@ -81,8 +81,9 @@ process.rootuple.OnlyGen = cms.bool(options.onlyGen)
 process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
 
 
-outname = 'PrivateMC_{}_{}_part{}.root'.format('Res' if options.isRes  else 'notRes', 'Gen' if options.onlyGen else 'Reco' , str(options.inputFile)[len(options.inputFile)-7: len(options.inputFile)-4])
-
+outname = 'PrivateMC_{}_{}_part{}.root'.format('JPsi' if options.isRes  else 'MuMu', 'Gen' if options.onlyGen else 'Reco' , str(options.inputFile)[len(options.inputFile)-7: len(options.inputFile)-4])
+if options.saveInSync:
+    outname = '/eos/user/g/gayalasa/Sync/CondorResults/' + outname
 
 process.TFileService = cms.Service("TFileService",
 
