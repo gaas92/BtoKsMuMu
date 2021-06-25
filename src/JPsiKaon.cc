@@ -347,7 +347,7 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   if ( (kaon14V + Jpsi4V).M()<4.2 || (kaon14V + Jpsi4V).M()>6.8 ) continue;
 	   
 		   //Now we are ready to combine!
-		   // JPsi mass constraint is applied in the final Bplus fit,
+		   // JPsi mass constraint is applied in the final Bplus fit, 
 
 		   vector<RefCountedKinematicParticle> vFitMCParticles;
 		   vFitMCParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
@@ -355,8 +355,12 @@ void JPsiKaon::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 		   vFitMCParticles.push_back(pFactory.particle(kaonTT,kaon_mass ,chi,ndf,kaon_sigma));
 		   		  
 		   MultiTrackKinematicConstraint *  j_psi_c = new  TwoTrackMassKinematicConstraint(psi_mass);
-		   KinematicConstrainedVertexFitter kcvFitter;
-		   RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles, j_psi_c);
+		   //KinematicConstrainedVertexFitter kcvFitter;
+		   //RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles, j_psi_c);
+		   
+		   //no mass constrain 
+		   KinematicParticleVertexFitter kcvFitter;
+		   RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
 		   if (!vertexFitTree->isValid()) {
 		     //std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
 		     continue;
