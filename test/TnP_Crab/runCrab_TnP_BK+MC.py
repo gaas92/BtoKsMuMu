@@ -85,7 +85,7 @@ def main():
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
         config.Data.outputDatasetTag = None
-	config.Data.outLFNDirBase = '/store/user/gayalasa/TnP_MCch/'
+	config.Data.outLFNDirBase = '/store/user/gayalasa/Sync/TnP_MCch/'
 	#config.Site.storageSite = 'T3_US_FNALLPC'
 	config.Site.storageSite = 'T3_CH_CERNBOX'
         #config.Site.whitelist = ['T2_US*']
@@ -95,7 +95,7 @@ def main():
 
         # Will submit one task for each of these input datasets.
         inputDatasets = [ 
-                          '/BuToKMuMu_probefilterPt6_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v1/MINIAODSIM'
+                          '/BuToKJpsi_ToMuMu_probefilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
                  	]
  
         for inDS in inputDatasets:
