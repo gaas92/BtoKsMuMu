@@ -990,7 +990,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
 	   if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
 	   //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
-	   if(psi_vFit_noMC->currentState().mass()<1.1 || psi_vFit_noMC->currentState().mass()>22.0) continue;
+	   if(psi_vFit_noMC->currentState().mass()<0.01 || psi_vFit_noMC->currentState().mass()>22.0) continue;
 
 	   //Muon1 Trigger Matching
 	   unsigned int muon1Trg_ = 0;
