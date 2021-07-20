@@ -2620,7 +2620,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		drTrg_m2->clear();
 	    std::cout << "Debug onlyGen ok 2621" << std::endl;
    }
-   sts::cout << "Analyze ok 2623" << std::endl;
+   std::cout << "Analyze ok 2623" << std::endl;
 }
 
 bool JPsiKs0_PVpa_V0Ext::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
