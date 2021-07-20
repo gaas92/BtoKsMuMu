@@ -2987,8 +2987,10 @@ JPsiKs0_PVpa_V0Ext::beginJob()
 
 // ------------ method called once each job just after ending the event loop  ------------
 void JPsiKs0_PVpa_V0Ext::endJob() {
+  std::cout << "Ending job" << std::endl;
   tree_->GetDirectory()->cd();
   tree_->Write();
+  std::cout << "Ending job ok " << std::endl;
 }
 
 //define this as a plug-in
