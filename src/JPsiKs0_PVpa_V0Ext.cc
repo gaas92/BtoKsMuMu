@@ -2534,9 +2534,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    //fill the tree and clear the vectors
    if (nB > 0 || OnlyGen_) 
      {
-       //std::cout << "filling tree" << std::endl;
+       std::cout << "filling tree" << std::endl;
        tree_->Fill();
-	   //std::cout << "fill ok" << std::endl;
+	   std::cout << "fill ok" << std::endl;
      }
    // *********
 
