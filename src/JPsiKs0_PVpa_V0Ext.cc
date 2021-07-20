@@ -990,20 +990,23 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
 	   if(psi_vFit_vertex_noMC->chiSquared()>50.) continue;
 	   //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue;
-	   if(psi_vFit_noMC->currentState().mass()<0.01 || psi_vFit_noMC->currentState().mass()>22.0) continue;
+	   if(psi_vFit_noMC->currentState().mass()<0.1 || psi_vFit_noMC->currentState().mass()>22.0) continue;
 
 	   //Muon1 Trigger Matching
 	   unsigned int muon1Trg_ = 0;
 	   unsigned int muon2Trg_ = 0;
 	   for (unsigned int i = 0; i < NTRIGGERS; i++) {
-			std::string triggerName = TriggersToTest[i]; 
-			triggerName += "*";
-			if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+			std::string triggerName = TriggersToTest[i] + "_part*_v*"; 
+			//if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+			if(iMuon1->triggered(triggerName.c_str())){ 
 				muon1Trg_ += (1<<i);
+				if (abs(iMuon1->eta()) > 1.5) std::cout << "muon1 eta: " << iMuon1->eta() std::endl;
 				//std::cout<< " Muon 1 matched " << triggerName << std::endl; 
 			} 
-			if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+			//if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+			if(iMuon2->triggered(triggerName.c_str())){ 
 				muon2Trg_ += (1<<i);
+				if (abs(iMuon2->eta()) > 1.5) std::cout << "muon2 eta: " << iMuon2->eta() std::endl;
 				//std::cout<< " Muon 1 matched " << triggerName << std::endl; 
 			} 
 	   }	 
@@ -2833,7 +2836,7 @@ JPsiKs0_PVpa_V0Ext::beginJob()
    
      tree_->Branch("nVtx",       &nVtx);
      tree_->Branch("run",        &run,       "run/I");
-     tree_->Branch("event",        &event,     "event/I");
+     tree_->Branch("event",      &event,     "event/I");
      tree_->Branch("lumiblock",&lumiblock,"lumiblock/I");
 	 tree_->Branch("trigger",  &trigger, "trigger/i");
    
