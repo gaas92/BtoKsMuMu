@@ -198,7 +198,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   using namespace reco;
   using namespace std;
 
-  //std::cout << "analyse ok" <<std::endl;
+  std::cout << "analyse ok" <<std::endl;
   //*********************************
   // Get event content information
   //*********************************  
@@ -1001,13 +1001,26 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 			if(iMuon1->triggered(triggerName.c_str())){ 
 				muon1Trg_ += (1<<i);
 				if (abs(iMuon1->eta()) > 1.5) std::cout << "muon1 eta: " << iMuon1->eta() << std::endl;
-				//std::cout<< " Muon 1 matched " << triggerName << std::endl; 
+				std::cout<< " Muon 1 matched " << triggerName << std::endl;
+				if (iMuon1->triggerObjectMatches().size()!=0){
+					for(size_t k=0; k<iMuon1->triggerObjectMatches().size();k++){
+						if(iMuon1->triggerObjectMatch(k)!=0 && iMuon1->triggerObjectMatch(k)->hasPathName(triggerName.c_str(),true,true)){
+
+                            float dr=TMath::Sqrt(pow(iMuon1->triggerObjectMatch(i)->eta()-iMuon1->eta(),2.)+pow(iMuon1->triggerObjectMatch(i)->phi()-iMuon1->phi(),2.));
+                            float dpt=(iMuon1->triggerObjectMatch(i)->pt()-iMuon1->pt())/iMuon1->triggerObjectMatch(i)->pt();
+				            if (abs(iMuon1->eta()) > 1.5){
+								 std::cout << "muon1 eta inside: " << iMuon1->eta() << std::endl;
+								 std::cout << "match obj eta: " << iMuon1->triggerObjectMatch(i)->eta() << std::endl;
+							}
+						}
+					}
+				}
 			} 
 			//if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon2->triggered(triggerName.c_str())){ 
 				muon2Trg_ += (1<<i);
 				if (abs(iMuon2->eta()) > 1.5) std::cout << "muon2 eta: " << iMuon2->eta() << std::endl;
-				//std::cout<< " Muon 1 matched " << triggerName << std::endl; 
+				std::cout<< " Muon 1 matched " << triggerName << std::endl; 
 			} 
 	   }	 
 
