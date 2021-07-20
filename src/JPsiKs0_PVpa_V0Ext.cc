@@ -1000,13 +1000,13 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 			//if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon1->triggered(triggerName.c_str())){ 
 				muon1Trg_ += (1<<i);
-				if (abs(iMuon1->eta()) > 1.5) std::cout << "muon1 eta: " << iMuon1->eta() std::endl;
+				if (abs(iMuon1->eta()) > 1.5) std::cout << "muon1 eta: " << iMuon1->eta() << std::endl;
 				//std::cout<< " Muon 1 matched " << triggerName << std::endl; 
 			} 
 			//if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon2->triggered(triggerName.c_str())){ 
 				muon2Trg_ += (1<<i);
-				if (abs(iMuon2->eta()) > 1.5) std::cout << "muon2 eta: " << iMuon2->eta() std::endl;
+				if (abs(iMuon2->eta()) > 1.5) std::cout << "muon2 eta: " << iMuon2->eta() << std::endl;
 				//std::cout<< " Muon 1 matched " << triggerName << std::endl; 
 			} 
 	   }	 
