@@ -1013,12 +1013,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 							
                             float dr=TMath::Sqrt(pow(iMuon1->triggerObjectMatch(i)->eta()-iMuon1->eta(),2.)+pow(iMuon1->triggerObjectMatch(i)->phi()-iMuon1->phi(),2.));
                             float dpt=(iMuon1->triggerObjectMatch(i)->pt()-iMuon1->pt())/iMuon1->triggerObjectMatch(i)->pt();
-							/*
+							
 				            if (abs(iMuon1->eta()) > 1.5){
 								 std::cout << "muon1 eta inside: " << iMuon1->eta() << std::endl;
 								 std::cout << "match obj eta: " << iMuon1->triggerObjectMatch(i)->eta() << std::endl;
 							}
-							*/
+							
 						}
 					}
 				}
