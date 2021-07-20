@@ -1011,12 +1011,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 						if(iMuon1->triggerObjectMatch(k)!=0 && iMuon1->triggerObjectMatch(k)->hasPathName(triggerName.c_str(),true,true)){
 							std::cout << " Muon1 match inside . . ." << std::endl;
 							
-                            float dr=TMath::Sqrt(pow(iMuon1->triggerObjectMatch(i)->eta()-iMuon1->eta(),2.)+pow(iMuon1->triggerObjectMatch(i)->phi()-iMuon1->phi(),2.));
-                            float dpt=(iMuon1->triggerObjectMatch(i)->pt()-iMuon1->pt())/iMuon1->triggerObjectMatch(i)->pt();
+                            float dr=TMath::Sqrt(pow(iMuon1->triggerObjectMatch(k)->eta()-iMuon1->eta(),2.)+pow(iMuon1->triggerObjectMatch(k)->phi()-iMuon1->phi(),2.));
+                            float dpt=(iMuon1->triggerObjectMatch(k)->pt()-iMuon1->pt())/iMuon1->triggerObjectMatch(k)->pt();
 							
 				            if (abs(iMuon1->eta()) > 1.5){
-								 std::cout << "muon1 eta inside: " << iMuon1->eta() << std::endl;
-								 std::cout << "match obj eta: " << iMuon1->triggerObjectMatch(i)->eta() << std::endl;
+								 std::cout << "   Muon1 eta inside: " << iMuon1->eta() << std::endl;
+								 std::cout << "   Match1 obj eta: " << iMuon1->triggerObjectMatch(k)->eta() << std::endl;
 							}
 							
 						}
