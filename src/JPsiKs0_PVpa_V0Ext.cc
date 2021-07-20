@@ -2774,7 +2774,7 @@ void
 JPsiKs0_PVpa_V0Ext::beginJob()
 {
 
-  //std::cout << "Beginning analyzer job with value of doMC = " << doMC_ << std::endl;
+  std::cout << "Beginning analyzer " << std::endl;
 
   edm::Service<TFileService> fs;
   tree_ = fs->make<TTree>("ntuple","Bs->mu mu Ks0 ntuple");
@@ -2963,6 +2963,7 @@ JPsiKs0_PVpa_V0Ext::beginJob()
   }
     // gen
   if (isMC_ || OnlyGen_) {
+	 std::cout << "Definition of only gen TTree" << std::endl; 
 	 tree_->Branch("ngen", &ngen, "ngen/I");
      tree_->Branch("gen_b_p4",      "TLorentzVector",  &gen_b_p4);
      tree_->Branch("gen_jpsi_p4",   "TLorentzVector",  &gen_jpsi_p4);
@@ -2976,6 +2977,8 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("gen_ks0_vtx",   "TVector3",        &gen_ks0_vtx);
      tree_->Branch("gen_b_ct",      &gen_b_ct,        "gen_b_ct/F");
      tree_->Branch("gen_ks0_ct",    &gen_ks0_ct,      "gen_ks0_ct/F");
+	 std::cout << "Definition of only gen TTree ok ..." << std::endl; 
+
   }
 
 }
