@@ -1002,7 +1002,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 				muon1Trg_ += (1<<i);
 				if (abs(iMuon1->eta()) > 1.5) std::cout << "muon1 eta: " << iMuon1->eta() << std::endl;
 				std::cout<< " Muon 1 matched " << triggerName << std::endl;
-				std::cout<< " Muon 1 pT: " << iMuon1->pt() << ", IP: " << iMuon1->track()->dxy(referencePos) << std::endl;
+				std::cout<< " Muon 1 pT: " << iMuon1->pt() << ", IP: " << abs(iMuon1->track()->dxy(referencePos)/iMuon1->track->dxyError())<< std::endl;
 				if (iMuon1->triggerObjectMatches().size()!=0){
 					std::cout << "muon1 match inside . . ." << std::endl;
 					for(size_t k=0; k<iMuon1->triggerObjectMatches().size();k++){
