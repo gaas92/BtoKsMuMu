@@ -2542,7 +2542,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
    nB = 0; nMu = 0;
    trigger = 0;
-   ngen = 0;
+   //ngen = 0;
    //bm_IPxy = 0;
    //bm_pT = 0;
 
@@ -2580,7 +2580,6 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    } 
    nVtx = 0;
    if (!OnlyGen_){
-	    std::cout << "Debug onlyGen ok 2583" << std::endl;
    		bDecayVtxX->clear(); bDecayVtxY->clear(); bDecayVtxZ->clear(); 
    		bDecayVtxXE->clear(); bDecayVtxYE->clear(); bDecayVtxZE->clear(); 
    		bDecayVtxXYE->clear(); bDecayVtxXZE->clear(); bDecayVtxYZE->clear();  
@@ -2618,7 +2617,6 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		//Trigger Selector
    		drTrg_m1->clear();
    		drTrg_m2->clear();
-	    std::cout << "Debug onlyGen ok 2621" << std::endl;
    }
    std::cout << "Analyze ok 2623" << std::endl;
 }
