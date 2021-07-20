@@ -1003,13 +1003,13 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 				muon1Trg_ += (1<<i);
 				std::cout<< " Muon 1 matched " << triggerName << std::endl;
 				std::cout<< " Muon 1 pT: " << iMuon1->pt() << ", IP: " << abs(iMuon1->track()->dxy(referencePos)/iMuon1->track()->dxyError())<< std::endl;
-				if (abs(iMuon1->eta()) > 1.5) std::cout << "   muon1 eta: " << iMuon1->eta() << std::endl;
+				if (abs(iMuon1->eta()) > 1.5) std::cout << "   Muon1 eta: " << iMuon1->eta() << std::endl;
 
 				if (iMuon1->triggerObjectMatches().size()!=0){
 					for(size_t k=0; k<iMuon1->triggerObjectMatches().size();k++){
 
 						if(iMuon1->triggerObjectMatch(k)!=0 && iMuon1->triggerObjectMatch(k)->hasPathName(triggerName.c_str(),true,true)){
-							std::cout << " muon1 match inside . . ." << std::endl;
+							std::cout << " Muon1 match inside . . ." << std::endl;
 							
                             float dr=TMath::Sqrt(pow(iMuon1->triggerObjectMatch(i)->eta()-iMuon1->eta(),2.)+pow(iMuon1->triggerObjectMatch(i)->phi()-iMuon1->phi(),2.));
                             float dpt=(iMuon1->triggerObjectMatch(i)->pt()-iMuon1->pt())/iMuon1->triggerObjectMatch(i)->pt();
