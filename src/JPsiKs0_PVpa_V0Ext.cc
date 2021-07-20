@@ -995,6 +995,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	   //Muon1 Trigger Matching
 	   unsigned int muon1Trg_ = 0;
 	   unsigned int muon2Trg_ = 0;
+	   /*
 	   for (unsigned int i = 0; i < NTRIGGERS; i++) {
 			std::string triggerName = TriggersToTest[i] + "_part*_v*"; 
 			//if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
@@ -1025,7 +1026,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 				std::cout<< " Muon 1 matched " << triggerName << std::endl; 
 			} 
 	   }	 
-
+	   */	
 
 
        // Vector containing Candidates used (avoid repeating)
