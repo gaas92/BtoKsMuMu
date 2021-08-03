@@ -131,12 +131,11 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   mu1PF(0), mu2PF(0), mu1loose(0), mu2loose(0),
   muon1Trg(0), muon2Trg(0),
 
-  just_test(0),
   //Trigger save non-sense 
-  //mu1_HLT_Mu7_IP4(0), mu1_HLT_Mu8_IP3(0), mu1_HLT_Mu8_IP5(0), mu1_HLT_Mu8_IP6(0), mu1_HLT_Mu8p5_IP3p5(0),
-  //mu1_HLT_Mu9_IP0(0), mu1_HLT_Mu9_IP3(0), mu1_HLT_Mu9_IP4(0), mu1_HLT_Mu9_IP5(0), mu1_HLT_Mu9_IP6(0), mu1_HLT_Mu10p5_IP3p5(0), mu1_HLT_Mu12_IP6(0),
-  //mu2_HLT_Mu7_IP4(0), mu2_HLT_Mu8_IP3(0), mu2_HLT_Mu8_IP5(0), mu2_HLT_Mu8_IP6(0), mu2_HLT_Mu8p5_IP3p5(0),
-  //mu2_HLT_Mu9_IP0(0), mu2_HLT_Mu9_IP3(0), mu2_HLT_Mu9_IP4(0), mu2_HLT_Mu9_IP5(0), mu2_HLT_Mu9_IP6(0), mu2_HLT_Mu10p5_IP3p5(0), mu2_HLT_Mu12_IP6(0),
+  mu1_HLT_Mu7_IP4(0), mu1_HLT_Mu8_IP3(0), mu1_HLT_Mu8_IP5(0), mu1_HLT_Mu8_IP6(0), mu1_HLT_Mu8p5_IP3p5(0),
+  mu1_HLT_Mu9_IP0(0), mu1_HLT_Mu9_IP3(0), mu1_HLT_Mu9_IP4(0), mu1_HLT_Mu9_IP5(0), mu1_HLT_Mu9_IP6(0), mu1_HLT_Mu10p5_IP3p5(0), mu1_HLT_Mu12_IP6(0),
+  mu2_HLT_Mu7_IP4(0), mu2_HLT_Mu8_IP3(0), mu2_HLT_Mu8_IP5(0), mu2_HLT_Mu8_IP6(0), mu2_HLT_Mu8p5_IP3p5(0),
+  mu2_HLT_Mu9_IP0(0), mu2_HLT_Mu9_IP3(0), mu2_HLT_Mu9_IP4(0), mu2_HLT_Mu9_IP5(0), mu2_HLT_Mu9_IP6(0), mu2_HLT_Mu10p5_IP3p5(0), mu2_HLT_Mu12_IP6(0),
 
 
   //Trigger Selector
@@ -1119,7 +1118,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 			//if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon2->triggered(triggerName.c_str())){ 
 				muon2Trg_ += (1<<i);
-								//Trigger save non-sense 
+				//Trigger save non-sense 
 				if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){
 					mu2_HLT_Mu7_IP4_ = 1;
 					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
@@ -1583,33 +1582,33 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon2Trg->push_back(muon2Trg_);
 
            //Trigger save non-sense 
-           //mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
-		   //mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
-		   //mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
-		   //mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
-		   //mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
-//
-           //mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
-		   //mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
-		   //mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
-		   //mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
-		   //mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
-		   //mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
-		   //mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
-//
-           //mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
-		   //mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
-		   //mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
-		   //mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
-		   //mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
-//
-           //mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
-		   //mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
-		   //mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
-		   //mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
-		   //mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
-		   //mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
-		   //mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
+           mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
+		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
+		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
+		   mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
+		   mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
+
+           mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
+		   mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
+		   mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
+		   mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
+		   mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
+		   mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
+		   mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
+
+           mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
+		   mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
+		   mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
+		   mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
+		   mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
+
+           mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
+		   mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
+		   mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
+		   mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
+		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
+		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
+		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
 
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
@@ -2121,33 +2120,33 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon2Trg->push_back(muon2Trg_);
 
            //Trigger save non-sense 
-           //mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
-		   //mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
-		   //mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
-		   //mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
-		   //mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
-//
-           //mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
-		   //mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
-		   //mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
-		   //mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
-		   //mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
-		   //mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
-		   //mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
-//
-           //mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
-		   //mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
-		   //mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
-		   //mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
-		   //mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
-//
-           //mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
-		   //mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
-		   //mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
-		   //mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
-		   //mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
-		   //mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
-		   //mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
+           mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
+		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
+		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
+		   mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
+		   mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
+
+           mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
+		   mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
+		   mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
+		   mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
+		   mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
+		   mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
+		   mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
+
+           mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
+		   mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
+		   mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
+		   mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
+		   mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
+
+           mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
+		   mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
+		   mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
+		   mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
+		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
+		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
+		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
 
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
@@ -2659,33 +2658,33 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon2Trg->push_back(muon2Trg_);
 
 		   //Trigger save non-sense 
-           //mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
-		   //mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
-		   //mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
-		   //mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
-		   //mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
-//
-           //mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
-		   //mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
-		   //mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
-		   //mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
-		   //mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
-		   //mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
-		   //mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
-//
-           //mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
-		   //mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
-		   //mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
-		   //mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
-		   //mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
-//
-           //mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
-		   //mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
-		   //mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
-		   //mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
-		   //mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
-		   //mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
-		   //mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
+           mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
+		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
+		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
+		   mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
+		   mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
+
+           mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
+		   mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
+		   mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
+		   mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
+		   mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
+		   mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
+		   mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
+
+           mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
+		   mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
+		   mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
+		   mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
+		   mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
+
+           mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
+		   mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
+		   mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
+		   mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
+		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
+		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
+		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
 
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
@@ -2857,10 +2856,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		muon1Trg->clear(); muon2Trg->clear();
 
         //Trigger save non-sense 
-        //mu1_HLT_Mu7_IP4->clear(); mu1_HLT_Mu8_IP3->clear(); mu1_HLT_Mu8_IP5->clear(); mu1_HLT_Mu8_IP6->clear(); mu1_HLT_Mu8p5_IP3p5->clear();
-        //mu1_HLT_Mu9_IP0->clear(); mu1_HLT_Mu9_IP3->clear(); mu1_HLT_Mu9_IP4->clear(); mu1_HLT_Mu9_IP5->clear(); mu1_HLT_Mu9_IP6->clear(); mu1_HLT_Mu10p5_IP3p5->clear(); mu1_HLT_Mu12_IP6->clear();
-        //mu2_HLT_Mu7_IP4->clear(); mu2_HLT_Mu8_IP3->clear(); mu2_HLT_Mu8_IP5->clear(); mu2_HLT_Mu8_IP6->clear(); mu2_HLT_Mu8p5_IP3p5->clear();
-        //mu2_HLT_Mu9_IP0->clear(); mu2_HLT_Mu9_IP3->clear(); mu2_HLT_Mu9_IP4->clear(); mu2_HLT_Mu9_IP5->clear(); mu2_HLT_Mu9_IP6->clear(); mu2_HLT_Mu10p5_IP3p5->clear(); mu2_HLT_Mu12_IP6->clear();
+        mu1_HLT_Mu7_IP4->clear(); mu1_HLT_Mu8_IP3->clear(); mu1_HLT_Mu8_IP5->clear(); mu1_HLT_Mu8_IP6->clear(); mu1_HLT_Mu8p5_IP3p5->clear();
+        mu1_HLT_Mu9_IP0->clear(); mu1_HLT_Mu9_IP3->clear(); mu1_HLT_Mu9_IP4->clear(); mu1_HLT_Mu9_IP5->clear(); mu1_HLT_Mu9_IP6->clear(); mu1_HLT_Mu10p5_IP3p5->clear(); mu1_HLT_Mu12_IP6->clear();
+        mu2_HLT_Mu7_IP4->clear(); mu2_HLT_Mu8_IP3->clear(); mu2_HLT_Mu8_IP5->clear(); mu2_HLT_Mu8_IP6->clear(); mu2_HLT_Mu8p5_IP3p5->clear();
+        mu2_HLT_Mu9_IP0->clear(); mu2_HLT_Mu9_IP3->clear(); mu2_HLT_Mu9_IP4->clear(); mu2_HLT_Mu9_IP5->clear(); mu2_HLT_Mu9_IP6->clear(); mu2_HLT_Mu10p5_IP3p5->clear(); mu2_HLT_Mu12_IP6->clear();
 
    		//Trigger Selector
    		drTrg_m1->clear();
@@ -3205,30 +3204,30 @@ JPsiKs0_PVpa_V0Ext::beginJob()
 	 tree_->Branch("muon2Trg",&muon2Trg);
 
      //Trigger save non-sense 
-     //tree_->Branch("mu1_HLT_Mu7_IP4", &mu1_HLT_Mu7_IP4); 
-	 //tree_->Branch("mu1_HLT_Mu8_IP3", &mu1_HLT_Mu8_IP3); 
-	 //tree_->Branch("mu1_HLT_Mu8_IP5", &mu1_HLT_Mu8_IP5);
-	 //tree_->Branch("mu1_HLT_Mu8_IP6", &mu1_HLT_Mu8_IP6);
-	 //tree_->Branch("mu1_HLT_Mu8p5_IP3p5", &mu1_HLT_Mu8p5_IP3p5);
-     //tree_->Branch("mu1_HLT_Mu9_IP0", &(mu1_HLT_Mu9_IP0); 
-	 //tree_->Branch("mu1_HLT_Mu9_IP3", &(mu1_HLT_Mu9_IP3);
-	 //tree_->Branch("mu1_HLT_Mu9_IP4", &(mu1_HLT_Mu9_IP4); 
-	 //tree_->Branch("mu1_HLT_Mu9_IP5", &(mu1_HLT_Mu9_IP5); 
-	 //tree_->Branch("mu1_HLT_Mu9_IP6", &(mu1_HLT_Mu9_IP6); 
-	 //tree_->Branch("mu1_HLT_Mu10p5_IP3p5" &mu1_HLT_Mu10p5_IP3p5); 
-	 //tree_->Branch("mu1_HLT_Mu12_IP6", &mu1_HLT_Mu12_IP6);
-     //tree_->Branch("mu2_HLT_Mu7_IP4", &mu2_HLT_Mu7_IP4); 
-	 //tree_->Branch("mu2_HLT_Mu8_IP3", &mu2_HLT_Mu8_IP3); 
-	 //tree_->Branch("mu2_HLT_Mu8_IP5", &mu2_HLT_Mu8_IP5);
-	 //tree_->Branch("mu2_HLT_Mu8_IP6", &mu2_HLT_Mu8_IP6);
-	 //tree_->Branch("mu2_HLT_Mu8p5_IP3p5", &mu2_HLT_Mu8p5_IP3p5);
-     //tree_->Branch("mu2_HLT_Mu9_IP0", &mu2_HLT_Mu9_IP0); 
-	 //tree_->Branch("mu2_HLT_Mu9_IP3", &mu2_HLT_Mu9_IP3);
-	 //tree_->Branch("mu2_HLT_Mu9_IP4", &mu2_HLT_Mu9_IP4); 
-	 //tree_->Branch("mu2_HLT_Mu9_IP5", &mu2_HLT_Mu9_IP5); 
-	 //tree_->Branch("mu2_HLT_Mu9_IP6", &mu2_HLT_Mu9_IP6); 
-	 //tree_->Branch("mu2_HLT_Mu10p5_IP3p5", &mu2_HLT_Mu10p5_IP3p5); 
-	 //tree_->Branch("mu2_HLT_Mu12_IP6", &mu2_HLT_Mu12_IP6);	 
+     tree_->Branch("mu1_HLT_Mu7_IP4", &mu1_HLT_Mu7_IP4); 
+	 tree_->Branch("mu1_HLT_Mu8_IP3", &mu1_HLT_Mu8_IP3); 
+	 tree_->Branch("mu1_HLT_Mu8_IP5", &mu1_HLT_Mu8_IP5);
+	 tree_->Branch("mu1_HLT_Mu8_IP6", &mu1_HLT_Mu8_IP6);
+	 tree_->Branch("mu1_HLT_Mu8p5_IP3p5", &mu1_HLT_Mu8p5_IP3p5);
+     tree_->Branch("mu1_HLT_Mu9_IP0", &(mu1_HLT_Mu9_IP0); 
+	 tree_->Branch("mu1_HLT_Mu9_IP3", &(mu1_HLT_Mu9_IP3);
+	 tree_->Branch("mu1_HLT_Mu9_IP4", &(mu1_HLT_Mu9_IP4); 
+	 tree_->Branch("mu1_HLT_Mu9_IP5", &(mu1_HLT_Mu9_IP5); 
+	 tree_->Branch("mu1_HLT_Mu9_IP6", &(mu1_HLT_Mu9_IP6); 
+	 tree_->Branch("mu1_HLT_Mu10p5_IP3p5" &mu1_HLT_Mu10p5_IP3p5); 
+	 tree_->Branch("mu1_HLT_Mu12_IP6", &mu1_HLT_Mu12_IP6);
+     tree_->Branch("mu2_HLT_Mu7_IP4", &mu2_HLT_Mu7_IP4); 
+	 tree_->Branch("mu2_HLT_Mu8_IP3", &mu2_HLT_Mu8_IP3); 
+	 tree_->Branch("mu2_HLT_Mu8_IP5", &mu2_HLT_Mu8_IP5);
+	 tree_->Branch("mu2_HLT_Mu8_IP6", &mu2_HLT_Mu8_IP6);
+	 tree_->Branch("mu2_HLT_Mu8p5_IP3p5", &mu2_HLT_Mu8p5_IP3p5);
+     tree_->Branch("mu2_HLT_Mu9_IP0", &mu2_HLT_Mu9_IP0); 
+	 tree_->Branch("mu2_HLT_Mu9_IP3", &mu2_HLT_Mu9_IP3);
+	 tree_->Branch("mu2_HLT_Mu9_IP4", &mu2_HLT_Mu9_IP4); 
+	 tree_->Branch("mu2_HLT_Mu9_IP5", &mu2_HLT_Mu9_IP5); 
+	 tree_->Branch("mu2_HLT_Mu9_IP6", &mu2_HLT_Mu9_IP6); 
+	 tree_->Branch("mu2_HLT_Mu10p5_IP3p5", &mu2_HLT_Mu10p5_IP3p5); 
+	 tree_->Branch("mu2_HLT_Mu12_IP6", &mu2_HLT_Mu12_IP6);	 
 
 	 //Trigger Selector
 	 tree_->Branch("drTrg_m1", &drTrg_m1);
