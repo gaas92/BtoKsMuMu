@@ -138,15 +138,6 @@ private:
 
   std::vector<int>         *muon1Trg, *muon2Trg;
 
-  std::vector<int>         *just_test;
-
-  //Trigger save non-sense 
-  std::vector<int>         *mu1_HLT_Mu7_IP4, *mu1_HLT_Mu8_IP3, *mu1_HLT_Mu8_IP5, *mu1_HLT_Mu8_IP6, *mu1_HLT_Mu8p5_IP3p5;
-  std::vector<int>         *mu1_HLT_Mu9_IP0, *mu1_HLT_Mu9_IP3, *mu1_HLT_Mu9_IP4, *mu1_HLT_Mu9_IP5, *mu1_HLT_Mu9_IP6, *mu1_HLT_Mu10p5_IP3p5, *mu1_HLT_Mu12_IP6;
-  std::vector<int>         *mu2_HLT_Mu7_IP4, *mu2_HLT_Mu8_IP3, *mu2_HLT_Mu8_IP5, *mu2_HLT_Mu8_IP6, *mu2_HLT_Mu8p5_IP3p5;
-  std::vector<int>         *mu2_HLT_Mu9_IP0, *mu2_HLT_Mu9_IP3, *mu2_HLT_Mu9_IP4, *mu2_HLT_Mu9_IP5, *mu2_HLT_Mu9_IP6, *mu2_HLT_Mu10p5_IP3p5, *mu2_HLT_Mu12_IP6;
-
-
   //Triger Selector
   std::vector<float>       *drTrg_m1, *drTrg_m2; 
  
