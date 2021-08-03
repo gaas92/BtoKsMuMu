@@ -60,10 +60,10 @@ class ObjVsMuon_tupler : public edm::EDProducer {
       unsigned int lumiNum;
       unsigned long long eventNum;
 
-      vector<string> triggerTag = {"Mu12_IP6", 
-	                                 "Mu10p5_IP3p5", "Mu9_IP0", "Mu9_IP3", "Mu9_IP4", "Mu9_IP5", "Mu9_IP6", 
-                                   "Mu8p5_IP3p5",  "Mu8_IP3", "Mu8_IP5", "Mu8_IP6", 
-                                   "Mu7_IP4"};
+      vector<string> triggerTags = {"Mu12_IP6", 
+	                                  "Mu10p5_IP3p5", "Mu9_IP0", "Mu9_IP3", "Mu9_IP4", "Mu9_IP5", "Mu9_IP6", 
+                                    "Mu8p5_IP3p5",  "Mu8_IP3", "Mu8_IP5", "Mu8_IP6", 
+                                    "Mu7_IP4"};
 
       std::vector<float>       *TriggerObj_pt, *TriggerObj_eta, *TriggerObj_phi, *TriggerObj_ch, *TriggerObj_ip;
       std::vector<int>         *obj_HLT_Mu7_IP4, *obj_HLT_Mu8_IP3, *obj_HLT_Mu8_IP5, *obj_HLT_Mu8_IP6, *obj_HLT_Mu8p5_IP3p5;
