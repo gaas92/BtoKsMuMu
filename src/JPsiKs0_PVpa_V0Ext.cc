@@ -1519,33 +1519,33 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon2Trg->push_back(muon2Trg_);
 
            //Trigger save non-sense 
-           mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
-		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
-		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
-		   mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
-		   mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
-
-           mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
-		   mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
-		   mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
-		   mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
-		   mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
-		   mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
-		   mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
-
-           mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
-		   mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
-		   mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
-		   mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
-		   mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
-
-           mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
-		   mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
-		   mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
-		   mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
-		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
-		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
-		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
+           //mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
+		   //mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
+		   //mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
+		   //mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
+		   //mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
+//
+           //mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
+		   //mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
+		   //mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
+		   //mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
+		   //mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
+		   //mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
+		   //mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
+//
+           //mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
+		   //mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
+		   //mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
+		   //mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
+		   //mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
+//
+           //mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
+		   //mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
+		   //mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
+		   //mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
+		   //mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
+		   //mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
+		   //mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
 
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
@@ -2057,33 +2057,33 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon2Trg->push_back(muon2Trg_);
 
            //Trigger save non-sense 
-           mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
-		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
-		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
-		   mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
-		   mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
-
-           mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
-		   mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
-		   mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
-		   mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
-		   mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
-		   mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
-		   mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
-
-           mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
-		   mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
-		   mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
-		   mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
-		   mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
-
-           mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
-		   mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
-		   mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
-		   mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
-		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
-		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
-		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
+           //mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
+		   //mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
+		   //mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
+		   //mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
+		   //mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
+//
+           //mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
+		   //mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
+		   //mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
+		   //mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
+		   //mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
+		   //mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
+		   //mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
+//
+           //mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
+		   //mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
+		   //mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
+		   //mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
+		   //mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
+//
+           //mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
+		   //mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
+		   //mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
+		   //mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
+		   //mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
+		   //mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
+		   //mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
 
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
@@ -2595,33 +2595,33 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon2Trg->push_back(muon2Trg_);
 
 		   //Trigger save non-sense 
-           mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
-		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
-		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
-		   mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
-		   mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
-
-           mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
-		   mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
-		   mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
-		   mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
-		   mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
-		   mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
-		   mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
-
-           mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
-		   mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
-		   mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
-		   mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
-		   mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
-
-           mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
-		   mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
-		   mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
-		   mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
-		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
-		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
-		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
+           //mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
+		   //mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
+		   //mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
+		   //mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
+		   //mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
+//
+           //mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
+		   //mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
+		   //mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
+		   //mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
+		   //mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
+		   //mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
+		   //mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
+//
+           //mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
+		   //mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
+		   //mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
+		   //mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
+		   //mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
+//
+           //mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
+		   //mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
+		   //mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
+		   //mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
+		   //mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
+		   //mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
+		   //mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
 
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
@@ -2793,10 +2793,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		muon1Trg->clear(); muon2Trg->clear();
 
         //Trigger save non-sense 
-        mu1_HLT_Mu7_IP4->clear(); mu1_HLT_Mu8_IP3->clear(); mu1_HLT_Mu8_IP5->clear(); mu1_HLT_Mu8_IP6->clear(); mu1_HLT_Mu8p5_IP3p5->clear();
-        mu1_HLT_Mu9_IP0->clear(); mu1_HLT_Mu9_IP3->clear(); mu1_HLT_Mu9_IP4->clear(); mu1_HLT_Mu9_IP5->clear(); mu1_HLT_Mu9_IP6->clear(); mu1_HLT_Mu10p5_IP3p5->clear(); mu1_HLT_Mu12_IP6->clear();
-        mu2_HLT_Mu7_IP4->clear(); mu2_HLT_Mu8_IP3->clear(); mu2_HLT_Mu8_IP5->clear(); mu2_HLT_Mu8_IP6->clear(); mu2_HLT_Mu8p5_IP3p5->clear();
-        mu2_HLT_Mu9_IP0->clear(); mu2_HLT_Mu9_IP3->clear(); mu2_HLT_Mu9_IP4->clear(); mu2_HLT_Mu9_IP5->clear(); mu2_HLT_Mu9_IP6->clear(); mu2_HLT_Mu10p5_IP3p5->clear(); mu2_HLT_Mu12_IP6->clear();
+        //mu1_HLT_Mu7_IP4->clear(); mu1_HLT_Mu8_IP3->clear(); mu1_HLT_Mu8_IP5->clear(); mu1_HLT_Mu8_IP6->clear(); mu1_HLT_Mu8p5_IP3p5->clear();
+        //mu1_HLT_Mu9_IP0->clear(); mu1_HLT_Mu9_IP3->clear(); mu1_HLT_Mu9_IP4->clear(); mu1_HLT_Mu9_IP5->clear(); mu1_HLT_Mu9_IP6->clear(); mu1_HLT_Mu10p5_IP3p5->clear(); mu1_HLT_Mu12_IP6->clear();
+        //mu2_HLT_Mu7_IP4->clear(); mu2_HLT_Mu8_IP3->clear(); mu2_HLT_Mu8_IP5->clear(); mu2_HLT_Mu8_IP6->clear(); mu2_HLT_Mu8p5_IP3p5->clear();
+        //mu2_HLT_Mu9_IP0->clear(); mu2_HLT_Mu9_IP3->clear(); mu2_HLT_Mu9_IP4->clear(); mu2_HLT_Mu9_IP5->clear(); mu2_HLT_Mu9_IP6->clear(); mu2_HLT_Mu10p5_IP3p5->clear(); mu2_HLT_Mu12_IP6->clear();
 
    		//Trigger Selector
    		drTrg_m1->clear();
