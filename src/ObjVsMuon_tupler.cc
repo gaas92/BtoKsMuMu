@@ -110,7 +110,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
   runNum     = iEvent.id().run();
   lumiNum    = iEvent.luminosityBlock();
   eventNum   = iEvent.id().event();
-  bool something_to_fill = false;
+  bool something_to_fill = true;
 
   //BPH trigger footprint
   regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9].*");
@@ -121,7 +121,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
   
   //emulate BParking MuonTriggerSelector 
   int int_obj = 0;
-
+  /*
   for (pat::TriggerObjectStandAlone obj : *triggerObjects) { // note: not "const &" since we want to call unpackPathNames   
     int_obj++; 
     obj.unpackFilterLabels(iEvent, *triggerResults_handle);
@@ -178,7 +178,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
     }
 
   }//trigger objects
-
+  */ 
 
   //Trigger Muons ...
 
@@ -218,9 +218,9 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
   if(something_to_fill) addToTree();
 
 
-  TriggerObj_pt->clear(); TriggerObj_eta->clear(); TriggerObj_phi->clear(); TriggerObj_ch->clear(); TriggerObj_ip->clear(); 
-  obj_HLT_Mu7_IP4->clear(); obj_HLT_Mu8_IP3->clear(); obj_HLT_Mu8_IP5->clear(); obj_HLT_Mu8_IP6->clear(); obj_HLT_Mu8p5_IP3p5->clear(); 
-  obj_HLT_Mu9_IP0->clear(); obj_HLT_Mu9_IP3->clear(); obj_HLT_Mu9_IP4->clear(); obj_HLT_Mu9_IP5->clear(); obj_HLT_Mu9_IP6->clear(); obj_HLT_Mu10p5_IP3p5->clear(); obj_HLT_Mu12_IP6->clear(); 
+  //TriggerObj_pt->clear(); TriggerObj_eta->clear(); TriggerObj_phi->clear(); TriggerObj_ch->clear(); TriggerObj_ip->clear(); 
+  //obj_HLT_Mu7_IP4->clear(); obj_HLT_Mu8_IP3->clear(); obj_HLT_Mu8_IP5->clear(); obj_HLT_Mu8_IP6->clear(); obj_HLT_Mu8p5_IP3p5->clear(); 
+  //obj_HLT_Mu9_IP0->clear(); obj_HLT_Mu9_IP3->clear(); obj_HLT_Mu9_IP4->clear(); obj_HLT_Mu9_IP5->clear(); obj_HLT_Mu9_IP6->clear(); obj_HLT_Mu10p5_IP3p5->clear(); obj_HLT_Mu12_IP6->clear(); 
 
   if (verbose) {cout << "======================== " << endl;}
   return;
@@ -236,30 +236,30 @@ void ObjVsMuon_tupler::addToTree() {
     tree->Branch("eventNum", &eventNum);
 
     //Trigger object info 
-    tree->Branch("TriggerObj_pt", &TriggerObj_pt); 
-    tree->Branch("TriggerObj_eta", &TriggerObj_eta); 
-    tree->Branch("TriggerObj_phi", &TriggerObj_phi); 
-    tree->Branch("TriggerObj_ch", &TriggerObj_ch); 
-    tree->Branch("TriggerObj_ip", &TriggerObj_ip); 
+    //tree->Branch("TriggerObj_pt", &TriggerObj_pt); 
+    //tree->Branch("TriggerObj_eta", &TriggerObj_eta); 
+    //tree->Branch("TriggerObj_phi", &TriggerObj_phi); 
+    //tree->Branch("TriggerObj_ch", &TriggerObj_ch); 
+    //tree->Branch("TriggerObj_ip", &TriggerObj_ip); 
+    //
+    //tree->Branch("obj_HLT_Mu7_IP4", &obj_HLT_Mu7_IP4); 
+	  //tree->Branch("obj_HLT_Mu8_IP3", &obj_HLT_Mu8_IP3); 
+	  //tree->Branch("obj_HLT_Mu8_IP5", &obj_HLT_Mu8_IP5);
+	  //tree->Branch("obj_HLT_Mu8_IP6", &obj_HLT_Mu8_IP6);
+	  //tree->Branch("obj_HLT_Mu8p5_IP3p5", &obj_HLT_Mu8p5_IP3p5);
+    //tree->Branch("obj_HLT_Mu9_IP0", &obj_HLT_Mu9_IP0); 
+	  //tree->Branch("obj_HLT_Mu9_IP3", &obj_HLT_Mu9_IP3);
+	  //tree->Branch("obj_HLT_Mu9_IP4", &obj_HLT_Mu9_IP4); 
+	  //tree->Branch("obj_HLT_Mu9_IP5", &obj_HLT_Mu9_IP5); 
+	  //tree->Branch("obj_HLT_Mu9_IP6", &obj_HLT_Mu9_IP6); 
+	  //tree->Branch("obj_HLT_Mu10p5_IP3p5", &obj_HLT_Mu10p5_IP3p5); 
+	  //tree->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
 
-    tree->Branch("obj_HLT_Mu7_IP4", &obj_HLT_Mu7_IP4); 
-	  tree->Branch("obj_HLT_Mu8_IP3", &obj_HLT_Mu8_IP3); 
-	  tree->Branch("obj_HLT_Mu8_IP5", &obj_HLT_Mu8_IP5);
-	  tree->Branch("obj_HLT_Mu8_IP6", &obj_HLT_Mu8_IP6);
-	  tree->Branch("obj_HLT_Mu8p5_IP3p5", &obj_HLT_Mu8p5_IP3p5);
-    tree->Branch("obj_HLT_Mu9_IP0", &obj_HLT_Mu9_IP0); 
-	  tree->Branch("obj_HLT_Mu9_IP3", &obj_HLT_Mu9_IP3);
-	  tree->Branch("obj_HLT_Mu9_IP4", &obj_HLT_Mu9_IP4); 
-	  tree->Branch("obj_HLT_Mu9_IP5", &obj_HLT_Mu9_IP5); 
-	  tree->Branch("obj_HLT_Mu9_IP6", &obj_HLT_Mu9_IP6); 
-	  tree->Branch("obj_HLT_Mu10p5_IP3p5", &obj_HLT_Mu10p5_IP3p5); 
-	  tree->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
-
-    for(auto& kv : outMap) {
-      auto k = kv.first;
-      if(verbose) {cout << "\t" << k;}
-      tree->Branch(k.c_str(), &(outMap[k]));
-    }
+    //for(auto& kv : outMap) {
+    //  auto k = kv.first;
+    //  if(verbose) {cout << "\t" << k;}
+    //  tree->Branch(k.c_str(), &(outMap[k]));
+    //}
     treeDeclared = true;
     if(verbose) {cout << "\n\n";}
   }
