@@ -62,6 +62,11 @@ class ObjVsMuon_tupler : public edm::EDProducer {
 	                                 "Mu10p5_IP3p5", "Mu9_IP0", "Mu9_IP3", "Mu9_IP4", "Mu9_IP5", "Mu9_IP6", 
                                    "Mu8p5_IP3p5",  "Mu8_IP3", "Mu8_IP5", "Mu8_IP6", 
                                    "Mu7_IP4"};
+
+      std::vector<float>       *TriggerObj_pt, *TriggerObj_eta, *TriggerObj_phi, *TriggerObj_ch, *TriggerObj_ip;
+      std::vector<int>         *obj_HLT_Mu7_IP4, *obj_HLT_Mu8_IP3, *obj_HLT_Mu8_IP5, *obj_HLT_Mu8_IP6, *obj_HLT_Mu8p5_IP3p5;
+      std::vector<int>         *obj_HLT_Mu9_IP0, *obj_HLT_Mu9_IP3, *obj_HLT_Mu9_IP4, *obj_HLT_Mu9_IP5, *obj_HLT_Mu9_IP6, *obj_HLT_Mu10p5_IP3p5, *obj_HLT_Mu12_IP6;
+
       int verbose = 0;
 };
 
@@ -70,10 +75,13 @@ ObjVsMuon_tupler::ObjVsMuon_tupler(const edm::ParameterSet& iConfig):
   triggerBitsSrc_( consumes<edm::TriggerResults> ( iConfig.getParameter<edm::InputTag>("triggerBits") ) ),
   triggerPrescalesSrc_(consumes<pat::PackedTriggerPrescales>(edm::InputTag("patTrigger"))),
 
+  //Trigger Muon Selecctor 
+  triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
+
   vtxSrc_( consumes<vector<reco::Vertex>> ( edm::InputTag("offlineSlimmedPrimaryVertices") ) ),
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {
-  tree = fs->make<TTree>( "T", "Events Tree from N Vtx Produccer");
+  tree = fs->make<TTree>( "T", "Trigger Objects and Trigger Muons TTree ");
 }
 
 void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
@@ -91,6 +99,10 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
   edm::Handle<edm::TriggerResults> triggerResults_handle;
   iEvent.getByToken(triggerBitsSrc_, triggerResults_handle);
 
+  //Trigger Object Selector
+  edm::Handle<std::vector<pat::TriggerObjectStandAlone>> triggerObjects;
+  iEvent.getByToken(triggerObjects_, triggerObjects);
+
   isRealData = iEvent.isRealData() ? 1 : 0 ;
   runNum     = iEvent.id().run();
   lumiNum    = iEvent.luminosityBlock();
@@ -101,31 +113,69 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
   const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
   if (verbose) {cout << "\n ==== TRIGGER PATHS ==== " << endl;}
 
-  //for (auto trgTag : triggerTags) outMap["prescale_" + trgTag] = 0;
-
   //look and fill the BParked Trigger Objects ... 
-  if ( triggerResults_handle.isValid()) {
-  const edm::TriggerNames &TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+  
+  //emulate BParking MuonTriggerSelector 
+  int int_obj = 0;
 
-    for (unsigned int i = 0, n = triggerResults_handle->size(); i < n; ++i) {
-      auto trgName = TheTriggerNames.triggerName(i);
-      //if (verbose) {
-      // cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
-      //}
+  for (pat::TriggerObjectStandAlone obj : *triggerObjects) { // note: not "const &" since we want to call unpackPathNames   
+    int_obj++; 
+    obj.unpackFilterLabels(iEvent, *triggerResults_handle);
+    obj.unpackPathNames(names);
+    bool isTriggerMuon = false;
 
-      for (unsigned int k = 0; k < NTRIGGERS; k++){
-        std::string trgTag = TriggersToTest[k];	
-	      bool found_ = false; 
-        bool match = (trgName.find(trgTag) != std::string::npos && !found_);
-        //bool match = trgName.substr(4, trgTag.size()) == trgTag.c_str();
-        if (triggerPrescales->getPrescaleForIndex(i) < 1) continue;
-        if (match && triggerResults_handle->accept(i)) {
-		      trigger += (1<<k);
-		      found_ = true;
-	      }
-      }
+    // checa que al menos un elemento sea un muon (ID=83)
+    // que pasa con los demas?
+    //if(debug) std::cout << "\tfilterIds size:   " << obj.filterIds().size()<< "\n";
+    for (unsigned h = 0; h < obj.filterIds().size(); ++h)
+    	if(obj.filterIds()[h] == 83){ 
+        	isTriggerMuon = true; 
+         	// std::cout << "\t\tType IDs:   " << 83 <<"\n";  //83 = muon
+        	//break;
+      	} else {
+         	// std::cout << "\t\tXXXXXXXXXX   Not Muon:   " << obj.filterIds()[h] <<"\n";
+         	isTriggerMuon = false;
     }
-  }
+    if(!isTriggerMuon) continue;
+    // Ahora checa que dentro de los filterlabes en al menos uno
+    // exista hltL3 y Park
+    isTriggerMuon = false;
+    //std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
+	  std::string filterLabel = "";
+	  std::string filterName_ = "";
+    for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
+        std::string filterName = obj.filterLabels()[h];
+		
+        //if (debug) std::cout << "\t\tfilterlabel:  " << h << filterName << "\n";
+        if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
+          isTriggerMuon = true;
+			    filterLabel = filterName;
+        }
+    }
+	  if(!isTriggerMuon) continue;
+
+	  float obj_pt = obj.pt();
+	  float obj_eta = obj.eta();
+	  float obj_phi = obj.phi();
+	  TriggerObj_pt->push_back(obj_pt);
+	  TriggerObj_eta->push_back(obj_phi);
+	  TriggerObj_phi->push_back(obj_eta);
+	  float obj_ch = obj.charge();
+	  TriggerObj_ch->push_back(obj_ch);
+    TriggerObj_ip->push_back(0.0);
+    
+    if(verbose){ 
+      std::cout << "\n\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
+      //Print trigger object collection and type
+	    std::cout << "\t\t\tCollection: " << obj.collection() << std::endl;
+	    std::cout << "\t\t\tFilter Label: " << filterLabel << std::endl;
+		  std::cout << "\t\t\tFilter Name: " << filterName_ << std::endl;
+    }
+
+  }//trigger objects
+
+
+  //Trigger Muons ...
 
   
   for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
