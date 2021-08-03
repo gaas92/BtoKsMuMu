@@ -121,7 +121,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
   
   //emulate BParking MuonTriggerSelector 
   int int_obj = 0;
-  /*
+  
   for (pat::TriggerObjectStandAlone obj : *triggerObjects) { // note: not "const &" since we want to call unpackPathNames   
     int_obj++; 
     obj.unpackFilterLabels(iEvent, *triggerResults_handle);
@@ -178,7 +178,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
     }
 
   }//trigger objects
-  */ 
+   
 
   //Trigger Muons ...
 
