@@ -180,7 +180,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
 
   //Trigger Muons ...
 
-  
+  /*
   for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
     auto trgName = names.triggerName(i);
     if (!regex_match(trgName, txt_regex_path)) continue;
@@ -211,7 +211,8 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
   }
   outMap["NewTrigger_Int"] = new_trigger;
 
-
+  */
+ 
   if(something_to_fill) addToTree();
 
   if (verbose) {cout << "======================== " << endl;}
