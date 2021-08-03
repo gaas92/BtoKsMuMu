@@ -77,10 +77,11 @@ ObjVsMuon_tupler::ObjVsMuon_tupler(const edm::ParameterSet& iConfig):
   triggerBitsSrc_( consumes<edm::TriggerResults> ( iConfig.getParameter<edm::InputTag>("triggerBits") ) ),
   triggerPrescalesSrc_(consumes<pat::PackedTriggerPrescales>(edm::InputTag("patTrigger"))),
 
+  vtxSrc_( consumes<vector<reco::Vertex>> ( edm::InputTag("offlineSlimmedPrimaryVertices") ) ),
+
   //Trigger Muon Selecctor 
   triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
 
-  vtxSrc_( consumes<vector<reco::Vertex>> ( edm::InputTag("offlineSlimmedPrimaryVertices") ) ),
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {
   tree = fs->make<TTree>( "T", "Trigger Objects and Trigger Muons TTree ");
