@@ -47,6 +47,8 @@ class ObjVsMuon_tupler : public edm::EDProducer {
       edm::EDGetTokenT <pat::PackedTriggerPrescales> triggerPrescalesSrc_;
       edm::EDGetTokenT<vector<reco::Vertex>> vtxSrc_;
 
+      edm::EDGetTokenT<std::vector<pat::TriggerObjectStandAlone>> triggerObjects_;
+
       edm::Service<TFileService> fs;
 
       TTree* tree;
@@ -163,7 +165,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
 	  float obj_ch = obj.charge();
 	  TriggerObj_ch->push_back(obj_ch);
     TriggerObj_ip->push_back(0.0);
-    
+
     if(verbose){ 
       std::cout << "\n\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
       //Print trigger object collection and type
