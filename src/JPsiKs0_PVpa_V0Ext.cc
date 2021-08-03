@@ -131,6 +131,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   mu1PF(0), mu2PF(0), mu1loose(0), mu2loose(0),
   muon1Trg(0), muon2Trg(0),
 
+  just_test(0),
   //Trigger save non-sense 
   //mu1_HLT_Mu7_IP4(0), mu1_HLT_Mu8_IP3(0), mu1_HLT_Mu8_IP5(0), mu1_HLT_Mu8_IP6(0), mu1_HLT_Mu8p5_IP3p5(0),
   //mu1_HLT_Mu9_IP0(0), mu1_HLT_Mu9_IP3(0), mu1_HLT_Mu9_IP4(0), mu1_HLT_Mu9_IP5(0), mu1_HLT_Mu9_IP6(0), mu1_HLT_Mu10p5_IP3p5(0), mu1_HLT_Mu12_IP6(0),
