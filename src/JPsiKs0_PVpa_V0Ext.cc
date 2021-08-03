@@ -131,6 +131,13 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   mu1PF(0), mu2PF(0), mu1loose(0), mu2loose(0),
   muon1Trg(0), muon2Trg(0),
 
+  //Trigger save non-sense 
+  mu1_HLT_Mu7_IP4(0), mu1_HLT_Mu8_IP3(0), mu1_HLT_Mu8_IP5(0), mu1_HLT_Mu8_IP6(0), mu1_HLT_Mu8p5_IP3p5(0),
+  mu1_HLT_Mu9_IP0(0), mu1_HLT_Mu9_IP3(0), mu1_HLT_Mu9_IP4(0), mu1_HLT_Mu9_IP5(0), mu1_HLT_Mu9_IP6(0), mu1_HLT_Mu10p5_IP3p5(0), mu1_HLT_Mu12_IP6(0),
+  mu2_HLT_Mu7_IP4(0), mu2_HLT_Mu8_IP3(0), mu2_HLT_Mu8_IP5(0), mu2_HLT_Mu8_IP6(0), mu2_HLT_Mu8p5_IP3p5(0),
+  mu2_HLT_Mu9_IP0(0), mu2_HLT_Mu9_IP3(0), mu2_HLT_Mu9_IP4(0), mu2_HLT_Mu9_IP5(0), mu2_HLT_Mu9_IP6(0), mu2_HLT_Mu10p5_IP3p5(0), mu2_HLT_Mu12_IP6(0),
+
+
   //Trigger Selector
   drTrg_m1(0), drTrg_m2(0),
 
@@ -486,11 +493,11 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
   std::string TriggersToTest[NTRIGGERS] = {
      "HLT_Mu12_IP6", //0
-	 "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-5
-     "HLT_Mu8_IP3","HLT_Mu8_IP5", "HLT_Mu8_IP6", //6-8
-     "HLT_Mu7_IP4", //9
-  	 "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18", "L1_SingleMu14", "L1_SingleMu12", "L1_SingleMu10", //10-15
-	 "L1_SingleMu9", "L1_SingleMu8", "L1_SingleMu7", "L1_SingleMu6"}; //16-19
+	 "HLT_Mu10p5_IP3p5", "HLT_Mu9_IP0","HLT_Mu9_IP3", "HLT_Mu9_IP4", "HLT_Mu9_IP5", "HLT_Mu9_IP6", //1-6
+     "HLT_Mu8p5_IP3p5", "HLT_Mu8_IP3","HLT_Mu8_IP5", "HLT_Mu8_IP6", //7-10
+     "HLT_Mu7_IP4", //11
+  	 "L1_SingleMu22", "L1_SingleMu25", "L1_SingleMu18", "L1_SingleMu14", "L1_SingleMu12", "L1_SingleMu10", //12-17
+	 "L1_SingleMu9", "L1_SingleMu8"}; //18-19
 
   if ( triggerResults_handle.isValid()) {
    //std::cout << "Triggers ok ..." <<std::endl;	  
@@ -996,32 +1003,116 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	   unsigned int muon1Trg_ = 0;
 	   unsigned int muon2Trg_ = 0;
 	   
+	   //Trigger save non-sense 
+       int mu1_HLT_Mu7_IP4_ = 0; 
+	   int mu1_HLT_Mu8_IP3_ = 0; 
+	   int mu1_HLT_Mu8_IP5_ = 0;
+	   int mu1_HLT_Mu8_IP6_ = 0;
+	   int mu1_HLT_Mu8p5_IP3p5_ = 0;
+
+       int mu1_HLT_Mu9_IP0_ = 0;
+	   int mu1_HLT_Mu9_IP3_ = 0;
+	   int mu1_HLT_Mu9_IP4_ = 0;
+	   int mu1_HLT_Mu9_IP5_ = 0;
+	   int mu1_HLT_Mu9_IP6_ = 0;
+	   int mu1_HLT_Mu10p5_IP3p5_ = 0;
+	   int mu1_HLT_Mu12_IP6_ = 0;
+
+       int mu2_HLT_Mu7_IP4_ = 0;
+	   int mu2_HLT_Mu8_IP3_ = 0;
+	   int mu2_HLT_Mu8_IP5_ = 0;
+	   int mu2_HLT_Mu8_IP6_ = 0;
+	   int mu2_HLT_Mu8p5_IP3p5_ = 0;
+
+       int mu2_HLT_Mu9_IP0_ = 0;
+	   int mu2_HLT_Mu9_IP3_ = 0;
+	   int mu2_HLT_Mu9_IP4_ = 0;
+	   int mu2_HLT_Mu9_IP5_ = 0;
+	   int mu2_HLT_Mu9_IP6_ = 0;
+	   int mu2_HLT_Mu10p5_IP3p5_ = 0;
+	   int mu2_HLT_Mu12_IP6_ = 0;
+
+	   bool print_trash = true;
 	   for (unsigned int i = 0; i < NTRIGGERS; i++) {
 			std::string triggerName = TriggersToTest[i] + "_part*_v*"; 
 			//if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon1->triggered(triggerName.c_str())){ 
 				muon1Trg_ += (1<<i);
-				//std::cout<< " Muon 1 matched " << triggerName << std::endl;
-				//std::cout<< " Muon 1 pT: " << iMuon1->pt() << ", IP: " << abs(iMuon1->track()->dxy(referencePos)/iMuon1->track()->dxyError())<< std::endl;
-				//if (abs(iMuon1->eta()) > 1.5) std::cout << "   Muon 1 eta: " << iMuon1->eta() << std::endl;
-                //
-				//if (iMuon1->triggerObjectMatches().size()!=0){
-				//	for(size_t k=0; k<iMuon1->triggerObjectMatches().size();k++){
-                //
-				//		if(iMuon1->triggerObjectMatch(k)!=0 && iMuon1->triggerObjectMatch(k)->hasPathName(triggerName.c_str(),true,true)){
-				//			std::cout << " Muon1 match inside . . ." << std::endl;
-				//			
-                //            float dr=TMath::Sqrt(pow(iMuon1->triggerObjectMatch(k)->eta()-iMuon1->eta(),2.)+pow(iMuon1->triggerObjectMatch(k)->phi()-iMuon1->phi(),2.));
-                //            float dpt=(iMuon1->triggerObjectMatch(k)->pt()-iMuon1->pt())/iMuon1->triggerObjectMatch(k)->pt();
-				//			
-				//            if (abs(iMuon1->eta()) > 1.5){
-				//				 std::cout << "   Muon1 eta inside: " << iMuon1->eta() << std::endl;
-				//				 std::cout << "   Match1 obj eta: " << iMuon1->triggerObjectMatch(k)->eta() << std::endl;
-				//			}
-				//			
-				//		}
-				//	}
-				//}
+				//Trigger save non-sense 
+				if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){
+					mu1_HLT_Mu7_IP4_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+				if (triggerName.find("HLT_Mu8_IP3") != std::string::npos){
+					mu1_HLT_Mu8_IP3_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+				if (triggerName.find("HLT_Mu8_IP5") != std::string::npos){
+					mu1_HLT_Mu8_IP5_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}				
+				if (triggerName.find("HLT_Mu8_IP6") != std::string::npos){
+					mu1_HLT_Mu8_IP6_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+				if (triggerName.find("HLT_Mu8p5_IP3p5") != std::string::npos){
+					mu1_HLT_Mu8p5_IP3p5_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+
+				if (triggerName.find("HLT_Mu9_IP0") != std::string::npos){
+					mu1_HLT_Mu9_IP0_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}					
+				if (triggerName.find("HLT_Mu9_IP3") != std::string::npos){
+					mu1_HLT_Mu9_IP3_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}				
+				if (triggerName.find("HLT_Mu9_IP4") != std::string::npos){
+					mu1_HLT_Mu9_IP4_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu9_IP5") != std::string::npos){
+					mu1_HLT_Mu9_IP5_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu9_IP6") != std::string::npos){
+					mu1_HLT_Mu9_IP6_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu10p5_IP3p5") != std::string::npos){
+					mu1_HLT_Mu10p5_IP3p5_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu12_IP6") != std::string::npos){
+					mu1_HLT_Mu12_IP6_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+
+				//sanity checks 
+				if (print_trash) {
+				    std::cout<< " Muon 1 matched " << triggerName << std::endl;
+				    std::cout<< " Muon 1 pT: " << iMuon1->pt() << ", IP: " << abs(iMuon1->track()->dxy(referencePos)/iMuon1->track()->dxyError())<< std::endl;
+				    if (abs(iMuon1->eta()) > 1.5) std::cout << "   Muon 1 eta: " << iMuon1->eta() << std::endl;
+                    
+				    if (iMuon1->triggerObjectMatches().size()!=0){
+				    	for(size_t k=0; k<iMuon1->triggerObjectMatches().size();k++){
+                    
+				    		if(iMuon1->triggerObjectMatch(k)!=0 && iMuon1->triggerObjectMatch(k)->hasPathName(triggerName.c_str(),true,true)){
+				    			std::cout << " Muon1 match inside . . ." << std::endl;
+				    			
+                                float dr=TMath::Sqrt(pow(iMuon1->triggerObjectMatch(k)->eta()-iMuon1->eta(),2.)+pow(iMuon1->triggerObjectMatch(k)->phi()-iMuon1->phi(),2.));
+                                float dpt=(iMuon1->triggerObjectMatch(k)->pt()-iMuon1->pt())/iMuon1->triggerObjectMatch(k)->pt();
+				    			
+				                if (abs(iMuon1->eta()) > 1.5){
+				    				 std::cout << "   Muon1 eta inside: " << iMuon1->eta() << std::endl;
+				    				 std::cout << "   Match1 obj eta: " << iMuon1->triggerObjectMatch(k)->eta() << std::endl;
+				    			}
+				    			
+				    		}
+				    	}
+				    }
+				}// end print trash 
 				
 			} 
 			//if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
@@ -1426,6 +1517,35 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   mu2loose->push_back(muon::isLooseMuon(*iMuon2));
   		   muon1Trg->push_back(muon1Trg_);
 		   muon2Trg->push_back(muon2Trg_);
+
+           //Trigger save non-sense 
+           mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
+		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
+		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
+		   mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
+		   mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
+
+           mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
+		   mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
+		   mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
+		   mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
+		   mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
+		   mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
+		   mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
+
+           mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
+		   mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
+		   mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
+		   mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
+		   mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
+
+           mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
+		   mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
+		   mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
+		   mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
+		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
+		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
+		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
 
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
@@ -1936,6 +2056,35 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   		   muon1Trg->push_back(muon1Trg_);
 		   muon2Trg->push_back(muon2Trg_);
 
+           //Trigger save non-sense 
+           mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
+		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
+		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
+		   mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
+		   mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
+
+           mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
+		   mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
+		   mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
+		   mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
+		   mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
+		   mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
+		   mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
+
+           mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
+		   mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
+		   mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
+		   mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
+		   mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
+
+           mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
+		   mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
+		   mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
+		   mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
+		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
+		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
+		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
+
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
@@ -2445,6 +2594,35 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   		   muon1Trg->push_back(muon1Trg_);
 		   muon2Trg->push_back(muon2Trg_);
 
+		   //Trigger save non-sense 
+           mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
+		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
+		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
+		   mu1_HLT_Mu8_IP6->push_back(mu1_HLT_Mu8_IP6_);
+		   mu1_HLT_Mu8p5_IP3p5->push_back(mu1_HLT_Mu8p5_IP3p5_);
+
+           mu1_HLT_Mu9_IP0->push_back(mu1_HLT_Mu9_IP0_); 
+		   mu1_HLT_Mu9_IP3->push_back(mu1_HLT_Mu9_IP3_);
+		   mu1_HLT_Mu9_IP4->push_back(mu1_HLT_Mu9_IP4_); 
+		   mu1_HLT_Mu9_IP5->push_back(mu1_HLT_Mu9_IP5_); 
+		   mu1_HLT_Mu9_IP6->push_back(mu1_HLT_Mu9_IP6_); 
+		   mu1_HLT_Mu10p5_IP3p5->push_back(mu1_HLT_Mu10p5_IP3p5_); 
+		   mu1_HLT_Mu12_IP6->push_back(mu1_HLT_Mu12_IP6_);
+
+           mu2_HLT_Mu7_IP4->push_back(mu2_HLT_Mu7_IP4_); 
+		   mu2_HLT_Mu8_IP3->push_back(mu2_HLT_Mu8_IP3_); 
+		   mu2_HLT_Mu8_IP5->push_back(mu2_HLT_Mu8_IP5_);
+		   mu2_HLT_Mu8_IP6->push_back(mu2_HLT_Mu8_IP6_);
+		   mu2_HLT_Mu8p5_IP3p5->push_back(mu2_HLT_Mu8p5_IP3p5_);
+
+           mu2_HLT_Mu9_IP0->push_back(mu2_HLT_Mu9_IP0_); 
+		   mu2_HLT_Mu9_IP3->push_back(mu2_HLT_Mu9_IP3_);
+		   mu2_HLT_Mu9_IP4->push_back(mu2_HLT_Mu9_IP4_); 
+		   mu2_HLT_Mu9_IP5->push_back(mu2_HLT_Mu9_IP5_); 
+		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
+		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
+		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
+
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
@@ -2613,6 +2791,12 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
 
 		muon1Trg->clear(); muon2Trg->clear();
+
+        //Trigger save non-sense 
+        mu1_HLT_Mu7_IP4->clear(); mu1_HLT_Mu8_IP3->clear(); mu1_HLT_Mu8_IP5->clear(); mu1_HLT_Mu8_IP6->clear(); mu1_HLT_Mu8p5_IP3p5->clear();
+        mu1_HLT_Mu9_IP0->clear(); mu1_HLT_Mu9_IP3->clear(); mu1_HLT_Mu9_IP4->clear(); mu1_HLT_Mu9_IP5->clear(); mu1_HLT_Mu9_IP6->clear(); mu1_HLT_Mu10p5_IP3p5->clear(); mu1_HLT_Mu12_IP6->clear();
+        mu2_HLT_Mu7_IP4->clear(); mu2_HLT_Mu8_IP3->clear(); mu2_HLT_Mu8_IP5->clear(); mu2_HLT_Mu8_IP6->clear(); mu2_HLT_Mu8p5_IP3p5->clear();
+        mu2_HLT_Mu9_IP0->clear(); mu2_HLT_Mu9_IP3->clear(); mu2_HLT_Mu9_IP4->clear(); mu2_HLT_Mu9_IP5->clear(); mu2_HLT_Mu9_IP6->clear(); mu2_HLT_Mu10p5_IP3p5->clear(); mu2_HLT_Mu12_IP6->clear();
 
    		//Trigger Selector
    		drTrg_m1->clear();
@@ -2955,6 +3139,32 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("mu2loose",&mu2loose);
 	 tree_->Branch("muon1Trg",&muon1Trg);
 	 tree_->Branch("muon2Trg",&muon2Trg);
+
+	 //Trigger save non-sense 
+     tree_->Branch("mu1_HLT_Mu7_IP4", &mu1_HLT_Mu7_IP4); 
+	 tree_->Branch("mu1_HLT_Mu8_IP3", &mu1_HLT_Mu8_IP3); 
+	 tree_->Branch("mu1_HLT_Mu8_IP5", &mu1_HLT_Mu8_IP5);
+	 tree_->Branch("mu1_HLT_Mu8_IP6", &mu1_HLT_Mu8_IP6);
+	 tree_->Branch("mu1_HLT_Mu8p5_IP3p5", &mu1_HLT_Mu8p5_IP3p5);
+     tree_->Branch("mu1_HLT_Mu9_IP0", &(mu1_HLT_Mu9_IP0); 
+	 tree_->Branch("mu1_HLT_Mu9_IP3", &(mu1_HLT_Mu9_IP3);
+	 tree_->Branch("mu1_HLT_Mu9_IP4", &(mu1_HLT_Mu9_IP4); 
+	 tree_->Branch("mu1_HLT_Mu9_IP5", &(mu1_HLT_Mu9_IP5); 
+	 tree_->Branch("mu1_HLT_Mu9_IP6", &(mu1_HLT_Mu9_IP6); 
+	 tree_->Branch("mu1_HLT_Mu10p5_IP3p5" &mu1_HLT_Mu10p5_IP3p5); 
+	 tree_->Branch("mu1_HLT_Mu12_IP6", &mu1_HLT_Mu12_IP6);
+     tree_->Branch("mu2_HLT_Mu7_IP4", &mu2_HLT_Mu7_IP4); 
+	 tree_->Branch("mu2_HLT_Mu8_IP3", &mu2_HLT_Mu8_IP3); 
+	 tree_->Branch("mu2_HLT_Mu8_IP5", &mu2_HLT_Mu8_IP5);
+	 tree_->Branch("mu2_HLT_Mu8_IP6", &mu2_HLT_Mu8_IP6);
+	 tree_->Branch("mu2_HLT_Mu8p5_IP3p5", &mu2_HLT_Mu8p5_IP3p5);
+     tree_->Branch("mu2_HLT_Mu9_IP0", &mu2_HLT_Mu9_IP0); 
+	 tree_->Branch("mu2_HLT_Mu9_IP3", &mu2_HLT_Mu9_IP3);
+	 tree_->Branch("mu2_HLT_Mu9_IP4", &mu2_HLT_Mu9_IP4); 
+	 tree_->Branch("mu2_HLT_Mu9_IP5", &mu2_HLT_Mu9_IP5); 
+	 tree_->Branch("mu2_HLT_Mu9_IP6", &mu2_HLT_Mu9_IP6); 
+	 tree_->Branch("mu2_HLT_Mu10p5_IP3p5", &mu2_HLT_Mu10p5_IP3p5); 
+	 tree_->Branch("mu2_HLT_Mu12_IP6", &mu2_HLT_Mu12_IP6);	 
 
 	 //Trigger Selector
 	 tree_->Branch("drTrg_m1", &drTrg_m1);
