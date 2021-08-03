@@ -1118,12 +1118,75 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 			//if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon2->triggered(triggerName.c_str())){ 
 				muon2Trg_ += (1<<i);
+								//Trigger save non-sense 
+				if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){
+					mu2_HLT_Mu7_IP4_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+				if (triggerName.find("HLT_Mu8_IP3") != std::string::npos){
+					mu2_HLT_Mu8_IP3_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+				if (triggerName.find("HLT_Mu8_IP5") != std::string::npos){
+					mu2_HLT_Mu8_IP5_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}				
+				if (triggerName.find("HLT_Mu8_IP6") != std::string::npos){
+					mu2_HLT_Mu8_IP6_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+				if (triggerName.find("HLT_Mu8p5_IP3p5") != std::string::npos){
+					mu2_HLT_Mu8p5_IP3p5_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+
+				if (triggerName.find("HLT_Mu9_IP0") != std::string::npos){
+					mu2_HLT_Mu9_IP0_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}					
+				if (triggerName.find("HLT_Mu9_IP3") != std::string::npos){
+					mu2_HLT_Mu9_IP3_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}				
+				if (triggerName.find("HLT_Mu9_IP4") != std::string::npos){
+					mu2_HLT_Mu9_IP4_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu9_IP5") != std::string::npos){
+					mu2_HLT_Mu9_IP5_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu9_IP6") != std::string::npos){
+					mu2_HLT_Mu9_IP6_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu10p5_IP3p5") != std::string::npos){
+					mu2_HLT_Mu10p5_IP3p5_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu12_IP6") != std::string::npos){
+					mu2_HLT_Mu12_IP6_ = 1;
+					if (print_trash) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+
 				//if (abs(iMuon2->eta()) > 1.5) std::cout << " muon2 eta: " << iMuon2->eta() << std::endl;
 				//std::cout<< " Muon 1 matched " << triggerName << std::endl; 
 			} 
-	   }	 
-	   	
+	   }
 
+	   int total = 0;
+	   total = mu1_HLT_Mu7_IP4_ + mu1_HLT_Mu8_IP3_ + mu1_HLT_Mu8_IP5_ +
+	           mu1_HLT_Mu8_IP6_ + mu1_HLT_Mu8p5_IP3p5_ + mu1_HLT_Mu9_IP0_ +
+	           mu1_HLT_Mu9_IP3_ + mu1_HLT_Mu9_IP4_ + mu1_HLT_Mu9_IP5_ +
+	           mu1_HLT_Mu9_IP6_ + mu1_HLT_Mu10p5_IP3p5_ + mu1_HLT_Mu12_IP6_;
+
+	   total = total + mu2_HLT_Mu7_IP4_ + mu2_HLT_Mu8_IP3_ + mu2_HLT_Mu8_IP5_ +
+	           mu2_HLT_Mu8_IP6_ + mu2_HLT_Mu8p5_IP3p5_ + mu2_HLT_Mu9_IP0_ +
+	           mu2_HLT_Mu9_IP3_ + mu2_HLT_Mu9_IP4_ + mu2_HLT_Mu9_IP5_ +
+	           mu2_HLT_Mu9_IP6_ + mu2_HLT_Mu10p5_IP3p5_ + mu2_HLT_Mu12_IP6_;
+       if (total != 0 && print_trash){
+		   std::cout << "this is a Tag Event" << std::endl;
+	   } 
 
        // Vector containing Candidates used (avoid repeating)
        vector<pat::PackedCandidate> usedTracks;
@@ -3140,7 +3203,7 @@ JPsiKs0_PVpa_V0Ext::beginJob()
 	 tree_->Branch("muon1Trg",&muon1Trg);
 	 tree_->Branch("muon2Trg",&muon2Trg);
 
-	 //Trigger save non-sense 
+     //Trigger save non-sense 
      //tree_->Branch("mu1_HLT_Mu7_IP4", &mu1_HLT_Mu7_IP4); 
 	 //tree_->Branch("mu1_HLT_Mu8_IP3", &mu1_HLT_Mu8_IP3); 
 	 //tree_->Branch("mu1_HLT_Mu8_IP5", &mu1_HLT_Mu8_IP5);
