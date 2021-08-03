@@ -236,24 +236,24 @@ void ObjVsMuon_tupler::addToTree() {
     tree->Branch("eventNum", &eventNum);
 
     //Trigger object info 
-    tree_->Branch("TriggerObj_pt", &TriggerObj_pt); 
-    tree_->Branch("TriggerObj_eta", &TriggerObj_eta); 
-    tree_->Branch("TriggerObj_phi", &TriggerObj_phi); 
-    tree_->Branch("TriggerObj_ch", &TriggerObj_ch); 
-    tree_->Branch("TriggerObj_ip", &TriggerObj_ip); 
+    tree->Branch("TriggerObj_pt", &TriggerObj_pt); 
+    tree->Branch("TriggerObj_eta", &TriggerObj_eta); 
+    tree->Branch("TriggerObj_phi", &TriggerObj_phi); 
+    tree->Branch("TriggerObj_ch", &TriggerObj_ch); 
+    tree->Branch("TriggerObj_ip", &TriggerObj_ip); 
 
-    tree_->Branch("obj_HLT_Mu7_IP4", &obj_HLT_Mu7_IP4); 
-	  tree_->Branch("obj_HLT_Mu8_IP3", &obj_HLT_Mu8_IP3); 
-	  tree_->Branch("obj_HLT_Mu8_IP5", &obj_HLT_Mu8_IP5);
-	  tree_->Branch("obj_HLT_Mu8_IP6", &obj_HLT_Mu8_IP6);
-	  tree_->Branch("obj_HLT_Mu8p5_IP3p5", &obj_HLT_Mu8p5_IP3p5);
-    tree_->Branch("obj_HLT_Mu9_IP0", &obj_HLT_Mu9_IP0); 
-	  tree_->Branch("obj_HLT_Mu9_IP3", &obj_HLT_Mu9_IP3);
-	  tree_->Branch("obj_HLT_Mu9_IP4", &obj_HLT_Mu9_IP4); 
-	  tree_->Branch("obj_HLT_Mu9_IP5", &obj_HLT_Mu9_IP5); 
-	  tree_->Branch("obj_HLT_Mu9_IP6", &obj_HLT_Mu9_IP6); 
-	  tree_->Branch("obj_HLT_Mu10p5_IP3p5", &obj_HLT_Mu10p5_IP3p5); 
-	  tree_->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
+    tree->Branch("obj_HLT_Mu7_IP4", &obj_HLT_Mu7_IP4); 
+	  tree->Branch("obj_HLT_Mu8_IP3", &obj_HLT_Mu8_IP3); 
+	  tree->Branch("obj_HLT_Mu8_IP5", &obj_HLT_Mu8_IP5);
+	  tree->Branch("obj_HLT_Mu8_IP6", &obj_HLT_Mu8_IP6);
+	  tree->Branch("obj_HLT_Mu8p5_IP3p5", &obj_HLT_Mu8p5_IP3p5);
+    tree->Branch("obj_HLT_Mu9_IP0", &obj_HLT_Mu9_IP0); 
+	  tree->Branch("obj_HLT_Mu9_IP3", &obj_HLT_Mu9_IP3);
+	  tree->Branch("obj_HLT_Mu9_IP4", &obj_HLT_Mu9_IP4); 
+	  tree->Branch("obj_HLT_Mu9_IP5", &obj_HLT_Mu9_IP5); 
+	  tree->Branch("obj_HLT_Mu9_IP6", &obj_HLT_Mu9_IP6); 
+	  tree->Branch("obj_HLT_Mu10p5_IP3p5", &obj_HLT_Mu10p5_IP3p5); 
+	  tree->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
 
     for(auto& kv : outMap) {
       auto k = kv.first;
