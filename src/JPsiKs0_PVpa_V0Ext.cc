@@ -205,7 +205,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   using namespace reco;
   using namespace std;
 
-  std::cout << "analyse ok" <<std::endl;
+  //std::cout << "analyse ok" <<std::endl;
   //*********************************
   // Get event content information
   //*********************************  
@@ -2865,7 +2865,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		drTrg_m1->clear();
    		drTrg_m2->clear();
    }
-   std::cout << "Analyze ok 2623" << std::endl;
+   //std::cout << "Analyze ok 2623" << std::endl;
 }
 
 bool JPsiKs0_PVpa_V0Ext::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
