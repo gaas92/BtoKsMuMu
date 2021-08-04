@@ -54,6 +54,7 @@ class ObjVsMuon_tupler : public edm::EDAnalyzer {
       edm::EDGetTokenT<edm::TriggerResults> triggerBitsSrc_;
       edm::EDGetTokenT <pat::PackedTriggerPrescales> triggerPrescalesSrc_;
       edm::EDGetTokenT<vector<reco::Vertex>> vtxSrc_;
+      edm::EDGetTokenT<edm::View<pat::Muon>> muon_Label;
 
       edm::EDGetTokenT<std::vector<pat::TriggerObjectStandAlone>> triggerObjects_;
 
@@ -86,6 +87,7 @@ ObjVsMuon_tupler::ObjVsMuon_tupler(const edm::ParameterSet& iConfig):
   triggerPrescalesSrc_(consumes<pat::PackedTriggerPrescales>(edm::InputTag("patTrigger"))),
 
   vtxSrc_( consumes<vector<reco::Vertex>> ( edm::InputTag("offlineSlimmedPrimaryVertices") ) ),
+  muon_Label(consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>("muons"))),
 
   //Trigger Muon Selecctor 
   triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
@@ -122,6 +124,10 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   //Trigger Object Selector
   edm::Handle<std::vector<pat::TriggerObjectStandAlone>> triggerObjects;
   iEvent.getByToken(triggerObjects_, triggerObjects);
+
+  //Muons
+  edm::Handle< View<pat::Muon> > thePATMuonHandle;
+  iEvent.getByToken(muon_Label,thePATMuonHandle);
 
   isRealData = iEvent.isRealData() ? 1 : 0 ;
   runNum     = iEvent.id().run();
@@ -176,8 +182,8 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 	  float obj_eta = obj.eta();
 	  float obj_phi = obj.phi();
 	  TriggerObj_pt->push_back(obj_pt);
-	  TriggerObj_eta->push_back(obj_phi);
-	  TriggerObj_phi->push_back(obj_eta);
+	  TriggerObj_eta->push_back(obj_eta);
+	  TriggerObj_phi->push_back(obj_phi);
 	  float obj_ch = obj.charge();
 	  TriggerObj_ch->push_back(obj_ch);
     TriggerObj_ip->push_back(0.0);
@@ -275,6 +281,12 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   
 
 
+  //Trigger muons . . .
+  for(View<pat::Muon>::const_iterator iMuon = thePATMuonHandle->begin(); iMuon != thePATMuonHandle->end(); ++iMuon) {
+     break;
+  }	
+  
+
   tree->Fill();
 
   TriggerObj_pt->clear();  TriggerObj_eta->clear(); TriggerObj_phi->clear(); TriggerObj_ch->clear(); TriggerObj_ip->clear(); 
@@ -323,45 +335,7 @@ void ObjVsMuon_tupler::beginJob()
   tree->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
 
 }
-//void ObjVsMuon_tupler::addToTree() {
-//  if (!treeDeclared) {
-//    if(verbose) {cout << "\nCreating the branches in the output tree:\n";}
-//    tree->Branch("isRealData", &isRealData);
-//    tree->Branch("runNum", &runNum);
-//    tree->Branch("lumiNum", &lumiNum);
-//    tree->Branch("eventNum", &eventNum);
-//
-//    //Trigger object info 
-//    //tree->Branch("TriggerObj_pt", &TriggerObj_pt); 
-//    //tree->Branch("TriggerObj_eta", &TriggerObj_eta); 
-//    //tree->Branch("TriggerObj_phi", &TriggerObj_phi); 
-//    //tree->Branch("TriggerObj_ch", &TriggerObj_ch); 
-//    //tree->Branch("TriggerObj_ip", &TriggerObj_ip); 
-//    //
-//    //tree->Branch("obj_HLT_Mu7_IP4", &obj_HLT_Mu7_IP4); 
-//	  //tree->Branch("obj_HLT_Mu8_IP3", &obj_HLT_Mu8_IP3); 
-//	  //tree->Branch("obj_HLT_Mu8_IP5", &obj_HLT_Mu8_IP5);
-//	  //tree->Branch("obj_HLT_Mu8_IP6", &obj_HLT_Mu8_IP6);
-//	  //tree->Branch("obj_HLT_Mu8p5_IP3p5", &obj_HLT_Mu8p5_IP3p5);
-//    //tree->Branch("obj_HLT_Mu9_IP0", &obj_HLT_Mu9_IP0); 
-//	  //tree->Branch("obj_HLT_Mu9_IP3", &obj_HLT_Mu9_IP3);
-//	  //tree->Branch("obj_HLT_Mu9_IP4", &obj_HLT_Mu9_IP4); 
-//	  //tree->Branch("obj_HLT_Mu9_IP5", &obj_HLT_Mu9_IP5); 
-//	  //tree->Branch("obj_HLT_Mu9_IP6", &obj_HLT_Mu9_IP6); 
-//	  //tree->Branch("obj_HLT_Mu10p5_IP3p5", &obj_HLT_Mu10p5_IP3p5); 
-//	  //tree->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
-//
-//    //for(auto& kv : outMap) {
-//    //  auto k = kv.first;
-//    //  if(verbose) {cout << "\t" << k;}
-//    //  tree->Branch(k.c_str(), &(outMap[k]));
-//    //}
-//    treeDeclared = true;
-//    if(verbose) {cout << "\n\n";}
-//  }
-//
-//  tree->Fill();
-//}
+
 
 // ------------ method called once each job just after ending the event loop  ------------
 void ObjVsMuon_tupler::endJob() {
