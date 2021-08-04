@@ -69,6 +69,7 @@ process.ObjVsMu = cms.EDAnalyzer("ObjVsMuon_tupler",
         triggerBits = cms.InputTag("TriggerResults","","HLT"),
         objects = cms.InputTag("slimmedPatTrigger"),
         bslabel = cms.InputTag("offlineBeamSpot"),
+        muons = cms.InputTag("slimmedMuons"),
         verbose = cms.int32(2)
 )
 
