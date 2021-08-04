@@ -201,7 +201,7 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     for (unsigned int i = 0, n = triggerResults_handle->size(); i < n; ++i) {
       auto trgName = TheTriggerNames.triggerName(i);
       if(!regex_match(trgName, txt_regex_path)) continue;
-
+      if (!(triggerPrescales->getPrescaleForIndex(i))) continue;
       if (verbose) {
         cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
       }
