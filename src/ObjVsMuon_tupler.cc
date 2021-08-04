@@ -305,7 +305,9 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   //Trigger muons . . .
   int mu_HLT_Mu7_IP4_ = 0, mu_HLT_Mu8_IP3_ = 0, mu_HLT_Mu8_IP5_ = 0, mu_HLT_Mu8_IP6_ = 0, mu_HLT_Mu8p5_IP3p5_ = 0;
   int mu_HLT_Mu9_IP0_ = 0, mu_HLT_Mu9_IP3_ = 0, mu_HLT_Mu9_IP4_ = 0, mu_HLT_Mu9_IP5_ = 0, mu_HLT_Mu9_IP6_ = 0, mu_HLT_Mu10p5_IP3p5_ = 0, mu_HLT_Mu12_IP6_ = 0;
-
+  for(auto tag : triggerTags) {
+    std::cout << "djfoeirwnfir: " << tag << std::endl;
+  }
   for(edm::View<pat::Muon>::const_iterator iMuon = thePATMuonHandle->begin(); iMuon != thePATMuonHandle->end(); ++iMuon) {
     for(auto tag : triggerTags) {
       std::string triggerName = tag + "_part*_v*"; 
