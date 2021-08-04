@@ -165,7 +165,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
 	  float obj_pt = obj.pt();
 	  float obj_eta = obj.eta();
 	  float obj_phi = obj.phi();
-	  //TriggerObj_pt->push_back(obj_pt);
+	  TriggerObj_pt->push_back(obj_pt);
 	  //TriggerObj_eta->push_back(obj_phi);
 	  //TriggerObj_phi->push_back(obj_eta);
 	  //float obj_ch = obj.charge();
