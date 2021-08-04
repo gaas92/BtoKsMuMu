@@ -191,8 +191,9 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     }
 
   }//trigger objects
+  int obj_HLT_Mu7_IP4_ = 0, obj_HLT_Mu8_IP3_ = 0, obj_HLT_Mu8_IP5_ = 0, obj_HLT_Mu8_IP6_ = 0, obj_HLT_Mu8p5_IP3p5_ = 0;
+  int obj_HLT_Mu9_IP0_ = 0, obj_HLT_Mu9_IP3_ = 0, obj_HLT_Mu9_IP4_ = 0, obj_HLT_Mu9_IP5_ = 0, obj_HLT_Mu9_IP6_ = 0, obj_HLT_Mu10p5_IP3p5_ = 0, obj_HLT_Mu12_IP6_ = 0;
 
-  
   if ( triggerResults_handle.isValid()) {
     const edm::TriggerNames &TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
     regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9]_v[0-9]");
@@ -204,17 +205,57 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
       if (verbose) {
         cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
       }
+      	//Trigger save non-sense 
+				if (trgName.find("HLT_Mu7_IP4") != std::string::npos){
+					obj_HLT_Mu7_IP4_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}
+				if (trgName.find("HLT_Mu8_IP3") != std::string::npos){
+					obj_HLT_Mu8_IP3_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}
+				if (trgName.find("HLT_Mu8_IP5") != std::string::npos){
+					obj_HLT_Mu8_IP5_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}				
+				if (trgName.find("HLT_Mu8_IP6") != std::string::npos){
+					obj_HLT_Mu8_IP6_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}
+				if (trgName.find("HLT_Mu8p5_IP3p5") != std::string::npos){
+					obj_HLT_Mu8p5_IP3p5_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}
 
-      for(auto trgTag : triggerTags) {
-	      bool found_ = false; 
-        bool match = (trgName.find(trgTag) != std::string::npos && !found_);
-        if (match && triggerResults_handle->accept(i)) {
-          if (verbose) {
-            cout << "Trigger " << trgName << " Matched with " <<trgTag << endl;
-          }
-    		  found_ = true;
-	      }
-      }
+				if (trgName.find("HLT_Mu9_IP0") != std::string::npos){
+					obj_HLT_Mu9_IP0_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}					
+				if (trgName.find("HLT_Mu9_IP3") != std::string::npos){
+					obj_HLT_Mu9_IP3_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}				
+				if (trgName.find("HLT_Mu9_IP4") != std::string::npos){
+					obj_HLT_Mu9_IP4_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}	
+				if (trgName.find("HLT_Mu9_IP5") != std::string::npos){
+					obj_HLT_Mu9_IP5_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}	
+				if (trgName.find("HLT_Mu9_IP6") != std::string::npos){
+					obj_HLT_Mu9_IP6_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}	
+				if (trgName.find("HLT_Mu10p5_IP3p5") != std::string::npos){
+					obj_HLT_Mu10p5_IP3p5_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}	
+				if (trgName.find("HLT_Mu12_IP6") != std::string::npos){
+					obj_HLT_Mu12_IP6_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << trgName << std::endl;
+				}	
+
     }
   }//end trigger results 
   
