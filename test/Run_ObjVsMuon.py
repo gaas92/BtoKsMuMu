@@ -70,7 +70,7 @@ process.ObjVsMu = cms.EDAnalyzer("ObjVsMuon_tupler",
         objects = cms.InputTag("slimmedPatTrigger"),
         bslabel = cms.InputTag("offlineBeamSpot"),
         muons = cms.InputTag("slimmedMuons"),
-        verbose = cms.int32(2)
+        verbose = cms.int32(0)
 )
 
 process.p = cms.Path(
