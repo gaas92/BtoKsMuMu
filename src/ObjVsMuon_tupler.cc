@@ -182,7 +182,8 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
     }
 
   }//trigger objects
-   
+  if (verbose) {cout << "======================== " << endl;}
+
 
   //Trigger Muons ...
 
@@ -226,7 +227,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
   //obj_HLT_Mu7_IP4->clear(); obj_HLT_Mu8_IP3->clear(); obj_HLT_Mu8_IP5->clear(); obj_HLT_Mu8_IP6->clear(); obj_HLT_Mu8p5_IP3p5->clear(); 
   //obj_HLT_Mu9_IP0->clear(); obj_HLT_Mu9_IP3->clear(); obj_HLT_Mu9_IP4->clear(); obj_HLT_Mu9_IP5->clear(); obj_HLT_Mu9_IP6->clear(); obj_HLT_Mu10p5_IP3p5->clear(); obj_HLT_Mu12_IP6->clear(); 
 
-  if (verbose) {cout << "======================== " << endl;}
+  //if (verbose) {cout << "======================== " << endl;}
   return;
 
 }

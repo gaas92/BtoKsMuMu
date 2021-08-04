@@ -151,6 +151,8 @@ private:
   std::vector<unsigned int> *muon1Trg, *muon2Trg;
  
   //Trigger save non-sense 
+  std::vecotr<float>       *mu1_prefit_pt, *mu1_prefit_eta, *mu1_prefit_phi, *mu1_prefit_ch, *mu1_prefit_ip;
+  std::vecotr<float>       *mu2_prefit_pt, *mu2_prefit_eta, *mu2_prefit_phi, *mu2_prefit_ch, *mu2_prefit_ip;
   std::vector<int>         *mu1_HLT_Mu7_IP4, *mu1_HLT_Mu8_IP3, *mu1_HLT_Mu8_IP5, *mu1_HLT_Mu8_IP6, *mu1_HLT_Mu8p5_IP3p5;
   std::vector<int>         *mu1_HLT_Mu9_IP0, *mu1_HLT_Mu9_IP3, *mu1_HLT_Mu9_IP4, *mu1_HLT_Mu9_IP5, *mu1_HLT_Mu9_IP6, *mu1_HLT_Mu10p5_IP3p5, *mu1_HLT_Mu12_IP6;
   std::vector<int>         *mu2_HLT_Mu7_IP4, *mu2_HLT_Mu8_IP3, *mu2_HLT_Mu8_IP5, *mu2_HLT_Mu8_IP6, *mu2_HLT_Mu8p5_IP3p5;

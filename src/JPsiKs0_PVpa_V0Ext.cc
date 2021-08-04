@@ -133,6 +133,8 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
 
 
   //Trigger save non-sense 
+  mu1_prefit_pt(0), mu1_prefit_eta(0), mu1_prefit_phi(0), mu1_prefit_ch(0), mu1_prefit_ip(0),
+  mu2_prefit_pt(0), mu2_prefit_eta(0), mu2_prefit_phi(0), mu2_prefit_ch(0), mu2_prefit_ip(0),
   mu1_HLT_Mu7_IP4(0), mu1_HLT_Mu8_IP3(0), mu1_HLT_Mu8_IP5(0), mu1_HLT_Mu8_IP6(0), mu1_HLT_Mu8p5_IP3p5(0),
   mu1_HLT_Mu9_IP0(0), mu1_HLT_Mu9_IP3(0), mu1_HLT_Mu9_IP4(0), mu1_HLT_Mu9_IP5(0), mu1_HLT_Mu9_IP6(0), mu1_HLT_Mu10p5_IP3p5(0), mu1_HLT_Mu12_IP6(0),
   mu2_HLT_Mu7_IP4(0), mu2_HLT_Mu8_IP3(0), mu2_HLT_Mu8_IP5(0), mu2_HLT_Mu8_IP6(0), mu2_HLT_Mu8p5_IP3p5(0),
@@ -1032,13 +1034,21 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	   int mu2_HLT_Mu9_IP6_ = 0;
 	   int mu2_HLT_Mu10p5_IP3p5_ = 0;
 	   int mu2_HLT_Mu12_IP6_ = 0;
+       float mu1_prefit_pt_ = 0, mu1_prefit_eta_ = 0, mu1_prefit_phi_ = 0, mu1_prefit_ch_ = 0, mu1_prefit_ip_ = 0;
+       float mu2_prefit_pt_ = 0, mu2_prefit_eta_ = 0, mu2_prefit_phi_ = 0, mu2_prefit_ch_ = 0, mu2_prefit_ip_ = 0;
 
-	   bool print_trash = true;
+	   bool print_trash = false;
 	   for (unsigned int i = 0; i < NTRIGGERS; i++) {
 			std::string triggerName = TriggersToTest[i] + "_part*_v*"; 
 			//if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon1->triggered(triggerName.c_str())){ 
 				muon1Trg_ += (1<<i);
+				mu1_prefit_pt_  = iMuon1->pt();
+				mu1_prefit_eta_ = iMuon1->eta();
+				mu1_prefit_phi_ = iMuon1->phi();
+				mu1_prefit_ch_  = iMuon1->charge();
+				mu1_prefit_ip_  = iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError();
+
 				//Trigger save non-sense 
 				if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){
 					mu1_HLT_Mu7_IP4_ = 1;
@@ -1119,6 +1129,13 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 			//if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon2->triggered(triggerName.c_str())){ 
 				muon2Trg_ += (1<<i);
+
+				mu2_prefit_pt_  = iMuon2->pt();
+				mu2_prefit_eta_ = iMuon2->eta();
+				mu2_prefit_phi_ = iMuon2->phi();
+				mu2_prefit_ch_  = iMuon2->charge();
+				mu2_prefit_ip_  = iMuon2->muonBestTrack()->dxy(referencePos)/iMuon2->muonBestTrack()->dxyError();
+
 				//Trigger save non-sense 
 				if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){
 					mu2_HLT_Mu7_IP4_ = 1;
@@ -1583,6 +1600,18 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon2Trg->push_back(muon2Trg_);
 
            //Trigger save non-sense 
+           mu1_prefit_pt->push_back(mu1_prefit_pt_);
+		   mu1_prefit_eta->push_back(mu1_prefit_eta_);
+           mu1_prefit_phi->push_back(mu1_prefit_phi_);
+           mu1_prefit_ch->push_back(mu1_prefit_ch_);
+           mu1_prefit_ip->push_back(mu1_prefit_ip_);
+
+           mu2_prefit_pt->push_back(mu2_prefit_pt_);
+		   mu2_prefit_eta->push_back(mu2_prefit_eta_);
+           mu2_prefit_phi->push_back(mu2_prefit_phi_);
+           mu2_prefit_ch->push_back(mu2_prefit_ch_);
+           mu2_prefit_ip->push_back(mu2_prefit_ip_);
+
            mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
 		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
 		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
@@ -2121,6 +2150,18 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   muon2Trg->push_back(muon2Trg_);
 
            //Trigger save non-sense 
+           mu1_prefit_pt->push_back(mu1_prefit_pt_);
+		   mu1_prefit_eta->push_back(mu1_prefit_eta_);
+           mu1_prefit_phi->push_back(mu1_prefit_phi_);
+           mu1_prefit_ch->push_back(mu1_prefit_ch_);
+           mu1_prefit_ip->push_back(mu1_prefit_ip_);
+
+           mu2_prefit_pt->push_back(mu2_prefit_pt_);
+		   mu2_prefit_eta->push_back(mu2_prefit_eta_);
+           mu2_prefit_phi->push_back(mu2_prefit_phi_);
+           mu2_prefit_ch->push_back(mu2_prefit_ch_);
+           mu2_prefit_ip->push_back(mu2_prefit_ip_);
+
            mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
 		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
 		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
@@ -2658,7 +2699,19 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   		   muon1Trg->push_back(muon1Trg_);
 		   muon2Trg->push_back(muon2Trg_);
 
-		   //Trigger save non-sense 
+           //Trigger save non-sense 
+           mu1_prefit_pt->push_back(mu1_prefit_pt_);
+		   mu1_prefit_eta->push_back(mu1_prefit_eta_);
+           mu1_prefit_phi->push_back(mu1_prefit_phi_);
+           mu1_prefit_ch->push_back(mu1_prefit_ch_);
+           mu1_prefit_ip->push_back(mu1_prefit_ip_);
+
+           mu2_prefit_pt->push_back(mu2_prefit_pt_);
+		   mu2_prefit_eta->push_back(mu2_prefit_eta_);
+           mu2_prefit_phi->push_back(mu2_prefit_phi_);
+           mu2_prefit_ch->push_back(mu2_prefit_ch_);
+           mu2_prefit_ip->push_back(mu2_prefit_ip_);
+
            mu1_HLT_Mu7_IP4->push_back(mu1_HLT_Mu7_IP4_); 
 		   mu1_HLT_Mu8_IP3->push_back(mu1_HLT_Mu8_IP3_); 
 		   mu1_HLT_Mu8_IP5->push_back(mu1_HLT_Mu8_IP5_);
@@ -2855,8 +2908,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		mu1PF->clear(); mu2PF->clear(); mu1loose->clear(); mu2loose->clear(); 
 
 		muon1Trg->clear(); muon2Trg->clear();
-
+  
         //Trigger save non-sense 
+        mu1_prefit_pt->clear(); mu1_prefit_eta->clear(); mu1_prefit_phi->clear(); mu1_prefit_ch->clear(); mu1_prefit_ip->clear();
+        mu2_prefit_pt->clear(); mu2_prefit_eta->clear(); mu2_prefit_phi->clear(); mu2_prefit_ch->clear(); mu2_prefit_ip->clear();
         mu1_HLT_Mu7_IP4->clear(); mu1_HLT_Mu8_IP3->clear(); mu1_HLT_Mu8_IP5->clear(); mu1_HLT_Mu8_IP6->clear(); mu1_HLT_Mu8p5_IP3p5->clear();
         mu1_HLT_Mu9_IP0->clear(); mu1_HLT_Mu9_IP3->clear(); mu1_HLT_Mu9_IP4->clear(); mu1_HLT_Mu9_IP5->clear(); mu1_HLT_Mu9_IP6->clear(); mu1_HLT_Mu10p5_IP3p5->clear(); mu1_HLT_Mu12_IP6->clear();
         mu2_HLT_Mu7_IP4->clear(); mu2_HLT_Mu8_IP3->clear(); mu2_HLT_Mu8_IP5->clear(); mu2_HLT_Mu8_IP6->clear(); mu2_HLT_Mu8p5_IP3p5->clear();
@@ -3205,6 +3260,17 @@ JPsiKs0_PVpa_V0Ext::beginJob()
 	 tree_->Branch("muon2Trg",&muon2Trg);
 
      //Trigger save non-sense 
+     tree_->Branch("mu1_prefit_pt", &mu1_prefit_pt);
+	 tree_->Branch("mu1_prefit_eta", &mu1_prefit_eta);
+     tree_->Branch("mu1_prefit_phi", &mu1_prefit_phi);
+     tree_->Branch("mu1_prefit_ch", &mu1_prefit_ch);
+     tree_->Branch("mu1_prefit_ip", &mu1_prefit_ip);
+     tree_->Branch("mu2_prefit_pt", &mu2_prefit_pt);
+	 tree_->Branch("mu2_prefit_eta" &mu2_prefit_eta);
+     tree_->Branch("mu2_prefit_phi" &mu2_prefit_phi);
+     tree_->Branch("mu2_prefit_ch", &mu2_prefit_ch);
+     tree_->Branch("mu2_prefit_ip", &mu2_prefit_ip);
+
      tree_->Branch("mu1_HLT_Mu7_IP4", &mu1_HLT_Mu7_IP4); 
 	 tree_->Branch("mu1_HLT_Mu8_IP3", &mu1_HLT_Mu8_IP3); 
 	 tree_->Branch("mu1_HLT_Mu8_IP5", &mu1_HLT_Mu8_IP5);
