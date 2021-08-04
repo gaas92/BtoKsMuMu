@@ -3266,8 +3266,8 @@ JPsiKs0_PVpa_V0Ext::beginJob()
      tree_->Branch("mu1_prefit_ch", &mu1_prefit_ch);
      tree_->Branch("mu1_prefit_ip", &mu1_prefit_ip);
      tree_->Branch("mu2_prefit_pt", &mu2_prefit_pt);
-	 tree_->Branch("mu2_prefit_eta" &mu2_prefit_eta);
-     tree_->Branch("mu2_prefit_phi" &mu2_prefit_phi);
+	 tree_->Branch("mu2_prefit_eta", &mu2_prefit_eta);
+     tree_->Branch("mu2_prefit_phi", &mu2_prefit_phi);
      tree_->Branch("mu2_prefit_ch", &mu2_prefit_ch);
      tree_->Branch("mu2_prefit_ip", &mu2_prefit_ip);
 
