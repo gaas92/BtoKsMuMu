@@ -192,12 +192,9 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     }
 
   }//trigger objects
-  if (verbose) {cout << "======================== " << endl;}
 
+  regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9]_v[0-9]");
 
-  //Trigger Muons ...
-
-  /*
   for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
     auto trgName = names.triggerName(i);
     if (!regex_match(trgName, txt_regex_path)) continue;
@@ -207,14 +204,11 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 
     for (auto trgTag : triggerTags){
       bool match = trgName.substr(4, trgTag.size()) == trgTag.c_str();
-      if (match && triggerPrescales->getPrescaleForIndex(i) > 0) trgActive[trgTag] = true;
       if (match && triggerBits->accept(i)){
-        trgPassed[trgTag] = true;
-        for(unsigned int k = 0; k < NTRIGGERS; i++){
-		      if (trgTag.find(TriggersToTest[i]) != std::string::npos){
-            new_trigger += (1<<k);
-          }
-        }
+      if (verbose) {
+        cout << "Trigger " << trgName << " Accepted . . ." << endl;
+      }
+
        //for (int part = 0; part <= 5; part++) {
        //  regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
        //  if (regex_match(trgName, rule)) {
@@ -226,15 +220,12 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
       }
     }
   }
-  outMap["NewTrigger_Int"] = new_trigger;
 
-  */
+  
 
   //if(something_to_fill) addToTree();
 
-  std::cout << "filling tree" << std::endl;
   tree->Fill();
-	std::cout << "fill ok" << std::endl;
 
   TriggerObj_pt->clear(); // TriggerObj_eta->clear(); TriggerObj_phi->clear(); TriggerObj_ch->clear(); TriggerObj_ip->clear(); 
   //obj_HLT_Mu7_IP4->clear(); obj_HLT_Mu8_IP3->clear(); obj_HLT_Mu8_IP5->clear(); obj_HLT_Mu8_IP6->clear(); obj_HLT_Mu8p5_IP3p5->clear(); 
