@@ -183,7 +183,6 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 	  //float obj_ch = obj.charge();
 	  //TriggerObj_ch->push_back(obj_ch);
     //TriggerObj_ip->push_back(0.0);
-    something_to_fill = true;
 
     if(verbose){ 
       std::cout << "\n\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
