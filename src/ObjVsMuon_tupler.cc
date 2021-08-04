@@ -309,7 +309,7 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   for(edm::View<pat::Muon>::const_iterator iMuon = thePATMuonHandle->begin(); iMuon != thePATMuonHandle->end(); ++iMuon) {
 
     for(auto tag : triggerTags) {
-      std::string triggerName = tag + "_part*_v*"; 
+      std::string triggerName = "HLT_" + tag + "_part*_v*"; 
       //std::cout << "checking trigger :" << triggerName << std::endl;
 			if(iMuon->triggered(triggerName.c_str())){ 
         std::cout << "Muon Fired !! " << triggerName << std::endl;
