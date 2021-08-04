@@ -65,7 +65,7 @@ process.TFileService = cms.Service("TFileService",
 #################   Sequence    ####################
 '''
 
-process.ObjVsMu = cms.EDProducer("ObjVsMuon_tupler",
+process.ObjVsMu = cms.EDAnalyzer("ObjVsMuon_tupler",
         triggerBits = cms.InputTag("TriggerResults","","HLT"),
         objects = cms.InputTag("slimmedPatTrigger"),
         verbose = cms.int32(1)

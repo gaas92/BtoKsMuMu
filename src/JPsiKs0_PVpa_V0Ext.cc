@@ -1037,17 +1037,24 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
        float mu1_prefit_pt_ = 0, mu1_prefit_eta_ = 0, mu1_prefit_phi_ = 0, mu1_prefit_ch_ = 0, mu1_prefit_ip_ = 0;
        float mu2_prefit_pt_ = 0, mu2_prefit_eta_ = 0, mu2_prefit_phi_ = 0, mu2_prefit_ch_ = 0, mu2_prefit_ip_ = 0;
 
+	   mu1_prefit_pt_  = iMuon1->pt();
+	   mu1_prefit_eta_ = iMuon1->eta();
+	   mu1_prefit_phi_ = iMuon1->phi();
+	   mu1_prefit_ch_  = iMuon1->charge();
+	   mu1_prefit_ip_  = iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError();
+
+	   mu2_prefit_pt_  = iMuon2->pt();
+	   mu2_prefit_eta_ = iMuon2->eta();
+	   mu2_prefit_phi_ = iMuon2->phi();
+	   mu2_prefit_ch_  = iMuon2->charge();
+	   mu2_prefit_ip_  = iMuon2->muonBestTrack()->dxy(referencePos)/iMuon2->muonBestTrack()->dxyError();
+
 	   bool print_trash = false;
 	   for (unsigned int i = 0; i < NTRIGGERS; i++) {
 			std::string triggerName = TriggersToTest[i] + "_part*_v*"; 
 			//if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon1->triggered(triggerName.c_str())){ 
 				muon1Trg_ += (1<<i);
-				mu1_prefit_pt_  = iMuon1->pt();
-				mu1_prefit_eta_ = iMuon1->eta();
-				mu1_prefit_phi_ = iMuon1->phi();
-				mu1_prefit_ch_  = iMuon1->charge();
-				mu1_prefit_ip_  = iMuon1->muonBestTrack()->dxy(referencePos)/iMuon1->muonBestTrack()->dxyError();
 
 				//Trigger save non-sense 
 				if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){
@@ -1129,12 +1136,6 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 			//if(iMuon2->triggerObjectMatchByPath(triggerName)!=nullptr){ 
 			if(iMuon2->triggered(triggerName.c_str())){ 
 				muon2Trg_ += (1<<i);
-
-				mu2_prefit_pt_  = iMuon2->pt();
-				mu2_prefit_eta_ = iMuon2->eta();
-				mu2_prefit_phi_ = iMuon2->phi();
-				mu2_prefit_ch_  = iMuon2->charge();
-				mu2_prefit_ip_  = iMuon2->muonBestTrack()->dxy(referencePos)/iMuon2->muonBestTrack()->dxyError();
 
 				//Trigger save non-sense 
 				if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){
