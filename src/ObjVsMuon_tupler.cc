@@ -59,9 +59,9 @@ class ObjVsMuon_tupler : public edm::EDAnalyzer {
       edm::EDGetTokenT <pat::PackedTriggerPrescales> triggerPrescalesSrc_;
       edm::EDGetTokenT<vector<reco::Vertex>> vtxSrc_;
       edm::EDGetTokenT<edm::View<pat::Muon>> muon_Label;
-      edm::EDGetTokenT<reco::BeamSpot> BSLabel_;
 
       edm::EDGetTokenT<std::vector<pat::TriggerObjectStandAlone>> triggerObjects_;
+      edm::EDGetTokenT<reco::BeamSpot> BSLabel_;
 
       edm::Service<TFileService> fs;
 
