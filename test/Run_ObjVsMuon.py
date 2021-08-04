@@ -68,7 +68,8 @@ process.TFileService = cms.Service("TFileService",
 process.ObjVsMu = cms.EDAnalyzer("ObjVsMuon_tupler",
         triggerBits = cms.InputTag("TriggerResults","","HLT"),
         objects = cms.InputTag("slimmedPatTrigger"),
-        verbose = cms.int32(1)
+        bslabel = cms.InputTag("offlineBeamSpot"),
+        verbose = cms.int32(2)
 )
 
 process.p = cms.Path(
