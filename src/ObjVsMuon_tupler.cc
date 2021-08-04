@@ -127,7 +127,6 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   runNum     = iEvent.id().run();
   lumiNum    = iEvent.luminosityBlock();
   eventNum   = iEvent.id().event();
-  bool something_to_fill = true;
 
   //BPH trigger footprint
   regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9].*");
