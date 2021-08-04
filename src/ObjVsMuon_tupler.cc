@@ -259,7 +259,19 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
     }
   }//end trigger results 
   
+  obj_HLT_Mu7_IP4->push_back(obj_HLT_Mu7_IP4_); 
+	obj_HLT_Mu8_IP3->push_back(obj_HLT_Mu8_IP3_); 
+	obj_HLT_Mu8_IP5->push_back(obj_HLT_Mu8_IP5_);
+	obj_HLT_Mu8_IP6->push_back(obj_HLT_Mu8_IP6_);
+	obj_HLT_Mu8p5_IP3p5->push_back(obj_HLT_Mu8p5_IP3p5_);
 
+  obj_HLT_Mu9_IP0->push_back(obj_HLT_Mu9_IP0_); 
+	obj_HLT_Mu9_IP3->push_back(obj_HLT_Mu9_IP3_);
+	obj_HLT_Mu9_IP4->push_back(obj_HLT_Mu9_IP4_); 
+	obj_HLT_Mu9_IP5->push_back(obj_HLT_Mu9_IP5_); 
+	obj_HLT_Mu9_IP6->push_back(obj_HLT_Mu9_IP6_); 
+	obj_HLT_Mu10p5_IP3p5->push_back(obj_HLT_Mu10p5_IP3p5_); 
+	obj_HLT_Mu12_IP6->push_back(obj_HLT_Mu12_IP6_);
   
 
 
