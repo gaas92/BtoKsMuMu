@@ -89,11 +89,12 @@ ObjVsMuon_tupler::ObjVsMuon_tupler(const edm::ParameterSet& iConfig):
 
   //Trigger Muon Selecctor 
   triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
-  verbose( iConfig.getParameter<int>( "verbose" ) ),
 
   TriggerObj_pt(0), TriggerObj_eta(0), TriggerObj_phi(0), TriggerObj_ch(0), TriggerObj_ip(0),
   obj_HLT_Mu7_IP4(0), obj_HLT_Mu8_IP3(0), obj_HLT_Mu8_IP5(0), obj_HLT_Mu8_IP6(0), obj_HLT_Mu8p5_IP3p5(0),
-  obj_HLT_Mu9_IP0(0), obj_HLT_Mu9_IP3(0), obj_HLT_Mu9_IP4(0), obj_HLT_Mu9_IP5(0), obj_HLT_Mu9_IP6(0), obj_HLT_Mu10p5_IP3p5(0), obj_HLT_Mu12_IP6(0)
+  obj_HLT_Mu9_IP0(0), obj_HLT_Mu9_IP3(0), obj_HLT_Mu9_IP4(0), obj_HLT_Mu9_IP5(0), obj_HLT_Mu9_IP6(0), obj_HLT_Mu10p5_IP3p5(0), obj_HLT_Mu12_IP6(0),
+  
+  verbose( iConfig.getParameter<int>( "verbose" ) )
 
 {
   
