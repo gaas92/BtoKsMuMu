@@ -31,16 +31,20 @@
 
 using namespace std;
 
-class ObjVsMuon_tupler : public edm::EDProducer {
+class ObjVsMuon_tupler : public edm::EDAnalyzer {
    public:
       explicit ObjVsMuon_tupler(const edm::ParameterSet& iConfig);
       ~ObjVsMuon_tupler() {};
 
-   private:
-      void beginJob(const edm::EventSetup&) {};
-      void produce(edm::Event& iEvent, const edm::EventSetup& iSetup) override;
 
-      void addToTree();
+   private:
+      //void beginJob(const edm::EventSetup&) {};
+      //void produce(edm::Event& iEvent, const edm::EventSetup& iSetup) override;
+      //void addToTree();
+
+      virtual void beginJob() ;
+      virtual void analyze(const edm::Event&, const edm::EventSetup&);
+      virtual void endJob() ;
 
       // ----------member data ---------------------------
       edm::EDGetTokenT<edm::TriggerResults> triggerBitsSrc_;
@@ -81,17 +85,25 @@ ObjVsMuon_tupler::ObjVsMuon_tupler(const edm::ParameterSet& iConfig):
 
   //Trigger Muon Selecctor 
   triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
+  verbose( iConfig.getParameter<int>( "verbose" ) ),
 
   TriggerObj_pt(0), TriggerObj_eta(0), TriggerObj_phi(0), TriggerObj_ch(0), TriggerObj_ip(0),
   obj_HLT_Mu7_IP4(0), obj_HLT_Mu8_IP3(0), obj_HLT_Mu8_IP5(0), obj_HLT_Mu8_IP6(0), obj_HLT_Mu8p5_IP3p5(0),
   obj_HLT_Mu9_IP0(0), obj_HLT_Mu9_IP3(0), obj_HLT_Mu9_IP4(0), obj_HLT_Mu9_IP5(0), obj_HLT_Mu9_IP6(0), obj_HLT_Mu10p5_IP3p5(0), obj_HLT_Mu12_IP6(0),
 
-  verbose( iConfig.getParameter<int>( "verbose" ) )
 {
-  tree = fs->make<TTree>( "T", "Trigger Objects and Trigger Muons TTree ");
+  
+  //tree = fs->make<TTree>( "T", "Trigger Objects and Trigger Muons TTree ");
 }
 
-void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
+ObjVsMuon_tupler::~ObjVsMuon_tupler()
+{
+
+}
+
+// ------------ method called to for each event  ------------
+void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
+//void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
   edm::Handle<edm::TriggerResults> triggerBits;
   iEvent.getByToken(triggerBitsSrc_, triggerBits);
 
@@ -120,7 +132,7 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
   regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9].*");
   const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
   if (verbose) {cout << "\n ==== TRIGGER PATHS ==== " << endl;}
-  cout << " x x x" << TriggerObj_pt->size() << endl;
+  //cout << " x x x" << TriggerObj_pt->size() << endl;
   //look and fill the BParked Trigger Objects ... 
   
   //emulate BParking MuonTriggerSelector 
@@ -220,8 +232,11 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
 
   */
 
-  if(something_to_fill) addToTree();
+  //if(something_to_fill) addToTree();
 
+  std::cout << "filling tree" << std::endl;
+  tree->Fill();
+	std::cout << "fill ok" << std::endl;
 
   //TriggerObj_pt->clear(); TriggerObj_eta->clear(); TriggerObj_phi->clear(); TriggerObj_ch->clear(); TriggerObj_ip->clear(); 
   //obj_HLT_Mu7_IP4->clear(); obj_HLT_Mu8_IP3->clear(); obj_HLT_Mu8_IP5->clear(); obj_HLT_Mu8_IP6->clear(); obj_HLT_Mu8p5_IP3p5->clear(); 
@@ -232,43 +247,69 @@ void ObjVsMuon_tupler::produce(edm::Event& iEvent, const edm::EventSetup& iSetup
 
 }
 
-void ObjVsMuon_tupler::addToTree() {
-  if (!treeDeclared) {
-    if(verbose) {cout << "\nCreating the branches in the output tree:\n";}
-    tree->Branch("isRealData", &isRealData);
-    tree->Branch("runNum", &runNum);
-    tree->Branch("lumiNum", &lumiNum);
-    tree->Branch("eventNum", &eventNum);
+ 
+void ObjVsMuon_tupler::beginJob()
+{
 
-    //Trigger object info 
-    //tree->Branch("TriggerObj_pt", &TriggerObj_pt); 
-    //tree->Branch("TriggerObj_eta", &TriggerObj_eta); 
-    //tree->Branch("TriggerObj_phi", &TriggerObj_phi); 
-    //tree->Branch("TriggerObj_ch", &TriggerObj_ch); 
-    //tree->Branch("TriggerObj_ip", &TriggerObj_ip); 
-    //
-    //tree->Branch("obj_HLT_Mu7_IP4", &obj_HLT_Mu7_IP4); 
-	  //tree->Branch("obj_HLT_Mu8_IP3", &obj_HLT_Mu8_IP3); 
-	  //tree->Branch("obj_HLT_Mu8_IP5", &obj_HLT_Mu8_IP5);
-	  //tree->Branch("obj_HLT_Mu8_IP6", &obj_HLT_Mu8_IP6);
-	  //tree->Branch("obj_HLT_Mu8p5_IP3p5", &obj_HLT_Mu8p5_IP3p5);
-    //tree->Branch("obj_HLT_Mu9_IP0", &obj_HLT_Mu9_IP0); 
-	  //tree->Branch("obj_HLT_Mu9_IP3", &obj_HLT_Mu9_IP3);
-	  //tree->Branch("obj_HLT_Mu9_IP4", &obj_HLT_Mu9_IP4); 
-	  //tree->Branch("obj_HLT_Mu9_IP5", &obj_HLT_Mu9_IP5); 
-	  //tree->Branch("obj_HLT_Mu9_IP6", &obj_HLT_Mu9_IP6); 
-	  //tree->Branch("obj_HLT_Mu10p5_IP3p5", &obj_HLT_Mu10p5_IP3p5); 
-	  //tree->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
+  std::cout << "Beginning analyzer " << std::endl;
 
-    //for(auto& kv : outMap) {
-    //  auto k = kv.first;
-    //  if(verbose) {cout << "\t" << k;}
-    //  tree->Branch(k.c_str(), &(outMap[k]));
-    //}
-    treeDeclared = true;
-    if(verbose) {cout << "\n\n";}
-  }
+  edm::Service<TFileService> fs;
+  tree = fs->make<TTree>("T", "Trigger Objects and Trigger Muons TTree ");
+  if(verbose) {cout << "\nCreating the branches in the output tree:\n";}
 
-  tree->Fill();
+  tree->Branch("isRealData", &isRealData);
+  tree->Branch("runNum", &runNum);
+  tree->Branch("lumiNum", &lumiNum);
+  tree->Branch("eventNum", &eventNum);
+
 }
+//void ObjVsMuon_tupler::addToTree() {
+//  if (!treeDeclared) {
+//    if(verbose) {cout << "\nCreating the branches in the output tree:\n";}
+//    tree->Branch("isRealData", &isRealData);
+//    tree->Branch("runNum", &runNum);
+//    tree->Branch("lumiNum", &lumiNum);
+//    tree->Branch("eventNum", &eventNum);
+//
+//    //Trigger object info 
+//    //tree->Branch("TriggerObj_pt", &TriggerObj_pt); 
+//    //tree->Branch("TriggerObj_eta", &TriggerObj_eta); 
+//    //tree->Branch("TriggerObj_phi", &TriggerObj_phi); 
+//    //tree->Branch("TriggerObj_ch", &TriggerObj_ch); 
+//    //tree->Branch("TriggerObj_ip", &TriggerObj_ip); 
+//    //
+//    //tree->Branch("obj_HLT_Mu7_IP4", &obj_HLT_Mu7_IP4); 
+//	  //tree->Branch("obj_HLT_Mu8_IP3", &obj_HLT_Mu8_IP3); 
+//	  //tree->Branch("obj_HLT_Mu8_IP5", &obj_HLT_Mu8_IP5);
+//	  //tree->Branch("obj_HLT_Mu8_IP6", &obj_HLT_Mu8_IP6);
+//	  //tree->Branch("obj_HLT_Mu8p5_IP3p5", &obj_HLT_Mu8p5_IP3p5);
+//    //tree->Branch("obj_HLT_Mu9_IP0", &obj_HLT_Mu9_IP0); 
+//	  //tree->Branch("obj_HLT_Mu9_IP3", &obj_HLT_Mu9_IP3);
+//	  //tree->Branch("obj_HLT_Mu9_IP4", &obj_HLT_Mu9_IP4); 
+//	  //tree->Branch("obj_HLT_Mu9_IP5", &obj_HLT_Mu9_IP5); 
+//	  //tree->Branch("obj_HLT_Mu9_IP6", &obj_HLT_Mu9_IP6); 
+//	  //tree->Branch("obj_HLT_Mu10p5_IP3p5", &obj_HLT_Mu10p5_IP3p5); 
+//	  //tree->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
+//
+//    //for(auto& kv : outMap) {
+//    //  auto k = kv.first;
+//    //  if(verbose) {cout << "\t" << k;}
+//    //  tree->Branch(k.c_str(), &(outMap[k]));
+//    //}
+//    treeDeclared = true;
+//    if(verbose) {cout << "\n\n";}
+//  }
+//
+//  tree->Fill();
+//}
+
+// ------------ method called once each job just after ending the event loop  ------------
+void ObjVsMuon_tupler::endJob() {
+  std::cout << "Ending job" << std::endl;
+  tree->GetDirectory()->cd();
+  tree->Write();
+  std::cout << "Ending job ok " << std::endl;
+}
+
+
 DEFINE_FWK_MODULE(ObjVsMuon_tupler);
