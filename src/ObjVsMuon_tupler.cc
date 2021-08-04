@@ -129,7 +129,6 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   eventNum   = iEvent.id().event();
 
   //BPH trigger footprint
-  regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9].*");
   const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
   if (verbose) {cout << "\n ==== TRIGGER PATHS ==== " << endl;}
   //look and fill the BParked Trigger Objects ... 
@@ -193,43 +192,38 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 
   }//trigger objects
 
-  regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9]_v[0-9]");
 
-  for (unsigned int i = 0, n = triggerBits->size(); i < n; ++i) {
-    auto trgName = names.triggerName(i);
-    if (!regex_match(trgName, txt_regex_path)) continue;
+  if ( triggerResults_handle.isValid()) {
+   const edm::TriggerNames &TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+
+   for (unsigned int i = 0, n = triggerResults_handle->size(); i < n; ++i) {
+    auto trgName = TheTriggerNames.triggerName(i);
     if (verbose) {
       cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
     }
 
-    for (auto trgTag : triggerTags){
-      bool match = trgName.substr(4, trgTag.size()) == trgTag.c_str();
-      if (match && triggerBits->accept(i)){
-      if (verbose) {
-        cout << "Trigger " << trgName << " Accepted . . ." << endl;
-      }
-
-       //for (int part = 0; part <= 5; part++) {
-       //  regex rule(Form("HLT_%s_part%d.*", trgTag.c_str(), part));
-       //  if (regex_match(trgName, rule)) {
-       //    outMap[Form("prescale_%s_part%d", trgTag.c_str(), part)] = triggerPrescales->getPrescaleForIndex(i);
-       //    if (triggerPrescales->getPrescaleForIndex(i) > 0) outMap["prescale_" + trgTag]++;
-       //  }
-       //}
-
-      }
+      for(auto trgTag : triggerTags) {
+	      bool found_ = false; 
+        bool match = (trgName.find(trgTag) != std::string::npos && !found_);
+        if (match && triggerResults_handle->accept(i)) {
+          if (verbose) {
+            cout << "Trigger " << trgName << " Matched with " <<trgTag << endl;
+          }
+    		  found_ = true;
+	    }
     }
   }
 
+
+
   
 
-  //if(something_to_fill) addToTree();
 
   tree->Fill();
 
-  TriggerObj_pt->clear(); // TriggerObj_eta->clear(); TriggerObj_phi->clear(); TriggerObj_ch->clear(); TriggerObj_ip->clear(); 
-  //obj_HLT_Mu7_IP4->clear(); obj_HLT_Mu8_IP3->clear(); obj_HLT_Mu8_IP5->clear(); obj_HLT_Mu8_IP6->clear(); obj_HLT_Mu8p5_IP3p5->clear(); 
-  //obj_HLT_Mu9_IP0->clear(); obj_HLT_Mu9_IP3->clear(); obj_HLT_Mu9_IP4->clear(); obj_HLT_Mu9_IP5->clear(); obj_HLT_Mu9_IP6->clear(); obj_HLT_Mu10p5_IP3p5->clear(); obj_HLT_Mu12_IP6->clear(); 
+  TriggerObj_pt->clear();  TriggerObj_eta->clear(); TriggerObj_phi->clear(); TriggerObj_ch->clear(); TriggerObj_ip->clear(); 
+  obj_HLT_Mu7_IP4->clear(); obj_HLT_Mu8_IP3->clear(); obj_HLT_Mu8_IP5->clear(); obj_HLT_Mu8_IP6->clear(); obj_HLT_Mu8p5_IP3p5->clear(); 
+  obj_HLT_Mu9_IP0->clear(); obj_HLT_Mu9_IP3->clear(); obj_HLT_Mu9_IP4->clear(); obj_HLT_Mu9_IP5->clear(); obj_HLT_Mu9_IP6->clear(); obj_HLT_Mu10p5_IP3p5->clear(); obj_HLT_Mu12_IP6->clear(); 
 
   //if (verbose) {cout << "======================== " << endl;}
   return;
@@ -257,6 +251,20 @@ void ObjVsMuon_tupler::beginJob()
   tree->Branch("TriggerObj_ch", &TriggerObj_ch);
   tree->Branch("TriggerObj_ip", &TriggerObj_ip);
   tree->Branch("TriggerObj_pt", &TriggerObj_pt);
+
+  tree->Branch("obj_HLT_Mu7_IP4", &obj_HLT_Mu7_IP4);
+  tree->Branch("obj_HLT_Mu8_IP3", &obj_HLT_Mu8_IP3);
+  tree->Branch("obj_HLT_Mu8_IP5", &obj_HLT_Mu8_IP5);
+  tree->Branch("obj_HLT_Mu8_IP6", &obj_HLT_Mu8_IP6);
+  tree->Branch("obj_HLT_Mu8p5_IP3p5", &obj_HLT_Mu8p5_IP3p5);
+
+  tree->Branch("obj_HLT_Mu9_IP0", &obj_HLT_Mu9_IP0);
+  tree->Branch("obj_HLT_Mu9_IP3", &obj_HLT_Mu9_IP3);
+  tree->Branch("obj_HLT_Mu9_IP4", &obj_HLT_Mu9_IP4);
+  tree->Branch("obj_HLT_Mu9_IP5", &obj_HLT_Mu9_IP5);
+  tree->Branch("obj_HLT_Mu9_IP6", &obj_HLT_Mu9_IP6);
+  tree->Branch("obj_HLT_Mu10p5_IP3p5", &obj_HLT_Mu10p5_IP3p5);
+  tree->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
 
 }
 //void ObjVsMuon_tupler::addToTree() {
