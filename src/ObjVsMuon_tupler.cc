@@ -236,7 +236,7 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   tree->Fill();
 	std::cout << "fill ok" << std::endl;
 
-  //TriggerObj_pt->clear(); TriggerObj_eta->clear(); TriggerObj_phi->clear(); TriggerObj_ch->clear(); TriggerObj_ip->clear(); 
+  TriggerObj_pt->clear(); // TriggerObj_eta->clear(); TriggerObj_phi->clear(); TriggerObj_ch->clear(); TriggerObj_ip->clear(); 
   //obj_HLT_Mu7_IP4->clear(); obj_HLT_Mu8_IP3->clear(); obj_HLT_Mu8_IP5->clear(); obj_HLT_Mu8_IP6->clear(); obj_HLT_Mu8p5_IP3p5->clear(); 
   //obj_HLT_Mu9_IP0->clear(); obj_HLT_Mu9_IP3->clear(); obj_HLT_Mu9_IP4->clear(); obj_HLT_Mu9_IP5->clear(); obj_HLT_Mu9_IP6->clear(); obj_HLT_Mu10p5_IP3p5->clear(); obj_HLT_Mu12_IP6->clear(); 
 
@@ -259,6 +259,8 @@ void ObjVsMuon_tupler::beginJob()
   tree->Branch("runNum", &runNum);
   tree->Branch("lumiNum", &lumiNum);
   tree->Branch("eventNum", &eventNum);
+
+  tree->Branch("TriggerObj_pt", &TriggerObj_pt);
 
 }
 //void ObjVsMuon_tupler::addToTree() {
