@@ -130,7 +130,7 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   iEvent.getByToken(triggerObjects_, triggerObjects);
 
   //Muons
-  edm::Handle< View<pat::Muon> > thePATMuonHandle;
+  edm::Handle<edm::View<pat::Muon> > thePATMuonHandle;
   iEvent.getByToken(muon_Label,thePATMuonHandle);
 
   isRealData = iEvent.isRealData() ? 1 : 0 ;
@@ -286,7 +286,7 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 
 
   //Trigger muons . . .
-  for(View<pat::Muon>::const_iterator iMuon = thePATMuonHandle->begin(); iMuon != thePATMuonHandle->end(); ++iMuon) {
+  for(edm::View<pat::Muon>::const_iterator iMuon = thePATMuonHandle->begin(); iMuon != thePATMuonHandle->end(); ++iMuon) {
      break;
   }	
   
