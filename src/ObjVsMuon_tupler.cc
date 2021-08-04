@@ -196,7 +196,7 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   if ( triggerResults_handle.isValid()) {
    const edm::TriggerNames &TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
 
-   for (unsigned int i = 0, n = triggerResults_handle->size(); i < n; ++i) {
+    for (unsigned int i = 0, n = triggerResults_handle->size(); i < n; ++i) {
     auto trgName = TheTriggerNames.triggerName(i);
     if (verbose) {
       cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
@@ -210,11 +210,11 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
             cout << "Trigger " << trgName << " Matched with " <<trgTag << endl;
           }
     		  found_ = true;
-	    }
+	      }
+      }
     }
-  }
-
-
+  }//end trigger results 
+  
 
   
 
