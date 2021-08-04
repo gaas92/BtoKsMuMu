@@ -177,11 +177,11 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 	  float obj_eta = obj.eta();
 	  float obj_phi = obj.phi();
 	  TriggerObj_pt->push_back(obj_pt);
-	  //TriggerObj_eta->push_back(obj_phi);
-	  //TriggerObj_phi->push_back(obj_eta);
-	  //float obj_ch = obj.charge();
-	  //TriggerObj_ch->push_back(obj_ch);
-    //TriggerObj_ip->push_back(0.0);
+	  TriggerObj_eta->push_back(obj_phi);
+	  TriggerObj_phi->push_back(obj_eta);
+	  float obj_ch = obj.charge();
+	  TriggerObj_ch->push_back(obj_ch);
+    TriggerObj_ip->push_back(0.0);
 
     if(verbose){ 
       std::cout << "\n\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
@@ -260,6 +260,11 @@ void ObjVsMuon_tupler::beginJob()
   tree->Branch("lumiNum", &lumiNum);
   tree->Branch("eventNum", &eventNum);
 
+  tree->Branch("TriggerObj_pt", &TriggerObj_pt);
+  tree->Branch("TriggerObj_eta", &TriggerObj_eta);
+  tree->Branch("TriggerObj_phi", &TriggerObj_phi);
+  tree->Branch("TriggerObj_ch", &TriggerObj_ch);
+  tree->Branch("TriggerObj_ip", &TriggerObj_ip);
   tree->Branch("TriggerObj_pt", &TriggerObj_pt);
 
 }
