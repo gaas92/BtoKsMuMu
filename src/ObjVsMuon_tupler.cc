@@ -101,10 +101,6 @@ ObjVsMuon_tupler::ObjVsMuon_tupler(const edm::ParameterSet& iConfig):
   //tree = fs->make<TTree>( "T", "Trigger Objects and Trigger Muons TTree ");
 }
 
-ObjVsMuon_tupler::~ObjVsMuon_tupler()
-{
-
-}
 
 // ------------ method called to for each event  ------------
 void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup){
