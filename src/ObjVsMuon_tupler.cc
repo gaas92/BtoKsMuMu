@@ -192,15 +192,18 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 
   }//trigger objects
 
-
+  
   if ( triggerResults_handle.isValid()) {
-   const edm::TriggerNames &TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+    const edm::TriggerNames &TheTriggerNames = iEvent.triggerNames(*triggerResults_handle);
+    regex txt_regex_path("HLT_Mu[0-9]+_IP[0-9]_part[0-9]_v[0-9]");
 
     for (unsigned int i = 0, n = triggerResults_handle->size(); i < n; ++i) {
-    auto trgName = TheTriggerNames.triggerName(i);
-    if (verbose) {
-      cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
-    }
+      auto trgName = TheTriggerNames.triggerName(i);
+      if(!regex_match(trgName, txt_regex_path)) continue;
+
+      if (verbose) {
+        cout << "Trigger " << trgName << ", prescale " << triggerPrescales->getPrescaleForIndex(i) << endl;
+      }
 
       for(auto trgTag : triggerTags) {
 	      bool found_ = false; 
