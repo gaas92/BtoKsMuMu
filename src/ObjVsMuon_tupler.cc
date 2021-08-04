@@ -59,6 +59,7 @@ class ObjVsMuon_tupler : public edm::EDAnalyzer {
       edm::EDGetTokenT <pat::PackedTriggerPrescales> triggerPrescalesSrc_;
       edm::EDGetTokenT<vector<reco::Vertex>> vtxSrc_;
       edm::EDGetTokenT<edm::View<pat::Muon>> muon_Label;
+      edm::EDGetTokenT<reco::BeamSpot> BSLabel_;
 
       edm::EDGetTokenT<std::vector<pat::TriggerObjectStandAlone>> triggerObjects_;
 
@@ -82,6 +83,10 @@ class ObjVsMuon_tupler : public edm::EDAnalyzer {
       std::vector<int>         *obj_HLT_Mu7_IP4, *obj_HLT_Mu8_IP3, *obj_HLT_Mu8_IP5, *obj_HLT_Mu8_IP6, *obj_HLT_Mu8p5_IP3p5;
       std::vector<int>         *obj_HLT_Mu9_IP0, *obj_HLT_Mu9_IP3, *obj_HLT_Mu9_IP4, *obj_HLT_Mu9_IP5, *obj_HLT_Mu9_IP6, *obj_HLT_Mu10p5_IP3p5, *obj_HLT_Mu12_IP6;
 
+      std::vector<float>       *TriggerMu_pt, *TriggerMu_eta, *TriggerMu_phi, *TriggerMu_ch, *TriggerMu_ip;
+      std::vector<int>         *mu_HLT_Mu7_IP4, *mu_HLT_Mu8_IP3, *mu_HLT_Mu8_IP5, *mu_HLT_Mu8_IP6, *mu_HLT_Mu8p5_IP3p5;
+      std::vector<int>         *mu_HLT_Mu9_IP0, *mu_HLT_Mu9_IP3, *mu_HLT_Mu9_IP4, *mu_HLT_Mu9_IP5, *mu_HLT_Mu9_IP6, *mu_HLT_Mu10p5_IP3p5, *mu_HLT_Mu12_IP6;
+
       int verbose = 0;
 };
 
@@ -95,11 +100,16 @@ ObjVsMuon_tupler::ObjVsMuon_tupler(const edm::ParameterSet& iConfig):
 
   //Trigger Muon Selecctor 
   triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
+  BSLabel_(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("bslabel"))),
 
   TriggerObj_pt(0), TriggerObj_eta(0), TriggerObj_phi(0), TriggerObj_ch(0), TriggerObj_ip(0),
   obj_HLT_Mu7_IP4(0), obj_HLT_Mu8_IP3(0), obj_HLT_Mu8_IP5(0), obj_HLT_Mu8_IP6(0), obj_HLT_Mu8p5_IP3p5(0),
   obj_HLT_Mu9_IP0(0), obj_HLT_Mu9_IP3(0), obj_HLT_Mu9_IP4(0), obj_HLT_Mu9_IP5(0), obj_HLT_Mu9_IP6(0), obj_HLT_Mu10p5_IP3p5(0), obj_HLT_Mu12_IP6(0),
   
+  TriggerMu_pt(0), TriggerMu_eta(0), TriggerMu_phi(0), TriggerMu_ch(0), TriggerMu_ip(0),
+  mu_HLT_Mu7_IP4(0), mu_HLT_Mu8_IP3(0), mu_HLT_Mu8_IP5(0), mu_HLT_Mu8_IP6(0), mu_HLT_Mu8p5_IP3p5(0),
+  mu_HLT_Mu9_IP0(0), mu_HLT_Mu9_IP3(0), mu_HLT_Mu9_IP4(0), mu_HLT_Mu9_IP5(0), mu_HLT_Mu9_IP6(0), mu_HLT_Mu10p5_IP3p5(0), mu_HLT_Mu12_IP6(0),
+
   verbose( iConfig.getParameter<int>( "verbose" ) )
 
 {
@@ -132,6 +142,13 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   //Muons
   edm::Handle<edm::View<pat::Muon> > thePATMuonHandle;
   iEvent.getByToken(muon_Label,thePATMuonHandle);
+
+  //Beam spot handle & position (for displaced Tracks ...)
+  edm::Handle<reco::BeamSpot> theBeamSpotHandle;
+  iEvent.getByToken(BSLabel_, theBeamSpotHandle);
+  const reco::BeamSpot* theBeamSpot = theBeamSpotHandle.product();
+  math::XYZPoint referencePos(theBeamSpot->position());
+
 
   isRealData = iEvent.isRealData() ? 1 : 0 ;
   runNum     = iEvent.id().run();
@@ -286,8 +303,89 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
 
 
   //Trigger muons . . .
+  int mu_HLT_Mu7_IP4_ = 0, mu_HLT_Mu8_IP3_ = 0, mu_HLT_Mu8_IP5_ = 0, mu_HLT_Mu8_IP6_ = 0, mu_HLT_Mu8p5_IP3p5_ = 0;
+  int mu_HLT_Mu9_IP0_ = 0, mu_HLT_Mu9_IP3_ = 0, mu_HLT_Mu9_IP4_ = 0, mu_HLT_Mu9_IP5_ = 0, mu_HLT_Mu9_IP6_ = 0, mu_HLT_Mu10p5_IP3p5_ = 0, mu_HLT_Mu12_IP6_ = 0;
+
   for(edm::View<pat::Muon>::const_iterator iMuon = thePATMuonHandle->begin(); iMuon != thePATMuonHandle->end(); ++iMuon) {
-     break;
+    for(auto tag : triggerTags) {
+      std::string triggerName = tag + "_part*_v*"; 
+			if(iMuon->triggered(triggerName.c_str())){ 
+        float mu_pt = iMuon->pt();
+	      float mu_eta = iMuon->eta();
+	      float mu_phi = iMuon->phi();
+	      TriggerMu_pt->push_back(mu_pt);
+	      TriggerMu_eta->push_back(mu_eta);
+	      TriggerMu_phi->push_back(mu_phi);
+	      float mu_ch = iMuon->charge();
+	      TriggerMu_ch->push_back(mu_ch);
+        float mu_ip = iMuon->muonBestTrack()->dxy(referencePos)/iMuon->muonBestTrack()->dxyError();
+        TriggerMu_ip->push_back(mu_ip);
+        
+        if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){
+					mu_HLT_Mu7_IP4_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+				if (triggerName.find("HLT_Mu8_IP3") != std::string::npos){
+					mu_HLT_Mu8_IP3_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+				if (triggerName.find("HLT_Mu8_IP5") != std::string::npos){
+					mu_HLT_Mu8_IP5_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}				
+				if (triggerName.find("HLT_Mu8_IP6") != std::string::npos){
+					mu_HLT_Mu8_IP6_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+				if (triggerName.find("HLT_Mu8p5_IP3p5") != std::string::npos){
+					mu_HLT_Mu8p5_IP3p5_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+
+				if (triggerName.find("HLT_Mu9_IP0") != std::string::npos){
+					mu_HLT_Mu9_IP0_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}					
+				if (triggerName.find("HLT_Mu9_IP3") != std::string::npos){
+					mu_HLT_Mu9_IP3_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}				
+				if (triggerName.find("HLT_Mu9_IP4") != std::string::npos){
+					mu_HLT_Mu9_IP4_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu9_IP5") != std::string::npos){
+					mu_HLT_Mu9_IP5_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu9_IP6") != std::string::npos){
+					mu_HLT_Mu9_IP6_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu10p5_IP3p5") != std::string::npos){
+					mu_HLT_Mu10p5_IP3p5_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}	
+				if (triggerName.find("HLT_Mu12_IP6") != std::string::npos){
+					mu_HLT_Mu12_IP6_ = 1;
+					if (verbose > 1) std::cout<< "-Mu 1" << triggerName << std::endl;
+				}
+
+        mu_HLT_Mu7_IP4->push_back(mu_HLT_Mu7_IP4_); 
+	      mu_HLT_Mu8_IP3->push_back(mu_HLT_Mu8_IP3_); 
+	      mu_HLT_Mu8_IP5->push_back(mu_HLT_Mu8_IP5_);
+	      mu_HLT_Mu8_IP6->push_back(mu_HLT_Mu8_IP6_);
+	      mu_HLT_Mu8p5_IP3p5->push_back(mu_HLT_Mu8p5_IP3p5_);
+
+        mu_HLT_Mu9_IP0->push_back(mu_HLT_Mu9_IP0_); 
+	      mu_HLT_Mu9_IP3->push_back(mu_HLT_Mu9_IP3_);
+	      mu_HLT_Mu9_IP4->push_back(mu_HLT_Mu9_IP4_); 
+	      mu_HLT_Mu9_IP5->push_back(mu_HLT_Mu9_IP5_); 
+	      mu_HLT_Mu9_IP6->push_back(mu_HLT_Mu9_IP6_); 
+	      mu_HLT_Mu10p5_IP3p5->push_back(mu_HLT_Mu10p5_IP3p5_); 
+	      mu_HLT_Mu12_IP6->push_back(mu_HLT_Mu12_IP6_);	
+      }// end if triggered
+    }
   }	
   
 
@@ -297,6 +395,9 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
   obj_HLT_Mu7_IP4->clear(); obj_HLT_Mu8_IP3->clear(); obj_HLT_Mu8_IP5->clear(); obj_HLT_Mu8_IP6->clear(); obj_HLT_Mu8p5_IP3p5->clear(); 
   obj_HLT_Mu9_IP0->clear(); obj_HLT_Mu9_IP3->clear(); obj_HLT_Mu9_IP4->clear(); obj_HLT_Mu9_IP5->clear(); obj_HLT_Mu9_IP6->clear(); obj_HLT_Mu10p5_IP3p5->clear(); obj_HLT_Mu12_IP6->clear(); 
 
+  TriggerMu_pt->clear();  TriggerMu_eta->clear(); TriggerMu_phi->clear(); TriggerMu_ch->clear(); TriggerMu_ip->clear(); 
+  mu_HLT_Mu7_IP4->clear(); mu_HLT_Mu8_IP3->clear(); mu_HLT_Mu8_IP5->clear(); mu_HLT_Mu8_IP6->clear(); mu_HLT_Mu8p5_IP3p5->clear(); 
+  mu_HLT_Mu9_IP0->clear(); mu_HLT_Mu9_IP3->clear(); mu_HLT_Mu9_IP4->clear(); mu_HLT_Mu9_IP5->clear(); mu_HLT_Mu9_IP6->clear(); mu_HLT_Mu10p5_IP3p5->clear(); mu_HLT_Mu12_IP6->clear(); 
   //if (verbose) {cout << "======================== " << endl;}
   return;
 
@@ -317,6 +418,7 @@ void ObjVsMuon_tupler::beginJob()
   tree->Branch("lumiNum", &lumiNum);
   tree->Branch("eventNum", &eventNum);
 
+  //Trigger objects . . . 
   tree->Branch("TriggerObj_pt", &TriggerObj_pt);
   tree->Branch("TriggerObj_eta", &TriggerObj_eta);
   tree->Branch("TriggerObj_phi", &TriggerObj_phi);
@@ -338,6 +440,27 @@ void ObjVsMuon_tupler::beginJob()
   tree->Branch("obj_HLT_Mu10p5_IP3p5", &obj_HLT_Mu10p5_IP3p5);
   tree->Branch("obj_HLT_Mu12_IP6", &obj_HLT_Mu12_IP6);
 
+  //Trigger muons  . . . 
+  tree->Branch("TriggerMu_pt",  &TriggerMu_pt);
+  tree->Branch("TriggerMu_eta", &TriggerMu_eta);
+  tree->Branch("TriggerMu_phi", &TriggerMu_phi);
+  tree->Branch("TriggerMu_ch",  &TriggerMu_ch);
+  tree->Branch("TriggerMu_ip",  &TriggerMu_ip);
+  tree->Branch("TriggerMu_pt",  &TriggerMu_pt);
+
+  tree->Branch("mu_HLT_Mu7_IP4", &mu_HLT_Mu7_IP4);
+  tree->Branch("mu_HLT_Mu8_IP3", &mu_HLT_Mu8_IP3);
+  tree->Branch("mu_HLT_Mu8_IP5", &mu_HLT_Mu8_IP5);
+  tree->Branch("mu_HLT_Mu8_IP6", &mu_HLT_Mu8_IP6);
+  tree->Branch("mu_HLT_Mu8p5_IP3p5", &mu_HLT_Mu8p5_IP3p5);
+
+  tree->Branch("mu_HLT_Mu9_IP0", &mu_HLT_Mu9_IP0);
+  tree->Branch("mu_HLT_Mu9_IP3", &mu_HLT_Mu9_IP3);
+  tree->Branch("mu_HLT_Mu9_IP4", &mu_HLT_Mu9_IP4);
+  tree->Branch("mu_HLT_Mu9_IP5", &mu_HLT_Mu9_IP5);
+  tree->Branch("mu_HLT_Mu9_IP6", &mu_HLT_Mu9_IP6);
+  tree->Branch("mu_HLT_Mu10p5_IP3p5", &mu_HLT_Mu10p5_IP3p5);
+  tree->Branch("mu_HLT_Mu12_IP6", &mu_HLT_Mu12_IP6);
 }
 
 
