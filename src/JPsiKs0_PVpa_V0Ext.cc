@@ -142,7 +142,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
 
 
   //Trigger Selector
-  drTrg_m1(0), drTrg_m2(0),
+  drTrg_m1(0), drTrg_m2(0), dpT_m1(0), dpT_m2(0),
 
   nVtx(0), nTks(0), TrkIndex(0), PVTriggDz(0),
   priVtxX(0), priVtxY(0), priVtxZ(0), priVtxXE(0), priVtxYE(0), priVtxZE(0), priVtxCL(0),
@@ -853,6 +853,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	  //Match with TriggerMuons, BParking Nano MuonTriggerSelector emulation 
 	  float dRMuonMatching1 = -1.; 	
 	  float dRMuonMatching2 = -1.;
+	  float dpT_m1_ = -100000.0;
+	  float dpT_m2_ = -100000.0; 
 	  float dzm1_trg = 35.0;
 	  float dzm2_trg = 35.0;
 	  float dz_mumu_t = abs(iMuon1->vz() - iMuon2->vz());
@@ -869,6 +871,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		}
 	    if((dR1 < dRMuonMatching1 || dRMuonMatching1 == -1) && dR1 < maxdR_){
         	dRMuonMatching1 = dR1;
+			dpT_m1_ = triggeringMuons[iTrg].pt() - iMuon1->pt();
         	// float eta = muon.eta() - triggeringMuons[iTrg].eta();
         	// float phi = muon.phi() - triggeringMuons[iTrg].phi();
         	// dR_H = std::sqrt(eta*eta+phi*phi);
@@ -879,6 +882,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	    }
 	    if((dR2 < dRMuonMatching2 || dRMuonMatching2 == -1) && dR2 < maxdR_){
         	dRMuonMatching2 = dR2;	 
+			dpT_m2_ = triggeringMuons[iTrg].pt() - iMuon2->pt();
 		}
       }
       //if ((dRMuonMatching1 != -1) | (dRMuonMatching2 != -1)) std::cout << "matching ok ..." << std::endl;
@@ -1644,6 +1648,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
+		   dpT_m1->push_back(dpT_m1_);
+	       dpT_m2->push_back(dpT_m2_);
 		   //std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
@@ -2194,6 +2200,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
+		   dpT_m1->push_back(dpT_m1_);
+	       dpT_m2->push_back(dpT_m2_);
 		   //std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
@@ -2744,6 +2752,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
+		   dpT_m1->push_back(dpT_m1_);
+	       dpT_m2->push_back(dpT_m2_);
 		   //std::cout << "pushing " << dRMuonMatching1 << " & " << dRMuonMatching2 << std::endl;
 
 		   mumC2->push_back( glbTrackM->normalizedChi2() );
@@ -2921,6 +2931,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    		//Trigger Selector
    		drTrg_m1->clear();
    		drTrg_m2->clear();
+		dpT_m1->clear();
+		dpT_m2->clear();
    }
    //std::cout << "Analyze ok 2623" << std::endl;
 }
@@ -3300,6 +3312,8 @@ JPsiKs0_PVpa_V0Ext::beginJob()
 	 //Trigger Selector
 	 tree_->Branch("drTrg_m1", &drTrg_m1);
 	 tree_->Branch("drTrg_m2", &drTrg_m2);
+	 tree_->Branch("dpT_m1", &dpT_m1);
+	 tree_->Branch("dpT_m2", &dpT_m2);
   }
     // gen
   if (isMC_ || OnlyGen_) {

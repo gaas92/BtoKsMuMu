@@ -312,7 +312,7 @@ void ObjVsMuon_tupler::analyze(const edm::Event& iEvent, const edm::EventSetup& 
       std::string triggerName = "HLT_" + tag + "_part*_v*"; 
       //std::cout << "checking trigger :" << triggerName << std::endl;
 			if(iMuon->triggered(triggerName.c_str())){ 
-        std::cout << "Muon Fired !! " << triggerName << std::endl;
+        //std::cout << "Muon Fired !! " << triggerName << std::endl;
         float mu_pt = iMuon->pt();
 	      float mu_eta = iMuon->eta();
 	      float mu_phi = iMuon->phi();
