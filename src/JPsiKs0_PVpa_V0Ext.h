@@ -159,7 +159,7 @@ private:
   std::vector<int>         *mu2_HLT_Mu9_IP0, *mu2_HLT_Mu9_IP3, *mu2_HLT_Mu9_IP4, *mu2_HLT_Mu9_IP5, *mu2_HLT_Mu9_IP6, *mu2_HLT_Mu10p5_IP3p5, *mu2_HLT_Mu12_IP6;
 
   //Triger Selector
-  std::vector<float>       *drTrg_m1, *drTrg_m2, *dpT_m1, dpT_m2; 
+  std::vector<float>       *drTrg_m1, *drTrg_m2, *dpT_m1, *dpT_m2; 
  
   int                      muAcc, muTrig, weight;
   
