@@ -319,7 +319,7 @@ bool TagAndProbeProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSet
       if(m.innerTrack().isNull()) continue;
       TLorentzVector pAux;
       pAux.SetPtEtaPhiM(m.pt(), m.eta(), m.phi(), massMu);
-      if( fabs((pAux + pProbe).M() - massJpsi) > 0.2 ) continue;
+      if( fabs((pAux + pProbe).M() - massJpsi) > 0.4 ) continue;
       if(m.pt() > ptTagMu){
         ptTagMu = m.pt();
         mTag = m;
