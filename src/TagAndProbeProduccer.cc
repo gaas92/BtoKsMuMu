@@ -412,7 +412,7 @@ bool TagAndProbeProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSet
     if(ptTagMu != -1) {
       outMap["massMuMu"] = (pTag + pProbe).M();
       outMap["deltaR_tagProbe"] = dR(pTag.Phi(), mProbe.phi(), pTag.Eta(), mProbe.eta());
-      auto kinTree = FitJpsi_mumu(iSetup, mTag, mProbe, false);
+      auto kinTree = FitJpsi_mumu(iSetup, mTag, mProbe, true);
       auto res = fitQuality(kinTree, 0.05);
       outMap["vtx_isValid"] = res.isValid;
       outMap["vtx_chi2"] = res.chi2;
