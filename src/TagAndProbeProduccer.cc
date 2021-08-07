@@ -251,7 +251,7 @@ bool TagAndProbeProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSet
 	                             "Mu10p5_IP3p5", "Mu9_IP0", "Mu9_IP3", "Mu9_IP4", "Mu9_IP5", "Mu9_IP6", 
                                "Mu8p5_IP3p5",  "Mu8_IP3", "Mu8_IP5", "Mu8_IP6", 
                                "Mu7_IP4"};
-                               
+
   for(auto tag : triggerTag) outMap["prescale" + tag] = -1;
 
   const edm::TriggerNames &names = iEvent.triggerNames(*triggerBits);
@@ -516,6 +516,8 @@ RefCountedKinematicTree TagAndProbeProducer::FitJpsi_mumu(const edm::EventSetup&
   if (!mass_constraint) {
     KinematicParticleVertexFitter VtxFitter;
     RefCountedKinematicTree KinTree = VtxFitter.fit(parts);
+    //testing
+    std::cout << "kin tree valid: " << KinTree.isValid() << std::endl;
     return KinTree;
   }
   else {
@@ -529,6 +531,8 @@ RefCountedKinematicTree TagAndProbeProducer::FitJpsi_mumu(const edm::EventSetup&
 
 TagAndProbeProducer::kinFitResuts TagAndProbeProducer::fitQuality(RefCountedKinematicTree t, double pval_thr){
   kinFitResuts out;
+  //testing
+  std::cout << "kin tree valid (kinfitresults): " << t->isValid() << std::endl;
   if(t->isValid()) {
     out.isValid = true;
     t->movePointerToTheTop();
