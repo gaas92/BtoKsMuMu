@@ -138,7 +138,7 @@ process.l1bits=cms.EDProducer("L1TriggerResultsConverter",
 #process.TnP = cms.EDFilter("TagAndProbeProducer_MC",
 process.TnP = cms.EDFilter(tagNprobe_,
         muonIDScaleFactors = cms.int32(0),
-        requireTag = cms.int32(0),
+        requireTag = cms.int32(1),
         verbose = cms.int32(0)
 )
 
