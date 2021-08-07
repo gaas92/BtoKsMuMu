@@ -296,9 +296,10 @@ bool TagAndProbeProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSet
     if(idxTriggeringMuons.size() == 1 && idxTriggeringMuons[0] == j && requireTag) continue;
 
     auto mProbe = (*muonHandle)[j];
+    //Olmo
     //if ( fabs(mProbe.eta()) > 1.6 ) continue;
     //if ( mProbe.pt() < 5.5 ) continue;
-    //Olmo
+    //Gabriel
     if ( fabs(mProbe.eta()) > 2.5 ) continue;
     if ( mProbe.pt() < 2.5 ) continue;
     if (mProbe.innerTrack().isNull()) continue;

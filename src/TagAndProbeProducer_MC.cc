@@ -318,8 +318,12 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     if(idxTriggeringMuons.size() == 1 && idxTriggeringMuons[0] == j && requireTag) continue;
 
     auto mProbe = (*muonHandle)[j];
-    if ( fabs(mProbe.eta()) > 1.6 ) continue;
-    if ( mProbe.pt() < 5.5 ) continue;
+    //Olmo
+    //if ( fabs(mProbe.eta()) > 1.6 ) continue;
+    //if ( mProbe.pt() < 5.5 ) continue;
+    //Gabriel
+    if ( fabs(mProbe.eta()) > 2.5 ) continue;
+    if ( mProbe.pt() < 2.5 ) continue;
     if (mProbe.innerTrack().isNull()) continue;
     auto tkProbe = mProbe.innerTrack();
     auto dxyProbe_PV = fabs(tkProbe->dxy(primaryVtx.position()));
