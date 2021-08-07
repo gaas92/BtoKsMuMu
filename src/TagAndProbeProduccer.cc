@@ -517,7 +517,7 @@ RefCountedKinematicTree TagAndProbeProducer::FitJpsi_mumu(const edm::EventSetup&
     KinematicParticleVertexFitter VtxFitter;
     RefCountedKinematicTree KinTree = VtxFitter.fit(parts);
     //testing
-    std::cout << "kin tree valid: " << KinTree.isValid() << std::endl;
+    std::cout << "kin tree valid: " << KinTree->isValid() << std::endl;
     return KinTree;
   }
   else {
