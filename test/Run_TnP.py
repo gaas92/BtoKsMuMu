@@ -18,8 +18,18 @@ process.load('Configuration.StandardSequences.MagneticField_cff')
 # process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
+
+isMC = True
+
+if isMC:
+    globaltag_ = '102X_upgrade2018_realistic_v12'
+    tagNprobe_ = 'TagAndProbeProducer_MC' 
+else :
+    globaltag_ = '102X_dataRun2_v11'
+    tagNprobe_ = 'TagAndProbeProducer' 
+
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '102X_upgrade2018_realistic_v12', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, globaltag_, '')
 #process.GlobalTag = GlobalTag(process.GlobalTag, '102X_dataRun2_v11', '')
 #process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_mc')
 
@@ -123,7 +133,7 @@ process.l1bits=cms.EDProducer("L1TriggerResultsConverter",
 )
 
 #process.TnP = cms.EDFilter("TagAndProbeProducer_MC",
-process.TnP = cms.EDFilter("TagAndProbeProducer",
+process.TnP = cms.EDFilter(tagNprobe_,
         muonIDScaleFactors = cms.int32(0),
         requireTag = cms.int32(0),
         verbose = cms.int32(0)

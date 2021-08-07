@@ -516,10 +516,6 @@ RefCountedKinematicTree TagAndProbeProducer::FitJpsi_mumu(const edm::EventSetup&
   if (!mass_constraint) {
     KinematicParticleVertexFitter VtxFitter;
     RefCountedKinematicTree KinTree = VtxFitter.fit(parts);
-    //testing
-    std::cout << "kin tree valid: " << KinTree->isValid() << std::endl;
-    std::cout << "kin tree empty: " << KinTree->isEmpty() << std::endl;
-    std::cout << "kin tree consistent: " << KinTree->isConsistent() << std::endl;
     return KinTree;
   }
   else {
@@ -533,8 +529,6 @@ RefCountedKinematicTree TagAndProbeProducer::FitJpsi_mumu(const edm::EventSetup&
 
 TagAndProbeProducer::kinFitResuts TagAndProbeProducer::fitQuality(RefCountedKinematicTree t, double pval_thr){
   kinFitResuts out;
-  //testing
-  std::cout << "kin tree valid (kinfitresults): " << t->isValid() << std::endl;
   if(t->isValid()) {
     out.isValid = true;
     t->movePointerToTheTop();
