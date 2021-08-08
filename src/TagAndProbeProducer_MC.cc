@@ -281,7 +281,8 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   if (verbose) { cout << "\n == TRIGGER PATHS == \n";}
   for (unsigned int i = 0; i < triggerBits->size(); ++i) {
       auto n =  names.triggerName(i);
-      if (verbose && triggerBits->accept(i)) {
+      regex txt_regex_watch("HLT_Mu*");
+      if (verbose && triggerBits->accept(i) && regex_match(n, txt_regex_watch)) {
         cout << n << ": PASS" << endl;
       }
       if(!regex_match(n, txt_regex_path)) continue;
