@@ -310,8 +310,6 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   for(uint i=0; i < nMuons; i++) {
     auto m = (*muonHandle)[i];
     if(m.triggered("HLT_Mu*_IP*")) idxTriggeringMuons.push_back(i);
-    //just test 
-    if(m.triggered("HLT_Mu8_v*")) std::cout << "Mu8_v* fired !" << std::endl;
   }
   if(idxTriggeringMuons.size() == 0 && requireTag) return false;
 
@@ -383,6 +381,8 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
         string trgPath = "HLT_" + tag + "_part*_v*";
         outMap["mTag_HLT_" + tag] = mTag.triggered(trgPath.c_str());
       }
+      //testing
+      outMap["mTag_HLT_Mu8"] = mTag.triggered("HLT_Mu8_v*");
       outMap["mTag_tightID"] = mTag.isTightMuon(primaryVtx);
       outMap["mTag_softID"] = mTag.isSoftMuon(primaryVtx);
 
