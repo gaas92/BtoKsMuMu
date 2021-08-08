@@ -352,7 +352,16 @@ bool TagAndProbeProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSet
         outMap["mTag_HLT_" + tag] = mTag.triggered(trgPath.c_str());
       }
       //testing
+      //testing
       outMap["mTag_HLT_Mu8"] = mTag.triggered("HLT_Mu8_v*");
+      outMap["HLT_Mu3_L1SingleMu5orSingleMu7"] = mTag.triggered("HLT_Mu3_L1SingleMu5orSingleMu7_v*");
+      outMap["HLT_Mu12"] = mTag.triggered("HLT_Mu12_v*");
+      outMap["HLT_Mu15"] = mTag.triggered("HLT_Mu15_v*");
+      outMap["HLT_Mu7p5_L2Mu2_Jpsi"] = mTag.triggered("HLT_Mu7p5_L2Mu2_Jpsi_v*");
+      outMap["HLT_Mu7p5_Track2_Jpsi"] = mTag.triggered("HLT_Mu7p5_Track2_Jpsi_v*");
+      outMap["HLT_Mu7p5_Track3p5_Jpsi"] = mTag.triggered("HLT_Mu7p5_Track3p5_Jpsi_v*");
+      outMap["HLT_Mu8_TrkIsoVVL"] = mTag.triggered("HLT_Mu8_TrkIsoVVL_v*");
+      
       outMap["mTag_tightID"] = mTag.isTightMuon(primaryVtx);
       outMap["mTag_softID"] = mTag.isSoftMuon(primaryVtx);
 
