@@ -281,7 +281,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   if (verbose) { cout << "\n == TRIGGER PATHS == \n";}
   for (unsigned int i = 0; i < triggerBits->size(); ++i) {
       auto n =  names.triggerName(i);
-      if (verbose && triggerBits->accept(i) && false) {
+      if (verbose && triggerBits->accept(i)) {
         cout << n << ": PASS" << endl;
       }
       if(!regex_match(n, txt_regex_path)) continue;
@@ -293,7 +293,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
       }
   }
 
-  if (verbose) {
+  if (verbose > 1) {
     cout << "\n MUONS LIST" << endl;
     for (auto muon : (*muonHandle)) {
         cout << Form("id:%d  pt:%.1f  eta:%.1f  phi:%.1f", muon.pdgId(), muon.pt(), muon.eta(), muon.phi());
