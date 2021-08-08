@@ -318,6 +318,14 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     if(idxTriggeringMuons.size() == 1 && idxTriggeringMuons[0] == j && requireTag) continue;
 
     auto mProbe = (*muonHandle)[j];
+    //My test look for triggers 
+    //if (mProbe.triggerObjectMatches().size()!=0){
+    //  for(size_t k=0; k<mProbe.triggerObjectMatches().size();k++){
+    //    if(mProbe.triggerObjectMatch(k)!=0 && mProbe.triggerObjectMatch(k)->hasPathName("HLT_Mu*_*"true,true)){
+		//		    			std::cout << "\t Watch trigger"<<  << std::endl;
+    //    }
+    //  }
+    //}
     //Olmo
     //if ( fabs(mProbe.eta()) > 1.6 ) continue;
     //if ( mProbe.pt() < 5.5 ) continue;
