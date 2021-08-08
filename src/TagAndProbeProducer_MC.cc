@@ -310,6 +310,8 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   for(uint i=0; i < nMuons; i++) {
     auto m = (*muonHandle)[i];
     if(m.triggered("HLT_Mu*_IP*")) idxTriggeringMuons.push_back(i);
+    //just test 
+    if(m.triggered("HLT_Mu8_v*")) std::cout << "Mu8_v* fired !" << std::endl;
   }
   if(idxTriggeringMuons.size() == 0 && requireTag) return false;
 
