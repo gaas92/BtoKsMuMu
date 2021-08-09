@@ -95,14 +95,16 @@ def main():
 
         # Will submit one task for each of these input datasets.
         inputDatasets = [ 
-                          '/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
+                          '/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM', # Official Probe Filter
+                          '/BdToK0sJPsi_JPsiToMuMu_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM', # Official no Probe Filter
+                          '/BuToKJpsi_ToMuMu_probefilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM' # Official charged probe Filter 
                           #'/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
                  	]
  
         for inDS in inputDatasets:
              # inDS is of the form /A/B/C. Since B is unique for each inDS, use this in the CRAB request name.
             #config.General.requestName = inDS.split('/')[1]+'-'+inDS.split('/')[2]
-            config.General.requestName = inDS.split('/')[1]
+            config.General.requestName = inDS.split('/')[1]  #
             config.Data.inputDataset = inDS
             config.Data.outputDatasetTag = '%s_%s' % (config.General.workArea, config.General.requestName)
             # Submit.
