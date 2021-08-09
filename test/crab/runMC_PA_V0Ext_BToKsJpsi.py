@@ -85,7 +85,7 @@ def main():
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
         config.Data.outputDatasetTag = None
-	config.Data.outLFNDirBase = '/store/user/gayalasa/V5_ResMC/'
+	config.Data.outLFNDirBase = '/store/user/gayalasa/Sync/V5_ResMC/'
 	#config.Site.storageSite = 'T3_US_FNALLPC'
 	config.Site.storageSite = 'T3_CH_CERNBOX'
         #config.Site.whitelist = ['T2_US*']
@@ -96,7 +96,8 @@ def main():
         # Will submit one task for each of these input datasets.
         inputDatasets = [ 
                           #'/BdToK0sMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
-                          '/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
+                          '/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM', # Official probe filter res
+                          '/BdToK0sJPsi_JPsiToMuMu_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM' # Official no Probe filter res
                  	]
  
         for inDS in inputDatasets:
