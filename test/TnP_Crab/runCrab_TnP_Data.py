@@ -80,7 +80,7 @@ def main():
 	config.Data.inputDBS = 'global'
    #     config.Data.splitting = 'Automatic'
         config.Data.splitting = 'FileBased'
-        config.Data.unitsPerJob = 5
+        config.Data.unitsPerJob = 1 #5
    #     config.Data.totalUnits = 30
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
@@ -95,31 +95,31 @@ def main():
 
         # Will submit one task for each of these input datasets.
         inputDatasets = [ 
-                          '/ParkingBPH1/Run2018A-05May2019-v1/MINIAOD', # BParked A 
-                          '/ParkingBPH2/Run2018A-05May2019-v1/MINIAOD',
-                          '/ParkingBPH3/Run2018A-05May2019-v1/MINIAOD',
-                          '/ParkingBPH4/Run2018A-05May2019-v1/MINIAOD',
-                          '/ParkingBPH5/Run2018A-05May2019-v1/MINIAOD',
-                          '/ParkingBPH6/Run2018A-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH1/Run2018A-05May2019-v1/MINIAOD', # BParked A 
+                          #'/ParkingBPH2/Run2018A-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH3/Run2018A-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH4/Run2018A-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH5/Run2018A-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH6/Run2018A-05May2019-v1/MINIAOD',
 
-                          '/ParkingBPH1/Run2018B-05May2019-v2/MINIAOD',
-                          '/ParkingBPH2/Run2018B-05May2019-v2/MINIAOD',
-                          '/ParkingBPH3/Run2018B-05May2019-v2/MINIAOD',
-                          '/ParkingBPH4/Run2018B-05May2019-v2/MINIAOD',
-                          '/ParkingBPH5/Run2018B-05May2019-v2/MINIAOD',
-                          '/ParkingBPH6/Run2018B-05May2019-v2/MINIAOD',
+                          #'/ParkingBPH1/Run2018B-05May2019-v2/MINIAOD',
+                          #'/ParkingBPH2/Run2018B-05May2019-v2/MINIAOD',
+                          '/ParkingBPH3/Run2018B-05May2019-v2/MINIAOD'
+                          #'/ParkingBPH4/Run2018B-05May2019-v2/MINIAOD',
+                          #'/ParkingBPH5/Run2018B-05May2019-v2/MINIAOD',
+                          #'/ParkingBPH6/Run2018B-05May2019-v2/MINIAOD',
 
-                          '/ParkingBPH1/Run2018C-05May2019-v1/MINIAOD',
-                          '/ParkingBPH2/Run2018C-05May2019-v1/MINIAOD',
-                          '/ParkingBPH3/Run2018C-05May2019-v1/MINIAOD',
-                          '/ParkingBPH4/Run2018C-05May2019-v1/MINIAOD',
-                          '/ParkingBPH5/Run2018C-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH1/Run2018C-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH2/Run2018C-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH3/Run2018C-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH4/Run2018C-05May2019-v1/MINIAOD',
+                          #'/ParkingBPH5/Run2018C-05May2019-v1/MINIAOD',
 
-                          '/ParkingBPH1/Run2018D-05May2019promptD-v1/MINIAOD',
-                          '/ParkingBPH2/Run2018D-05May2019promptD-v1/MINIAOD',
-                          '/ParkingBPH3/Run2018D-05May2019promptD-v1/MINIAOD',
-                          '/ParkingBPH4/Run2018D-05May2019promptD-v1/MINIAOD',
-                          '/ParkingBPH5/Run2018D-05May2019promptD-v1/MINIAOD'
+                          #'/ParkingBPH1/Run2018D-05May2019promptD-v1/MINIAOD',
+                          #'/ParkingBPH2/Run2018D-05May2019promptD-v1/MINIAOD',
+                          #'/ParkingBPH3/Run2018D-05May2019promptD-v1/MINIAOD',
+                          #'/ParkingBPH4/Run2018D-05May2019promptD-v1/MINIAOD',
+                          #'/ParkingBPH5/Run2018D-05May2019promptD-v1/MINIAOD'
                           ]
  
         for inDS in inputDatasets:
