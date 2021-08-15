@@ -54,6 +54,7 @@ options.register('tg', 'TnP_Condor_Result',
                 VarParsing.varType.string,
                 "tag for outputfile"
 )
+'''new'''
 options.register('inputMINIAODFile', '/store/data/Run2018B/ParkingBPH3/MINIAOD/05May2019-v2/40002/3294F295-DBA4-CD40-9F7E-C8DF4B144DF1.root',
                 VarParsing.multiplicity.singleton,
                 VarParsing.varType.string,
@@ -62,11 +63,14 @@ options.register('inputMINIAODFile', '/store/data/Run2018B/ParkingBPH3/MINIAOD/0
 options.register('singleFile', False,
                 VarParsing.multiplicity.singleton,
                 VarParsing.varType.bool,
-                "if Single MiniAOD file")
+                "if Single MiniAOD file"
+)
 options.register('njob', 0,
                 VarParsing.multiplicity.singleton,
                 VarParsing.varType.int,
-                "Id of the job")
+                "Id of the job"
+)
+'''end new'''
 
 options.register('inputFile', 'noProbeFilterDecayFilter_MiniAOD1_0.txt',
                 VarParsing.multiplicity.singleton,
@@ -156,7 +160,6 @@ process.l1bits=cms.EDProducer("L1TriggerResultsConverter",
                               legacyL1=cms.bool(False),
 )
 
-if 
 process.TnP = cms.EDFilter(tagNprobe_,
 #process.TnP = cms.EDFilter("TagAndProbeProducer",
         muonIDScaleFactors = cms.int32(0),
