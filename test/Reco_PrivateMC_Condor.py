@@ -121,12 +121,14 @@ process.source = cms.Source("PoolSource",
 
 if options.singleFile:
     container = str(int(options.njob/1000))
-    if 'Run2018B' in files_to_run:
+    if 'Run2018B' in files_to_run and 'ParkingBPH3' in files_to_run:
         folder = 'B{}000'.format(container)
+        pattern = ''
     else :
         folder = 'failed_crab_jobs'   
+        pattern = files_to_run.split('/')[4] + '_' +files_to_run.split('/')[3]
 
-    outname = 'Data_Reco/{}/SpecialReco_{}_part{}.root'.format(folder,'MC' if options.isMC  else 'RD',  options.njob)
+    outname = 'Data_Reco/{}/SpecialReco_{}_part{}.root'.format(folder,'MC' if options.isMC  else 'RD'+pattern,  options.njob)
 
 else:
     outname = 'PrivateMC_{}_{}_part{}.root'.format('JPsi' if options.isRes  else 'MuMu', 'Gen' if options.onlyGen else 'Reco' , str(options.inputFile)[len(options.inputFile)-7: len(options.inputFile)-4])
