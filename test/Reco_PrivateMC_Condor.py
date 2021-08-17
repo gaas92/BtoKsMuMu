@@ -8,6 +8,11 @@ from FWCore.ParameterSet.VarParsing import VarParsing
  
 options = VarParsing('python')
 
+options.register('isMC', True,
+                VarParsing.multiplicity.singleton,
+                VarParsing.varType.bool,
+                "Run MC or RD")
+
 options.register('isRes', False,
                 VarParsing.multiplicity.singleton,
                 VarParsing.varType.bool,
@@ -120,7 +125,7 @@ if options.singleFile:
         folder = 'B{}000'.format(container)
     else :
         folder = 'failed_crab_jobs'   
-        
+
     outname = 'Data_Reco/{}/SpecialReco_{}_part{}.root'.format(folder,'MC' if options.isMC  else 'RD',  options.njob)
 
 else:
