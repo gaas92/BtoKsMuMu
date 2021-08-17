@@ -110,7 +110,7 @@ process.maxEvents = cms.untracked.PSet(
 )
 if options.singleFile:
     files_to_run = str(options.inputMINIAODFile)
-
+ 
 else:
     files_to_run = [string for string in open('myGenFiles/'+options.inputFile).readlines() if len(string) > 10]
 
@@ -132,7 +132,7 @@ process.source = cms.Source("PoolSource",
 
 if options.singleFile:
     container = str(int(options.njob/1000))
-    outname = 'Data/B{}000/TagAndProbeTrigger_{}_part{}.root'.format(container,'MC' if options.isMC  else 'RD',  options.njob)
+    outname = 'Data_TnP/B{}000/TagAndProbeTrigger_{}_part{}.root'.format(container,'MC' if options.isMC  else 'RD',  options.njob)
 
 else:
     #outname = f'TagAndProbeTrigger_{ "MC" if options.isMC else "RD"}_part{options.input_file[len(options.input_file)-7: len(options.input_file)-4]}.root'
