@@ -442,6 +442,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
       string trgPath = "HLT_" + tag + "_part*_v*";
       outMap["mProbe_HLT_" + tag] = mProbe.triggered(trgPath.c_str());
     }
+    outMap["mProbe_HLT_Mu_IP"] = mProbe.triggered("HLT_Mu*_IP*");
     outMap["mProbe_tightID"] = mProbe.isTightMuon(primaryVtx);
     outMap["mProbe_softID"] = mProbe.isSoftMuon(primaryVtx);
     if (muonIDScaleFactors) {

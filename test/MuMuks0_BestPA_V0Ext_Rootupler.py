@@ -23,9 +23,24 @@ process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(#files_my_gen
 
         #Parked Data
-        '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/2129F080-982D-A649-8D20-4944620E99A6.root',
-        '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/12C659FD-D961-6640-9C3D-48CD12A0D033.root', 
-        '/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/05030414-6C93-DC46-AD09-68D76E2FB466.root'
+        #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/2129F080-982D-A649-8D20-4944620E99A6.root',
+        #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/12C659FD-D961-6640-9C3D-48CD12A0D033.root', 
+        #'/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/05030414-6C93-DC46-AD09-68D76E2FB466.root'
+        #Failed Datafiles
+        '/store/data/Run2018B/ParkingBPH1/MINIAOD/05May2019-v2/230000/BDE201E3-92B3-0640-A9B0-9FA6D4A64DB2.root', 
+        '/store/data/Run2018B/ParkingBPH1/MINIAOD/05May2019-v2/230000/BEF7C437-2D8F-9E47-9387-2CBF82813237.root', 
+
+        '/store/data/Run2018B/ParkingBPH1/MINIAOD/05May2019-v2/230000/DF476FF5-ABC1-8C42-85EB-CA30E74209F7.root', 
+
+        '/store/data/Run2018D/ParkingBPH2/MINIAOD/05May2019promptD-v1/130007/97C9FFF0-E03C-8A48-A8C3-F06CD63E65EC.root', 
+        '/store/data/Run2018D/ParkingBPH2/MINIAOD/05May2019promptD-v1/130007/994F7213-2598-4843-BB41-CE653908B894.root',
+        '/store/data/Run2018D/ParkingBPH2/MINIAOD/05May2019promptD-v1/130007/99910C92-D70D-EC45-B108-AE1D6BD2096B.root',
+
+        '/store/data/Run2018D/ParkingBPH1/MINIAOD/05May2019promptD-v1/50004/44C185C3-CF69-3E41-8877-3F70821771DB.root', 
+        '/store/data/Run2018D/ParkingBPH1/MINIAOD/05May2019promptD-v1/50004/44EDA4E4-0807-8D4C-9ED5-6159DA0D5C2C.root', 
+        '/store/data/Run2018D/ParkingBPH1/MINIAOD/05May2019promptD-v1/50004/456859F1-50ED-C34F-8C20-EA784E3729A7.root', 
+        '/store/data/Run2018D/ParkingBPH1/MINIAOD/05May2019promptD-v1/50004/456859F1-50ED-C34F-8C20-EA784E3729A7.root' 
+
         # Test on MC 
         #'/store/mc/RunIIAutumn18MiniAOD/BdToK0sMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/100000/17621299-2380-064D-A5E9-B78072D95A7D.root'   
 
