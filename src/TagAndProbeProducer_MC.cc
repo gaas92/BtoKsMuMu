@@ -134,11 +134,11 @@ TagAndProbeProducer_MC::TagAndProbeProducer_MC(const edm::ParameterSet& iConfig)
   muonSrc_( consumes<vector<pat::Muon>> ( edm::InputTag("slimmedMuons") ) ),
   vtxSrc_( consumes<vector<reco::Vertex>> ( edm::InputTag("offlineSlimmedPrimaryVertices") ) ),
   beamSpotSrc_( consumes<reco::BeamSpot> ( edm::InputTag("offlineBeamSpot") ) ),
+  triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(edm::InputTag("slimmedPatTrigger"))),
   pileupMCSrc_( consumes<vector<PileupSummaryInfo>> ( edm::InputTag("slimmedAddPileupInfo") ) ),
   muonIDScaleFactors( iConfig.getParameter<int>( "muonIDScaleFactors" ) ),
   requireTag( iConfig.getParameter<int>( "requireTag" ) ),
 
-  triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
 
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {

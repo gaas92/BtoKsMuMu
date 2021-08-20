@@ -139,7 +139,6 @@ process.l1bits=cms.EDProducer("L1TriggerResultsConverter",
 process.TnP = cms.EDFilter(tagNprobe_,
         muonIDScaleFactors = cms.int32(0),
         requireTag = cms.int32(1),
-        objects = cms.InputTag("slimmedPatTrigger"),
         verbose = cms.int32(0)
 )
 
