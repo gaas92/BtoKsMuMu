@@ -533,6 +533,11 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     addToTree();
   }
   if (verbose) {cout << "======================== " << endl;}
+
+  TriggerOjects_pt.clear();
+  TriggerOjects_eta.clear();
+  TriggerOjects_phi.clear();
+  
   return true;
 }
 
@@ -583,9 +588,6 @@ void TagAndProbeProducer_MC::addToTree() {
 
   tree->Fill();
 
-  TriggerOjects_pt.clear();
-  TriggerOjects_eta.clear();
-  TriggerOjects_phi.clear();
 }
 double TagAndProbeProducer_MC::dR(double p1, double p2, double e1, double e2){
     double dp = std::abs(p1 - p2);
