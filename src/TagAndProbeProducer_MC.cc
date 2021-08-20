@@ -355,7 +355,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   //end New stuf
 
   vector<uint> idxTriggeringMuons;
-  int nTrgMu;
+  uint nTrgMu;
   for(uint i=0; i < nMuons; i++) {
     auto m = (*muonHandle)[i];
     if(m.triggered("HLT_Mu*_IP*")){
