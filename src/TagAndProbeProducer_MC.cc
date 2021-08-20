@@ -364,8 +364,8 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     }
   }
 
-  if (nTrgMu != TriggerOjects_eta.size()){
-    cout << "ntrigger muons: " << nTrgMu << " / nTrigger objects: " << TriggerOjects_eta.size()<< endl;;
+  if (idxTriggeringMuons.size() != TriggerOjects_eta.size()){
+    cout << "ntrigger muons: " << idxTriggeringMuons.size() << " / nTrigger objects: " << TriggerOjects_eta.size()<< endl;;
   }
 
   if(idxTriggeringMuons.size() == 0 && requireTag) return false;
