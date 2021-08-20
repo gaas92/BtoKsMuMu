@@ -95,6 +95,8 @@ class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
       edm::EDGetTokenT<vector<reco::Vertex>> vtxSrc_;
       edm::EDGetTokenT<reco::BeamSpot> beamSpotSrc_;
 
+      edm::EDGetTokenT<std::vector<pat::TriggerObjectStandAlone>> triggerObjects_;
+
       edm::EDGetTokenT<vector<PileupSummaryInfo>> pileupMCSrc_;
 
       edm::Service<TFileService> fs;
@@ -135,6 +137,9 @@ TagAndProbeProducer_MC::TagAndProbeProducer_MC(const edm::ParameterSet& iConfig)
   pileupMCSrc_( consumes<vector<PileupSummaryInfo>> ( edm::InputTag("slimmedAddPileupInfo") ) ),
   muonIDScaleFactors( iConfig.getParameter<int>( "muonIDScaleFactors" ) ),
   requireTag( iConfig.getParameter<int>( "requireTag" ) ),
+
+  triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
+
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {
   hAllNvts = fs->make<TH1I>("hAllNvts", "Number of vertexes from all the MINIAOD events", 101, -0.5, 100.5);
@@ -160,6 +165,8 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   edm::Handle<pat::PackedTriggerPrescales> triggerPrescales;
   iEvent.getByToken(triggerPrescales_, triggerPrescales);
 
+  edm::Handle<std::vector<pat::TriggerObjectStandAlone>> triggerObjects;
+  iEvent.getByToken(triggerObjects_, triggerObjects);
 
   edm::Handle<vector<reco::Vertex>> vtxHandle;
   iEvent.getByToken(vtxSrc_, vtxHandle);
@@ -305,6 +312,41 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
         cout << endl;
       }
   }
+  
+
+  //New stuf avoid Trigger muon Dr Bug 
+  for (pat::TriggerObjectStandAlone obj : *triggerObjects) { // note: not "const &" since we want to call unpackPathNames   
+    obj.unpackFilterLabels(iEvent, *triggerBits);
+    obj.unpackPathNames(names);
+    bool isTriggerMuon = false;
+    // checa que al menos un elemento sea un muon (ID=83)
+    // que pasa con los demas?
+    for (unsigned h = 0; h < obj.filterIds().size(); ++h)
+    	if(obj.filterIds()[h] == 83){ 
+        	isTriggerMuon = true; 
+      	} else {
+         	isTriggerMuon = false;
+    }
+    if(!isTriggerMuon) continue;
+    // Ahora checa que dentro de los filterlabes en al menos uno
+    // exista hltL3 y Park
+    isTriggerMuon = false;
+    //std::cout << "\tfilterLabels size:  " << obj.filterLabels().size()<< "\n";
+    for (unsigned h = 0; h < obj.filterLabels().size(); ++h){   
+      std::string filterName = obj.filterLabels()[h];
+      if(filterName.find("hltL3") != std::string::npos  && filterName.find("Park") != std::string::npos){
+          isTriggerMuon = true;
+      }
+    }
+	  if(!isTriggerMuon) continue;
+    if(verbose){ 
+        std::cout << "\n\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
+        //Print trigger object collection and type
+	      std::cout << "\t\t\tCollection: " << obj.collection() << std::endl;
+    }
+  }//trigger objects
+
+  //end New stuf
 
   vector<uint> idxTriggeringMuons;
   for(uint i=0; i < nMuons; i++) {
