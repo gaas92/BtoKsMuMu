@@ -355,10 +355,19 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   //end New stuf
 
   vector<uint> idxTriggeringMuons;
+  int nTrgMu;
   for(uint i=0; i < nMuons; i++) {
     auto m = (*muonHandle)[i];
-    if(m.triggered("HLT_Mu*_IP*")) idxTriggeringMuons.push_back(i);
+    if(m.triggered("HLT_Mu*_IP*")){
+       idxTriggeringMuons.push_back(i);
+       nTrgMu++;
+    }
   }
+
+  if (nTrgMu != TriggerOjects_eta.size()){
+    cout << "ntrigger muons: " << nTrgMu << " / nTrigger objects: " << TriggerOjects_eta.size()<< endl;;
+  }
+
   if(idxTriggeringMuons.size() == 0 && requireTag) return false;
 
 
@@ -537,7 +546,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   TriggerOjects_pt.clear();
   TriggerOjects_eta.clear();
   TriggerOjects_phi.clear();
-  
+
   return true;
 }
 
