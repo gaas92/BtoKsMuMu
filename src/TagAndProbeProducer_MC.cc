@@ -315,6 +315,9 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   
 
   //New stuf avoid Trigger muon Dr Bug 
+  vector<double> TriggerOjects_pt ;
+  vector<double> TriggerOjects_eta ;
+  vector<double> TriggerOjects_phi ;
   for (pat::TriggerObjectStandAlone obj : *triggerObjects) { // note: not "const &" since we want to call unpackPathNames   
     obj.unpackFilterLabels(iEvent, *triggerBits);
     obj.unpackPathNames(names);
@@ -339,6 +342,9 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
       }
     }
 	  if(!isTriggerMuon) continue;
+    TriggerOjects_pt.push_back(obj.pt()); 
+    TriggerOjects_eta.push_back(obj.eta()); 
+    TriggerOjects_phi.push_back(obj.phi()); 
     if(verbose){ 
         std::cout << "\n\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
         //Print trigger object collection and type
@@ -576,6 +582,10 @@ void TagAndProbeProducer_MC::addToTree() {
   }
 
   tree->Fill();
+
+  TriggerOjects_pt.clear();
+  TriggerOjects_eta.clear();
+  TriggerOjects_phi.clear();
 }
 double TagAndProbeProducer_MC::dR(double p1, double p2, double e1, double e2){
     double dp = std::abs(p1 - p2);
