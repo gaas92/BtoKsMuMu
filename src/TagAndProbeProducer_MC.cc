@@ -352,7 +352,6 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     }
   }//trigger objects
 
-  //end New stuf
 
   vector<uint> idxTriggeringMuons;
   uint nTrgMu = 0;
@@ -363,11 +362,32 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
        nTrgMu++;
     }
   }
+  
+  vector<uint> idxTriggeringMuons_; // True Triggering Muons
 
-  if (idxTriggeringMuons.size() != TriggerOjects_eta.size()){
-    cout << "ntrigger muons: " << idxTriggeringMuons.size() << " / nTrigger objects: " << TriggerOjects_eta.size()<< endl;;
+  for (uint k=0; k < TriggerOjects_phi.size(); k++){
+    double best_dr = 1.0;
+    uint true_muon = 0;
+    for (auto i : idxTriggeringMuons){
+      auto this_muon = (*muonHandle)[i];
+      double this_dr = dR(this_muon.phi(), TriggerOjects_phi[k], this_muon.eta(), TriggerOjects_eta[k]);
+      if (this_dr < best_dr){
+        best_dr = this_dr;
+        true_muon = i ;
+      }
+    }
+    idxTriggeringMuons_.push_back(true_muon)
   }
 
+
+  if (idxTriggeringMuons.size() != TriggerOjects_eta.size()){
+    cout << "ntrigger muons: " << idxTriggeringMuons.size() << " / nTrigger objects: " << TriggerOjects_eta.size()<< endl;
+    cout << "nTrue Muons: " << idxTriggeringMuons_.size() << endl;
+  }
+
+  //end New stuf
+
+  
   if(idxTriggeringMuons.size() == 0 && requireTag) return false;
 
 
