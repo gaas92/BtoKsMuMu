@@ -19,7 +19,7 @@ process.load('Configuration.StandardSequences.MagneticField_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 
-isMC = False
+isMC = True
 
 if isMC:
     globaltag_ = '102X_upgrade2018_realistic_v12'
