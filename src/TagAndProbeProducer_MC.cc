@@ -376,7 +376,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
       auto this_muon = (*muonHandle)[i];
       double this_dr = dR(this_muon.phi(), TriggerOjects_phi[k], this_muon.eta(), TriggerOjects_eta[k]);
       if(1){
-        cout "\tTrigger Muon "<<i<< " pT " << this_muon.pt()<< " eta: "<< this_muon.eta()<< " phi: "<< this_muon.phi() << " dR: " << this_dr << endl;
+        cout<<"\tTrigger Muon "<<i<< " pT " << this_muon.pt()<< " eta: "<< this_muon.eta()<< " phi: "<< this_muon.phi() << " dR: " << this_dr << endl;
       }
       if (this_dr < best_dr){
         best_dr = this_dr;
