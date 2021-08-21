@@ -376,7 +376,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
         true_muon = i ;
       }
     }
-    idxTriggeringMuons_.push_back(true_muon)
+    idxTriggeringMuons_.push_back(true_muon);
   }
 
 
