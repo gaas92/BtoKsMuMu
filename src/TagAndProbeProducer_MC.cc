@@ -365,19 +365,31 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   
   vector<uint> idxTriggeringMuons_; // True Triggering Muons
 
+  //Add if verbose
   for (uint k=0; k < TriggerOjects_phi.size(); k++){
     double best_dr = 1.0;
     uint true_muon = 0;
+    if(1){
+      cout << "Trigger Object pT: "<< TriggerOjects_pt[k] << " eta: " << TriggerOjects_eta[k] << " phi : " << TriggerOjects_phi[k] << endl;
+    }
     for (auto i : idxTriggeringMuons){
       auto this_muon = (*muonHandle)[i];
       double this_dr = dR(this_muon.phi(), TriggerOjects_phi[k], this_muon.eta(), TriggerOjects_eta[k]);
+      if(1){
+        cout "\tTrigger Muon "<<i<< " pT " << this_muon.pt()<< " eta: "<< this_muon.eta()<< " phi: "<< this_muon.phi() << " dR: " << this_dr << endl;
+      }
       if (this_dr < best_dr){
         best_dr = this_dr;
         true_muon = i ;
       }
     }
     idxTriggeringMuons_.push_back(true_muon);
+
+    if(1){
+      cout<<"\t\t BestMuon is: " << true_muon << endl;
+    }
   }
+
 
 
   if (idxTriggeringMuons.size() != TriggerOjects_eta.size()){
