@@ -47,7 +47,6 @@
 #include "CommonTools/Statistics/interface/ChiSquaredProbability.h"
 
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
-
 // L1 trigger
 #include "CondFormats/L1TObjects/interface/L1GtTriggerMenu.h"
 #include "CondFormats/DataRecord/interface/L1GtTriggerMenuRcd.h"
@@ -57,8 +56,6 @@
 
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
-
-//#include "VtxUtils.hh" 
 
 using namespace std;
 
@@ -121,7 +118,6 @@ class TagAndProbeProducer_MC : public edm::stream::EDFilter<> {
       double massJpsi  = 3.09691;
 
       TH2D* hMuonIdSF;
-
 };
 
 
@@ -146,6 +142,7 @@ TagAndProbeProducer_MC::TagAndProbeProducer_MC(const edm::ParameterSet& iConfig)
   hAllNTrueIntMC = fs->make<TH1I>("hAllNTrueIntMC", "Number of true interactions generated in MC", 101, -0.5, 100.5);
   hAllVtxZ = fs->make<TH1I>("hAllVtxZ", "Z coordinate of vertexes from all the MINIAOD events", 100, -25, 25);
   tree = fs->make<TTree>( "T", "Events Tree from TAG AND PROBE");
+  
   if (muonIDScaleFactors) {
     //TFile fAux = TFile("/storage/user/ocerri/BPhysics/data/calibration/muonIDscaleFactors/Run2018ABCD_SF_MuonID_Jpsi.root", "READ");
     //hMuonIdSF = (TH2D*) fAux.Get("NUM_SoftID_DEN_genTracks_pt_abseta");
@@ -377,7 +374,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     for (auto i : idxTriggeringMuons_){
       auto this_muon = (*muonHandle)[i];
       double this_dr = dR(this_muon.phi(), TriggerOjects_phi[k], this_muon.eta(), TriggerOjects_eta[k]);
-      if( 1 && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
+      if(verbose && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
         cout<<"\tTrigger Muon "<<i<< " pT " << this_muon.pt()<< " eta: "<< this_muon.eta()<< " phi: "<< this_muon.phi() << " dR: " << this_dr << endl;
       }
       if (this_dr < best_dr){
