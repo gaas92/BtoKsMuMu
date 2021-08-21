@@ -345,7 +345,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     TriggerOjects_pt.push_back(obj.pt()); 
     TriggerOjects_eta.push_back(obj.eta()); 
     TriggerOjects_phi.push_back(obj.phi()); 
-    if(verbose){ 
+    if(verbose > 1){ 
         std::cout << "\n\t\t\tTrigger object:  pt " << obj.pt() << ", eta " << obj.eta() << ", phi " << obj.phi() << std::endl;
         //Print trigger object collection and type
 	      std::cout << "\t\t\tCollection: " << obj.collection() << std::endl;
@@ -353,32 +353,31 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   }//trigger objects
 
 
-  vector<uint> idxTriggeringMuons;
+  vector<uint> idxTriggeringMuons_;
   uint nTrgMu = 0;
   for(uint i=0; i < nMuons; i++) {
     auto m = (*muonHandle)[i];
     if(m.triggered("HLT_Mu*_IP*")){
-       idxTriggeringMuons.push_back(i);
+       idxTriggeringMuons_.push_back(i);
        nTrgMu++;
     }
   }
   
-  vector<uint> idxTriggeringMuons_; // True Triggering Muons
+  vector<uint> idxTriggeringMuons; // True Triggering Muons
 
-  //Add if verbose
-  if (1 && idxTriggeringMuons.size() != TriggerOjects_eta.size()){
+  if (verbose > 1 && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
     cout << "=========================== Trigger ambiguity ======================================" << endl;
   }
   for (uint k=0; k < TriggerOjects_phi.size(); k++){
     double best_dr = 1.0;
     uint true_muon = 0;
-    if(1 && idxTriggeringMuons.size() != TriggerOjects_eta.size()){
+    if(1 && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
       cout << "Trigger Object pT: "<< TriggerOjects_pt[k] << " eta: " << TriggerOjects_eta[k] << " phi : " << TriggerOjects_phi[k] << endl;
     }
-    for (auto i : idxTriggeringMuons){
+    for (auto i : idxTriggeringMuons_){
       auto this_muon = (*muonHandle)[i];
       double this_dr = dR(this_muon.phi(), TriggerOjects_phi[k], this_muon.eta(), TriggerOjects_eta[k]);
-      if(1 && idxTriggeringMuons.size() != TriggerOjects_eta.size()){
+      if(verbose > 1 && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
         cout<<"\tTrigger Muon "<<i<< " pT " << this_muon.pt()<< " eta: "<< this_muon.eta()<< " phi: "<< this_muon.phi() << " dR: " << this_dr << endl;
       }
       if (this_dr < best_dr){
@@ -386,16 +385,16 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
         true_muon = i ;
       }
     }
-    idxTriggeringMuons_.push_back(true_muon);
+    idxTriggeringMuons.push_back(true_muon);
 
-    if(1 && idxTriggeringMuons.size() != TriggerOjects_eta.size()){
+    if(verbose > 1 && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
       cout<<"\t\t BestMuon is: " << true_muon << endl;
     }
   }
 
 
 
-  if (idxTriggeringMuons.size() != TriggerOjects_eta.size()){
+  if ( verbose > 1 && idxTriggeringMuons.size() != TriggerOjects_eta.size()){
     cout << "ntrigger muons: " << idxTriggeringMuons.size() << " / nTrigger objects: " << TriggerOjects_eta.size()<< endl;
     cout << "nTrue Muons: " << idxTriggeringMuons_.size() << endl;
   }
@@ -410,6 +409,10 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     if(idxTriggeringMuons.size() == 1 && idxTriggeringMuons[0] == j && requireTag) continue;
 
     auto mProbe = (*muonHandle)[j];
+    if (std::find(idxTriggeringMuons.begin(), idxTriggeringMuons.end(), j) != idxTriggeringMuons.end()){
+      cout << "Probe is a Trigger Muon !!" << endl;
+      cout << "Probe pT: " << mProbe.pt() << " eta: " << mProbe.eta() << " phi: " << mProbe.phi() << endl;
+    }
     //My test look for triggers 
     //if (mProbe.triggerObjectMatches().size()!=0){
     //  for(size_t k=0; k<mProbe.triggerObjectMatches().size();k++){
@@ -423,7 +426,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     //if ( mProbe.pt() < 5.5 ) continue;
     //Gabriel
     if ( fabs(mProbe.eta()) > 2.5 ) continue;
-    if ( mProbe.pt() < 2.5 ) continue;
+    if ( mProbe.pt() < 5.5 ) continue;
     if (mProbe.innerTrack().isNull()) continue;
     auto tkProbe = mProbe.innerTrack();
     auto dxyProbe_PV = fabs(tkProbe->dxy(primaryVtx.position()));
