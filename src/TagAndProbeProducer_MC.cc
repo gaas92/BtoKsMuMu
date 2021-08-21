@@ -409,7 +409,7 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     if(idxTriggeringMuons.size() == 1 && idxTriggeringMuons[0] == j && requireTag) continue;
 
     auto mProbe = (*muonHandle)[j];
-    if (std::find(idxTriggeringMuons.begin(), idxTriggeringMuons.end(), j) != idxTriggeringMuons.end()){
+    if (std::find(idxTriggeringMuons.begin(), idxTriggeringMuons.end(), j) != idxTriggeringMuons.end() & idxTriggeringMuons.size() != TriggerOjects_eta.size()){
       cout << "Probe is a Trigger Muon !!" << endl;
       cout << "Probe pT: " << mProbe.pt() << " eta: " << mProbe.eta() << " phi: " << mProbe.phi() << endl;
     }
