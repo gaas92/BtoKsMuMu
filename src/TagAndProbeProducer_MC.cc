@@ -365,13 +365,13 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
   
   vector<uint> idxTriggeringMuons; // True Triggering Muons
 
-  if ( 1 && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
+  if (verbose && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
     cout << "=========================== Trigger ambiguity ======================================" << endl;
   }
   for (uint k=0; k < TriggerOjects_phi.size(); k++){
     double best_dr = 1.0;
     uint true_muon = 0;
-    if(1 && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
+    if(verbose && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
       cout << "Trigger Object pT: "<< TriggerOjects_pt[k] << " eta: " << TriggerOjects_eta[k] << " phi : " << TriggerOjects_phi[k] << endl;
     }
     for (auto i : idxTriggeringMuons_){
@@ -387,16 +387,16 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     }
     idxTriggeringMuons.push_back(true_muon);
 
-    if( 1 && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
+    if(verbose && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
       cout<<"\t\t BestMuon is: " << true_muon << endl;
     }
   }
 
 
 
-  if (  1 && idxTriggeringMuons.size() != TriggerOjects_eta.size()){
-    cout << "ntrigger muons: " << idxTriggeringMuons.size() << " / nTrigger objects: " << TriggerOjects_eta.size()<< endl;
-    cout << "nTrue Muons: " << idxTriggeringMuons_.size() << endl;
+  if (verbose && idxTriggeringMuons_.size() != TriggerOjects_eta.size()){
+    cout << "ntrigger muons: " << idxTriggeringMuons_.size() << " / nTrigger objects: " << TriggerOjects_eta.size()<< endl;
+    cout << "nTrue Muons: " << idxTriggeringMuons.size() << endl;
   }
 
   //end New stuf
@@ -409,13 +409,9 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
     if(idxTriggeringMuons.size() == 1 && idxTriggeringMuons[0] == j && requireTag) continue;
 
     auto mProbe = (*muonHandle)[j];
+    bool trigger_probe = false;
     if ((std::find(idxTriggeringMuons.begin(), idxTriggeringMuons.end(), j) != idxTriggeringMuons.end())){
-      cout << "rfeoirqngoirenvoiernoewnpoxwop qdmnwoinefioneroifnsdijbweoxnqwioxwoidnwenfcweionfoirnfionr!!!!!!!!!!1" << endl;
-      cout << "Probe is a Trigger Muon !!" << endl;
-      cout << "Probe pT: " << mProbe.pt() << " eta: " << mProbe.eta() << " phi: " << mProbe.phi() << endl;
-      cout << "Probe Muon index : " << j << endl;
-      for (auto kkk : idxTriggeringMuons) cout << kkk << ", " ;
-      cout << "" << endl;
+      trigger_probe = true;
     }
     //My test look for triggers 
     //if (mProbe.triggerObjectMatches().size()!=0){
@@ -539,9 +535,9 @@ bool TagAndProbeProducer_MC::filter(edm::Event& iEvent, const edm::EventSetup& i
 
     for(auto tag : triggerTag) {
       string trgPath = "HLT_" + tag + "_part*_v*";
-      outMap["mProbe_HLT_" + tag] = mProbe.triggered(trgPath.c_str());
+      outMap["mProbe_HLT_" + tag] = mProbe.triggered(trgPath.c_str()) && trigger_probe;
     }
-    outMap["mProbe_HLT_Mu_IP"] = mProbe.triggered("HLT_Mu*_IP*");
+    outMap["mProbe_HLT_Mu_IP"] = mProbe.triggered("HLT_Mu*_IP*") && trigger_probe;
     outMap["mProbe_tightID"] = mProbe.isTightMuon(primaryVtx);
     outMap["mProbe_softID"] = mProbe.isSoftMuon(primaryVtx);
     if (muonIDScaleFactors) {
