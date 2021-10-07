@@ -80,7 +80,7 @@ def main():
 	config.Data.inputDBS = 'global'
    #     config.Data.splitting = 'Automatic'
         config.Data.splitting = 'FileBased'
-        config.Data.unitsPerJob = 10
+        config.Data.unitsPerJob = 5
    #     config.Data.totalUnits = 30
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
@@ -104,12 +104,13 @@ def main():
                           ##'/BuToK10Jpsi_ToMuMu_probefilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM', # Official K10  ProbeFilter 2.6M
                           ##'/BuToKStarJpsi_ToKPiMuMu_probefilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v1/MINIAODSIM' # Official Kstar ProbeFilter 1.7 M 
                           #'/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/MINIAODSIM'
+                          
                           '/JpsiToMuMu_JpsiPt8_TuneCP5_13TeV-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v1/MINIAODSIM',  # 242 M
                           '/BsToJpsiPhi_JpsiPhiFilterDG0_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v2/MINIAODSIM', #108M
                           '/BsToJpsiPhi_BMuonFilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', #73.45M
-                          '/BToJpsi_ToMuMu_BMuonFilter_HardQCD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', #67.54M
-                          '/BdToJpsiKstar_BMuonFilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-N1_102X_upgrade2018_realistic_v15-v1/MINIAODSIM', #54.74M
-                          '/BuToJpsiK_BMuonFilter_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM' #23.75M
+                          #'/BToJpsi_ToMuMu_BMuonFilter_HardQCD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', #67.54M
+                          '/BdToJpsiKstar_BMuonFilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-N1_102X_upgrade2018_realistic_v15-v1/MINIAODSIM' #54.74M
+                          #'/BuToJpsiK_BMuonFilter_TuneCP5_13TeV-pythia8-evtgen/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM' #23.75M
                  	]
  
         for inDS in inputDatasets:
