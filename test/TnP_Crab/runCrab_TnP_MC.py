@@ -80,7 +80,7 @@ def main():
 	config.Data.inputDBS = 'global'
    #     config.Data.splitting = 'Automatic'
         config.Data.splitting = 'FileBased'
-        config.Data.unitsPerJob = 5
+        config.Data.unitsPerJob = 10
    #     config.Data.totalUnits = 30
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
@@ -88,7 +88,7 @@ def main():
 	config.Data.outLFNDirBase = '/store/user/gayalasa/Sync/TnP_MC3/'
 	#config.Site.storageSite = 'T3_US_FNALLPC'
 	config.Site.storageSite = 'T3_CH_CERNBOX'
-        #config.Site.whitelist = ['T2_US*']
+        config.Site.whitelist = ['T1_US_FNAL']
         #config.Data.ignoreLocality = True
         #config.Site.storageSite = None # Choose your site. 
         #--------------------------------------------------------
