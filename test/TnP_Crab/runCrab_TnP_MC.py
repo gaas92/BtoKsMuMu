@@ -88,7 +88,7 @@ def main():
 	config.Data.outLFNDirBase = '/store/user/gayalasa/Sync/TnP_MC3/'
 	#config.Site.storageSite = 'T3_US_FNALLPC'
 	config.Site.storageSite = 'T3_CH_CERNBOX'
-        config.Site.whitelist = ['T1_US_FNAL']
+        #config.Site.whitelist = ['T1_US_FNAL']
         #config.Data.ignoreLocality = True
         #config.Site.storageSite = None # Choose your site. 
         #--------------------------------------------------------
