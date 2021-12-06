@@ -140,6 +140,9 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   mu2_HLT_Mu7_IP4(0), mu2_HLT_Mu8_IP3(0), mu2_HLT_Mu8_IP5(0), mu2_HLT_Mu8_IP6(0), mu2_HLT_Mu8p5_IP3p5(0),
   mu2_HLT_Mu9_IP0(0), mu2_HLT_Mu9_IP3(0), mu2_HLT_Mu9_IP4(0), mu2_HLT_Mu9_IP5(0), mu2_HLT_Mu9_IP6(0), mu2_HLT_Mu10p5_IP3p5(0), mu2_HLT_Mu12_IP6(0),
 
+  prescale_HLT_Mu7_IP4(0), prescale_HLT_Mu8_IP3(0), prescale_HLT_Mu8_IP5(0), prescale_HLT_Mu8_IP6(0), prescale_HLT_Mu8p5_IP3p5(0),
+  prescale_HLT_Mu9_IP0(0), prescale_HLT_Mu9_IP3(0), prescale_HLT_Mu9_IP4(0), prescale_HLT_Mu9_IP5(0), prescale_HLT_Mu9_IP6(0), prescale_HLT_Mu10p5_IP3p5(0), prescale_HLT_Mu12_IP6(0),
+
 
   //Trigger Selector
   drTrg_m1(0), drTrg_m2(0), dpT_m1(0), dpT_m2(0),
@@ -1038,6 +1041,10 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	   int mu2_HLT_Mu9_IP6_ = 0;
 	   int mu2_HLT_Mu10p5_IP3p5_ = 0;
 	   int mu2_HLT_Mu12_IP6_ = 0;
+
+	   int prescale_HLT_Mu7_IP4_ = -1, prescale_HLT_Mu8_IP3_ = -1, prescale_HLT_Mu8_IP5_ = -1, prescale_HLT_Mu8_IP6_ = -1, prescale_HLT_Mu8p5_IP3p5_ = -1;
+       int prescale_HLT_Mu9_IP0_ = -1, prescale_HLT_Mu9_IP3_ = -1, prescale_HLT_Mu9_IP4_ = -1, prescale_HLT_Mu9_IP5_ = -1, prescale_HLT_Mu9_IP6_ = -1, prescale_HLT_Mu10p5_IP3p5_ = -1, prescale_HLT_Mu12_IP6_ = -1;
+
        float mu1_prefit_pt_ = 0, mu1_prefit_eta_ = 0, mu1_prefit_phi_ = 0, mu1_prefit_ch_ = 0, mu1_prefit_ip_ = 0;
        float mu2_prefit_pt_ = 0, mu2_prefit_eta_ = 0, mu2_prefit_phi_ = 0, mu2_prefit_ch_ = 0, mu2_prefit_ip_ = 0;
 
@@ -1057,6 +1064,19 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	   for (unsigned int i = 0; i < NTRIGGERS; i++) {
 			std::string triggerName = TriggersToTest[i] + "_part*_v*"; 
 			//if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+			if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){ prescale_HLT_Mu7_IP4_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu8_IP3") != std::string::npos){ prescale_HLT_Mu8_IP3_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu8_IP5") != std::string::npos){ prescale_HLT_Mu8_IP5_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu8_IP6") != std::string::npos){ prescale_HLT_Mu8_IP6_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu8p5_IP3p5") != std::string::npos){ prescale_HLT_Mu8p5_IP3p5_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu9_IP0") != std::string::npos){ prescale_HLT_Mu9_IP0_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu9_IP3") != std::string::npos){ prescale_HLT_Mu9_IP3_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu9_IP4") != std::string::npos){ prescale_HLT_Mu9_IP4_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu9_IP5") != std::string::npos){ prescale_HLT_Mu9_IP5_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu9_IP6") != std::string::npos){ prescale_HLT_Mu9_IP6_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu10p5_IP3p5") != std::string::npos){ prescale_HLT_Mu10p5_IP3p5_ = triggerPrescales->getPrescaleForIndex(i); }
+			if (triggerName.find("HLT_Mu12_IP6") != std::string::npos){ prescale_HLT_Mu12_IP6_ = triggerPrescales->getPrescaleForIndex(i); }
+
 			if(iMuon1->triggered(triggerName.c_str())){ 
 				muon1Trg_ += (1<<i);
 
@@ -1645,6 +1665,19 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
 		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
 
+  		   prescale_HLT_Mu7_IP4->push_back(prescale_HLT_Mu7_IP4_);
+		   prescale_HLT_Mu8_IP3->push_back(prescale_HLT_Mu8_IP3_);
+		   prescale_HLT_Mu8_IP5->push_back(prescale_HLT_Mu8_IP5_);
+		   prescale_HLT_Mu8_IP6->push_back(prescale_HLT_Mu8_IP6_);
+		   prescale_HLT_Mu8p5_IP3p5->push_back(prescale_HLT_Mu8p5_IP3p5_);
+  		   prescale_HLT_Mu9_IP0->push_back(prescale_HLT_Mu9_IP0_);
+		   prescale_HLT_Mu9_IP3->push_back(prescale_HLT_Mu9_IP3_);
+		   prescale_HLT_Mu9_IP4->push_back(prescale_HLT_Mu9_IP4_);
+		   prescale_HLT_Mu9_IP5->push_back(prescale_HLT_Mu9_IP5_);
+		   prescale_HLT_Mu9_IP6->push_back(prescale_HLT_Mu9_IP6_);
+		   prescale_HLT_Mu10p5_IP3p5->push_back(prescale_HLT_Mu10p5_IP3p5_);
+		   prescale_HLT_Mu12_IP6->push_back(prescale_HLT_Mu12_IP6_);
+
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
@@ -2196,6 +2229,19 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   mu2_HLT_Mu9_IP6->push_back(mu2_HLT_Mu9_IP6_); 
 		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
 		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
+
+  		   prescale_HLT_Mu7_IP4->push_back(prescale_HLT_Mu7_IP4_);
+		   prescale_HLT_Mu8_IP3->push_back(prescale_HLT_Mu8_IP3_);
+		   prescale_HLT_Mu8_IP5->push_back(prescale_HLT_Mu8_IP5_);
+		   prescale_HLT_Mu8_IP6->push_back(prescale_HLT_Mu8_IP6_);
+		   prescale_HLT_Mu8p5_IP3p5->push_back(prescale_HLT_Mu8p5_IP3p5_);
+  		   prescale_HLT_Mu9_IP0->push_back(prescale_HLT_Mu9_IP0_);
+		   prescale_HLT_Mu9_IP3->push_back(prescale_HLT_Mu9_IP3_);
+		   prescale_HLT_Mu9_IP4->push_back(prescale_HLT_Mu9_IP4_);
+		   prescale_HLT_Mu9_IP5->push_back(prescale_HLT_Mu9_IP5_);
+		   prescale_HLT_Mu9_IP6->push_back(prescale_HLT_Mu9_IP6_);
+		   prescale_HLT_Mu10p5_IP3p5->push_back(prescale_HLT_Mu10p5_IP3p5_);
+		   prescale_HLT_Mu12_IP6->push_back(prescale_HLT_Mu12_IP6_);
 
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
@@ -2749,6 +2795,19 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		   mu2_HLT_Mu10p5_IP3p5->push_back(mu2_HLT_Mu10p5_IP3p5_); 
 		   mu2_HLT_Mu12_IP6->push_back(mu2_HLT_Mu12_IP6_);
 
+  		   prescale_HLT_Mu7_IP4->push_back(prescale_HLT_Mu7_IP4_);
+		   prescale_HLT_Mu8_IP3->push_back(prescale_HLT_Mu8_IP3_);
+		   prescale_HLT_Mu8_IP5->push_back(prescale_HLT_Mu8_IP5_);
+		   prescale_HLT_Mu8_IP6->push_back(prescale_HLT_Mu8_IP6_);
+		   prescale_HLT_Mu8p5_IP3p5->push_back(prescale_HLT_Mu8p5_IP3p5_);
+  		   prescale_HLT_Mu9_IP0->push_back(prescale_HLT_Mu9_IP0_);
+		   prescale_HLT_Mu9_IP3->push_back(prescale_HLT_Mu9_IP3_);
+		   prescale_HLT_Mu9_IP4->push_back(prescale_HLT_Mu9_IP4_);
+		   prescale_HLT_Mu9_IP5->push_back(prescale_HLT_Mu9_IP5_);
+		   prescale_HLT_Mu9_IP6->push_back(prescale_HLT_Mu9_IP6_);
+		   prescale_HLT_Mu10p5_IP3p5->push_back(prescale_HLT_Mu10p5_IP3p5_);
+		   prescale_HLT_Mu12_IP6->push_back(prescale_HLT_Mu12_IP6_);
+
            //Trigger Selector
            drTrg_m1->push_back(dRMuonMatching1);
 	       drTrg_m2->push_back(dRMuonMatching2);
@@ -2927,6 +2986,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
         mu1_HLT_Mu9_IP0->clear(); mu1_HLT_Mu9_IP3->clear(); mu1_HLT_Mu9_IP4->clear(); mu1_HLT_Mu9_IP5->clear(); mu1_HLT_Mu9_IP6->clear(); mu1_HLT_Mu10p5_IP3p5->clear(); mu1_HLT_Mu12_IP6->clear();
         mu2_HLT_Mu7_IP4->clear(); mu2_HLT_Mu8_IP3->clear(); mu2_HLT_Mu8_IP5->clear(); mu2_HLT_Mu8_IP6->clear(); mu2_HLT_Mu8p5_IP3p5->clear();
         mu2_HLT_Mu9_IP0->clear(); mu2_HLT_Mu9_IP3->clear(); mu2_HLT_Mu9_IP4->clear(); mu2_HLT_Mu9_IP5->clear(); mu2_HLT_Mu9_IP6->clear(); mu2_HLT_Mu10p5_IP3p5->clear(); mu2_HLT_Mu12_IP6->clear();
+
+        prescale_HLT_Mu7_IP4->clear(); prescale_HLT_Mu8_IP3->clear(); prescale_HLT_Mu8_IP5->clear(); prescale_HLT_Mu8_IP6->clear(); prescale_HLT_Mu8p5_IP3p5->clear();
+        prescale_HLT_Mu9_IP0->clear(); prescale_HLT_Mu9_IP3->clear(); prescale_HLT_Mu9_IP4->clear(); prescale_HLT_Mu9_IP5->clear(); prescale_HLT_Mu9_IP6->clear(); prescale_HLT_Mu10p5_IP3p5->clear(); prescale_HLT_Mu12_IP6->clear();
 
    		//Trigger Selector
    		drTrg_m1->clear();
@@ -3308,6 +3370,19 @@ JPsiKs0_PVpa_V0Ext::beginJob()
 	 tree_->Branch("mu2_HLT_Mu9_IP6", &mu2_HLT_Mu9_IP6); 
 	 tree_->Branch("mu2_HLT_Mu10p5_IP3p5", &mu2_HLT_Mu10p5_IP3p5); 
 	 tree_->Branch("mu2_HLT_Mu12_IP6", &mu2_HLT_Mu12_IP6);	 
+
+  	 tree_->Branch("prescale_HLT_Mu7_IP4",      &prescale_HLT_Mu7_IP4_);
+	 tree_->Branch("prescale_HLT_Mu8_IP3",      &prescale_HLT_Mu8_IP3_);
+	 tree_->Branch("prescale_HLT_Mu8_IP5",      &prescale_HLT_Mu8_IP5_);
+	 tree_->Branch("prescale_HLT_Mu8_IP6",      &prescale_HLT_Mu8_IP6_);
+	 tree_->Branch("prescale_HLT_Mu8p5_IP3p5",  &prescale_HLT_Mu8p5_IP3p5_);
+  	 tree_->Branch("prescale_HLT_Mu9_IP0",      &prescale_HLT_Mu9_IP0_);
+	 tree_->Branch("prescale_HLT_Mu9_IP3",      &prescale_HLT_Mu9_IP3_);
+	 tree_->Branch("prescale_HLT_Mu9_IP4",      &prescale_HLT_Mu9_IP4_);
+	 tree_->Branch("prescale_HLT_Mu9_IP5",      &prescale_HLT_Mu9_IP5_);
+	 tree_->Branch("prescale_HLT_Mu9_IP6",      &prescale_HLT_Mu9_IP6_);
+	 tree_->Branch("prescale_HLT_Mu10p5_IP3p5", &prescale_HLT_Mu10p5_IP3p5_);
+	 tree_->Branch("prescale_HLT_Mu12_IP6",     &prescale_HLT_Mu12_IP6_);
 
 	 //Trigger Selector
 	 tree_->Branch("drTrg_m1", &drTrg_m1);

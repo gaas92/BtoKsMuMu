@@ -80,7 +80,7 @@ def main():
 	config.Data.inputDBS = 'global'
    #     config.Data.splitting = 'Automatic'
         config.Data.splitting = 'FileBased'
-        config.Data.unitsPerJob = 5
+        config.Data.unitsPerJob = 1
    #     config.Data.totalUnits = 30
 	#config.Data.lumiMask = '' # no idea 
 	config.Data.publication = True
