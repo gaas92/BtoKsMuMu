@@ -1064,6 +1064,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 	   for (unsigned int i = 0; i < NTRIGGERS; i++) {
 			std::string triggerName = TriggersToTest[i] + "_part*_v*"; 
 			//if(iMuon1->triggerObjectMatchByPath(triggerName)!=nullptr){ 
+			std::cout << triggerName << " prescale: " << triggerPrescales->getPrescaleForIndex(i) << std::endl;
 			if (triggerName.find("HLT_Mu7_IP4") != std::string::npos){ prescale_HLT_Mu7_IP4_ = triggerPrescales->getPrescaleForIndex(i); }
 			if (triggerName.find("HLT_Mu8_IP3") != std::string::npos){ prescale_HLT_Mu8_IP3_ = triggerPrescales->getPrescaleForIndex(i); }
 			if (triggerName.find("HLT_Mu8_IP5") != std::string::npos){ prescale_HLT_Mu8_IP5_ = triggerPrescales->getPrescaleForIndex(i); }
