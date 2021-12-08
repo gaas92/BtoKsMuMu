@@ -156,11 +156,11 @@ void Prescale_Producer::addToTree() {
     tree->Branch("lumiNum", &lumiNum);
     tree->Branch("eventNum", &eventNum);
 
-    for(auto& kv : outMap) {
-      auto k = kv.first;
-      if(verbose) {cout << "\t" << k;}
-      tree->Branch(k.c_str(), &(outMap[k]));
-    }
+    //for(auto& kv : outMap) {
+    //  auto k = kv.first;
+    //  if(verbose) {cout << "\t" << k;}
+    //  tree->Branch(k.c_str(), &(outMap[k]));
+    //}
     treeDeclared = true;
     if(verbose) {cout << "\n\n";}
   }
