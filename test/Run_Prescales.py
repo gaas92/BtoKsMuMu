@@ -52,7 +52,7 @@ process.source = cms.Source("PoolSource",
 #####################   Output   ###################
 '''
 
-outname = 'PrescaleVertices_CAND.root'
+outname = 'Prescale_CAND.root'
 
 process.TFileService = cms.Service("TFileService",
       fileName = cms.string(outname),
