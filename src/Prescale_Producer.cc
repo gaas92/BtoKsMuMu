@@ -132,8 +132,6 @@ bool Prescale_Producer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
   edm::Handle<std::vector<pat::TriggerObjectStandAlone>> triggerObjects;
   iEvent.getByToken(triggerObjects_, triggerObjects);
 
-  edm::Handle<vector<reco::Vertex>> vtxHandle;
-  iEvent.getByToken(vtxSrc_, vtxHandle);
 
   if (verbose) {cout << "\n\n =================  Event " << eventNum << " =================== " << endl;}
 
