@@ -154,7 +154,7 @@ bool Prescale_Producer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
       for(auto tag : triggerTag) {
         if(n.substr(4, tag.size()) == tag) {
           outMap["prescale" + tag] = triggerPrescales->getPrescaleForIndex(i);
-          if(verbose) {cout << tag << "\t" << n << "\t" << triggerBits->wasrun(i) << "\t" << triggerPrescales->getPrescaleForIndex(i) << endl;}
+          //if(verbose) {cout << tag << "\t" << n << "\t" << triggerBits->wasrun(i) << "\t" << triggerPrescales->getPrescaleForIndex(i) << endl;}
         }
       }
   }
