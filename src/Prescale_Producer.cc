@@ -98,7 +98,7 @@ Prescale_Producer::Prescale_Producer(const edm::ParameterSet& iConfig):
   triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(edm::InputTag("slimmedPatTrigger"))),
   verbose( iConfig.getParameter<int>( "verbose" ) )
 {
-
+  tree = fs->make<TTree>( "T", "Events Tree Prescales");
 }
 
 bool Prescale_Producer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup) {
