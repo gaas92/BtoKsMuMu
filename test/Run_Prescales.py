@@ -65,13 +65,13 @@ process.TFileService = cms.Service("TFileService",
 #################   Sequence    ####################
 '''
 
-process.nVtx = cms.EDFilter("Prescale_Producer",
+process.Prescale = cms.EDFilter("Prescale_Producer",
         triggerBits = cms.InputTag("TriggerResults","","HLT"),
         verbose = cms.int32(1)
 )
 
 process.p = cms.Path(
-                    process.nVtx
+                    process.Prescale
                     )
 
 
