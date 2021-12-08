@@ -158,6 +158,7 @@ bool Prescale_Producer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
         }
       }
   }
+  addToTree();
   if (verbose) {cout << "======================== " << endl;}
   return true;
 }
