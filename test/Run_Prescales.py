@@ -65,7 +65,7 @@ process.TFileService = cms.Service("TFileService",
 #################   Sequence    ####################
 '''
 
-process.nVtx = cms.EDProducer("Prescale_Producer",
+process.nVtx = cms.EDFilter("Prescale_Producer",
         triggerBits = cms.InputTag("TriggerResults","","HLT"),
         verbose = cms.int32(1)
 )
