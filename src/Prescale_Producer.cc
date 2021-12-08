@@ -102,6 +102,7 @@ class Prescale_Producer : public edm::stream::EDFilter<> {
       unsigned int runNum;
       unsigned int lumiNum;
       unsigned long long eventNum;
+      int verbose = 0;
 
 
 };
@@ -134,6 +135,7 @@ bool Prescale_Producer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
   edm::Handle<vector<reco::Vertex>> vtxHandle;
   iEvent.getByToken(vtxSrc_, vtxHandle);
 
+  if (verbose) {cout << "\n\n =================  Event " << eventNum << " =================== " << endl;}
 
   vector<string> triggerTag = {"Mu12_IP6", 
 	                             "Mu10p5_IP3p5", "Mu9_IP0", "Mu9_IP3", "Mu9_IP4", "Mu9_IP5", "Mu9_IP6", 
