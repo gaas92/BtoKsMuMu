@@ -191,7 +191,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
 
   run(0), event(0),
   lumiblock(0),
-  trigger(0) 
+  trigger(0), 
   ngen(0)
 
 {
