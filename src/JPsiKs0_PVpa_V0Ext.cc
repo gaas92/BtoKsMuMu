@@ -192,7 +192,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   run(0), event(0),
   lumiblock(0),
   trigger(0) 
-  //ngen(0)
+  ngen(0)
 
 {
    //now do what ever initialization is needed
@@ -2901,7 +2901,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    if (nB > 0 || OnlyGen_) 
      {
        std::cout << "filling tree" << std::endl;
-       //tree_->Fill();
+       tree_->Fill();
 	   std::cout << "fill ok" << std::endl;
      }
    // *********
