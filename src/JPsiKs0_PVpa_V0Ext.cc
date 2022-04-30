@@ -201,6 +201,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
 
 JPsiKs0_PVpa_V0Ext::~JPsiKs0_PVpa_V0Ext()
 {
+	std::cout << "destructor OK" << std::endl;
 
 }
 
