@@ -2914,6 +2914,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
    if (1){	
    //if (!OnlyGen_){	
+	    std::cout << "ok 1" << std::endl;
    		B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
    		B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
 
@@ -2946,7 +2947,9 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear(); TriggerMuon_ch->clear();
    } 
    nVtx = 0;
-   if (!OnlyGen_){
+   //if (!OnlyGen_){
+   if (1){
+	    std::cout << "ok 2" << std::endl;
    		bDecayVtxX->clear(); bDecayVtxY->clear(); bDecayVtxZ->clear(); 
    		bDecayVtxXE->clear(); bDecayVtxYE->clear(); bDecayVtxZE->clear(); 
    		bDecayVtxXYE->clear(); bDecayVtxXZE->clear(); bDecayVtxYZE->clear();  
