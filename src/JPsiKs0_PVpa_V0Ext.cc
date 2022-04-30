@@ -106,7 +106,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   isMC_(iConfig.getParameter<bool>("isMC")),
   isRes_(iConfig.getParameter<bool>("isRes")),
   OnlyGen_(iConfig.getParameter<bool>("OnlyGen")),
-  doMC_ ( iConfig.getUntrackedParameter<bool>("doMC",false) ),
+  //doMC_ ( iConfig.getUntrackedParameter<bool>("doMC",false) ),
   tree_(0), 
 
   mumC2(0), mumNHits(0), mumNPHits(0),

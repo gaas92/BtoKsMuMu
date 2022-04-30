@@ -117,7 +117,7 @@ private:
   bool isMC_;
   bool isRes_;
   bool OnlyGen_;
-  bool doMC_;
+  //bool doMC_;
 
   TTree*      tree_;
   int mupCategory;
