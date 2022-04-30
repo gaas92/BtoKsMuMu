@@ -6,7 +6,7 @@ from FWCore.ParameterSet.VarParsing import VarParsing
 ############ Command line args ################
 '''
  
-options = VarParsing('python')
+options = VarParsing('python') 
 
 options.register('isMC', True,
                 VarParsing.multiplicity.singleton,

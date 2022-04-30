@@ -1047,7 +1047,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 
        float mu1_prefit_pt_ = 0, mu1_prefit_eta_ = 0, mu1_prefit_phi_ = 0, mu1_prefit_ch_ = 0, mu1_prefit_ip_ = 0;
        float mu2_prefit_pt_ = 0, mu2_prefit_eta_ = 0, mu2_prefit_phi_ = 0, mu2_prefit_ch_ = 0, mu2_prefit_ip_ = 0;
-
+ 
 	   mu1_prefit_pt_  = iMuon1->pt();
 	   mu1_prefit_eta_ = iMuon1->eta();
 	   mu1_prefit_phi_ = iMuon1->phi();
@@ -2912,7 +2912,8 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    //bm_IPxy = 0;
    //bm_pT = 0;
 
-   if (!OnlyGen_){	
+   if (1){	
+   //if (!OnlyGen_){	
    		B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
    		B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
 
