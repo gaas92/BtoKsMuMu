@@ -195,6 +195,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   ngen(0)
 
 {
+	std::cout << "constructor OK" << std::endl;
    //now do what ever initialization is needed
 }
 
@@ -3417,8 +3418,8 @@ JPsiKs0_PVpa_V0Ext::beginJob()
 // ------------ method called once each job just after ending the event loop  ------------
 void JPsiKs0_PVpa_V0Ext::endJob() {
   std::cout << "Ending job" << std::endl;
-  //tree_->GetDirectory()->cd();
-  //tree_->Write();
+  tree_->GetDirectory()->cd();
+  tree_->Write();
   std::cout << "Ending job ok " << std::endl;
 }
 
