@@ -106,7 +106,7 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
   isMC_(iConfig.getParameter<bool>("isMC")),
   isRes_(iConfig.getParameter<bool>("isRes")),
   OnlyGen_(iConfig.getParameter<bool>("OnlyGen")),
-  //doMC_ ( iConfig.getUntrackedParameter<bool>("doMC",false) ),
+  doMC_ ( iConfig.getUntrackedParameter<bool>("doMC",false) ),
   tree_(0), 
 
   mumC2(0), mumNHits(0), mumNPHits(0),
@@ -201,7 +201,6 @@ JPsiKs0_PVpa_V0Ext::JPsiKs0_PVpa_V0Ext(const edm::ParameterSet& iConfig)
 
 JPsiKs0_PVpa_V0Ext::~JPsiKs0_PVpa_V0Ext()
 {
-	std::cout << "destructor OK" << std::endl;
 
 }
 
@@ -291,6 +290,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   // for resonant in jpsi 
   ngen = 0;
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && isRes_) {   
+	std::cout << "Res Pruned valid? " << pruned.isValid() << std::endl;  
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
       foundit = 0;
@@ -385,6 +385,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
   //std::cout<< "is is res? " << isRes_ << std::endl;
 
   if ( (isMC_ || OnlyGen_) && pruned.isValid() && !isRes_) {
+	std::cout << "nRs Pruned valid? " << pruned.isValid() << std::endl;  
 	//std::cout<< "only gen test ok "<< std::endl;  
     int foundit = 0;
     for (size_t i=0; i<pruned->size(); i++) {
