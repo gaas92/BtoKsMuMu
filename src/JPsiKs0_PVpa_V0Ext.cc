@@ -2901,7 +2901,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    if (nB > 0 || OnlyGen_) 
      {
        std::cout << "filling tree" << std::endl;
-       tree_->Fill();
+       //tree_->Fill();
 	   std::cout << "fill ok" << std::endl;
      }
    // *********
@@ -2912,9 +2912,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
    //bm_IPxy = 0;
    //bm_pT = 0;
 
-   if (1){	
-   //if (!OnlyGen_){	
-	    std::cout << "ok 1" << std::endl;
+   if (!OnlyGen_){	
    		B_mass->clear();    B_px->clear();    B_py->clear();    B_pz->clear();
    		B_Ks0_mass->clear(); B_Ks0_px->clear(); B_Ks0_py->clear(); B_Ks0_pz->clear();
 
@@ -2947,9 +2945,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		TriggerMuon_px->clear(); TriggerMuon_py->clear(); TriggerMuon_pz->clear(); TriggerMuon_ch->clear();
    } 
    nVtx = 0;
-   //if (!OnlyGen_){
-   if (1){
-	    std::cout << "ok 2" << std::endl;
+   if (!OnlyGen_){
    		bDecayVtxX->clear(); bDecayVtxY->clear(); bDecayVtxZ->clear(); 
    		bDecayVtxXE->clear(); bDecayVtxYE->clear(); bDecayVtxZE->clear(); 
    		bDecayVtxXYE->clear(); bDecayVtxXZE->clear(); bDecayVtxYZE->clear();  
@@ -3001,7 +2997,7 @@ void JPsiKs0_PVpa_V0Ext::analyze(const edm::Event& iEvent, const edm::EventSetup
 		dpT_m1->clear();
 		dpT_m2->clear();
    }
-   //std::cout << "Analyze ok 2623" << std::endl;
+   std::cout << "Analyze ok 2623" << std::endl;
 }
 
 bool JPsiKs0_PVpa_V0Ext::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
