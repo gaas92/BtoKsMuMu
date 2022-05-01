@@ -124,6 +124,41 @@ JPsiKs0_onlyGen::~JPsiKs0_onlyGen()
 // ------------ method called to for each event  ------------
 void JPsiKs0_onlyGen::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
+	using std::vector;
+  	using namespace edm;
+  	using namespace reco;
+  	using namespace std;
+  	//*********************************
+  	// Get gen level information
+  	//*********************************
+  	edm::Handle<reco::GenParticleCollection> pruned;
+  	//edm::Handle<pat::PackedGenParticle> pruned; 
+  	iEvent.getByToken(genCands_, pruned);
+  
+  	edm::Handle<pat::PackedGenParticleCollection> packed;
+  	iEvent.getByToken(packedGenToken_,packed);
+  	//For simulated events, only a selected set of particles is stored because the simulated particle
+  	//format, called GenParticle, takes a lot of space. First, a set called pruned GenParticles that
+  	//includes initial partons, heavy flavor particles, electroweak bosons, and leptons is stored in full.
+  	//Second, a set called packed GenParticles that have only the four-momentum and particle type
+  	//is saved for particles representing the final state particles in the event. Generated jets and some
+  	//reference information is also saved.
+  	//With the packed GenParticles, an analyst can re-make the generated jets with various
+  	//algorithms. The pruned GenParticles enable event classification, flavor definition, and matching
+  	//to reconstructed physics objects. Links from each packed GenParticle to its last surviving
+  	//ancestor pruned GenParticle allow the decay chain of the event to be reconstructed.
+
+  	gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	gen_pion2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  	gen_b_vtx.SetXYZ(0.,0.,0.);
+  	gen_jpsi_vtx.SetXYZ(0.,0.,0.);
+  	gen_ks0_vtx.SetXYZ(0.,0.,0.);
+
 	std::cout << "only gen, test ok"  << std::endl;
 }
 
@@ -298,8 +333,6 @@ JPsiKs0_onlyGen::beginJob()
      tree_->Branch("gen_b_vtx",     "TVector3",        &gen_b_vtx);
      tree_->Branch("gen_jpsi_vtx",  "TVector3",        &gen_jpsi_vtx);
      tree_->Branch("gen_ks0_vtx",   "TVector3",        &gen_ks0_vtx);
-     tree_->Branch("gen_b_ct",      &gen_b_ct,        "gen_b_ct/F");
-     tree_->Branch("gen_ks0_ct",    &gen_ks0_ct,      "gen_ks0_ct/F");
 	 std::cout << "Definition of only gen TTree ok ..." << std::endl; 
 
   }
