@@ -158,8 +158,84 @@ void JPsiKs0_onlyGen::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   	gen_b_vtx.SetXYZ(0.,0.,0.);
   	gen_jpsi_vtx.SetXYZ(0.,0.,0.);
   	gen_ks0_vtx.SetXYZ(0.,0.,0.);
-
+  	
+	// for resonant in jpsi 
+  	if (pruned.isValid() && isRes_) {   
+		std::cout << "Res Pruned valid? " << pruned.isValid() << std::endl;  
+    	int foundit = 0;
+    	for (size_t i=0; i<pruned->size(); i++) {
+      		foundit = 0;
+      		const reco::Candidate *dau = &(*pruned)[i];
+      		if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
+	    		foundit++;
+	    		gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
+	    		gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
+	    		for (size_t k=0; k<dau->numberOfDaughters(); k++) {
+	      			const reco::Candidate *gdau = dau->daughter(k);
+	      			if (gdau->pdgId()==443 ) { // if Jpsi
+	        			foundit++;
+	        			gen_jpsi_vtx.SetXYZ(gdau->vx(),gdau->vy(),gdau->vz());
+	        			gen_b_ct = GetLifetime(gen_b_p4,gen_b_vtx,gen_jpsi_vtx);     
+	        			int nm=0;
+	        			for (size_t l=0; l<gdau->numberOfDaughters(); l++) {
+	          				const reco::Candidate *mm = gdau->daughter(l);
+	          				if (mm->pdgId()==13) { foundit++;
+	    						if (mm->status()!=1) {
+	    		  					for (size_t m=0; m<mm->numberOfDaughters(); m++) {
+	    		    					const reco::Candidate *mu = mm->daughter(m);
+	    		    					if (mu->pdgId()==13 ) { //&& mu->status()==1) {
+	    		      						nm++;
+	    		      						gen_muon1_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
+	    		      						break;
+	    		    					}
+	    		  					}
+	    						} 
+			    				else {
+	    	    					gen_muon1_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
+	    	    					nm++;
+	    	    				}
+	          				}
+	          				if (mm->pdgId()==-13) { foundit++;
+	    						if (mm->status()!=1) {
+	    	  						for (size_t m=0; m<mm->numberOfDaughters(); m++) {
+	    	  		  					const reco::Candidate *mu = mm->daughter(m);
+	    	  		  					if (mu->pdgId()==-13 ) { //&& mu->status()==1) {
+	    	  		    					nm++;
+	    	  		    					gen_muon2_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
+	    	  		    					break;
+	    	  		    				}
+	    	  						}
+	    						}
+			  					else {
+	    	  						gen_muon2_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
+	    	  						nm++;
+	    	  					}
+	          				}
+	        			}// end for daugters of Jpsi
+	        			if (nm==2) gen_jpsi_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
+	        			else foundit-=nm;
+	      			}//end if Jpsi
+	    		} // end for B daughters for jpsi
+        		for (size_t k=0; k<dau->numberOfDaughters(); k++){
+					const reco::Candidate *gdau = dau->daughter(k);
+					if (gdau->pdgId()==310){ //is K0s
+			  			foundit++;
+			  			gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
+			  			gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
+			  			gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx); 
+			  			// TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx 
+		    		}// end if K0s
+				}// end of B daughters for Ks0
+      		} // end in B0
+      		if (foundit>=5){
+				ngen++;
+	  		}  //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0,// NO PIONS 6-pi1, 7-pi2
+    	} // for i
+	}//end valid pruned 
 	std::cout << "only gen, test ok"  << std::endl;
+
+	tree_->Fill();
+
 }
 
 bool JPsiKs0_onlyGen::IsTheSame(const reco::Track& tk, const pat::Muon& mu){
