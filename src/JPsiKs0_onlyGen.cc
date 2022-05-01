@@ -230,7 +230,107 @@ void JPsiKs0_onlyGen::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 	  		}  //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0,// NO PIONS 6-pi1, 7-pi2
     	} // for i
 	}//end valid pruned 
-	std::cout << "only gen, test ok"  << std::endl;
+
+	// for the non-resonant channel 
+  	//std::cout<< "is MC ? " << isMC_ << std::endl;
+  	//std::cout<< "is onlyGen ? " << OnlyGen_ << std::endl;
+  	//std::cout<< "is pruned ? " << pruned.isValid() << std::endl;
+  	//std::cout<< "is is res? " << isRes_ << std::endl;
+
+  	if (pruned.isValid() && !isRes_) {
+		std::cout << "nRs Pruned valid? " << pruned.isValid() << std::endl;  
+		//std::cout<< "only gen test ok "<< std::endl;  
+    	int foundit = 0;
+    	for (size_t i=0; i<pruned->size(); i++) {
+      		foundit = 0;
+      		const reco::Candidate *dau = &(*pruned)[i];
+      		if ( (abs(dau->pdgId()) == 511) ) { //&& (dau->status() == 2) ) { //B0 
+	    		foundit++;
+				//std::cout<< "|--XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX----XXX--|"<< std::endl;
+				//std::cout<<"Found B0 printing Decay Tree ..."<< std::endl;
+				//printMCtree(dau, 0);
+	    		gen_b_p4.SetPtEtaPhiM(dau->pt(),dau->eta(),dau->phi(),dau->mass());
+	    		gen_b_vtx.SetXYZ(dau->vx(),dau->vy(),dau->vz());
+				int nm=0;
+	    		for (size_t k=0; k<dau->numberOfDaughters(); k++) {
+	      			const reco::Candidate *mm = dau->daughter(k);     
+	      			if (mm->pdgId()==13 && !isAncestor(443,mm)) { foundit++;  // cames from B but not J/p
+		    			gen_jpsi_vtx.SetXYZ(mm->vx(),mm->vy(),mm->vz());
+	        			if (mm->status()!=1) {
+	          				for (size_t m=0; m<mm->numberOfDaughters(); m++) {
+	            				const reco::Candidate *mu = mm->daughter(m);
+	            				if (mu->pdgId()==13 ) { //&& mu->status()==1) {
+	              					nm++;
+	              					gen_muon1_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
+	              					break;
+	            				}
+	          				}
+	        			} 
+		    			else {
+	          				gen_muon1_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
+	          				nm++;
+	        			}
+	      			}
+	      			if (mm->pdgId()==-13 && !isAncestor(443,mm)) { foundit++;  // cames from B but not J/p
+	        			if (mm->status()!=1) {
+	        				for (size_t m=0; m<mm->numberOfDaughters(); m++) {
+	        					const reco::Candidate *mu = mm->daughter(m);
+	        				  		if (mu->pdgId()==-13 ) { //&& mu->status()==1) {
+	        				    		nm++;
+	        				    		gen_muon2_p4.SetPtEtaPhiM(mu->pt(),mu->eta(),mu->phi(),mu->mass());
+	        				    		break;
+	        				  		}
+	        				}
+	        			}
+		    			else {
+	        				gen_muon2_p4.SetPtEtaPhiM(mm->pt(),mm->eta(),mm->phi(),mm->mass());
+	        				nm++;
+	        			}
+	      			}
+	    		}// end for daugters (for muons)
+	    		if (nm==2) {
+					gen_jpsi_p4 = gen_muon1_p4 + gen_muon2_p4;
+					//std::cout << "muons ok"<< std::endl;
+				} 	  
+	    		else foundit-=nm;
+	    		// end for B daughters for dimuon
+        		for (size_t k=0; k<dau->numberOfDaughters(); k++){
+					const reco::Candidate *gdau = dau->daughter(k); 
+					if (gdau->pdgId()==310){ //is K0s
+			  			foundit++;
+			  			gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
+			  			gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
+		    		}// end if K0s
+	    		}// end for B daughters for Ks0
+      		} // end if B0
+      		if (foundit>=5){
+		  		ngen++;
+	  		} //1-B0, 2-JPsi, 3-mu1, 4-mu2, 5-Ks0 //NOPIONS , 6-pi1, 7-pi2
+    	} // for gen particlea
+    	//if (foundit!=5) {
+    	//  gen_b_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  		//  gen_jpsi_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  		//  gen_pion1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  		//  gen_pion2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  		//  gen_ks0_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  		//  gen_muon1_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  		//  gen_muon2_p4.SetPtEtaPhiM(0.,0.,0.,0.);
+  		//  gen_b_vtx.SetXYZ(0.,0.,0.);
+  		//  gen_jpsi_vtx.SetXYZ(0.,0.,0.);
+  		//  gen_ks0_vtx.SetXYZ(0.,0.,0.);
+  		//  gen_b_ct = -9999.;
+  		//  gen_ks0_ct = -9999.;
+    	//  std::cout << "Does not found the given decay (non-res) " << run << "," << event << " foundit=" << foundit << std::endl; // sanity check
+    	//}
+	}
+
+
+
+
+
+
+	std::cout << "only gen, test ok: "<< ngen  << std::endl;
+
 
 	tree_->Fill();
 
