@@ -18,7 +18,7 @@ options.register('isRes', False,
                 VarParsing.varType.bool,
                 "Run Resonant or non resonant MC")
 
-options.register('onlyGen', False,
+options.register('onlyGen', True,
                 VarParsing.multiplicity.singleton,
                 VarParsing.varType.bool,
                 "Run MC onlyGen level")
@@ -133,10 +133,12 @@ if options.singleFile:
 else:
     outname = 'PrivateMC_{}_{}_part{}.root'.format('JPsi' if options.isRes  else 'MuMu', 'Gen' if options.onlyGen else 'Reco' , str(options.inputFile)[len(options.inputFile)-7: len(options.inputFile)-4])
 
-if not options.onlyGen:
-    process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
-else:
-    process.load("myAnalyzers.BtoKsMuMu.Psiks0_OnlyGen_cfi")
+#if not options.onlyGen:
+#    process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
+#else:
+#    process.load("myAnalyzers.BtoKsMuMu.Psiks0_OnlyGen_cfi")
+
+process.load("myAnalyzers.BtoKsMuMu.Psiks0_OnlyGen_cfi")
 
 process.rootuple.isMC = cms.bool(True) # this is only for test
 process.rootuple.isRes = cms.bool(options.isRes)
