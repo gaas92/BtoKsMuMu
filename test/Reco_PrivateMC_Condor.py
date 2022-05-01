@@ -111,8 +111,7 @@ else:
     files_to_run = [string for string in open('myGenFiles/'+options.inputFile).readlines() if len(string) > 10]    
 
 process.source = cms.Source("PoolSource",
-    #fileNames = cms.untracked.vstring(files_to_run
-    fileNames = cms.untracked.vstring(['/store/mc/RunIIAutumn18MiniAOD/BdToK0sJPsi_ToMuMu_Mufilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/PUPoissonAve20_BParking_102X_upgrade2018_realistic_v15-v2/100000/08A85CD9-6209-9A41-AFDC-648C3688EA3D.root']
+    fileNames = cms.untracked.vstring(files_to_run[0:1]
  )
 )
 
