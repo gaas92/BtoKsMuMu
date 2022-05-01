@@ -32,7 +32,7 @@ outname = 'MC_onlyGen.root'
 process.load("myAnalyzers.BtoKsMuMu.Psiks0_OnlyGen_cfi")
 
 process.rootuple.isMC = cms.bool(True) # this is only for test
-process.rootuple.isRes = cms.bool(False)
+process.rootuple.isRes = cms.bool(True)
 process.rootuple.OnlyGen = cms.bool(True)
 process.rootuple.GenParticles = cms.InputTag("prunedGenParticles") 
 
