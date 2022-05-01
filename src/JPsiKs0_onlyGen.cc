@@ -175,7 +175,6 @@ void JPsiKs0_onlyGen::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 	      			if (gdau->pdgId()==443 ) { // if Jpsi
 	        			foundit++;
 	        			gen_jpsi_vtx.SetXYZ(gdau->vx(),gdau->vy(),gdau->vz());
-	        			gen_b_ct = GetLifetime(gen_b_p4,gen_b_vtx,gen_jpsi_vtx);     
 	        			int nm=0;
 	        			for (size_t l=0; l<gdau->numberOfDaughters(); l++) {
 	          				const reco::Candidate *mm = gdau->daughter(l);
@@ -222,7 +221,6 @@ void JPsiKs0_onlyGen::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 			  			foundit++;
 			  			gen_ks0_vtx.SetXYZ(gdau->vx(), gdau->vy(), gdau->vz());
 			  			gen_ks0_p4.SetPtEtaPhiM(gdau->pt(),gdau->eta(),gdau->phi(),gdau->mass());
-			  			gen_ks0_ct = GetLifetime(gen_ks0_p4, gen_jpsi_vtx, gen_ks0_vtx); 
 			  			// TLorentzVector b_p4, TVector3 production_vtx, TVector3 decay_vtx 
 		    		}// end if K0s
 				}// end of B daughters for Ks0
