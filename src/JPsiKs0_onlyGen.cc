@@ -108,7 +108,7 @@ JPsiKs0_onlyGen::JPsiKs0_onlyGen(const edm::ParameterSet& iConfig)
   OnlyGen_(iConfig.getParameter<bool>("OnlyGen")),
   doMC_ ( iConfig.getUntrackedParameter<bool>("doMC",false) ),
   tree_(0),
-  
+
   run(0), event(0),
   lumiblock(0)
 
@@ -413,12 +413,6 @@ void JPsiKs0_onlyGen::analyze(const edm::Event& iEvent, const edm::EventSetup& i
 	   std::cout << "fill ok" << std::endl;
      }
    // *********
-
-   nB = 0; nMu = 0;
-   trigger = 0;
-   ngen = 0;
-   //bm_IPxy = 0;
-   //bm_pT = 0;
 
    std::cout << "Analyze ok 2623" << std::endl;
 }

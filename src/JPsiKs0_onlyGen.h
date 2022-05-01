@@ -74,7 +74,7 @@
 class JPsiKs0_onlyGen : public edm::EDAnalyzer {
 public:
   explicit JPsiKs0_onlyGen(const edm::ParameterSet&);
-  ~JPsiKs0_PVpa_V0Ext();
+  ~JPsiKs0_onlyGen();
   void fillPsi(const reco::Candidate& genpsi);
   void fillV0(const reco::Candidate& genv0);
   int const getMuCat(reco::Muon const& muon) const;
