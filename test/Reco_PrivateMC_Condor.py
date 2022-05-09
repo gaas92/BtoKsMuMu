@@ -99,7 +99,7 @@ process.options = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 process.options.allowUnscheduled = cms.untracked.bool(True)
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
 #process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
-
+ 
 '''
 #####################   Input    ###################
 '''
@@ -133,12 +133,12 @@ if options.singleFile:
 else:
     outname = 'PrivateMC_{}_{}_part{}.root'.format('JPsi' if options.isRes  else 'MuMu', 'Gen' if options.onlyGen else 'Reco' , str(options.inputFile)[len(options.inputFile)-7: len(options.inputFile)-4])
 
-if not options.onlyGen:
-    process.load("myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi")
+if options.onlyGen:
+    process_ = "myAnalyzers.BtoKsMuMu.Psiks0_OnlyGen_cfi"
 else:
-    process.load("myAnalyzers.BtoKsMuMu.Psiks0_OnlyGen_cfi")
+    process_ = "myAnalyzers.BtoKsMuMu.Psiks0_BestPA_V0Ext_Rootupler_cfi"
 
-process.load("myAnalyzers.BtoKsMuMu.Psiks0_OnlyGen_cfi")
+process.load(process_)
 
 process.rootuple.isMC = cms.bool(True) # this is only for test
 process.rootuple.isRes = cms.bool(options.isRes)
